@@ -1,0 +1,53 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+<script>
+var socket = null;
+document.addEventListener("DOMContentLoaded", function() {
+	
+	var sock = new SockJS("/echo");
+	socket = sock;
+	
+	sock.onmessage = function (event){
+	
+		console.log("Info : connection onmessage." , event.data);
+		let $alarm = $("#alarm");
+		$alarm.html(event.data);
+		
+		setTimeout(function(){
+			$alarm.css('display' , 'block');
+		} , 1000);
+
+		setTimeout(function(){
+			
+			var param = {
+					memId : "${member.memId}",
+					memAlarm : "${member.memAlarm}"
+			}
+			
+			$.ajax({
+				url : "increaseCount.ajax",
+				type : "post",
+				data : param,
+				dataType : "json",
+				success : function(data){
+					console.log("ajax 테스트 : "  , data);
+					var alarmCount = data.alarmCount;
+					if(alarmCount > 0){
+					$("#alarmCount").text(alarmCount);	
+					}
+				}
+			});
+		
+		} , 1000);
+		
+		setTimeout(function(){
+			$alarm.css('display' , 'none');
+		} , 5000);
+	}
+});
+</script>

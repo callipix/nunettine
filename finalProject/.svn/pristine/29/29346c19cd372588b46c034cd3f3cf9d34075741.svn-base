@@ -1,0 +1,19 @@
+package kr.or.ddit.vo;
+
+import java.util.Date;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+public class ResveVO {
+	private int resveNo;
+	private int resveTotqy;
+	private int resveTpprice;
+	private Date resveDt;
+	private String mberDi;
+}

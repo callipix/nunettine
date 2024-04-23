@@ -1,0 +1,61 @@
+(function(){
+	$.fn.menuBar = function(){
+		this.each(function(index){
+			var $menuBar = null,
+				$menuList = null,
+				$menuSelect = null;
+				function init(el){
+					$menuBar = $(el);
+					$menuList = $menuBar.find('li');
+				}
+				function event(){
+					$menuList.on('click' , function(){
+						if($menuSelect)
+							$menuSelect.removeClass('active');
+							$menuList.removeClass('active');
+						$menuSelect = $(this);
+						$menuSelect.addClass('active');
+						$menuSelect.parent('ul').next().children().eq($(this).index()).show().siblings().hide();
+					});
+				}
+				init($(this));
+				event();
+		})
+		return this;
+	}
+})(jQuery);
+
+function allRoomList(event , roomNo){
+	event.preventDefault();
+	
+	var rslt = '';
+
+	if(confirm("방에 참가하시겠습니까?")){
+	console.log("여길 먼저 타야?")
+	$.ajax({
+		url : "http://localhost:8080/chat/check",
+		type : "get",
+		data : {roomNo:roomNo},
+		dataType : "text",
+		success : function(result){
+			rslt = result;
+			
+			if(result > 0){
+				alert("이미 참가중인 방입니다\n방으로 이동합니다");
+				return;
+				}else{
+					
+				}
+			}
+		})
+	}else{
+		return;
+	}
+	alert("해당 방에 입장합니다...");
+	location.href = "http://localhost:8080/chat/join?roomNo="+roomNo;
+}
+function check(event){
+	event.preventDefault();
+	console.log("event" , event);
+	location.href = "http://localhost:8080/chat/main";
+}

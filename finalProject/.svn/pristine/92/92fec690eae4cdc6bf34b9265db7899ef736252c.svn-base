@@ -1,0 +1,76 @@
+package kr.or.ddit.onedayclass.mapper;
+
+import java.util.List;
+import java.util.Map;
+
+import kr.or.ddit.vo.BcityVO;
+import kr.or.ddit.vo.BrtcVO;
+import kr.or.ddit.vo.OndyclReviewVO;
+import kr.or.ddit.vo.ReviewMberVO;
+import kr.or.ddit.vo.SpcltyRealmVO;
+import kr.or.ddit.vo.SprviseAtchmnflVO;
+import kr.or.ddit.vo.VOndyclProUsersVO;
+
+public interface OnedayClassMapper {
+
+	public List<VOndyclProUsersVO> vOndyclProUsersVOList();
+
+	public int countOndycl();
+
+	public String getCodeNm(String codeCd);
+
+	public List<VOndyclProUsersVO> searchClass(Map<String, Object> searchMap);
+
+	public List<SpcltyRealmVO> category();
+
+	public List<BcityVO> getBcity();
+
+	public List<BrtcVO> brtcSelect(String bcityCode);
+
+	public VOndyclProUsersVO detail(String ondyclNo);
+
+	public int getAttachNo();
+
+	public int addSprviseAtchmnfl(SprviseAtchmnflVO sprviseAtchmnflVO);
+
+	public int createOndycl(Map<String, Object> map);
+
+	public List<SprviseAtchmnflVO> fileList(String ondyclNo);
+
+	public int getInsertClNum();
+
+	public int deleteClass(String classNO);
+
+	public int thisAttachNo(int ondyclNo);
+
+	public int updateOndycl(Map<String, Object> map);
+
+	public int updateOndyclSchdul(Map<String, Object> map);
+
+	public int updateSprviseAtchmnfl(SprviseAtchmnflVO sprviseAtchmnflVO);
+
+	public int buyClass(Map<String, Object> map);
+
+	public int getResveNo();
+
+	public int plusndyclResvpa(Map<String, Object> map);
+
+	public List<VOndyclProUsersVO> memberOndyclList(Map<String, Object> map);
+
+	public int countMberMyClass(Map<String, Object> map);
+	
+	public List<VOndyclProUsersVO> proMyClassList(Map<String, Object> map);
+
+	public int countProMyClass(Map<String, Object> map);
+
+	public int resveCheck(Map<String, Object> mberOndyclMap);
+
+	public int mberClassCancel(Map<String, Object> map);
+
+	public String mberReviewTitle(int ondyclNo);
+
+	public int createReview(OndyclReviewVO ondyclReviewVO);
+
+	public List<ReviewMberVO> reviewList(int ondyclNo);
+
+}

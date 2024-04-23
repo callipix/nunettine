@@ -1,0 +1,103 @@
+package kr.or.ddit.member.mypage.controller;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import kr.or.ddit.member.mypage.service.MemberMypageService;
+import kr.or.ddit.vo.VMberUsersVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@Slf4j
+@RequestMapping("/member")
+public class MemberMypageController {
+	
+	@Autowired
+	MemberMypageService memberMypageService;
+	
+	@GetMapping("/memberMypage")
+	public String memberMypage() {
+		return "member/memberMypage";
+	}
+	
+	@GetMapping("/memberUpdateCk")
+	public String memberUpdateCk() {
+		return "member/memberUpdateCk";
+	}
+	
+	@PostMapping("/updating")
+	public String updating(VMberUsersVO vMberUsersVO) {
+		log.info("업뎃전 vo : " + vMberUsersVO);
+		Map<String, Object> map = new HashMap<String, Object>();
+		int result = 0;
+		
+		String userId = vMberUsersVO.getUserId();
+		map.put("userId",userId);
+		
+		String mberMbtlnum = vMberUsersVO.getMberMbtlnum();
+		if(mberMbtlnum != null && !mberMbtlnum.isEmpty()) {
+			map.put("mberMbtlnum",mberMbtlnum);
+			log.info("map1 : " + map);
+			result += this.memberMypageService.updTel(map);
+		}
+		String userPassword = vMberUsersVO.getUserPassword();
+		if(userPassword != null && !userPassword.isEmpty()) {
+			map.put("userPassword",userPassword);
+			log.info("map2 : " + map);
+			result += this.memberMypageService.updPW(map);
+		}
+		String userNcnm = vMberUsersVO.getUserNcnm();
+		if(userNcnm != null && !userNcnm.isEmpty()) {
+			map.put("userNcnm",userNcnm);
+			log.info("map3 : " + map);
+			result += this.memberMypageService.updNcnm(map);
+		}
+		
+//		MultipartFile multipartFile = vMberUsersVO.getUploadFile();
+//		if(multipartFile != null) {
+//			String uploadFolder = "c://upload";
+//			
+//			File uploadPath = new File(uploadFolder, getFolder());
+//			if(!uploadPath.exists()) {
+//				uploadPath.mkdirs();
+//			}
+//			String uploadFileName = multipartFile.getOriginalFilename();
+//			UUID uuid = UUID.randomUUID();
+//			uploadFileName = uuid.toString() + "_" + uploadFileName;
+//			File saveFile = new File(uploadPath, uploadFileName);
+//			try {
+//				multipartFile.transferTo(saveFile);
+//			} catch (IllegalStateException | IOException e) {
+//				log.info(e.getMessage());
+//			}
+//			String mberProflPhoto = "/" + getFolder().replace("\\", "/") + "/" + uploadFileName;
+//			log.info("저장파일1 : " + saveFile);
+//			log.info("저장파일2 : " + mberProflPhoto);
+//			
+//			map.put("mberProflPhoto",mberProflPhoto);
+//			
+//			log.info("업뎃 날릴 map : " + map);
+//			result += this.memberMypageService.updPhoto(map);
+//			
+//		}
+		log.info("결과수 : " + result);
+		
+		return "member/memberMypage";
+	}
+	
+	public String getFolder() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		String str = sdf.format(date);
+		return str.replace("-", File.separator);
+	}
+}

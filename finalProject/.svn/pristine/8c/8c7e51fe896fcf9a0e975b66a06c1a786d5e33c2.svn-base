@@ -1,0 +1,15 @@
+package kr.or.ddit.onedayclass.service;
+
+import java.util.List;
+
+import kr.or.ddit.vo.VOndyclProUsersVO;
+
+public interface OnedayClassService {
+
+	public List<VOndyclProUsersVO> vOndyclProUsersVOList();
+
+	public int countOndycl();
+
+	public String getCodeNm(String codeCd);
+
+}

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.pro_service.service_inquiry.mapper.SrvcBtfInqryMapper">
+
+
+	<select id="userChk" parameterType="String" resultType="usersVO">
+		SELECT USER_ID, USER_NM, EMPLYR_TY
+		FROM USERS
+		WHERE USER_ID = #{userId}
+	</select>
+	
+	
+	<select id="btfInqryList" parameterType="vSrvcBtfInqryVO" resultType="vSrvcBtfInqryVO">
+		SELECT ROW_NUMBER() OVER (ORDER BY a.BTF_INQRY_WR_DT DESC) NUM, a.* FROM V_SRVC_BTF_INQRY a
+		<choose>
+			<when test='"ET02".equals(emplyrTy)'>
+				WHERE emplyr_ty=#{emplyrTy} AND MBER_ID=#{userId}
+			</when>
+			<when test='"ET01".equals(emplyrTy)'>
+				WHERE emplyr_ty=#{emplyrTy} AND PRO_ID=#{userId}
+			</when>
+		</choose>
+		ORDER BY a.BTF_INQRY_WR_DT DESC
+	</select>
+	
+	<select id="btfInqryDetail" parameterType="vSrvcBtfInqryVO" resultMap="vSrvcBtfInqryMap">
+		SELECT A.BTF_INQRY_NO, A.BTF_INQRY_SJ, A.BTF_INQRY_CN, A.BTF_INQRY_WR_DT, 
+			   A.BTF_INQRY_ANSWER_CN, A.BTF_INQRY_ANSWER_WR_DT, A.USER_ID, A.USER_NM,
+		       A.SPRVISE_ATCHMNFL_NO, B.ATCHMNFL_NO, B.ATCHMNFL_COURS
+		FROM V_SRVC_BTF_INQRY A
+		LEFT JOIN SPRVISE_ATCHMNFL B
+		ON A.SPRVISE_ATCHMNFL_NO = B.SPRVISE_ATCHMNFL_NO
+		WHERE A.BTF_INQRY_NO = #{btfInqryNo} AND A.USER_ID=#{userId}
+	</select>
+	
+	<resultMap type="vSrvcBtfInqryVO" id="vSrvcBtfInqryMap">
+		<result property="btfInqryNo" column="BTF_INQRY_NO"/>
+		<result property="btfInqrySj" column="BTF_INQRY_SJ"/>
+		<result property="btfInqryCn" column="BTF_INQRY_CN"/>
+		<result property="btfInqryWrDt" column="BTF_INQRY_WR_DT"/>
+		<result property="mberId" column="MBER_ID"/>
+		<result property="proId" column="PRO_ID"/>
+		<result property="sprviseAtchmnflNo" column="SPRVISE_ATCHMNFL_NO"/>
+		<result property="btfInqryAnswerCn" column="BTF_INQRY_ANSWER_CN"/>
+		<result property="btfInqryAnswerWrDt" column="BTF_INQRY_ANSWER_WR_DT"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="userNm" column="USER_NM"/>
+		<result property="emplyrTy" column="EMPLYR_TY"/>
+		<collection property="sprviseAtchmnflVOList" resultMap="sprviseAtchMap"></collection>
+	</resultMap>
+	
+	<resultMap type="sprviseAtchmnflVO" id="sprviseAtchMap">
+		<result property="sprviseAtchmnflNo" column="SPRVISE_ATCHMNFL_NO"/>
+		<result property="atchmnflNo" column="ATCHMNFL_NO"/>
+		<result property="atchmnflCours" column="ATCHMNFL_COURS"/>
+		<result property="atchmnflNm" column="ATCHMNFL_NM"/>
+		<result property="storeAtchmnflNm" column="STORE_ATCHMNFL_NM"/>
+		<result property="atchmnflTy" column="ATCHMNFL_TY"/>
+		<result property="registDt" column="REGIST_DT"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="updtDt" column="UPDT_DT"/>
+	</resultMap>
+
+</mapper>

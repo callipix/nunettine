@@ -1,0 +1,424 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<script src="/resources/js/jquery.min.js"></script>
+<!-- <link rel="stylesheet" href="/resources/css/bootstrap.min.css" /> -->
+<script src="/resources/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<head>
+<title>프로 프로필</title>
+</head>
+
+<script>
+$(function(){
+	console.log("개똥이");
+	
+	$(document).ready(function() {
+		   
+		console.log("지역코드를 이름으로");
+	    var bcityCode = $("#bcityCode").text();
+	    var brtcCode = $("#brtcCode").text();
+	    console.log("bcityCode : " + bcityCode+", brtcCode" + brtcCode);
+	    
+	    $.ajax({
+	    	url:"/proProfl/getNm",
+	    	data:{"bcityCode":bcityCode,"brtcCode":brtcCode},
+	    	type:"post",
+	    	success:function(data){
+	    		 $("#bcityCode").text(data.bcityNm); 
+	             $("#brtcCode").text(data.brtcNm); 
+	    	}
+	    	});
+	    });
+	
+	$(document).on("click", ".btn.btn-success",function(){
+		console.log("삭제하자");
+		let sprviseAtchmnflNo = $(this).data("sprviseAtchmnflNo");
+		console.log("sprviseAtchmnflNo : " + sprviseAtchmnflNo);
+		
+		$.ajax({
+			url:"/prtFolio/deletePrt",
+			data:{"sprviseAtchmnflNo": sprviseAtchmnflNo},
+			type:"post",
+			success:function(result){
+				   Swal.fire({
+					   title: "정말 삭제 하시겠습니까?",
+					   confirmButtonText: "확인",
+					 }).then((result) => {
+					   if (result.isConfirmed) {
+						   console.log("result : ", result);
+						   location.reload();
+					   } else if (result.isDenied) {
+					   }
+					 });
+			}
+		});
+	});
+	
+    // 모달 내 버튼 클릭 시 슬라이드 변경
+    $(document).on("click",".modalPicBody button",function() {
+        let slideDirection = $(this).attr("aria-label");
+        if (slideDirection === "Previous slide") {
+            plusSlides(-1); // 이전 슬라이드로 이동
+        } else if (slideDirection === "Next slide") {
+            plusSlides(1); // 다음 슬라이드로 이동
+        }
+    });
+	
+	
+	// 이미지 클릭 시 모달 창 제목 변경
+    $(document).on("click", ".prtThumb", function(){
+    	console.log("왔다");
+        let portfolioSj = $(this).data("prtfolioSj"); // 수정된 부분: id로 값을 가져오도록 변경
+        //data-sprvise-atchmnfl-no="${portfolio.spAtVOList[0].sprviseAtchmnflNo}"
+        let sprviseAtchmnflNo = $(this).data("sprviseAtchmnflNo");
+        $(".btn.btn-success").data("sprviseAtchmnflNo", sprviseAtchmnflNo);
+        
+        console.log("portfolioSj : " + portfolioSj + ", sprviseAtchmnflNo : " + sprviseAtchmnflNo);
+
+        
+        $("#modalPicTitle").text(portfolioSj); // 모달 창 제목 설정
+        
+        $.ajax({
+        	url:"/proProfl/portfolioPicture",
+        	data:{"sprviseAtchmnflNo": sprviseAtchmnflNo},
+        	type:"post",
+        	success:function(result){
+        		console.log("result : ", result);
+        		
+        		let str = "";
+        		
+        		str += "<li style='list-style-type: none; display: inline-block;'>";
+        		str += "<button type='button' aria-label='Previous slide' style='background: none; margin-left:-15px; border: none; position: absolute; top: 42%;'>";
+        		str += "<i class='mdi mdi-arrow-left-drop-circle-outline' style='font-size: 40px;'></i></button></li>";
+        		
+        		//result : List<SprviseAtchmnflVO>
+        		$.each(result,function(idx,sprviseAtchmnflVO){
+        			str += "<li style='list-style-type: none; display: inline-block;'>";
+        			str += "<img src='"+sprviseAtchmnflVO.atchmnflCours+"' style='width:390px; height:390px; margin-left:35px;'>";
+        			str += "</li>";
+        		});
+        		
+        		str += "<li style='list-style-type: none; display: inline-block;'>";
+       			str += "<button type='button' aria-label='Next slide' style='background: none; margin-left:-2px; border: none; position: absolute; top: 42%;' >";
+      			str += "<i class='mdi mdi-arrow-right-drop-circle-outline' style='font-size: 40px;'></i></button></li>";
+        		
+        		$("#ulPrt").html(str);
+        		
+        		showSlides();
+        	}
+        });
+    });
+	
+    // 슬라이드 쇼 함수
+    let slideIndex = 0;
+    showSlides();
+
+    function plusSlides(n) {
+        slideIndex += n;
+        showSlides();
+    }
+
+    function showSlides() {
+    	console.log("왔다2");
+        let slides = document.querySelectorAll(".modalPicBody img");
+        console.log("slides.length : " + slides.length);
+        
+        if (slideIndex >= slides.length) {
+        	slideIndex = 0 
+        }
+        if (slideIndex < 0) {
+        	slideIndex = slides.length - 1 
+        	}
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        if (slides[slideIndex]) {
+            slides[slideIndex].style.display = "block";
+        } else {
+        }
+    }
+   
+    
+});
+</script>
+<!-- 
+요청URI : /createPost
+요청파라미터 : {PRO_ID=protest100, PRO_PROFL_ON_LI_INTRCN=반려동물 산책/돌봄 자신있습니다, PRO_PROFL_CONTACT_POSBL_TIME=10:00 ~ 21:00, 
+              PRO_PROFL_REQ_FORM=반려동물 이름:  종류: , PRO_PROFL_HIST=반려견 산책대회 우승자, BCITY_CODE=25, BRTC_CODE=25030}
+요청방식 : post
+ -->
+ <!--회원이보는 프로필  -->
+<c:if test="${memSession != null && proSession == null}">
+<form action="/proProfl/createPost?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
+<div>
+	    <div class="border-bottom text-center pb-4">
+	        <c:if test="${vProUsersVO.proProflPhoto == null}">
+	            <img src="/images/2024/profile.jpg" class="img-lg rounded-circle mb-3" alt="profile" style="width:150px; height:150px; border-radius: 70%;" />
+	        </c:if>
+	        <c:if test="${vProUsersVO.proProflPhoto != null}">
+	            <img src="${vProUsersVO.proProflPhoto}" class="img-lg rounded-circle mb-3" alt="profile" style="width:150px; height:150px; border-radius: 70%;">
+	        </c:if>
+	
+	      <div class="mb-3">
+	        <h2><b>${vProUsersVO.userNcnm}</b></h2>
+	        <p style="border: 1px solid #CED4DA; border-radius: 20px; display: inline-block;">&nbsp;&nbsp;${proBun}&nbsp;&nbsp;</p>
+	        <div class="d-flex align-items-center justify-content-center">
+	            <h5 class="mb-0 me-2 text-muted">${proProflVO.proId}</h5>
+	        </div>
+	       </div>
+			<div>
+	            <img src="../resources/images/즐찾전.png" onclick="location.href=#" style="width:50px; margin: 0px 0px 10px 0px;" />
+	        </div>
+	        <div>
+	      <p class="w-75 mx-auto mb-3" style="margin-top:5px;">${proProflVO.proProflOnLiIntrcn}</p>
+	        </div>
+	        <div class="d-flex justify-content-center">
+	            <button class="btn btn-outline-primary btn-fw" type="button" style="margin-right: 10px;" onclick="location.href='/srvcBtfInqry/btfInqryCreate?proId=${proProflVO.proId}'">문의하기</button>
+	            <button class="btn btn-outline-primary btn-fw" type="button" style="margin-right: 10px;" onclick="location.href='/srvcRequst/srvcRqCreate?proId=${proProflVO.proId}'">요청하기</button>
+	            <button class="btn btn-outline-primary btn-fw" type="button" style="margin-right: 10px;" onclick="location.href=#">신고하기</button>
+	        </div>
+	    </div>
+	    <br>
+	    <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+	    <div style="width: 20%; height:90px; border:1px solid #CED4DA; border-radius: 20px; float:left;">
+	        <h5 style="text-align:center; margin-top:12px;"><b>연락 가능 시간</b></h5>
+	        <hr style="border: 1px solid #CED4DA; width: 60px; margin: 0 auto;">
+	        <h3 style="background-color : white; text-align:center; margin-top:10px;">${proProflVO.proProflContactPosblTime}</h3>
+	    </div>
+	    <div style="width: 20%; height:90px; border:1px solid #CED4DA; margin-left: 15px; border-radius: 20px; float:left;">
+			<h5 style="text-align:center; margin-top:12px;"><b>지역</b></h5>
+			<hr style="border: 1px solid #CED4DA; width: 60px; margin: 0 auto;">
+			<h3 style="text-align:center; margin-top:10px;"><span id="bcityCode">${proProflVO.bcityCode}</span>&nbsp;<span id="brtcCode">${proProflVO.brtcCode}</span></h3>
+	    </div>
+	    </div>
+	    <div style="display: flex; flex-wrap: wrap; margin-top:15px; justify-content: center;">
+	    <div style="width:40%; height:300px; border:1px solid #CED4DA; border-radius: 20px; float:left; overflow:auto;">
+	    	<br>
+	        <h5 style="text-align:center;"><b>요청서 양식 </b></h5>
+	        <hr style="border: 1px solid #CED4DA; width: 60px; margin: 0 auto;">
+	        <br>
+	        <h5 style="background-color : white; margin:0 15px 15px 15px; ">${proProflVO.proProflReqForm}</h5>
+	    </div>
+	    <div style="width:40%; height:300px; border:1px solid #CED4DA; margin-left: 15px; border-radius: 20px; float:left; overflow:auto;">
+	        <br>
+	        <h5 style="text-align:center;"><b>이력</b></h5>
+	        <hr style="border: 1px solid #CED4DA; width: 60px; margin: 0 auto;">
+	        <br>
+	        <h5 style="background-color : white; text-align:center; margin:0 15px 15px 15px; ">${proProflVO.proProflHist}</h5>
+	    </div>
+     	</div>
+       <!-- 포트 폴리오 -->
+      <br>
+      <div style="width:100%; height:auto; border:1px solid #CED4DA; border-radius: 20px; float:left;">
+      	<br>
+      	<h5 style="text-align:center;"><b>포트 폴리오</b></h5>  
+      	<hr style="border: 1px solid #CED4DA; width: 60px; margin: 0 auto;">
+      	<br>
+	    <ul>
+	      	<c:forEach items="${VPrtfolioVO}" var="portfolio">
+			    <li style="list-style-type: none; display: inline-block; margin-right: 10px;">
+			        <div>
+			        	<a href="#modalPicture" data-picture-url="${portfolio.spAtVOList[0].atchmnflCours}" data-toggle="modal">
+			            <img class="prtThumb" src="${portfolio.spAtVOList[0].atchmnflCours}" data-prtfolio-sj="${portfolio.prtfolioSj}" 
+			            	data-sprvise-atchmnfl-no="${portfolio.spAtVOList[0].sprviseAtchmnflNo}" style="width:150px; height:150px; border-radius: 20%">
+			        	</a>
+			        </div>
+			        <br>
+			        <div class="prtName">
+			            <input type="text" name="prtName" id="portfolioTitle"  value="${portfolio.prtfolioSj}" style="text-align:center; background: none; border:none;">
+			        </div>
+			    </li>
+			</c:forEach>
+		</ul>
+      </div>
+      
+</div>
+
+<!-- //////// 이미지 크게 보기 모달 //////// -->
+<div class="modal fade" id="modalPicture" tabindex="-1" aria-labelledby="exampleModalLabel-2" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalPicTitle"></h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<!-- 
+			sprviseAtchmnflVOList : 
+			[VPrtfolioVO(prtfolioNo=32, prtfolioSj=1번, prtfolioWrDt=Mon Mar 18 17:07:08 KST 2024, 
+				sprviseAtchmnflNo=323, proId=protest200, atchmnflNo=1, 
+				atchmnflCours=/images/2024/03/18/932722b2-a0ac-4039-a8a5-4081e2beee5d_거징징이.jpg, 
+				atchmnflNm=거징징이.jpg, storeAtchmnflNm=932722b2-a0ac-4039-a8a5-4081e2beee5d_거징징이.jpg, 
+				atchmnflTy=image/jpeg, registDt=Mon Mar 18 17:07:08 KST 2024, updtDt=null), 
+			VPrtfolioVO(prtfolioNo=32, prtfolioSj=1번, prtfolioWrDt=Mon Mar 18 17:07:08 KST 2024, 
+				sprviseAtchmnflNo=323, proId=protest200, atchmnflNo=2, 
+				atchmnflCours=/images/2024/03/18/168de32a-0169-4817-a2dd-d7ef6f6429f6_아니.jpg, 
+				atchmnflNm=아니.jpg, storeAtchmnflNm=168de32a-0169-4817-a2dd-d7ef6f6429f6_아니.jpg, 
+				atchmnflTy=image/jpeg, registDt=Mon Mar 18 17:07:08 KST 2024, updtDt=null)]
+			
+			 -->
+			<div class="modalPicBody">
+				<ul id="ulPrt">
+				</ul>
+			</div>
+			
+			<div class="modal-footer">
+				<button type="button" class="btn btn-light" data-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</div>
+</div>
+</form>
+</c:if>
+
+
+
+
+<!-- 프로일때 -->
+<c:if test="${memSession == null && proSession != null}">
+<form action="/proProfl/createPost?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
+<div>
+	    <div class="border-bottom text-center pb-4">
+	        <c:if test="${vProUsersVO.proProflPhoto == null}">
+	            <img src="/images/2024/profile.jpg" class="img-lg rounded-circle mb-3" alt="profile" style="width:150px; height:150px; border-radius: 70%;" />
+	        </c:if>
+	        <c:if test="${vProUsersVO.proProflPhoto != null}">
+	            <img src="${vProUsersVO.proProflPhoto}" class="img-lg rounded-circle mb-3" alt="profile" style="width:150px; height:150px; border-radius: 70%;">
+	        </c:if>
+	
+	      <div class="mb-3">
+	        <h2><b>${vProUsersVO.userNcnm}</b></h2>
+			<p style="border: 1px solid #CED4DA; border-radius: 20px; display: inline-block;">&nbsp;&nbsp;${proBun}&nbsp;&nbsp;</p>
+	        <div class="d-flex align-items-center justify-content-center">
+	            <h5 class="mb-0 me-2 text-muted">${proProflVO.proId}</h5>
+	        </div>
+	       </div>
+	        <div>
+	      <p class="w-75 mx-auto mb-3" style="margin-top:5px;">${proProflVO.proProflOnLiIntrcn}</p>
+	        </div>
+	        <div class="d-flex justify-content-center">
+	            <!-- 프로 본인 -->
+		<c:if test="${proSession.userId==proProflVO.proId}">
+			<button class="btn btn-outline-primary btn-fw" type="button"  style="margin-right: 10px;" onclick="location.href='/proProfl/modify?proId=${proProflVO.proId}'">수정하기</button>
+		</c:if>
+		<!-- 다른 프로 -->
+		<c:if test="${proSession.userId!=proProflVO.proId}">
+	            <button class="btn btn-outline-primary btn-fw" type="button" style="margin-right: 10px;" onclick="location.href=#">신고하기</button>
+		</c:if>
+	        </div>
+	    </div>
+	    <br>
+	    <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+	    <div style="width: 20%; height:90px; border:1px solid #CED4DA; border-radius: 20px; float:left;">
+	        <h5 style="text-align:center; margin-top:12px;"><b>연락 가능 시간</b></h5>
+	        <hr style="border: 1px solid #CED4DA; width: 60px; margin: 0 auto;">
+	        <h3 style="background-color : white; text-align:center; margin-top:10px;">${proProflVO.proProflContactPosblTime}</h3>
+	    </div>
+	    <div style="width: 20%; height:90px; border:1px solid #CED4DA; margin-left: 15px; border-radius: 20px; float:left;">
+			<h5 style="text-align:center; margin-top:12px;"><b>지역</b></h5>
+			<hr style="border: 1px solid #CED4DA; width: 60px; margin: 0 auto;">
+			<h3 style="text-align:center; margin-top:10px;"><span id="bcityCode">${proProflVO.bcityCode}</span>&nbsp;<span id="brtcCode">${proProflVO.brtcCode}</span></h3>
+	    </div>
+	    </div>
+	    <div style="display: flex; flex-wrap: wrap; margin-top:15px; justify-content: center;">
+	    <div style="width:40%; height:300px; border:1px solid #CED4DA; border-radius: 20px;; float:left; overflow: auto;">
+	    	<br>
+	        <h5 style="text-align:center;"><b>요청서 양식 </b></h5>
+	        <hr style="border: 1px solid #CED4DA; width: 60px; margin: 0 auto;">
+	        <br>
+	        <h5 style="background-color : white; margin:0 15px 15px 15px; ">${proProflVO.proProflReqForm}</h5>
+	    </div>
+	    <div style="width:40%; height:300px; border:1px solid #CED4DA; margin-left: 15px; border-radius: 20px;; float:left; overflow: auto;">
+	        <br>
+	        <h5 style="text-align:center;"><b>이력</b></h5>
+	        <hr style="border: 1px solid #CED4DA; width: 60px; margin: 0 auto;">
+	        <br>
+	        <h5 style="background-color : white; text-align:center; margin:0 15px 15px 15px; ">${proProflVO.proProflHist}</h5>
+	    </div>
+     	</div>
+       <!-- 포트 폴리오 -->
+      <br>
+      <div style="width:100%; height:auto; border:1px solid #CED4DA; border-radius: 20px;; float:left;">
+      	<br>
+      	<h5 style="text-align:center;"><b>포트 폴리오</b></h5>  
+      	<hr style="border: 1px solid #CED4DA; width: 60px; margin: 0 auto;">
+		<c:if test="${proSession.userId==proProflVO.proId}">
+			<button class="btn btn-outline-primary btn-fw" style="float:right; margin-right:20px;" type="button" onclick="location.href='/prtFolio/create'">포트폴리오 추가</button>
+			<c:if test="${VPrtfolioVO[0].sprviseAtchmnflNo == null}">
+			    <br>
+			    <h3 style="margin-left: 50px;"><b>프로님의 눈에띄는! 작업물을 보여주세요.</b></h3>
+			    <h5 style="margin-left: 50px;">작업사진과 과정을 포함한 포트폴리오를<br>
+			    등록할 경우 프로님을 선택할 확률이 높아집니다.
+			    </h5>
+			    <br><br>
+			</c:if>
+		</c:if>
+      	<br>
+	    <ul>
+	      	<c:forEach items="${VPrtfolioVO}" var="portfolio">
+			    <li style="list-style-type: none; display: inline-block; margin-right: 10px;">
+			        <div>
+			        	<a href="#modalPicture" data-picture-url="${portfolio.spAtVOList[0].atchmnflCours}" data-toggle="modal">
+			            <img class="prtThumb" src="${portfolio.spAtVOList[0].atchmnflCours}" data-prtfolio-sj="${portfolio.prtfolioSj}" 
+			            	data-sprvise-atchmnfl-no="${portfolio.spAtVOList[0].sprviseAtchmnflNo}" style="width:150px; height:150px; border-radius: 20%">
+			        	</a>
+			        </div>
+			        <br>
+			        <div class="prtName">
+			            <input type="text" name="prtName" id="portfolioTitle"  value="${portfolio.prtfolioSj}" style="text-align:center; background: none; border:none;">
+			        </div>
+			    </li>
+			</c:forEach>
+		</ul>
+      </div>
+      
+</div>
+
+<!-- //////// 이미지 크게 보기 모달 //////// -->
+<div class="modal fade" id="modalPicture" tabindex="-1" aria-labelledby="exampleModalLabel-2" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalPicTitle"></h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<!-- 
+			sprviseAtchmnflVOList : 
+			[VPrtfolioVO(prtfolioNo=32, prtfolioSj=1번, prtfolioWrDt=Mon Mar 18 17:07:08 KST 2024, 
+				sprviseAtchmnflNo=323, proId=protest200, atchmnflNo=1, 
+				atchmnflCours=/images/2024/03/18/932722b2-a0ac-4039-a8a5-4081e2beee5d_거징징이.jpg, 
+				atchmnflNm=거징징이.jpg, storeAtchmnflNm=932722b2-a0ac-4039-a8a5-4081e2beee5d_거징징이.jpg, 
+				atchmnflTy=image/jpeg, registDt=Mon Mar 18 17:07:08 KST 2024, updtDt=null), 
+			VPrtfolioVO(prtfolioNo=32, prtfolioSj=1번, prtfolioWrDt=Mon Mar 18 17:07:08 KST 2024, 
+				sprviseAtchmnflNo=323, proId=protest200, atchmnflNo=2, 
+				atchmnflCours=/images/2024/03/18/168de32a-0169-4817-a2dd-d7ef6f6429f6_아니.jpg, 
+				atchmnflNm=아니.jpg, storeAtchmnflNm=168de32a-0169-4817-a2dd-d7ef6f6429f6_아니.jpg, 
+				atchmnflTy=image/jpeg, registDt=Mon Mar 18 17:07:08 KST 2024, updtDt=null)]
+			
+			 -->
+			<div class="modalPicBody">
+				<ul id="ulPrt">
+				</ul>
+			</div>
+			
+			<div class="modal-footer">
+					 <c:if test="${proSession.userId==proProflVO.proId}">
+					<button type="button" class="btn btn-success" >삭제하기</button>
+					 </c:if>
+				<button type="button" class="btn btn-light" data-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</div>
+</div>
+</form>
+</c:if>
+
+

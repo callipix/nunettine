@@ -1,0 +1,20 @@
+package kr.or.ddit.vo;
+
+import java.util.Date;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+public class ProJoBbscttAnswerVO {
+	private int proJoBbscttNo;
+	private String proJoBbscttSj;
+	private String proJoBbscttCn;
+	private Date proJoBbscttWrDt;
+	private int proJoBbscttRdcnt;
+	private String mberId;
+}

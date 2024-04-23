@@ -1,0 +1,51 @@
+/* 구글 폰트 import */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Nanum+Myeongjo:wght@400;700&display=swap");
+@import "reset.css";
+@import "status-bar.css";
+@import "header.css";
+@import "nav.css";
+@import "friend.css";
+@import "friends.css";
+@import "find.css";
+@import "more.css";
+@import "settings.css";
+@import "chat.css";
+@import "mobile.css";
+
+/* Default 스타일 */
+/* box안에 padding을 추가해도 box-size영향 X */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: beige;
+  padding: 10px 25px;
+  color: #020202;
+  font-family: "Noto Sans", "Do Hyeon", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+    sans-serif;
+}
+
+/* 링크 색깔 설정 + 밑줄없애기 */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+main {
+  animation: fadeIn 0.5s ease-in-out;
+}
+

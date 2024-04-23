@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.admin.usersSearch.mapper.UsersSearchMapper">
+	
+	<sql id = "where">
+		<if test="keyword!=null and keyword!=''">
+			And(
+				user_Id like '%' || #{keyword} || '%'
+				
+			or user_Nm like '%' || #{keyword} || '%'
+
+			or user_Ncnm like '%' || #{keyword} || '%'
+			
+			)
+		</if>
+	</sql>
+	
+	<select id="list" parameterType="hashMap" resultType="kr.or.ddit.admin.usersSearch.vo.UsersVO">
+		with t as(
+			select row_number() over(order by f.user_id DESC)RNUM
+				,f.*
+			from(
+				SELECT USER_ID, USER_NM, USER_PASSWORD, EMPLYR_TY
+        ,SECSN_AT, USER_NCNM 
+        from users
+        WHERE 1=1
+        AND  EMPLYR_TY != 'ET03'
+				<include refid = "where"></include>
+			)f
+		)
+		select t.* from t
+		where t.rnum between(#{currentPage}*10)-(10-1) and (#{currentPage}*10)
+	</select>
+	
+	<select id = "getTotal" parameterType="hashMap" resultType="int">
+		select count(*) from users
+		where 1 = 1
+		<include refid="where"></include>
+	</select>
+	
+	
+
+</mapper>

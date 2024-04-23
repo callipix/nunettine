@@ -1,0 +1,14 @@
+package kr.or.ddit.vo;
+
+import java.util.Date;
+import lombok.Data;
+
+@Data
+public class AftusBbscttAnswerVO {
+	
+	private int aftusBbscttAnswerNo;
+	private String aftusBbscttAnswerCn;
+	private Date aftusBbscttAnswerWritngDt;
+	private String userId;
+	private int aftusBbscttNo;
+}

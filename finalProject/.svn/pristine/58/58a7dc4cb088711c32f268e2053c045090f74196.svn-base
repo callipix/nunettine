@@ -1,0 +1,21 @@
+package kr.or.ddit.admin.decl.service;
+
+import java.util.List;
+import java.util.Map;
+
+import kr.or.ddit.vo.LbrtyBbscttVO2;
+import kr.or.ddit.vo.SntncDeclVO;
+
+
+public interface DeclService {
+
+	public List<SntncDeclVO> decllbrSelect(Map<String, Object> map);
+
+	public LbrtyBbscttVO2 lbrtyBbscttVo(SntncDeclVO sntncDeclVO);
+
+	public List<SntncDeclVO> declResnList(SntncDeclVO sntncDeclVO);
+
+	public int declSet(int lbrtyBbscttNo);
+	
+
+}

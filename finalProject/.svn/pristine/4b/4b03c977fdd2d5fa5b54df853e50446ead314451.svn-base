@@ -1,0 +1,27 @@
+package kr.or.ddit.vo;
+
+
+import java.util.List;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+public class TdmtngPrtcpntVO {
+	
+	private String userId;
+	private int tdmtngNo;
+	
+	List<UsersVO> usersVOList;
+	List<MberVO> mberVOList;
+	
+	
+	public TdmtngPrtcpntVO(String userId , int tdmtngNo){
+		this.tdmtngNo = tdmtngNo;
+		this.userId = userId;
+	}
+}

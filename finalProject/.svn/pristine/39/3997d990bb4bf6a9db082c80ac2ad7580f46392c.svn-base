@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.board.pro_story.mapper.ProStoryMapper">
+<!-- 게시글 번호(자동증가 , sequence)		proStoryBbscttNo	 -->
+<!-- 게시글 제목(직접입력)					proStoryBbscttSj -->
+<!-- 게시글 내용(직접입력)					proStoryBbscttCn -->
+<!-- 게시글 작성일자(sysdate)			proStoryBbscttWrDt -->
+<!-- 게시글 추천수(별도)					proStoryBbscttRecommend -->
+<!-- 게시글 조회수(별도)					proStoryBbscttRdcnt -->
+<!-- 프로이야기게시글썸네일사진(직접입력)		proStoryBbscttThumbPhoto -->
+<!-- 통합첨부파일(사진, 직접등록)			sprviceAtchmnflNo -->
+<!-- 프로아이디							proId -->
+<select id="storyList" resultType="proStoryBbscttVO">
+/** package kr.or.ddit.board.pro_story.mapper.ProStoryMapper storyList */
+	SELECT    PRO_STORY_BBSCTT_NO
+			, PRO_STORY_BBSCTT_SJ
+<!-- 			, PRO_STORY_BBSCTT_CN -->
+			, TO_CHAR(PRO_STORY_BBSCTT_WR_DT , 'YYYY-MM-DD HH24:MI:SS') AS PRO_STORY_BBSCTT_WR_DT
+			, PRO_STORY_BBSCTT_RECOMMEND
+			, PRO_STORY_BBSCTT_RDCNT
+			, PRO_STORY_BBSCTT_THUMB_PHOTO
+<!-- 			, SPRVISE_ATCHMNFL_NO -->
+			, PRO_ID
+	FROM 	PRO_STORY_BBSCTT
+	ORDER BY PRO_STORY_BBSCTT_NO
+</select>
+
+<select id="getStory" parameterType="int" resultType="kr.or.ddit.board.pro_story.vo.ProStoryBbscttVO">
+/** kr.or.ddit.board.pro_story.mapper.ProStoryMapper getStory */
+		SELECT    PRO_STORY_BBSCTT_NO
+				, PRO_STORY_BBSCTT_SJ
+				, PRO_STORY_BBSCTT_CN
+				, TO_CHAR(PRO_STORY_BBSCTT_WR_DT , 'YYYY-MM-DD HH24:MI:SS') AS PRO_STORY_BBSCTT_WR_DT
+				, PRO_STORY_BBSCTT_RECOMMEND
+				, PRO_STORY_BBSCTT_RDCNT
+				, PRO_STORY_BBSCTT_THUMB_PHOTO
+				, SPRVISE_ATCHMNFL_NO
+				, PRO_ID
+		FROM 	PRO_STORY_BBSCTT
+		WHERE 	PRO_STORY_BBSCTT_NO = #{proStoryBbscttNo}
+</select>
+
+<insert id="insert" parameterType="proStoryBbscttVO">
+/** kr.or.ddit.board.pro_story.mapper.ProStoryMapper createStory */
+	INSERT INTO
+				PRO_STORY_BBSCTT(
+									PRO_STORY_BBSCTT_NO
+								  , PRO_STORY_BBSCTT_SJ
+								  , PRO_STORY_BBSCTT_CN
+								  , PRO_STORY_BBSCTT_WR_DT
+								  , PRO_STORY_BBSCTT_THUMB_PHOTO
+								  , PRO_ID
+				  				)
+						VALUES(
+								PRO_STORY_BBSCTT_NO_SEQ.NEXTVAL
+						 	  ,	#{proStoryBbscttSj}
+						 	  ,	#{proStoryBbscttCn}
+						 	  , SYSDATE
+						 	  , #{proStoryBbscttThumbPhoto}
+						 	  , #{proId}
+						 	  	)
+</insert>
+
+<update id="updateStory" parameterType="kr.or.ddit.board.pro_story.vo.ProStoryBbscttVO">
+/** kr.or.ddit.board.pro_story.mapper.ProStoryMapper updateStory */
+ UPDATE   PRO_STORY_BBSCTT
+
+ 	SET   PRO_STORY_BBSCTT_SJ = #{proStoryBbscttSj}
+ 		, PRO_STORY_BBSCTT_CN = #{proStoryBbscttCn}
+ 		, PRO_STORY_BBSCTT_WR_DT = SYSDATE
+ 		, PRO_STORY_BBSCTT_THUMB_PHOTO = #{proStoryBbscttThumbPhoto}
+
+  WHERE	  PRO_ID = #{proId} AND PRO_STORY_BBSCTT_NO = #{proStoryBbscttNo}
+
+</update>
+
+<delete id="deleteStory">
+/** kr.or.ddit.board.pro_story.mapper.ProStoryMapper deleteStory */
+	DELETE FROM PRO_STORY_BBSCTT
+     WHERE PRO_STORY_BBSCTT_NO = #{proStoryBbscttNo} AND PRO_ID = #{proId}
+</delete>
+
+<update id="getStoryCount" parameterType="int">
+/** kr.or.ddit.board.pro_story.mapper.ProStoryMapper getStoryCount */
+	UPDATE	PRO_STORY_BBSCTT
+	   SET	PRO_STORY_BBSCTT_RDCNT = PRO_STORY_BBSCTT_RDCNT + 1
+	 WHERE	PRO_STORY_BBSCTT_NO = #{proStoryBbscttNo}
+</update>
+
+<update id="updateGood" parameterType="int">
+/** kr.or.ddit.board.pro_story.mapper.ProStoryMapper updateGood */
+	UPDATE	PRO_STORY_BBSCTT
+	   SET	PRO_STORY_BBSCTT_RECOMMEND = PRO_STORY_BBSCTT_RECOMMEND + 1
+	 WHERE	PRO_STORY_BBSCTT_NO = #{proStoryBbscttNo}
+</update>
+
+<update id="updateGoodCancle" parameterType="int">
+/** kr.or.ddit.board.pro_story.mapper.ProStoryMapper updateGoodCancle */
+	UPDATE	PRO_STORY_BBSCTT
+	   SET	PRO_STORY_BBSCTT_RECOMMEND = PRO_STORY_BBSCTT_RECOMMEND - 1
+	 WHERE	PRO_STORY_BBSCTT_NO = #{proStoryBbscttNo}
+</update>
+
+
+</mapper>

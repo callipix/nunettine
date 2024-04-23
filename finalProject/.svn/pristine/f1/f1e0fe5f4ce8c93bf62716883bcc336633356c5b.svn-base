@@ -1,0 +1,41 @@
+package kr.or.ddit.board.pro_collabo.service.impl;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.admin.notice.vo.NoticeVO;
+import kr.or.ddit.board.pro_collabo.mapper.ProCprtnBbscttMapper;
+import kr.or.ddit.board.pro_collabo.service.ProCprtnBbscttService;
+import kr.or.ddit.board.pro_collabo.vo.ProCprtnBbscttVO;
+
+@Service
+public class ProCprtnBbscttServiceImpl implements ProCprtnBbscttService {
+
+	@Autowired
+	String uploadFolder;
+	
+	@Autowired
+	ProCprtnBbscttMapper proCprtnBbscttMapper; 
+	
+//	@Override
+//	public List<ProCprtnBbscttVO> proCprtnBbscttList() {
+//		// TODO Auto-generated method stub
+//		return this.proCprtnBbscttMapper.proCprtnBbscttList();
+//	}
+
+	@Override
+	public int getTotal(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return this.proCprtnBbscttMapper.getTotal(map);
+	}
+
+	@Override
+	public List<NoticeVO> list(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return this.proCprtnBbscttMapper.list(map);
+	}
+
+}

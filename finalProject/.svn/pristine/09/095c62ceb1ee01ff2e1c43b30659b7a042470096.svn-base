@@ -1,0 +1,13 @@
+package kr.or.ddit.vo;
+
+import lombok.Data;
+
+@Data
+public class NtchDetailVO {
+	
+	private int ntchDetailSn;
+	private int ntchNo;
+	private int ntchDetailCnfirm;
+	private String userId;
+
+}

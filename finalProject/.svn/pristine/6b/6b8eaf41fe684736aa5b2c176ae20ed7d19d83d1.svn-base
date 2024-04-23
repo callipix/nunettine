@@ -1,0 +1,66 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<button onclick="fRandom()">값 변화</button>
+    <!-- 차트 크기는 부모 크기를 조절하면 거기에 맞게 자동으로 맹글어짐-->
+    <div style="width:400px; height:300px;border:2px solid black">
+        <!-- 차트 그릴 위치 지정 canvas webGL(그래픽엔진) 사용 -->
+        <canvas id="myChart" style="width: 48%;"></canvas>
+    </div>
+    ${dongVO}
+<script>
+	const ctx = document.querySelector('#myChart');
+	
+	
+	//  생성 객체를 변수로 받으면, 요기에 생성시 사용된 옵션값들이 거의 다 담겨있당.
+    //  chart.js는 이거 덕분에 사용이 아주 쉽당. 누니 쫓아만 가면 된당.
+	/* const mChart = new Chart(ctx,{
+		
+	}); */
+	
+	// mChart에 담긴 값 확인, 누르고 꼬옥 확인하자
+	/* console.log("labels :",mChart.data.labels);
+	console.log("labels :",mChart.data.datasets[0]);
+	console.log("labels :",mChart.data.datasets[1].label);
+	console.log("labels :",mChart.data.datasets[1].data); */
+	let voDate = []
+	let pet = ${dongVO.pet}
+	let sport = ${dongVO.sport}
+	let music = ${dongVO.music}
+	let home = ${dongVO.home}
+	let hobby = ${dongVO.hobby}
+	let meet = ${dongVO.meet}
+	let gita = ${dongVO.gita}
+	let total = ${dongVO.total}
+	
+	console.log("pet",pet)
+<%-- 	let dongVO = <% ${dongVO} %>; --%>
+	
+	//만들위치, 설정값객체
+	new Chart(ctx, {
+	    type: 'bar',  // bar, line, pie, doughnut, radar 등등...
+	    data: {
+	        labels: ['반려동물', '운동', '악기', '인테리어', '취미', '면접', '기타'],
+	        
+	        datasets: [
+	            {	
+	            	maxBarThickness: 10,
+	                label: '분야별통계',
+	                data: [pet, sport, music, home, hobby, meet, gita],
+	                borderWidth: 1,
+	            }
+	        ]
+	    },
+	    
+	    options: {
+	        scales: {
+	            y: {
+	                beginAtZero: true
+	            }
+	        }
+	    }
+	});
+</script>
+

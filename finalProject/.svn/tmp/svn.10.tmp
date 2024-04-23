@@ -1,0 +1,48 @@
+package kr.or.ddit.chatting.websocket;
+
+import java.util.Date;
+
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Controller;
+
+import kr.or.ddit.chatting.vo.MessageVO;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+@Controller
+@Slf4j
+@RequiredArgsConstructor
+public class StompChatController {
+	
+	private static int msgNo = 0;
+	private final SimpMessagingTemplate template;
+	
+	@MessageMapping("/chat/enter")
+	public void enter(MessageVO message) {
+		message.setMsgCont(message.getUserId() + "님이 채팅방에 참여하였습니다");
+		log.info("채팅입장 체크{messege}");
+		
+		template.convertAndSend("/sub/chat/room/" + message.getRoomNo(), message);
+	}
+	@MessageMapping("/chat/message")
+	public void message(MessageVO message) {
+		log.info("채팅전송체크{message}");
+		
+		System.out.println(message.getUserId());
+		
+		Date dd = new Date();
+		message.setMsgSendDate(dd.toString());
+		message.setMsgNo(msgNo);
+		
+		template.convertAndSend("/sub/chat/room/" + message.getRoomNo() , message);
+		if(message.getMsgCheck().equals("T")) {
+			message.setMsgCheck("F");
+		} else {
+			message.setMsgCheck("T");
+		}
+		
+		msgNo++;
+		System.out.println(msgNo);
+		System.err.println(message.getMsgCheck());
+	}
+}

@@ -1,0 +1,738 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<script type="text/javascript" src="/resources/js/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+    --indigo: #6610f2;
+    --pink: #e83e8c;
+    --red: #ff3131;
+    --orange: #fd7e14;
+    --yellow: #ffce21;
+    --green: #28a745;
+    --teal: #20c997;
+    --cyan: #17a2b8;
+    --white: #fff;
+    --gray: #999;
+    --gray-dark: #525252;
+    --primary: #00c7ae;
+    --secondary: #e1e1e1;
+    --success: #00c7ae;
+    --info: #17a2b8;
+    --warning: #ffce21;
+    --danger: #ff3131;
+    --light: #fafafa;
+    --dark: #525252;
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 36rem;
+    --breakpoint-md: 48rem;
+    --breakpoint-lg: 62rem;
+    --breakpoint-xl: 75rem;
+    --font-family-sans-serif: "Noto Sans KR","Malgun Gothic",-apple-system,"Segoe UI",Roboto,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    word-break: break-word;
+    padding: 0 0 5rem;
+.feed-list.card-list[data-v-1dd3d102] {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: (1fr)[3];
+    grid-template-columns: repeat(3,1fr);
+    margin: -.25rem -.5rem -1rem;
+}
+</style>
+<div>
+	<div data-v-422e0ac9="" data-v-3c08d3e6=""
+	class="community-content-layout">
+	<!---->
+	<!---->
+	<div data-v-744b39cc="" data-v-422e0ac9=""
+		class="topic-guide-banner-container soomgo-story" style="text-align: center">
+		<p data-v-744b39cc="" class="guideline">
+			<!---->
+			프로만의 특별한 이야기를 만나보세요
+		</p>
+		<img data-v-744b39cc=""
+			src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzIiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA3MiA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTQyLjY5IDBoMTUuMjI4YzEuNzU3IDAgMy40My4zNDggNC45NTEuOTc3QzY4LjIxMyAzLjAyIDcyIDguMDc0IDcyIDEzLjk5OWMwIDcuMDkyLTUuNDE4IDEzLjA2NS0xMi40NDUgMTMuOTg2LTEuMDIxLjEzNC0xLjkzNy0uNjMxLTEuOTM3LTEuNjM1di0xLjY0NUg0Mi42OWMtNy4wMDggMC0xMi42OS01LjUzLTEyLjY5LTEyLjM1M0MzMCA1LjUzMSAzNS42ODIgMCA0Mi42OSAwIiBmaWxsPSIjODBEQkI0Ii8+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDEgMTEpIiBmaWxsPSIjRkZGIj4KICAgICAgICAgICAgPGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiLz4KICAgICAgICAgICAgPGNpcmNsZSBjeD0iMTAiIGN5PSIyIiByPSIyIi8+CiAgICAgICAgICAgIDxjaXJjbGUgY3g9IjE4IiBjeT0iMiIgcj0iMiIvPgogICAgICAgIDwvZz4KICAgICAgICA8Zz4KICAgICAgICAgICAgPHBhdGggZD0iTTI5LjMxIDEySDE0LjA4MmMtMS43NTcgMC0zLjQzLjM0OC00Ljk1MS45NzdDMy43ODcgMTUuMDIgMCAyMC4wNzQgMCAyNS45OTljMCA3LjA5MiA1LjQxOCAxMy4wNjUgMTIuNDQ1IDEzLjk4NiAxLjAyMS4xMzQgMS45MzctLjYzMSAxLjkzNy0xLjYzNXYtMS42NDVIMjkuMzFjNy4wMDggMCAxMi42OS01LjUzIDEyLjY5LTEyLjM1M0M0MiAxNy41MzEgMzYuMzE4IDEyIDI5LjMxIDEyIiBmaWxsPSIjNDVDNTlCIi8+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik0xNS42NjcgMjIuMjVoLS44OWMtLjk4MSAwLTEuNzc3Ljc4My0xLjc3NyAxLjc1djUuMjVjMCAuOTY3Ljc5NiAxLjc1IDEuNzc4IDEuNzVoLjg4OWMuNDkgMCAuODg5LS4zOTIuODg5LS44NzV2LTdhLjg4Mi44ODIgMCAwIDAtLjg5LS44NzVtMTEuNTU2IDBoLTQuNDQ0bC43MzQtMi43MDZhMS43MzcgMS43MzcgMCAwIDAtLjczOC0xLjg4bC0uNzg3LS41MTdhLjg5Ny44OTcgMCAwIDAtMS4yODguMzM3bC0yLjAwNCA0LjAzOWEzLjQ1NiAzLjQ1NiAwIDAgMC0uMzYxIDEuNTM2djYuMTkxYzAgLjk2Ny43OTUgMS43NSAxLjc3NyAxLjc1aDYuMDQ0Yy44NDcgMCAxLjU3Ny0uNTg5IDEuNzQzLTEuNDA3bDEuMDY3LTUuMjVjLjIyLTEuMDgyLS42MjItMi4wOTMtMS43NDMtMi4wOTMiIGZpbGw9IiMxNTlBNkQiLz4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo="
+			class="guide-icon">
+	</div>
+	<!---->
+	<div data-v-71844fb9="" data-v-422e0ac9=""
+		class="observer-container d-lg-none">
+		<div data-v-71844fb9=""
+			id="observer-93e6dd56-a15d-411e-a6b7-f8f0a2a73eef"></div>
+		<!---->
+
+	</div>
+	<section data-v-940b42c8="" data-v-422e0ac9=""
+		class="service-area-filter soomgo-story fixed scroll-up">
+		<!---->
+		<button data-v-940b42c8="" type="button"
+			class="btn btn-none chip-btn filter-btn">
+			<span data-v-940b42c8="">글쓰기</span>
+		</button>
+		<!---->
+	</section>
+	<article data-v-1dd3d102="" data-v-422e0ac9=""
+		class="community-feed-list">
+		<ul data-v-1dd3d102="" class="feed-list card-list" style="text-align: center;">
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/65f9446fce4dee90fe18a529-EP11-%ED%8D%BC%EC%8A%A4%EB%84%90%EC%BB%AC%EB%9F%AC-%EA%B3%A8%EA%B2%A9-%EC%A7%84%EB%8B%A8%ED%95%98%EB%9F%AC-%EB%8B%A4%EB%85%80%EC%98%A4%EA%B2%A0%EC%88%A8%EB%8B%88%EB%8B%A4--"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="다녀오겠숨니다_썸네일 (1).png"
+							class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/8844a3ca-dc49-4f19-9ac3-dda341f148f3.png?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/8844a3ca-dc49-4f19-9ac3-dda341f148f3.png?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">EP11 퍼스널컬러&amp;골격
+						진단하러 다녀오겠숨니다👋</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">5</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">17</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/65df01b8d59666543547ebe2-EP03-%EB%8C%84%EC%8A%A4%EC%8A%A4%ED%8F%AC%EC%B8%A0-%EB%A0%88%EC%8A%A8-%EC%A1%B0%EC%86%8C%ED%9C%98-%EA%B3%A0%EC%88%98---"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="내일을 찾아서 03_썸네일_4_3.png"
+							class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/ef139e1e-3d70-4abc-bacd-cade72f7c896.png?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/ef139e1e-3d70-4abc-bacd-cade72f7c896.png?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">EP03 댄스스포츠 레슨 조소휘
+						고수 🔭</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">5</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">21</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/65c3271f314c44eeda04e45b-EP10-%EC%9D%B4%EC%82%AC-%EC%B2%AD%EC%86%8C%ED%95%98%EB%9F%AC-%EB%8B%A4%EB%85%80%EC%98%A4%EA%B2%A0%EC%88%A8%EB%8B%88%EB%8B%A4--"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="01_1.png" class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/ca0653a5-2d88-4506-ab08-4240e655ab20.png?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/ca0653a5-2d88-4506-ab08-4240e655ab20.png?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">EP10 이사 청소하러
+						다녀오겠숨니다👋</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">4</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">46</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/65b209c034c3870bc8061553-EP09-%EB%B2%A0%EC%9D%B4%ED%82%B9-%EB%A0%88%EC%8A%A8%ED%95%98%EB%9F%AC-%EB%8B%A4%EB%85%80%EC%98%A4%EA%B2%A0%EC%88%A8%EB%8B%88%EB%8B%A4--"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="01.png" class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/c59c7d7d-b3dc-47d8-881e-543c75bde446.png?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/c59c7d7d-b3dc-47d8-881e-543c75bde446.png?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">EP09 베이킹 레슨하러
+						다녀오겠숨니다👋</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">7</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">25</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/65a0d801d8a74720f2102b41-EP02-OPIc%EA%B3%BC%EC%99%B8-%EC%A0%95%ED%9D%AC%ED%9B%88-%EA%B3%A0%EC%88%98--"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="내일을 찾아서 02_썸네일_4_3.png"
+							class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/49b5fe9f-b95d-4d99-93de-1fa65fda9abe.png?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/49b5fe9f-b95d-4d99-93de-1fa65fda9abe.png?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">EP02 OPIc과외 정희훈
+						고수🔭</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">6</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">20</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/657fa1859dd5b65e6cdb6122-EP08-%EC%99%80%EC%9D%B8-%EB%A0%88%EC%8A%A8%ED%95%98%EB%9F%AC-%EB%8B%A4%EB%85%80%EC%98%A4%EA%B2%A0%EC%88%A8%EB%8B%88%EB%8B%A4--"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="썸네일_1.png" class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/191e3b5e-93e2-4743-8929-998090a590e1.png?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/191e3b5e-93e2-4743-8929-998090a590e1.png?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">EP08 와인 레슨하러
+						다녀오겠숨니다👋</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">10</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">31</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/655fff11cff71c5b9f226cb6-EP01-%EC%88%98%EC%A0%9C%EC%95%85%EA%B8%B0-%EC%A0%9C%EC%9E%91-%EA%B9%80%EB%B3%91%EC%B2%A0-%EA%B3%A0%EC%88%98---"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888=""
+							alt="내일을 찾아서_매거진 디자인_썸네일.png"
+							class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/dd5afca2-8f53-4f6c-807d-90abd7be82be.png?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/dd5afca2-8f53-4f6c-807d-90abd7be82be.png?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">EP01 수제악기 제작 김병철
+						고수 🔭</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">10</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">39</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/651faf20e5391d0472b01e0c-EP07-%EB%AA%A8%EB%8D%B8-%EB%A0%88%EC%8A%A8%ED%95%98%EB%9F%AC-%EB%8B%A4%EB%85%80%EC%98%A4%EA%B2%A0%EC%88%A8%EB%8B%88%EB%8B%A4--"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="model_main.png" class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/9a68a3ba-3349-40e3-9082-974adf989728.png?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/9a68a3ba-3349-40e3-9082-974adf989728.png?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">EP07 모델 레슨하러
+						다녀오겠숨니다👋</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">8</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">38</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/64fa671218e72eba227932b4-EP06-%EB%B2%8C%EC%B4%88%ED%95%98%EB%9F%AC-%EB%8B%A4%EB%85%80%EC%98%A4%EA%B2%A0%EC%88%A8%EB%8B%88%EB%8B%A4--"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="썸네일_다녀오겠숨니다_4_3.png"
+							class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/9974532a-d69e-46d2-adcb-3e267ee32930.png?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/9974532a-d69e-46d2-adcb-3e267ee32930.png?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">EP06 벌초하러
+						다녀오겠숨니다👋</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">14</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">57</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/64f6b8a395400b724b4ef798-%EB%8F%84%EC%A0%84%ED%95%98%EB%8A%94-%EC%A7%9C%EB%A6%BF%ED%95%A8--%EA%B7%B8-%EC%9E%90%EC%B2%B4%EA%B0%80-%EC%8A%A4%ED%8F%AC%EC%B8%A0%EC%98%88%EC%9A%94"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="스케이트보드레슨_표지.png"
+							class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/f7e98672-d7df-49c6-890f-5afab6a5a6a7.png?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/f7e98672-d7df-49c6-890f-5afab6a5a6a7.png?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">도전하는 짜릿함, 그 자체가
+						스포츠예요</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">3</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">45</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/64e3000d1b3b1a5b9db11762-EP05-%ED%8E%AB-%EB%AF%B8%EC%9A%A9%ED%95%98%EB%9F%AC-%EB%8B%A4%EB%85%80%EC%98%A4%EA%B2%A0%EC%88%A8%EB%8B%88%EB%8B%A4--"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="pet_main.png" class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/20113cc3-945f-4d91-bede-cee391ec2420.png?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/20113cc3-945f-4d91-bede-cee391ec2420.png?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">EP05 펫 미용하러
+						다녀오겠숨니다👋</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">5</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">24</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/64d59fc6e17cb37df6fea776-EP04-%ED%95%B4%EC%B6%A9-%EB%B0%A9%EC%97%AD%ED%95%98%EB%9F%AC-%EB%8B%A4%EB%85%80%EC%98%A4%EA%B2%A0%EC%88%A8%EB%8B%88%EB%8B%A4--"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="바퀴벌레퇴치_썸네일.png"
+							class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/c634b819-a4eb-441d-8d9e-71dd1d43b1de.png?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/c634b819-a4eb-441d-8d9e-71dd1d43b1de.png?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">EP04 해충 방역하러
+						다녀오겠숨니다👋</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">5</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">21</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/64d04de859429f05a77cd245-EP03-%EC%82%AC%EC%A0%84%EC%A0%90%EA%B2%80%ED%95%98%EB%9F%AC-%EB%8B%A4%EB%85%80%EC%98%A4%EA%B2%A0%EC%88%A8%EB%8B%88%EB%8B%A4--"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="01-3.png" class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/986d4e42-d6cf-44e2-ae9f-55695f597c30.png?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/986d4e42-d6cf-44e2-ae9f-55695f597c30.png?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">EP03 사전점검하러
+						다녀오겠숨니다👋</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">5</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">11</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/64bf8f2354c692e2382433fb-%ED%95%9C-%EB%AA%85%EC%9D%98-%EA%B3%A0%EA%B0%9D%EC%9D%84-%EC%9C%84%ED%95%B4-%EC%98%A8-%EA%B0%80%EC%A1%B1%EC%9D%B4-%EC%B6%9C%EB%8F%99%ED%95%B4%EC%9A%94"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="maclean.png" class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/9653ddff-54c4-4799-9e1d-b989f762ea08.png?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/9653ddff-54c4-4799-9e1d-b989f762ea08.png?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">한 명의 고객을 위해 온 가족이
+						출동해요</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">13</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">61</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/64afaf81b849331a0f5e2beb-%EC%83%9D%ED%99%9C-%EC%86%8D-%EC%95%88%EC%A0%84%EC%9D%84-%EC%B1%85%EC%9E%84%EC%A7%84%EB%8B%A4%EB%8A%94-%EC%83%9D%EA%B0%81%EC%9C%BC%EB%A1%9C-%EC%9E%84%ED%95%B4%EC%9A%94"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="jiwonbeom.png" class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/12907731-4cb7-4647-813b-adf074833913.png?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/12907731-4cb7-4647-813b-adf074833913.png?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">생활 속 안전을 책임진다는
+						생각으로 임해요</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">3</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">27</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/64812677022273b6db3934b2-%EC%82%AC%EC%A3%BC-%EB%AA%85%EB%A6%AC%ED%95%99--%EB%82%98%EC%9D%98-%EB%A7%9E%EC%B6%A4%ED%98%95-%EC%82%AC%EC%9A%A9%EC%84%A4%EB%AA%85%EC%84%9C%EC%98%88%EC%9A%94"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="backsong.png" class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/4dd43c55-ac4b-4ce1-9908-dd10b1d11f48.png?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/4dd43c55-ac4b-4ce1-9908-dd10b1d11f48.png?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">사주 명리학, 나의 맞춤형
+						사용설명서예요</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">6</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">17</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/645c602be0bc1e004da001f8-%EA%B5%90%EC%82%AC%EC%98%80%EB%8D%98-%EA%B2%BD%ED%97%98%EC%9C%BC%EB%A1%9C-%EC%9D%BC%EB%B3%B8%EC%96%B4%EB%A5%BC-%EA%B0%80%EB%A5%B4%EC%B3%90%EC%9A%94"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="IMG_1695.jpeg" class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/38871636-c171-4743-a100-030cdb2c7d03.jpeg?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/38871636-c171-4743-a100-030cdb2c7d03.jpeg?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">교사였던 경험으로 일본어를
+						가르쳐요</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">6</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">20</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/6440eeb0b34d70779ea8eddd-%EA%B4%9C%EC%B0%AE%EC%95%84%EC%9A%94--%EC%B2%98%EC%9D%8C%EB%B6%80%ED%84%B0-%EC%9E%98-%ED%95%98%EB%8A%94-%EC%82%AC%EB%9E%8C%EC%9D%80-%EC%97%86%EC%96%B4%EC%9A%94"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="KakaoTalk_20230419_124801639_03.jpg"
+							class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/186e850b-0ef7-4538-bb0c-b838a7dda102.jpg?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/186e850b-0ef7-4538-bb0c-b838a7dda102.jpg?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">괜찮아요. 처음부터 잘 하는
+						사람은 없어요</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">5</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">45</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/64337cbff22d78d3e3ccd754-%ED%96%89%EB%B3%B5%EC%9D%84-%EC%84%A0%EB%AC%BC%ED%95%98%EB%8A%94-%EA%BD%83%EC%9D%98-%ED%9E%98%EC%9D%84-%EC%A0%84%ED%95%B4%EC%9A%94"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="웨딩꽃장식_마크앤제니_1.jpeg"
+							class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/49e0effc-91eb-4d5f-9d21-473ec9f438af.jpeg?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/49e0effc-91eb-4d5f-9d21-473ec9f438af.jpeg?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">행복을 선물하는 꽃의 힘을
+						전해요</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">3</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">23</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/64337ab4f22d78d3e3ccd750-%EB%B0%98%EB%A0%A4%EA%B2%AC%EA%B3%BC-%ED%95%A8%EA%BB%98%ED%95%98%EB%8A%94-%EC%A2%8B%EC%9D%80-%EC%82%B6%EC%9D%84-%EA%B3%A0%EB%AF%BC%ED%95%B4%EC%9A%94"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="반려동물훈련_이아혜_1.jpeg"
+							class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/b3af55da-411d-43e3-9659-32d4bb7b1747.jpeg?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/b3af55da-411d-43e3-9659-32d4bb7b1747.jpeg?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">반려견과 함께하는 좋은 삶을
+						고민해요</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">3</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">31</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/6433794bf22d78d3e3ccd747-%EC%A2%8B%EC%9D%80-%EC%98%81%ED%96%A5%EB%A0%A5%EC%9D%84-%EC%A3%BC%EB%8A%94-%EB%A7%88%EC%88%A0%EC%82%AC%EA%B0%80-%EB%90%A0-%EA%B1%B0%EC%98%88%EC%9A%94"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="마술_이정규_1.jpeg"
+							class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/b6ca4e3a-de46-4208-b86b-cc797a84effc.jpeg?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/b6ca4e3a-de46-4208-b86b-cc797a84effc.jpeg?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">좋은 영향력을 주는 마술사가 될
+						거예요</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">1</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">19</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/64337619f22d78d3e3ccd745-%EA%B8%80%EC%93%B4%EC%9D%B4%EC%9D%98-%EA%B0%90%EC%84%B1%EC%9D%84-%EB%8B%B4%EC%95%84-%EA%B8%80%EC%9D%84-%EC%99%84%EC%84%B1%ED%95%B4%EC%9A%94"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="교정교열_이우림_1.jpeg"
+							class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/16e1dfe5-b9e3-4e6f-b10f-1592201b1d63.jpeg?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/16e1dfe5-b9e3-4e6f-b10f-1592201b1d63.jpeg?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">글쓴이의 감성을 담아 글을
+						완성해요</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">2</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">9</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/643375a5505cb9f47887cda7-%EC%B2%9C%EC%97%B0%EB%B9%84%EB%88%84%EB%A1%9C-%EB%82%B4-%ED%94%BC%EB%B6%80%EB%8F%84-%EC%A7%80%EA%B5%AC%EB%8F%84-%EC%A7%80%ED%82%AC-%EA%B1%B0%EC%98%88%EC%9A%94"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888=""
+							alt="SE-7c19f929-d8a4-4a8d-9c1e-28cc52deb862.jpeg"
+							class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/f2fedcdb-38ec-43a7-92f6-4bb7b1fbc990.jpeg?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/f2fedcdb-38ec-43a7-92f6-4bb7b1fbc990.jpeg?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">천연비누로 내 피부도 지구도
+						지킬 거예요</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">2</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">14</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/642fd8ff505cb9f47887ca0a-%EC%83%9D%EC%95%A0-%EC%B2%AB-%EC%A7%91%EC%9D%B4%EB%8B%88%EA%B9%8C-%EC%A0%9C%EB%8C%80%EB%A1%9C--%EC%8B%A0%ED%98%BC%EC%A7%91-%EC%9D%B8%ED%85%8C%EB%A6%AC%EC%96%B4"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="안방_1.jpeg" class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/b50679bf-2543-4f31-8ccf-7efd4e0eef95.jpeg?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/b50679bf-2543-4f31-8ccf-7efd4e0eef95.jpeg?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">생애 첫 집이니까 제대로!
+						신혼집 인테리어</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">2</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">12</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/642fc98af22d78d3e3ccd363-%EB%AA%A9%EC%86%8C%EB%A6%AC%EC%B2%98%EB%9F%BC-%ED%91%9C%ED%98%84%ED%95%98%EB%8A%94-%EC%95%85%EA%B8%B0--%ED%8A%B8%EB%9F%BC%ED%8E%AB%EC%9D%98-%EB%A7%A4%EB%A0%A5"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="최요셉고수_1.jpeg"
+							class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/74597474-717c-4cb1-86eb-6bfc93e1cb9a.jpeg?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/74597474-717c-4cb1-86eb-6bfc93e1cb9a.jpeg?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">목소리처럼 표현하는 악기,
+						트럼펫의 매력</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">0</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">9</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/642fb95df22d78d3e3ccd34a-%EB%8A%98-%EC%B9%9C%EC%A0%88%ED%95%98%EA%B2%8C--%EC%84%AC%EA%B8%B0%EB%8A%94-%EB%A7%88%EC%9D%8C%EC%9C%BC%EB%A1%9C"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="용달화물_PWC_1.jpeg"
+							class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/8fd6c4b5-a39d-4f8f-b6de-5568b91806c2.jpeg?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/8fd6c4b5-a39d-4f8f-b6de-5568b91806c2.jpeg?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">늘 친절하게! 섬기는 마음으로</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">2</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">13</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/642facd6f22d78d3e3ccd329-PPT-%EB%A7%8C%EB%93%A4%EA%B8%B0-%EA%B8%B0%EB%B3%B8%EC%9D%80-%EB%B0%94%EB%A1%9C--%EC%9D%B4%EA%B2%83-"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="제목.jpeg" class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/f60c1207-08d9-4725-8526-6c40c4d7210f.jpeg?h=126&amp;w=189&amp;webp=1"
+							src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/f60c1207-08d9-4725-8526-6c40c4d7210f.jpeg?h=126&amp;w=189&amp;webp=1"
+							lazy="loaded">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">PPT 만들기 기본은 바로
+						'이것'</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">1</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">14</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/642fa9ea6b4e593e7dd66a4c-%EC%95%84%EC%BD%94%EB%94%94%EC%96%B8-%EC%97%B0%EC%A3%BC%EB%A1%9C-%EC%9D%B8%EC%83%9D-2%EB%A7%89%EC%9D%84-%EC%97%B4%EC%97%88%EC%96%B4%EC%9A%94"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="IMG_7773_(1).JPG" class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/24956e5e-ad3d-45a8-9466-7a769f13b1df.jpg?h=126&amp;w=189&amp;webp=1"
+							src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+							lazy="loading">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">아코디언 연주로 인생 2막을
+						열었어요</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">0</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">9</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/642f9411505cb9f47887c996-%EC%97%90%EC%96%B4%EC%BB%A8-%EC%B2%AD%EC%86%8C%EB%A1%9C-%EB%BD%80%EC%86%A1%EB%BD%80%EC%86%A1%ED%95%9C-%EC%97%AC%EB%A6%84-%EC%A4%80%EB%B9%84-%EB%81%9D-"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="에어컨청소_김소연_6.jpeg"
+							class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/efb760d3-f132-41c1-9c9c-f778663bd604.jpeg?h=126&amp;w=189&amp;webp=1"
+							src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+							lazy="loading">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">에어컨 청소로 뽀송뽀송한 여름
+						준비 끝!</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">2</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">10</span>
+						</div>
+					</div></a></li>
+			<li data-v-7aec3888="" data-v-1dd3d102="" class="feed-card-item"><a
+				data-v-7aec3888=""
+				href="/community/soomgo-life/posts/642f8423a738d078658e1356-%EB%AA%B8-%EC%93%B0%EB%8A%94-%EC%B7%A8%EB%AF%B8%EA%B0%80-%EC%A2%8B%EC%95%84-%EB%8C%84%EC%8A%A4%EB%A5%BC-%EC%8B%9C%EC%9E%91%ED%96%88%EC%96%B4%EC%9A%94"
+				class="" data-testid="soomgo-life-feed-item"><figure
+						data-v-7aec3888="" class="image-wrapper">
+						<img data-v-7aec3888="" alt="얼반댄스_이동훈_1.jpeg"
+							class="cover-image"
+							data-src="https://static.cdn.soomgo.com/upload/soomgoLifeAdmin/a4d98fc1-b817-47b4-a3f3-38eaf65aff96.jpeg?h=126&amp;w=189&amp;webp=1"
+							src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+							lazy="loading">
+					</figure>
+					<h3 data-v-7aec3888="" class="content-title">몸 쓰는 취미가 좋아 댄스를
+						시작했어요</h3>
+					<div data-v-7aec3888="" class="feed-footer">
+						<div data-v-7aec3888="" class="user-interaction">
+							<span data-v-746dd3c0="" data-v-7aec3888=""
+								class="like legacy-typography interface-description gray-300 text-align-left">0</span><span
+								data-v-746dd3c0="" data-v-7aec3888=""
+								class="comment legacy-typography interface-description gray-300 text-align-left">10</span>
+						</div>
+					</div></a></li>
+		</ul>
+		<div data-v-644ea9c9="" data-v-1dd3d102=""
+			class="infinite-loading-container">
+			<div data-v-644ea9c9="" class="infinite-status-prompt"
+				style="display: none;">
+				<figure data-v-1dd3d102="" data-v-644ea9c9="" class="text-center">
+					<div data-v-fc3fcce8="" data-v-1dd3d102="" class=""
+						data-v-644ea9c9="">
+						<div data-v-fc3fcce8="" class="indicator-body center"
+							style="width: 24px; height: 24px; border-width: 0.25rem; border-style: solid; border-color: rgb(0, 199, 174) rgba(0, 199, 174, 0.2) rgba(0, 199, 174, 0.2); border-image: initial;"></div>
+						<p data-v-fc3fcce8="" style="display: none;"></p>
+					</div>
+				</figure>
+			</div>
+			<div data-v-644ea9c9="" class="infinite-status-prompt"
+				style="display: none;">
+				<article data-v-01ce92bd="" data-v-1dd3d102=""
+					class="no-items align-self-center text-center no-items"
+					data-v-644ea9c9="">
+					<i data-v-01ce92bd=""><img data-v-1dd3d102=""
+						data-v-01ce92bd=""
+						src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxkZWZzPgogICAgICAgIDxsaW5lYXJHcmFkaWVudCB4MT0iMCUiIHkxPSI1MCUiIHgyPSIxMDAlIiB5Mj0iNTAlIiBpZD0iNzBwczBldXVvYSI+CiAgICAgICAgICAgIDxzdG9wIHN0b3AtY29sb3I9IiMwMEM3QUUiIG9mZnNldD0iMCUiLz4KICAgICAgICAgICAgPHN0b3Agc3RvcC1jb2xvcj0iIzRDQzhFNSIgb2Zmc2V0PSIxMDAlIi8+CiAgICAgICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDwvZGVmcz4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGNpcmNsZSBmaWxsLW9wYWNpdHk9Ii41IiBmaWxsPSJ1cmwoIzcwcHMwZXV1b2EpIiBjeD0iNDAiIGN5PSI0MCIgcj0iNDAiLz4KICAgICAgICA8cGF0aCBkPSJNMTYgNjRoNDhWMTZIMTZ6Ii8+CiAgICAgICAgPHBhdGggZD0iTTIyLjEwNiA1MS44MTdjMCAxLjUzLjM4NCAyLjY4NiAxLjE1MiAzLjQ2Ny43NjguNzggMS45MyAxLjE3IDMuNDg1IDEuMTdINTIuNjNjMS42MTcgMCAyLjgzMS0uNCAzLjY0Mi0xLjIuODEtLjggMS4yMTUtMS45OTUgMS4yMTUtMy41ODRWMjcuNzg2YzAtMS41OTgtLjQwNS0yLjc5Ny0xLjIxNS0zLjU5OC0uODExLS44LTIuMDI1LTEuMjAxLTMuNjQyLTEuMjAxSDMzLjc4N2MtMS42MTggMC0yLjgzMi40LTMuNjQzIDEuMjAxLS44MS44LTEuMjE1IDItMS4yMTUgMy41OTh2Ny41NDVoLTMuNzJjLS45NzMgMC0xLjczNC4yNTQtMi4yODEuNzYtLjU0OC41MDgtLjgyMiAxLjIxNy0uODIyIDIuMTI4djEzLjU5OHptMi40MjEtLjAwMlYzOC42OGMwLS4yODguMDgzLS41MTUuMjUtLjY4LjE2NS0uMTY0LjM5OC0uMjQ3LjY5Ny0uMjQ3aDMuNDU1djE0LjA2MmMwIC42NTEtLjIxMiAxLjE4My0uNjM1IDEuNTk3LS40MjMuNDE0LS45NC42MjEtMS41NTEuNjIxLS42MyAwLTEuMTU4LS4yMTItMS41ODEtLjYzNi0uNDIzLS40MjMtLjYzNS0uOTUtLjYzNS0xLjU4MnptNi4yNzEgMi4yMThjLjM2OC0uNjgxLjU1My0xLjQ2OS41NTMtMi4zNjNWMjcuOTJjMC0uODI3LjIxNC0xLjQ1My42NDMtMS44NzcuNDI5LS40MjQgMS4wNDItLjYzNiAxLjg0LS42MzZoMTguNzVjLjc5OCAwIDEuNDEuMjEyIDEuODQuNjM2LjQyOS40MjQuNjQzIDEuMDUuNjQzIDEuODc3djIzLjYxNGMwIC44MjctLjIxNCAxLjQ1LS42NDMgMS44Ny0uNDMuNDE4LTEuMDQyLjYyOC0xLjg0LjYyOEgzMC43OTh6bTQuNjU0LTIxLjc5NmgxNS41NDNhLjg5NS44OTUgMCAwIDAgLjY2Ny0uMjguOTI5LjkyOSAwIDAgMCAuMjcyLS42NzIuODYzLjg2MyAwIDAgMC0uMjcyLS42NDMuOTIuOTIgMCAwIDAtLjY2Ny0uMjY1SDM1LjQ1MmMtLjI3MiAwLS41LjA4OS0uNjguMjY1YS44NjMuODYzIDAgMCAwLS4yNzMuNjQzYzAgLjI2Mi4wOS40ODYuMjcyLjY3My4xODIuMTg2LjQwOS4yOC42ODEuMjh6bTAgNS41MTZoMTUuNTQzYS45Mi45MiAwIDAgMCAuNjY3LS4yNjUuODguODggMCAwIDAgLjI3Mi0uNjU3LjkwNC45MDQgMCAwIDAtLjI3Mi0uNjY2LjkwOC45MDggMCAwIDAtLjY2Ny0uMjcySDM1LjQ1MmMtLjI3MiAwLS41LjA5LS42OC4yNzJhLjkwNS45MDUgMCAwIDAtLjI3My42NjZjMCAuMjYxLjA5LjQ4LjI3Mi42NTdhLjkzNy45MzcgMCAwIDAgLjY4MS4yNjV6bTEwLjI1NSAxMS4xNjRoNC4wNWMuNTkgMCAxLjA1Mi0uMTY4IDEuMzg4LS41MDUuMzM3LS4zMzYuNTA1LS43OTguNTA1LTEuMzg2di0zLjY5N2MwLS41OTgtLjE2OC0xLjA2NS0uNTA1LTEuNDAyLS4zMzYtLjMzNi0uNzk5LS41MDQtMS4zODctLjUwNGgtNC4wNTFjLS41OTggMC0xLjA2NS4xNjgtMS40MDIuNTA0LS4zMzcuMzM3LS41MDUuODA0LS41MDUgMS40MDJ2My42OTdjMCAuNTg4LjE2OCAxLjA1LjUwNSAxLjM4Ni4zMzcuMzM3LjgwNC41MDUgMS40MDIuNTA1em0tMTAuMzY4LTUuNjM0aDUuODNhLjkxMi45MTIgMCAwIDAgLjY3NC0uMjY1Ljg3NS44NzUgMCAwIDAgLjI2NS0uNjQzLjkzNi45MzYgMCAwIDAtLjI2NS0uNjguOS45IDAgMCAwLS42NzMtLjI3MmgtNS44MzFhLjkuOSAwIDAgMC0uNjc0LjI3Mi45MzUuOTM1IDAgMCAwLS4yNjUuNjhjMCAuMjUyLjA4OC40NjYuMjY1LjY0M2EuOTE0LjkxNCAwIDAgMCAuNjc0LjI2NXptMCA1LjYzNGg1LjgzYS45MTIuOTEyIDAgMCAwIC42NzQtLjI2NS44NzYuODc2IDAgMCAwIC4yNjUtLjY0My45MzYuOTM2IDAgMCAwLS4yNjUtLjY4LjkuOSAwIDAgMC0uNjczLS4yNzNoLTUuODMxYS45LjkgMCAwIDAtLjY3NC4yNzMuOTM1LjkzNSAwIDAgMC0uMjY1LjY4YzAgLjI1Mi4wODguNDY3LjI2NS42NDNhLjkxMy45MTMgMCAwIDAgLjY3NC4yNjV6IiBmaWxsPSIjRkZGIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz4KICAgIDwvZz4KPC9zdmc+Cg=="
+						alt="아직 글이 없어요"></i>
+					<h3 data-v-01ce92bd="">아직 글이 없어요</h3>
+					<p data-v-01ce92bd="" class="help-block p2">조금만 기다려주세요. 더욱 다양한
+						정보가 올라올 거예요.</p>
+					<!---->
+				</article>
+			</div>
+			<div data-v-644ea9c9="" class="infinite-status-prompt"
+				style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px; display: none;"></div>
+			<div data-v-644ea9c9="" class="infinite-status-prompt"
+				style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px; display: none;">
+
+				<br data-v-644ea9c9="">
+				<button data-v-644ea9c9="" class="btn-try-infinite"></button>
+			</div>
+		</div>
+	</article>
+</div>
+</div>

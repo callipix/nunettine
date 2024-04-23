@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.chatting.mapper.MessageMapper">
+
+	<insert id="insert" parameterType="kr.or.ddit.chatting.vo.MessageVO">
+		INSERT INTO MESSAGE(MSG_NO, MSG_SEND_DATE, MSG_CONT, MSG_CHECK, ROOM_NO, USER_ID)
+		VALUES(MSG_NO_SEQ.NEXTVAL , #{msgSendDate} , #{msgCont} , #{msgCheck} , #{roomNo} , #{userId})
+	</insert>
+	
+	<select id="messageList" parameterType="int" resultType="kr.or.ddit.chatting.vo.MessageVO">
+		SELECT
+			   MSG_NO
+			 , TO_CHAR(TO_DATE(MSG_SEND_DATE , 'YYYYMMDDHH24MISS') , 'YYYY/MM/DD HH24:MI:SS') AS MSG_SEND_DATE
+			 , MSG_CONT
+			 , MSG_CHECK
+			 , ROOM_NO
+			 , USER_ID
+		 FROM MESSAGE
+		WHERE ROOM_NO = #{roomNo}
+		ORDER BY MSG_SEND_DATE ASC
+	</select>
+	
+	<select id="firstMsgDate" parameterType="int" resultType="String">
+		SELECT
+			    SUBSTR(MSG_SEND_DATE, 1, 8),
+		    	MSG_NO
+		FROM
+			    MESSAGE
+		WHERE
+    		   (MSG_SEND_DATE , MSG_NO) = (
+			                SELECT
+			                    MIN(MSG_SEND_DATE),
+			                    MIN(MSG_NO)
+			                FROM
+			                    MESSAGE    
+			                WHERE
+			                    ROOM_NO = #{roomNo}
+			   )
+			
+				AND ROOM_NO = #{roomNo}
+	</select>
+	
+	<select id="roomMsgFirstDay" parameterType="int" resultType="kr.or.ddit.chatting.vo.MessageVO">
+		SELECT
+			   MSG_NO , SUBSTR(TO_CHAR(TO_DATE(MSG_SEND_DATE , 'YYYYMMDDHH24MISS') , 'YYYYMMDD HH24:MI:SS') , 1 , 8 ) AS MSG_SEND_DATE
+		  FROM MESSAGE
+		 WHERE ROOM_NO = #{roomNo}
+		 ORDER BY MSG_NO ASC
+	</select>
+
+</mapper>

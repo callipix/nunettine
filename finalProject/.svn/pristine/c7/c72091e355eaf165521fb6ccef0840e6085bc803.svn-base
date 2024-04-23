@@ -1,0 +1,90 @@
+package kr.or.ddit.board.pro_story.service.impl;
+
+import java.util.List;
+
+public class ScrollPagingVO<T> {
+	
+	private int totalSize;
+
+	private int startIndex;
+	
+	private int currentIndex;
+	
+	private int endIndex;
+	
+	private int pageSize;
+	
+	private String keyword = "";
+	
+	private List<?> content;
+	
+	public ScrollPagingVO(int startIndex , int currentIndex , int endIndex , int pageSize , int totalSize ,List<?> content , String keyword) {
+	
+		this.totalSize = totalSize;
+		this.currentIndex = currentIndex;
+		this.content = content;
+		this.keyword = keyword;
+		
+		if(totalSize == 0) {
+			
+		}
+		
+	}
+
+	public int getStartIndex() {
+		return startIndex;
+	}
+
+	public void setStartIndex(int startIndex) {
+		this.startIndex = startIndex;
+	}
+
+	public int getEndIndex() {
+		return endIndex;
+	}
+
+	public void setEndIndex(int endIndex) {
+		this.endIndex = endIndex;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public int getTotalSize() {
+		return totalSize;
+	}
+
+	public void setTotalSize(int totalSize) {
+		this.totalSize = totalSize;
+	}
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	public List<?> getContent() {
+		return content;
+	}
+
+	public void setContent(List<?> content) {
+		this.content = content;
+	}
+
+	public int getCurrentIndex() {
+		return currentIndex;
+	}
+
+	public void setCurrentIndex(int currentIndex) {
+		this.currentIndex = currentIndex;
+	}
+	
+}

@@ -1,0 +1,32 @@
+package kr.or.ddit.board.review_board.mapper;
+
+import java.util.List;
+import java.util.Map;
+
+import kr.or.ddit.vo.AftusBbscttVO;
+import kr.or.ddit.vo.SprviseAtchmnflVO;
+import kr.or.ddit.vo.SrvcRequstVO;
+
+public interface ReviewBoardMapper {
+
+	List<AftusBbscttVO> list(Map<String, Object> map);
+
+	List<SrvcRequstVO> listModal(String userId);
+	
+	//로그인한 회원 리뷰 조회
+	List<AftusBbscttVO> listMyReview(String userId);
+	
+	int create(AftusBbscttVO aftusBbscttVO);
+
+	AftusBbscttVO detail(int aftusBbscttNo);
+	
+	int insertAtach(SprviseAtchmnflVO sprviseAtchmnflVO);
+
+	int delete(int aftusBbscttNo);
+
+	int createAjax(AftusBbscttVO aftusBbscttVO);
+
+	int insertFile(SprviseAtchmnflVO sprviseAtchmnflVO);
+	
+
+}

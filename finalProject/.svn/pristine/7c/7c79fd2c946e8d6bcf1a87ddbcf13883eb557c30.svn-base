@@ -1,0 +1,239 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<script src="/resources/js/jquery.min.js"></script>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+a, a:link {
+  color: #000;
+  text-decoration: none;
+  font-family: 'Recipekorea';
+}
+
+/* 네비게이션 메뉴 */
+.sidenav {
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  font-size: 18px;
+  top: 153px;
+  left: 45px;
+  border-bottom: 1px solid lightgray;
+  overflow-x: hidden;
+  padding: 15px 0;
+  text-align: center;
+}
+.sidenav p {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 18px;
+  display: block;
+  color: #000;
+}
+.sidenav a, .sidenav a:link {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #000;
+  display: block;
+  color: #000;
+  font-family: 'GmarketSansLight';
+  position: relative;
+  overflow: hidden;
+}
+.sidenav a::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 11px;
+  left: 50%; /* 배경의 시작 위치를 텍스트 중앙으로 설정 */
+  transform: translateX(-50%); /* 가로 방향으로 이동시킴 */
+  z-index: -1;
+  width: 0; /* 초기 가로 크기를 0으로 설정 */
+  height: 30%;
+  background: rgba(182, 102, 210, 0.5); /* 투명한 연보라색 배경 */
+  transition: width .3s;
+}
+.sidenav a:hover::after {
+  width: 90%; /* 호버 시 가로 크기를 100%로 확장 */
+}
+</style>	
+<div class="container col-lg-12">
+	<div class="col-12 stretch-card grid-margin grid-margin-md-0">
+		<div class="card data-icon-card-primary">
+			<div class="card-body">
+				<p class="card-title text-white"></p>
+				<div class="row">
+					<div class="col-8 text-white">
+						<h3>프로 구인 게시판</h3>
+						<p class="text-white font-weight-500 mb-0">
+						 
+						</p>
+					</div>
+					<div class="col-4 background-icon"></div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="sidenav">
+	<p style="text-align: center;">
+		<b style="font-family: GmarketSansMedium;">BOARD MENU</b>
+	</p>
+	<hr>
+	<a href="#">자유 게시판</a> 
+	<a href="#">후기 게시판</a>
+	<a href="/proHunting/list">프로 구인 게시판</a> 
+	<a href="#">프로 협업 게시판</a>
+</div>
+<div class="col-12 grid-margin stretch-card">
+	<div class="card">
+		<div class="card-body">
+			<div class="dropdown show"
+				style="float: right; margin-right: 0">
+				<button class="btn btn-inverse-primary btn-sm dropdown-toggle"
+					type="button" id="dropdownMenuSizeButton3" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="true">선택</button>
+				<input type="text" name="keyword" id="keyword"
+					style="width: auto; border-radius: 15px; border: 0; outline: none; background-color: rgb(233, 233, 233); height: 30px; padding-left:11px;" />
+				<button type="button" class="btn btn-inverse-primary btn-sm"
+					id="searchBtn">
+					<i class="mdi mdi-yeast"></i>
+				</button>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3"
+					style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 31px, 0px);"
+					x-placement="bottom-start">
+					<p class="dropdown-item">전체</p>
+					<p class="dropdown-item">닉네임</p>
+					<p class="dropdown-item">제목</p>
+				</div>
+			</div>
+			<div class="table-responsive" style="margin-top: 45px;">
+				<table class="table table-striped text-center">
+					<thead>
+						<tr>
+							<th style="width: 5%">번호</th>
+							<th colspan="2" style="width: 15%">닉네임</th>
+							<th>제목</th>
+							<th style="width: 15%">작성일</th>
+							<th style="width: 10%">조회</th>
+						</tr>
+					</thead>
+					<tbody id= "proHuntingListBody">
+					</tbody>
+				</table>
+			</div>
+			<div id="divPaging"
+						style="position: relative; margin-left: 48%; margin-top: 20px;"></div>
+		</div>
+	</div>
+</div>
+<script>
+$(function(){
+	$(".dropdown-item").click(function() {
+        var selectedText = $(this).text();
+        $("#dropdownMenuSizeButton3").text(selectedText);
+    });
+	
+    // 전체 목록 출력
+    let currentPage = "${param.currentPage}";
+    if(currentPage == ""){
+    	currentPage = "1";
+    }
+    
+    let data = {
+    		"keyword" : "${param.keyword}",
+			"currentPage" : currentPage
+    }
+    
+    $.ajax({
+    	url : "/proHunting/listAjax?currentPage="+currentPage+"&keyword=${param.keyword}",
+    	contentType : "application/json; charset=utf-8",
+ 	    data : JSON.stringify(data),
+ 	    type : "post",
+ 	    dataType : "json",
+ 	    success : function(res){
+			console.log("구인게시판리스트 res : " , res);
+			$("#proHuntingListBody").html("");
+			$("#divPaging").html("");
+			var str = "";
+			$.each(res.content, function(i, v){
+				str += "<tr onclick=\"location.href='/proHunting/detail?proJoBbscttNo=" + v.proJoBbscttNo + "'\">";
+				str += "<td>"+v.num+"</td>";
+				str += "<td class='py-1' style='text-align:right; padding-right:10px;'><img src='"+v.mberVOList[0].mberProflPhoto+"' ";
+				str += "alt='image'></td>";
+				str += "<td style='text-align:left; padding-left:0;'>"+v.mberVOList[0].userNcnm+"</td>";
+				str += "<td>"+v.proJoBbscttSj+"</td>";
+				str += "<td>"+(v.proJoBbscttWrDt).substr(0,10)+"</td>";
+				str += "<td>"+v.proJoBbscttRdcnt+"</td>";
+				str += "</tr>";
+			});//each 끝
+			$("#proHuntingListBody").html(str);
+ 	    	$("#divPaging").html(res.pagingArea);
+ 	    }// success 종료
+ 	});//ajax 끝 
+ 	
+ 	// 검색
+	$("#searchBtn").on("click",function(){
+		let keyword = $("input[name='keyword']").val();
+		
+		// 검색 카테고리 설정
+		let selectColumn = $("#dropdownMenuSizeButton3").text();
+		let t_selectColumn = "";
+		if(selectColumn == "닉네임" ){
+			selectColumn = "A.USER_NCNM";
+			t_selectColumn = "USER_NCNM";
+		}else if(selectColumn == "제목"){
+			selectColumn = "A.PRO_JO_BBSCTT_SJ";
+			t_selectColumn = "PRO_JO_BBSCTT_SJ";
+		}else if(selectColumn == "전체"){
+			selectColumn = "ALL";
+			t_selectColumn = "ALL";
+		}
+
+		let currentPage = "1";
+		
+		var data = {
+				"keyword" : keyword,
+				"selectColumn" : selectColumn,
+				"t_selectColumn" : t_selectColumn,
+				"currentPage" : currentPage
+					};
+		$.ajax({
+	        url : "/proHunting/listAjax?currentPage="+currentPage+"&keyword="+keyword,
+	        contentType : "application/json; charset=utf-8",
+	        data : JSON.stringify(data),
+	        type : "post",
+	        dataType : "json",
+	        success: function(res){
+	        	console.log("구인게시판리스트 res : " , res);
+				$("#proHuntingListBody").html("");
+				$("#divPaging").html("");
+				var str = "";
+				$.each(res.content, function(i, v){
+					str += "<tr onclick='location.href='/proHunting/detail?"+v.proJoBbscttNo+"'>";
+					str += "<td class='py-1'><img src='"+v.mberVOList[0].mberProflPhoto+"' ";
+					str += "alt='image'></td>";
+					str += "<td>"+v.mberVOList[0].userNcnm+"</td>";
+					str += "<td>"+v.proJoBbscttSj+"</td>";
+					str += "<td>"+(v.proJoBbscttWrDt).substr(0,10)+"</td>";
+					str += "<td>"+v.proJoBbscttRdcnt+"</td>";
+					str += "</tr>";
+				});//each 끝
+				history.pushState(null, null, "listAjax?currentPage="+currentPage+"&keyword="+keyword);
+				$("#proHuntingListBody").html(str);
+				if(res.total > 0){
+	 	    	$("#divPaging").html(res.pagingArea);
+				}else{
+	 	    	$("#divPaging").html("");
+				}
+	 	    }// success 종료
+	 	});//ajax 끝 
+	});
+	 	
+});
+</script>

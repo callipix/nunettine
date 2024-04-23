@@ -1,0 +1,16 @@
+package kr.or.ddit.vo;
+
+import java.util.Date;
+import lombok.Data;
+
+@Data
+public class ProCprtnAnswerVO {
+
+	private int proCprtnAnswerNo;
+	private int proCprtnBbscttNo;
+	private String proCprtnAnswerCn;
+	private Date proCprtnAnswerWrDt;
+	private String proId;
+	
+}
+

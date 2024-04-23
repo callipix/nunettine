@@ -1,0 +1,57 @@
+/* header에 btn-list를 flex속성이용해서 정렬 */
+.more__btn-list {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 20px;
+}
+
+/* 버튼 안에 있는 icon과 title을 flex+flex-direction:column으로 정렬 */
+.more__btn-list .more__btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 버튼안에 아이콘과 타이틀간 간격을 위한 속성 */
+.more__btn .more__btn-title {
+  margin-top: 10px;
+  opacity: 0.7;
+}
+
+/* suggestion 부분 서브타이틀 */
+.more__suggestions .more__title {
+  padding-top: 20px;
+  border-top: 1px solid black;
+  margin-bottom: 20px;
+}
+
+/* suggestion 부분 flex 이용해 가로 정렬 */
+.more__suggestions-list {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* 버튼과 마찬가지로 아이콘과 타이틀 배치를 위한 flex-direction:column */
+.more .suggestion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 타이틀-아이콘 간격 */
+.suggestion__title {
+  margin-top: 10px;
+  opacity: 0.7;
+}
+
+/* 아이콘 */
+.suggestion__icon {
+  background-color: #fae100;
+  padding: 10px;
+}
+
+.suggestion__icon i {
+  font-size: 25px;
+}

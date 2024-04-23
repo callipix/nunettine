@@ -1,0 +1,23 @@
+package kr.or.ddit.chatting.vo;
+
+import java.util.Date;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+public class MessageVO {
+
+	private int msgNo;
+	private int roomNo;
+	private Date msgSendDate;
+	private String msgCont;
+	private String msgCheck;
+	private String userId;
+	
+}

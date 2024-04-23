@@ -1,0 +1,57 @@
+/* 네비게이션바 fixed이용해서 위치 고정, left,bottom같이 위치를 지정해야함(절대위치)
+ background-color와 border-top을 default와 다르게 함으로써 분리된것처럼 보임
+  */
+.nav {
+  position: fixed;
+  background-color: #fcfcfc;
+  width: 100%;
+  padding: 20px 40px;
+  left: 0px;
+  bottom: 0px;
+  border-top: 1px solid black;
+}
+/* 아아콘 가로정렬 */
+.nav .nav__list {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav__list .nav__list-item {
+  font-size: 20px;
+  position: relative;
+}
+
+/* position absolute를 적용하려면 부모 태그에 position relative를 적용해야함 */
+.nav__badge {
+  /* 위치 */
+  position: absolute;
+  top: -8px;
+  right: -7px;
+  /* 색깔 */
+  background-color: #e75f3f;
+  color: white;
+  /* 배경크기 */
+  width: 17px;
+  height: 16px;
+  border-radius: 50%;
+  font-size: 10px;
+  /* 글자를 원안에 두기 위한 속성 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes showNavBar {
+  from {
+    transform: translateY(80px);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.nav {
+  transform: translateY(80px);
+  animation: showNavBar 0.5s ease-out forwards;
+  animation-delay: 0.5s;
+}

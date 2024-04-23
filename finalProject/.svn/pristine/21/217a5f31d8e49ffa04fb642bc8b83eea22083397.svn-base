@@ -1,0 +1,16 @@
+/* 상단 네비게이션 바  flex를 이용해 정렬 */
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  /* 회색을 위한 투명도 */
+  opacity: 0.6;
+}
+
+.status-bar i {
+  font-size: 14px;
+}
+
+.status-bar .status-battery-level {
+  margin-left: 3px;
+}

@@ -1,0 +1,41 @@
+package kr.or.ddit.admin.decl.service.impl;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.admin.decl.mapper.DeclMapper;
+import kr.or.ddit.admin.decl.service.DeclService;
+import kr.or.ddit.vo.LbrtyBbscttVO2;
+import kr.or.ddit.vo.SntncDeclVO;
+import lombok.extern.slf4j.Slf4j;
+
+
+@Slf4j
+@Service
+public class DeclServiceImpl implements DeclService {
+	@Autowired
+	DeclMapper declMapper; 
+	
+	
+	@Override
+	public List<SntncDeclVO> decllbrSelect(Map<String, Object> map) {
+		return this.declMapper.decllbrSelect(map);
+	}
+
+
+	@Override
+	public LbrtyBbscttVO2 lbrtyBbscttVo(SntncDeclVO sntncDeclVO) {
+		// TODO Auto-generated method stub
+		return this.declMapper.lbrtyBbscttVo(sntncDeclVO);
+	}
+
+
+	@Override
+	public List<SntncDeclVO> declResnList(SntncDeclVO sntncDeclVO) {
+		return this.declMapper.declResnList(sntncDeclVO);
+	}
+
+}

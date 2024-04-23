@@ -1,0 +1,21 @@
+package kr.or.ddit.admin.decl.mapper;
+
+import java.util.List;
+import java.util.Map;
+
+import kr.or.ddit.vo.LbrtyBbscttVO2;
+import kr.or.ddit.vo.SntncDeclVO;
+
+public interface DeclMapper {
+
+	public List<SntncDeclVO> decllbrSelect(Map<String, Object> map);
+
+	public LbrtyBbscttVO2 lbrtyBbscttVo(SntncDeclVO sntncDeclVO);
+
+	public List<SntncDeclVO> declResnList(SntncDeclVO sntncDeclVO);
+
+	public int declSet1(int lbrtyBbscttNo);
+
+	public int declSet2(int lbrtyBbscttNo);
+
+}

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.admin.decl.mapper.DeclMapper">
+
+	<sql id="where">
+		<if test="keyword!=null and keyword!=''">
+			AND (
+			LBRTY_BBSCTT_SJ LIKE '%' || #{keyword} || '%'
+			OR LBRTY_BBSCTT_CN LIKE '%' || #{keyword} || '%'
+			OR USER_NCNM LIKE '%' || #{keyword} || '%'
+			)
+		</if>
+	</sql>
+	
+	<select id="decllbrSelect" resultType="sntncDeclVO">
+		select DENSE_RANK() OVER(ORDER BY DECL_BBSCTT_NO) AS rnum,
+		DECL_BBSCTT_NO, DECL_PROCESS_AT, DECL_TARGET, COUNT(*) count
+		from SNTNC_DECL
+		where DECL_TARGET = 'LBRTY_BBSCTT'
+        
+		group by DECL_BBSCTT_NO, DECL_TARGET, DECL_PROCESS_AT
+		order by count desc
+	</select>
+	
+	<select id="lbrtyBbscttVo" parameterType="sntncDeclVO" resultType="lbrtyBbscttVO2">
+		select * from V_${declTarget}
+		where LBRTY_BBSCTT_NO = ${declBbscttNo}
+	</select>
+	
+	<select id="declResnList" parameterType="sntncDeclVO" resultType="sntncDeclVO">
+		select DECL_RESN, DECL_PROCESS_AT, COUNT(*) count from SNTNC_DECL
+			where DECL_BBSCTT_NO = ${declBbscttNo}
+			and decl_target = #{declTarget}
+		group by DECL_RESN, DECL_PROCESS_AT
+	</select>
+	
+	<update id="declSet1" parameterType="int">
+		update lbrty_bbsctt
+		set 
+			DEL_TYPE= 1
+		where 
+			LBRTY_BBSCTT_NO = ${lbrtyBbscttNo}
+	</update>
+	
+	<update id="declSet2" parameterType="int">
+		UPDATE sntnc_decl
+		SET
+    		DECL_PROCESS_AT = 1
+		WHERE
+        	DECL_BBSCTT_NO = ${lbrtyBbscttNo} 
+    		AND DECL_TARGET = 'LBRTY_BBSCTT'
+	</update>
+
+</mapper>

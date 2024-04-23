@@ -1,0 +1,107 @@
+package kr.or.ddit.pro.proSearch.controller;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import kr.or.ddit.pro.proProfl.service.ProProflService;
+import kr.or.ddit.pro.proSearch.service.SearchProService;
+import kr.or.ddit.util.ArticlePage;
+import kr.or.ddit.vo.BcityVO;
+import kr.or.ddit.vo.ProVO;
+import kr.or.ddit.vo.SpcltyRealmVO;
+import lombok.extern.slf4j.Slf4j;
+
+@RequestMapping("/proSearch")
+@Slf4j
+@Controller
+public class SearchProController {
+	
+	@Autowired
+	SearchProService searchProService;
+	
+	@Autowired
+	ProProflService proProflService;
+	
+	
+	//전체 프로 출력
+	@GetMapping("/proList")
+	public String proList(Model model) {
+	      Map<String,Object> map = new HashMap<String, Object>();
+	      List<BcityVO> bcityVOList = this.proProflService.list(map);
+	      List<SpcltyRealmVO> spcltyBList = this.searchProService.spcltyB(map);
+	      
+	      model.addAttribute("bcityVOList",bcityVOList);
+	      model.addAttribute("spcltyBList",spcltyBList);
+		
+		return "proSearch/proList";
+	}
+	
+	@GetMapping("/getSpclty")
+	@ResponseBody
+	public List<SpcltyRealmVO> getSpclty(@RequestParam("spcltyRealmNm") String spcltyRealmNm) {
+		log.info("getSpclty->spcltyRealmNm : " + spcltyRealmNm);
+	    List<SpcltyRealmVO> spcltyRealmVOList = this.searchProService.getSpclty(spcltyRealmNm);
+	    
+	    return spcltyRealmVOList;
+	}
+
+	
+	//전체 프로리스트 페이징처리
+	@GetMapping("/proAllPage")
+	public String proAllPage(Model model, Map<String, Object> map, HttpServletRequest request, 
+			@RequestParam(value="currentPage", required=false, defaultValue="1") int currentPage) {
+		
+		map.put("currentPage", currentPage);
+		
+		List<ProVO> proAllList = this.searchProService.proListPage(map);
+		
+		model.addAttribute("proAllList", proAllList);
+		log.info("proSeLiPage->proAllPage : " +proAllList );
+		
+		return "proSearch/proAllPage";
+	}
+	
+	//검색 목록 페이징
+	@ResponseBody
+	@PostMapping("/searchPage")
+	public ArticlePage<ProVO> serachPage(Model model,@RequestBody(required=false) Map<String,Object> map, HttpServletRequest request){
+		int size = 5;
+		map.put("size",size);
+		
+		log.info("searchPage -> map : " + map);
+		
+		List<ProVO> proSearchList = this.searchProService.proListPage(map);
+		log.info("serachPage -> proSearchList : " + proSearchList);
+		
+		int total = this.searchProService.getTotal(map);
+		log.info("serachPage -> total : " + total);
+		
+		
+		String currentPage = map.get("currentPage").toString();
+		String keyword = map.get("keyword").toString();
+		log.info("serachPage -> currentPage : " + currentPage);
+		log.info("serachPage -> keyword : " + keyword);
+		
+		ArticlePage<ProVO> data = new ArticlePage<ProVO>(total, Integer.parseInt(currentPage),size,proSearchList,keyword);
+		
+		String url = "/proSearch/proList";
+		data.setUrl(url);
+		
+		return data;
+	}
+	
+
+}

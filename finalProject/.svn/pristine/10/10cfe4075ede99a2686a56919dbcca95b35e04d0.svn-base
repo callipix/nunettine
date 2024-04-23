@@ -1,0 +1,58 @@
+package kr.or.ddit.chatting.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.chatting.mapper.ChatMapper;
+import kr.or.ddit.chatting.vo.AllChatRoomViewVO;
+import kr.or.ddit.chatting.vo.ChatRelayVO;
+import kr.or.ddit.vo.UsersVO;
+@Service
+public class ChatServiceImpl implements ChatService{
+
+	@Autowired
+	public ChatMapper chatMapper;
+	
+	@Override
+	public List<AllChatRoomViewVO> roomList() {
+		return this.chatMapper.roomList();
+	}
+
+	@Override
+	public List<AllChatRoomViewVO> myRoomList(String userId) {
+		return this.chatMapper.myRoomList(userId);
+	}
+
+	@Override
+	public int joinCheck(ChatRelayVO chatRelayVO) {
+		return this.chatMapper.joinCheck(chatRelayVO);
+	}
+
+	@Override
+	public int joinRoom(ChatRelayVO chatRelayVO) {
+		return this.chatMapper.joinRoom(chatRelayVO);
+	}
+
+	@Override
+	public List<ChatRelayVO> myRoomId(int roomNo) {
+		return this.chatMapper.myRoomId(roomNo);
+	}
+
+	@Override
+	public List<UsersVO> userInfo() {
+		return this.chatMapper.userInfo();
+	}
+
+	@Override
+	public UsersVO joinUserInfo(String userId) {
+		return this.chatMapper.joinUserInfo(userId);
+	}
+
+	@Override
+	public List<AllChatRoomViewVO> roomByRoomNo(int roomNo) {
+		return this.chatMapper.roomByRoomNo(roomNo);
+	}
+
+}

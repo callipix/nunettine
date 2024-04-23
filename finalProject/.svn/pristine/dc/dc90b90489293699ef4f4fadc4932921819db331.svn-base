@@ -1,0 +1,13 @@
+package kr.or.ddit.chatting.mapper;
+
+import java.util.List;
+
+import kr.or.ddit.chatting.vo.MessageVO;
+
+public interface MessageMapper {
+
+	public int insert(MessageVO message);
+	
+	public List<MessageVO> messageList(int roomNo);	
+
+}

@@ -1,0 +1,28 @@
+package kr.or.ddit.pro.join.mapper;
+
+import java.util.Map;
+
+import kr.or.ddit.vo.UsersVO;
+import kr.or.ddit.vo.VProUsersVO;
+
+public interface ProJoinMapper {
+	
+	public int emailCk(String email);
+
+	public int idCk(String userId);
+
+	public int ncnmCk(String userNcnm);
+
+	public UsersVO proLogin(Map<String, Object> userMap);
+	
+	public int proInsert(Map<String, Object> map);
+
+	public String getProfile(Map<String, Object> userMap);
+
+	public String idSearch(VProUsersVO vProUsersVO);
+
+	public String pwSearch(VProUsersVO vProUsersVO);
+
+	public int updatePw(Map<String, Object> map);
+
+}

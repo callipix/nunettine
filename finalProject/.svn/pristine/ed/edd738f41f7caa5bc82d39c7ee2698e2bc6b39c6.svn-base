@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KaKao | chats</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+      integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- 상단 네비게이션바  **페이지공통부분**-->
+    <div class="status-bar">
+      <!-- 네비게이션 왼쪽- 시간 -->
+      <div class="status-bar__column">
+        <span class="status-clock">13:53</span>
+      </div>
+      <!-- 네비게이션 오른쪽- 아이콘 -->
+      <div class="status-bar__column">
+        <!-- 시계 -->
+        <i class="fas fa-clock"></i>
+        <!-- 음량 -->
+        <i class="fas fa-volume-mute"></i>
+        <i class="fas fa-wifi"></i>
+        <!-- 베터리 퍼센트 -->
+        <span class="status-battery-level">100%</span>
+        <!-- 베터리 아이콘-->
+        <i class="fas fa-battery-full"></i>
+      </div>
+    </div>
+    <!-- 헤더부분   title과 icon 페이지별 차이있음-->
+    <header class="header">
+      <div class="header__header-column">
+        <!-- 타이틀 -->
+        <h1 class="header__title">Chats</h1>
+      </div>
+      <!-- 아이콘 리스트 -->
+      <div class="header__header-column">
+        <!-- 상단 네비게이션과 다르게 아이콘간 간격이 있음 - span 안에 넣은 이유 -->
+        <!-- 돋보기 -->
+        <span class="header__icon"><i class="fas fa-search"></i></span>
+        <!-- 말풍선 -->
+        <span class="header__icon"><i class="far fa-comment"></i></span>
+        <!-- 톱니바퀴 -->
+        <span class="header__icon"><i class="fas fa-cog"></i></span>
+      </div>
+    </header>
+    <!-- chats 콘텐츠 부분 -->
+    <!-- chats : chats__list 부모 자식 -->
+    <main class="chats">
+      <!-- chat__list : chat 부모 자식 -->
+      <ul class="chats__list">
+        <li class="chats__chat chat">
+          <!-- 채팅방 링크 -->
+          <a href="chat.html">
+            <div class="chats__chat friend friend--lg">
+              <!-- 컬럼1 -->
+              <div class="friend__column">
+                <img src="images/avatar1.jpg" class="m-avatar friend__avatar" />
+                <div class="friend__content">
+                  <!-- 이름 -->
+                  <span class="friend__name">
+                    Someone
+                  </span>
+                  <!-- 상태창 -->
+                  <span class="friend__bottom-text">
+                    This is a test message
+                  </span>
+                </div>
+              </div>
+              <!-- 컬럼2 -->
+              <div class="friend__column">
+                <span class="chat__timestamp">March 8</span>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li class="chats__chat chat">
+          <!-- 채팅방 링크 -->
+          <a href="chat.html">
+            <div class="chats__chat friend friend--lg">
+              <!-- 컬럼1 -->
+              <div class="friend__column">
+                <img src="images/avatar2.jpg" class="m-avatar friend__avatar" />
+                <div class="friend__content">
+                  <!-- 이름 -->
+                  <span class="friend__name">
+                    Someone
+                  </span>
+                  <!-- 상태창 -->
+                  <span class="friend__bottom-text">
+                    뭐함
+                  </span>
+                </div>
+              </div>
+              <!-- 컬럼2 -->
+              <div class="friend__column">
+                <span class="chat__timestamp">March 25</span>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li class="chats__chat chat">
+          <!-- 채팅방 링크 -->
+          <a href="chat.html">
+            <div class="chats__chat friend friend--lg">
+              <!-- 컬럼1 -->
+              <div class="friend__column">
+                <img src="images/avatar3.jpg" class="m-avatar friend__avatar" />
+                <div class="friend__content">
+                  <!-- 이름 -->
+                  <span class="friend__name">
+                    Someone
+                  </span>
+                  <!-- 상태창 -->
+                  <span class="friend__bottom-text">
+                    집가는중
+                  </span>
+                </div>
+              </div>
+              <!-- 컬럼2 -->
+              <div class="friend__column">
+                <span class="chat__timestamp">March 22</span>
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </main>
+
+    <!-- 하단 네비게이션바 -->
+    <nav class="nav">
+      <ul class="nav__list">
+        <!-- friends 링크 -->
+        <li class="nav__list-item">
+          <a href="friends.html" class="nav__list-link">
+            <i class="far fa-user"></i>
+          </a>
+        </li>
+        <!-- chats 링크 -->
+        <li class="nav__list-item">
+          <a href="index.html" class="nav__list-link">
+            <div class="nav__badge">8</div>
+            <i class="fas fa-comment"></i>
+          </a>
+        </li>
+        <!-- find링크 -->
+        <li class="nav__list-item">
+          <a href="find.html" class="nav__list-link">
+            <i class="fas fa-search"></i>
+          </a>
+        </li>
+        <!-- more링크 -->
+        <li class="nav__list-item">
+          <a href="more.html" class="nav__list-link">
+            <i class="fas fa-ellipsis-h"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <div class="bigScreen">
+      <img src="images/media.png" alt="" />
+      <span class="bigScreen__text"
+        >지원하지 않는 해상도입니다. 화면을 줄여주세요</span
+      >
+    </div>
+  </body>
+</html>

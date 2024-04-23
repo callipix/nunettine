@@ -1,0 +1,41 @@
+package kr.or.ddit.pro.mypage.service.impl;
+
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.pro.mypage.mapper.ProMypageMapper;
+import kr.or.ddit.pro.mypage.service.ProMypageService;
+
+@Service
+public class ProMypageServiceImpl implements ProMypageService {
+	
+	@Autowired
+	ProMypageMapper proMypageMapper;
+
+	@Override
+	public int updTel(Map<String, Object> map) {
+		return this.proMypageMapper.updTel(map);
+	}
+
+	@Override
+	public int updPW(Map<String, Object> map) {
+		return this.proMypageMapper.updPW(map);
+	}
+
+	@Override
+	public int updNcnm(Map<String, Object> map) {
+		return this.proMypageMapper.updNcnm(map);
+	}
+
+	@Override
+	public int updPhoto(Map<String, Object> map) {
+		return this.proMypageMapper.updPhoto(map);
+	}
+
+	@Override
+	public int photoDelete(String userId) {
+		return this.proMypageMapper.photoDelete(userId);
+	}
+}

@@ -1,0 +1,12 @@
+package kr.or.ddit.vo;
+
+import lombok.Data;
+
+@Data
+public class ResveDetailVO {
+	private int resveNo;
+	private int ondyclSchdulNo;
+	private int ondyclNo;
+	private int resveTotqy;
+	private int resveTpprice;
+}

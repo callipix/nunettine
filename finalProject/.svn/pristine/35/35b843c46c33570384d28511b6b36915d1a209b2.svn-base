@@ -1,0 +1,49 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<div class="wrapper">
+    <div class="container">
+        <div class="left">
+            <div class="top">
+                <input type="text" placeholder="Search" />
+                <a href="javascript:;" class="search"></a>
+            </div>
+            <ul class="people">
+                <li class="person" data-chat="person5">
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/michael-jordan.jpg" alt="" />
+                    <span class="name">Michael Jordan</span>
+                    <span class="time">2:09 PM</span>
+                    <span class="preview">Wasup for the third time like is you blind bitch</span>
+                </li>
+                <li class="person" data-chat="person6">
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/drake.jpg" alt="" />
+                    <span class="name">Drake</span>
+                    <span class="time">2:09 PM</span>
+                    <span class="preview">howdoyoudoaspace</span>
+                </li>
+            </ul>
+        </div>
+        <div class="right">
+            <div class="top"><span>To: <span class="name">Dog Woofson</span></span></div>
+            <div class="chat" data-chat="person1">
+                <div class="conversation-start">
+                    <span>Today, 6:48 AM</span>
+                </div>
+                <div class="bubble you">
+                    Hello,
+                </div>
+                <div class="bubble you">
+                    it's me.
+                </div>
+                <div class="bubble you">
+                    I was wondering...
+                </div>
+            </div>
+            <div class="write">
+                <a href="javascript:;" class="write-link attach"></a>
+                <input type="text" />
+                <a href="javascript:;" class="write-link smiley"></a>
+                <a href="javascript:;" class="write-link send"></a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,623 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<script type="text/javascript" src="/resources/js/jquery.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<link rel="stylesheet" href="/resources/css/sweetalert2.min.css">
+<script src="/resources/js/sweetalert2.min.js"></script>
+<style>
+#imgProfile{
+	width:300px;
+	height:300px;
+	margin-left: auto;
+	margin-bottom:20px;
+	border-radius: 150px;
+}
+.box_container{
+/* 	height:100vh; */
+	height:400px;
+	display:flex;
+	justify-content: center;
+	
+}
+.box{
+	text-align: center;
+}
+.floatLeft{
+	float: left;
+	margin-left: 20px;
+}
+.codeTab{
+	border: 1px solid #DDDDDD;
+	text-align: center;
+	margin:5px;
+}
+#codeBtn{
+	margin-left:30px;
+	margin-right:30px;
+}
+#spcltyRealmCode{
+	width:200px;
+	height:50px;
+	margin:5px;
+}
+.filebox .upload-name {
+    display: inline-block;
+    height: 40px;
+    padding: 0 10px;
+    vertical-align: middle;
+    border: 1px solid #dddddd;
+    width: 78%;
+    color: #999999;
+}
+.filebox #lab {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    vertical-align: middle;
+    background-color: #4B49AC;
+    border-radius:13px 13px 13px 13px;
+    cursor: pointer;
+    height: 40px;
+    margin-left: 10px;
+}
+.filebox input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
+</style>
+<script>
+	$(function(){
+		//자동입력
+		$("#autoInsert").on("click",function(){
+			$("#userId").val("nntn111");
+			$("#userNcnm").val("nntn111");
+			$("#email").val("asd12@naver.com");
+			$("#userNm").val("홍길동");
+			$("#userPassword").val("123123");
+			$("#userPasswordCk").val("123123");
+			$("#phNum2").val("1234");
+			$("#phNum3").val("1234");
+			$("#zip").val("34908");
+			$("#adres").val("대전 중구 계룡로 846");
+			$("#detailAdres").val("대덕인재개발원");
+		})//자동입력 끝
+		
+		$("#uploadFile").on('change',function(){
+			var fileName = $("#uploadFile").val();
+			$(".upload-name").val(fileName);
+		});
+		
+		//회원가입 버튼 클릭 이벤트
+		$("#memberInsert").on("click",function(){
+			var idDupRes = $("#idDupRes").val();
+			var emailDupRes = $("#emailDupRes").val();
+			var phoneDupRes = $("#phoneDupRes").val();
+			var nicDupRes = $("#nicDupRes").val();
+			var userPassword = $("#userPassword").val();
+			var userPasswordCk = $("#userPasswordCk").val();
+			var sexdstnTy = $("#sexdstnTy").val();
+// 			$("#mberMbtlnum").val($("#phNum1").val()+$("#phNum2").val()+$("#phNum3").val());
+// 			console.log("전화전호 : " + $("#mberMbtlnum").val());
+			
+			if(idDupRes != "ok"){
+				Swal.fire("아이디 중복체크를 해주세요.");
+// 				$("#idDupCk").focus();
+			}else if(emailDupRes != "ok"){
+				Swal.fire("이메일 중복체크를 해주세요.");
+// 				$("#emailDupCk").focus();
+// 			}else if(phoneDupRes != "ok"){
+// 				Swal.fire("휴대폰 본인인증을 해주세요.");
+// 				$("#telCk").focus();
+			}else if(nicDupRes != "ok"){
+				Swal.fire("닉네임 중복체크를 해주세요.");
+// 				$("#nickDupCheck").focus();
+			}else if(userPassword != userPasswordCk){
+				Swal.fire("입력하신 비밀번호가 서로 다릅니다.\n비밀번호를 확인해주세요.");
+			}else if(sexdstnTy=="0"){
+				Swal.fire("성별을 선택해주세요.");
+			}else{
+				$("#insertForm").submit();
+			}
+		}) //회원가입버튼 클릭 이벤트 끝
+		
+		//닉네임, 이메일, 아이디 중복확인하고 값 바뀌면 다시 확인하게
+		$("#userNcnm").on("change",function(){
+			$("#nicDupRes").val("");
+		})
+		$("#email").on("change",function(){
+			$("#emailDupRes").val("");
+		})
+		$("#userId").on("change",function(){
+			$("#idDupRes").val("");
+		})
+		
+		//전화번호 본인인증
+		$("#telCk").on("click",function(){
+			const ph1 = $("#phNum1").val();
+			const ph2 = $("#phNum2").val();
+			const ph3 = $("#phNum3").val();
+			let mberMbtlnum = ph1 + ph2 + ph3;
+			$("#mberMbtlnum").val(mberMbtlnum);
+			const test = /^010[\d]{4}[\d]{4}$/;
+			const test1 = /^[\d]{4}$/;
+			
+			if(test.test(mberMbtlnum)){
+				$.ajax({
+	                  type: "post",
+	                  url: "/member/check/sendSMS",
+	                  cache: false,
+	                  data: { "mberMbtlnum": mberMbtlnum },
+// 	                  beforeSend: function (xhr) {
+// 	                     xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+// 	                  },
+	                  success: function (data) {
+						console.log("인증번호 : " + data);
+		                  if (data == "error") {
+		                  	Swal.fire({
+			     			    title: '전화번호 형식이 올바르지 않습니다.',
+			     			    text: "전화번호를 확인해주세요.",
+			     			    icon: 'error',
+			     			    showCancelButton: false,
+			     			    confirmButtonColor: '#3085d6',
+			     			    confirmButtonText: '확인',
+		     			    }).then((result) => {
+		     			    	$("#phNum2").focus();
+		     			    })
+		                  } else {
+							Swal.fire({
+								content: "input",
+								title: "인증번호가 발송되었습니다.",
+								text: "전송받은 인증번호 6자리를 입력해주세요.",
+								input: 'text',
+								buttons: ["확인", "취소"],
+								dangerMode: true,
+							})
+							.then((ranNum) => {
+								if(data == ranNum.value){ //인증번호 동일
+									Swal.fire({
+							            title: '본인인증이 완료되었습니다.',
+							            icon: 'success',
+							            showCancelButton: false,
+							            confirmButtonColor: '#3085d6',
+							            confirmButtonText: '확인',
+							        }).then((result) => {
+							        	$("#phNum1").attr("readonly",true);
+							        	$("#phNum2").attr("readonly",true);
+							        	$("#phNum3").attr("readonly",true);
+						                $("#telCk").attr("disabled",true);
+						                $("#phoneDupRes").val("ok");
+						                
+							        })
+								}else{ //인증번호 틀리면
+									Swal.fire("입력하신 번호가 전송된 인증번호와 일치하지 않습니다.");
+								}
+							});
+								authNum = data;
+		                  }
+	                  }
+	               });
+			}else{
+				if(test1.test(ph2)){
+					Swal.fire({
+			            title: '전화번호 형식이 올바르지 않습니다.',
+			            text: "전화번호를 확인해주세요.",
+			            icon: 'error',
+			            showCancelButton: false,
+			            confirmButtonColor: '#3085d6',
+			            confirmButtonText: '확인',
+			        }).then((result) => {
+			        	$("#phNum3").focus();
+			        })
+				}else{
+					Swal.fire({
+			            title: '전화번호 형식이 올바르지 않습니다.',
+			            text: "전화번호를 확인해주세요.",
+			            icon: 'error',
+			            showCancelButton: false,
+			            confirmButtonColor: '#3085d6',
+			            confirmButtonText: '확인',
+			        }).then((result) => {
+			        	$("#phNum2").focus();
+			        })
+				}
+			}
+			
+		})//전화번호 본인인증 끝
+		
+		//이메일 중복확인
+		$("#emailDupCk").on('click',function(){
+			var email = $("#email").val();
+			const emailTest = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+			if(emailTest.test(email)){
+				$.ajax({
+					url:"/member/emailCk?email=" + email,
+					method:"get",
+					dataType:"text",
+// 					beforeSend: function (xhr) {
+// 	                	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+// 	                },
+					success:function(res){
+						if(res==0){
+							Swal.fire({
+					            title: '사용할 수 있는 이메일입니다.',
+					            text: "이 이메일을 사용하시겠습니까?",
+					            icon: 'success',
+					            showCancelButton: true,
+					            confirmButtonColor: '#3085d6',
+					            cancelButtonColor: '#d33',
+					            confirmButtonText: '사용',
+					            cancelButtonText: '취소'
+					        }).then((result) => {
+					            if (result.isConfirmed) {
+					                $("#email").attr("readonly",true);
+					                $("#emailDupCk").attr("disabled",true);
+					                $("#emailDupRes").val("ok");
+					            }else{
+					            	$("#email").val("");
+					            	$("#email").focus();
+					            }
+					        })
+						}else{
+							Swal.fire({
+					            title: '존재하는 이메일입니다.',
+					            text: "이메일을 다시 입력하세요.",
+					            icon: 'warning',
+					            showCancelButton: false,
+					            confirmButtonColor: '#3085d6',
+					            confirmButtonText: '확인'
+					        }).then((result) => {
+					        	$("#email").focus();
+					        })
+						}
+					}
+				})
+			}else{
+				Swal.fire({
+		            title: '이메일 형식이 올바르지 않습니다.',
+		            text: "이메일 형식을 확인해주세요.",
+		            icon: 'error',
+		            showCancelButton: false,
+		            confirmButtonColor: '#3085d6',
+		            confirmButtonText: '확인',
+		        }).then((result) => {
+		        	$("#email").focus();
+		        })
+			}
+		})//이메일 중복확인 끝
+		
+		//아이디 중복확인
+		$("#idDupCk").on('click',function(){
+			const userId = $("#userId").val();
+			const test = /^[A-Za-z\d]{6,12}$/;
+			if(test.test(userId)){
+				$.ajax({
+					url:"/member/idCk?userId=" + userId,
+					method:"get",
+					dataType:"text",
+// 					beforeSend: function (xhr) {
+// 	                	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+// 	                },
+					success:function(res){
+						if(res==0){
+							Swal.fire({
+					            title: '사용할 수 있는 아이디입니다.',
+					            text: "이 아이디를 사용하시겠습니까?",
+					            icon: 'success',
+					            showCancelButton: true,
+					            confirmButtonColor: '#3085d6',
+					            cancelButtonColor: '#d33',
+					            confirmButtonText: '사용',
+					            cancelButtonText: '취소'
+					        }).then((result) => {
+					            if (result.isConfirmed) {
+					                $("#userId").attr("readonly",true);
+					                $("#idDupCk").attr("disabled",true);
+					                $("#idDupRes").val("ok");
+					            }else{
+					            	$("#userId").val("");
+					            	$("#userId").focus();
+					            }
+					        })
+						}else{
+							Swal.fire({
+					            title: '존재하는 아이디입니다.',
+					            text: "아이디를 다시 입력하세요.",
+					            icon: 'warning',
+					            showCancelButton: false,
+					            confirmButtonColor: '#3085d6',
+					            confirmButtonText: '확인'
+					        }).then((result) => {
+					        	$("#userId").focus();
+					        })
+						}
+					}
+				})
+			}else{
+				Swal.fire({
+		            title: '아이디 형식이 올바르지 않습니다.',
+		            text: "영문과 숫자만 포함하여 6~12자로 입력해주세요.",
+		            icon: 'error',
+		            showCancelButton: false,
+		            confirmButtonColor: '#3085d6',
+		            confirmButtonText: '확인',
+		        }).then((result) => {
+		        	$("#userId").focus();
+		        })
+			}
+		})//아이디 중복확인 끝
+		
+		//닉네임 중복확인
+		$("#nickDupCheck").on('click',function(){
+			const userNcnm = $("#userNcnm").val();
+			const test = /^[A-Za-z가-힣\d]{2,8}$/;
+			console.log("test",test.test(userNcnm));
+			if(test.test(userNcnm)){
+				$.ajax({
+					url:"/member/ncnmCk?userNcnm=" + userNcnm,
+					method:"get",
+					dataType:"text",
+// 					beforeSend: function (xhr) {
+// 	                	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+// 	                },
+					success:function(res){
+						if(res==0){
+							Swal.fire({
+					            title: '사용할 수 있는 닉네임입니다.',
+					            text: "이 닉네임을 사용하시겠습니까?",
+					            icon: 'success',
+					            showCancelButton: true,
+					            confirmButtonColor: '#3085d6',
+					            cancelButtonColor: '#d33',
+					            confirmButtonText: '사용',
+					            cancelButtonText: '취소'
+					        }).then((result) => {
+					            if (result.isConfirmed) {
+					                $("#userNcnm").attr("readonly",true);
+					                $("#nickDupCheck").attr("disabled",true);
+					                $("#nicDupRes").val("ok");
+					            }else{
+					            	$("#userNcnm").val("");
+					            	$("#userNcnm").focus();
+					            }
+					        })
+						}else{
+							Swal.fire({
+					            title: '존재하는 닉네임입니다.',
+					            text: "다른 닉네임을 입력하세요.",
+					            icon: 'warning',
+					            showCancelButton: false,
+					            confirmButtonColor: '#3085d6',
+					            confirmButtonText: '확인'
+					        }).then((result) => {
+					        	$("#userNcnm").focus();
+					        })
+						}
+					}
+				})
+			}else{
+				Swal.fire({
+		            title: '닉네임 형식이 올바르지 않습니다.',
+		            text: "영문과 숫자,한글을 포함하여 2~8자로 입력해주세요.",
+		            icon: 'error',
+		            showCancelButton: false,
+		            confirmButtonColor: '#3085d6',
+		            confirmButtonText: '확인',
+		        }).then((result) => {
+		        	$("#usersNcnm").focus();
+		        })
+			}
+		})//닉네임 중복확인 끝
+		
+		//우편번호 api 시작
+	    $("#zipSelect").on("click",function(){
+	        new daum.Postcode({
+	            oncomplete: function(data) {
+	            	  var resultHTML = [];
+	                var roadAddr = data.roadAddress; // 도로명 주소 변수
+	                var extraRoadAddr = ''; // 참고 항목 변수
+	                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+	                    extraRoadAddr += data.bname;
+	                }
+	                if(data.buildingName !== '' && data.apartment === 'Y'){
+	                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                }
+	                if(extraRoadAddr !== ''){
+	                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+	                }
+	                document.getElementById('zip').value = data.zonecode;	// --> 우편번호 칸
+	                document.getElementById("adres").value = roadAddr;	// --> 도로명 주소 칸
+	                if(roadAddr !== ''){
+	                    document.getElementById("adres").value = roadAddr;
+	                } else {
+	                    document.getElementById("adres").value = extraRoadAddr;
+	                }
+	                var guideTextBox = document.getElementById("guide");
+	           }
+	        }).open();
+	        $("#detailAdres").focus();
+	    });
+		
+		//프로필사진 삭제
+		$("#photoDelete").on("click",function(){
+			var userId = $("#userId").val();
+			var photoDelCk = confirm("프로필 사진을 삭제하시겠습니까?");
+			if(photoDelCk){
+				alert("사진 삭제 성공");
+				$("#photoDelete").css("display","none");
+				$("#newPhoto").css("display","none");
+				$("#photoZone").css("display","block");
+				$(".upload-name").val("");
+				$("#mberProflPhoto").val("");
+				$("#pfPhoto").val("");
+			}
+		}) //프로필 사진 삭제 끝
+		
+		$("#uploadFile").on("change",function(){
+			console.log("이미지 변경");
+			
+			var fileName = $("#uploadFile").val();
+			$(".upload-name").val(fileName);
+			$("#mberProflPhoto").val(fileName);
+			$("#photoDelete").css("display","block");
+		});
+		
+		$("#uploadFile").on("change",imgCk);
+		function imgCk(e){
+			let files = e.target.files;
+			
+			console.log(files);
+			let fileArr = Array.prototype.slice.call(files);
+		
+			fileArr.forEach(function(f){
+				
+				console.log(f);
+				if(!f.type.match("image.*")){
+					alert("이미지 파일만 가능합니다.");
+					return;
+				}
+
+				let reader = new FileReader();
+				
+				$("#newPhoto").html("");
+				$("#photoZone").css("display","none");
+				
+				reader.onload = function(e){
+					$("#newPhoto").css({
+						  "display":"block",
+						  "background-image": "url(" + e.target.result + ")",
+				          "width": "300px", 
+				          "height": "300px",
+				          "background-position": "center",
+				          "background-size": "cover",
+						  "margin-bottom":"20px",
+						  "border-radius": "150px"
+				    });	 				
+				}
+				reader.readAsDataURL(f);
+			});
+		}
+	});
+	
+</script>
+<div class="col-lg-8 container">
+	<div class="card">
+		<div class="card-body">
+			<h1 class="card-title">회원 가입</h1>
+			<p class="card-description">일반 이용자를 위한 회원가입입니다.</p>
+			<form class="forms-sample" id="insertForm" name="insertForm" method="post"
+				enctype="multipart/form-data" action="/member/memberInsert">
+				<input type="hidden" id="mberProflPhoto" name="mberProflPhoto">
+				<div class="box_container">
+					<div class="box">
+						<div id="photoZone">
+							<img id="imgProfile" src="/images/2024/profile.jpg"
+									style="float: left;" />
+						</div>
+						<div id="newPhoto" style="display: none;"></div>
+						<label>프로필사진 등록</label>
+			<!-- 			<input type="file" name="mberProflPhoto" class="file-upload-default"> -->
+						<div class="form-group filebox">
+							<div class="input-group col-xs-12">
+								<input placeholder="프로필 사진을 등록해보세요" readonly
+									class=" upload-name form-control file-upload-info" />
+								<span class="input-group-append">
+									<label for="uploadFile" id="lab">파일찾기</label> 
+									<input type="file" id="uploadFile" class="file-upload-browse btn btn-inverse-primary btn-fw" name="uploadFile"></button>
+			<!-- 						<input type="file" id="uploadFile" name="uploadFile" class="file-upload-browse btn btn-primary">업로드</button> -->
+								</span>
+								<button type='button' class='btn btn-inverse-link btn-fw'
+												id='photoDelete' style="display:none;">사진 삭제</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<label for="userId">아이디</label>
+				<div class="form-group input-group">
+					<input type="text" class="form-control" id="userId" name="userId"
+						placeholder="아이디" required />
+					<span class="input-group-append">
+						<button type="button" class="file-upload-browse btn btn-inverse-primary btn-fw" id="idDupCk">중복확인</button>
+					</span>
+				</div>
+				<input type="hidden" id="idDupRes">
+				<input type="hidden" id="emailDupRes">
+				<input type="hidden" id="phoneDupRes">
+				<input type="hidden" id="nicDupRes">
+				<input type="hidden" id="mberMbtlnum" name="mberMbtlnum">
+				<div class="form-group">
+					<label for="userPassword">비밀번호</label>
+					<input type="password" class="form-control" id="userPassword" name="userPassword"
+						placeholder="비밀번호" required />
+				</div>
+				<div class="form-group">
+					<label for="userPasswordCk">비밀번호 확인</label>
+					<input type="password" class="form-control" id="userPasswordCk" name="userPasswordCk"
+						placeholder="비밀번호 확인">
+				</div>
+				<label for="email">이메일</label>
+				<div class="form-group input-group">
+					<input type="text" class="form-control" id="email" name="email" required
+						placeholder="이메일">
+					<span class="input-group-append">
+						<button type="button" id="emailDupCk" class="file-upload-browse btn btn-inverse-primary btn-fw">중복확인</button>
+					</span>
+				</div>
+				<div class="form-group">
+					<label for="userNm">이름</label>
+					<input type="text" class="form-control" id="userNm" name="userNm" required
+						placeholder="이름">
+				</div>
+				<label>전화번호</label>
+				<div class="form-inline">
+					<input type="text" class="form-control mb-1 mr-sm-1" id="phNum1" name="phNum1" value="010">-
+					<input type="text" class="form-control mb-1 mr-sm-1" id="phNum2" name="phNum2">-
+					<input type="text" class="form-control mb-1 mr-sm-1" id="phNum3" name="phNum3">
+					<button type="button" id="telCk" class="btn btn-inverse-primary btn-fw">본인인증</button>
+				</div>
+				<div class="form-group">
+					<label for="sexdstnTy">성별</label>
+					<select class="form-control" id="sexdstnTy" name="sexdstnTy">
+						<option value="0">성별을 선택하세요</option>
+						<option value="SD01">남성</option>
+						<option value="SD02">여성</option>
+						<option value="SD03">기타</option>
+					</select>
+				</div>
+				<label for="userNcnm">닉네임</label>
+				<div class="form-group input-group">
+					<input type="text" class="form-control" id="userNcnm" name="userNcnm"
+						placeholder="닉네임" required>
+					<span class="input-group-append">
+						<button type="button" id="nickDupCheck" class="file-upload-browse btn btn-inverse-primary btn-fw">중복확인</button>
+					</span>
+				</div>
+				<label for="zip">우편번호</label>
+				<div class="form-group input-group">
+					<input type="text" readonly class="form-control" id="zip" name="zip"
+						placeholder="우편번호">
+					<span class="input-group-append">
+						<button type="button" id="zipSelect" class="file-upload-browse btn btn-inverse-primary btn-fw">우편번호 찾기</button>
+					</span>
+				</div>
+				<div class="form-group">
+					<label for="adres">주소</label>
+					<input type="text" class="form-control" id="adres" name="adres"
+						placeholder="주소" required>
+				</div>
+				<div class="form-group">
+					<label for="detailAdres">상세주소</label>
+					<input type="text" class="form-control" id="detailAdres" name="detailAdres"
+						placeholder="상세주소" required>
+				</div>
+				<button type="button" id="memberInsert" class="btn btn-outline-primary btn-fw">회원가입</button>
+				<button type="reset" class="btn btn-light">취소</button>
+				<button type="button" id="autoInsert" class="btn btn-light">자동완성</button>
+	<!-- 		<sec:csrfInpit /> -->
+			</form>
+		</div>
+	</div>
+</div>

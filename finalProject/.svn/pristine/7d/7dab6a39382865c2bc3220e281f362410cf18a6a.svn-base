@@ -1,0 +1,222 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+
+</head>
+<script  type="text/javascript" src="/resources/js/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#btnSearch").on("click",function(){
+		let keyword = $("input[name='keyword']").val();
+		
+		console.log("keyword:"+keyword);
+		
+		let currentPage = "1";
+		
+		let data = {
+			"keyword":keyword,
+			"currentPage":currentPage
+		};
+		console.log("data:"+data)
+		
+		$.ajax({
+			url:"/admin/listAjax",
+			contentType:"application/json;charset=utf-8",
+			data:JSON.stringify(data),
+			type:"post",
+			dataType:"json",
+			success:function(result){
+				console.log("result:",result);
+				
+				let str = "";
+				
+				$("#noticeTbody").html("");
+			
+				$.each(result.content,function(idx, noticeVO){
+					str += "<tr>";
+					str += "<td>"+noticeVO.rnum+"</td>";
+					//str += "<td>"+noticeVO.noticeNo+"</td>";
+					str += "<td>"+noticeVO.noticeSj+"</td>";
+// 					str += "<td>"+noticeVO.noticeCn+"</td>";
+					str += "<td>"+noticeVO.noticeWritngDt+"</td>";
+					str += "<td>"+noticeVO.noticeRdcnt+"</td>";
+					str += "<td>"+noticeVO.mngrId+"</td>";
+					str += "</tr>";
+				
+				});	
+				
+				$("#noticeTbody").append(str);
+				$("#divPagingArea").html(result.pagingArea);
+				
+				
+			}
+			
+		});
+		
+	});
+	
+	let currentPage  = "${param.currentpage}";
+	
+	if(currentPage==""){
+		currentPage = "1";
+		
+	}
+	
+	let data = {
+		"keyword":"${param.keyword}",
+		"currentPage":currentPage
+	};
+	console.log("data:",data);
+	
+	$.ajax({
+		url : "/admin/listAjax",
+		type : "post",
+		data : JSON.stringify(data),
+		contentType: "application/json;charset=utf-8",
+		dataType:"json",
+		success : function(result){
+			console.log("result:",result);
+		
+			let str = "";
+			
+			$("#noticeTbody").html("");
+			
+			$.each(result.content,function(idx, noticeVO){
+// 				str += "<tr onclick='location.href='/admin/detail?"+noticeVO.noticeNo+">";
+// 				//str += "<td>"+noticeVO.rnum+"</td>";
+// 				str += "<td>알라신이여 나를 도와다오"+noticeVO.noticeNo+"</td>";
+// 				str += "<td>"+noticeVO.noticeSj+"</td>";
+// // 				str += "<td>"+noticeVO.noticeCn+"</td>";
+// 				str += "<td>"+noticeVO.noticeWritngDt+"</td>";
+// 				str += "<td>"+noticeVO.noticeRdcnt+"</td>";
+// 				str += "<td>"+noticeVO.mngrId+"</td>";
+// 				str += "</tr>";
+
+				str += "<tr>";
+				str += "<td>"+noticeVO.rnum+"</td>";
+				//str += "<td>"+noticeVO.noticeNo+"</td>";
+				str += "<td>"+noticeVO.noticeSj+"</td>";
+//					str += "<td>"+noticeVO.noticeCn+"</td>";
+				str += "<td>"+noticeVO.noticeWritngDt+"</td>";
+				str += "<td>"+noticeVO.noticeRdcnt+"</td>";
+				str += "<td>"+noticeVO.mngrId+"</td>";
+				str += "</tr>";
+				
+				
+			});
+			$("#noticeTbody").append(str);
+			console.log(result.pagingArea);
+			$("#divPagingArea").html(result.pagingArea);
+			
+			
+			sessionStorage.setItem("total",result.total);
+		}
+		
+	});
+	
+});
+</script>
+
+<body>
+
+<div class="row">
+	<div class="col-md-12 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				
+				<p class="card-title">공지사항</p>
+				
+				<div class="form-group">
+                    <div class="input-group">
+                      <input type="text"  name="keyword" id="keyword" value="${param.keyword}" 
+                      class="form-control" placeholder="검색어를 입력하세요" aria-label="">
+                      <div class="input-group-append">
+                        <button class="btn btn-sm btn-primary" id="btnSearch" type="button">Search
+                      	<i class="fas fa-search"></i>
+                      	</button>
+                      </div>
+                    </div>
+                   </div>
+                   	
+				<div class="row">
+				
+					<div class="col-12">
+						<div class="table-responsive">
+							<div id="example_wrapper"
+								class="dataTables_wrapper dt-bootstrap4 no-footer">
+								<div class="row">
+									<div class="col-sm-12 col-md-6"></div>
+									<div class="col-sm-12 col-md-6"></div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										<table id=""
+											class="display expandable-table dataTable no-footer table-hover text-nowrap"
+											style="width: 100%;" role="grid">
+											<thead>
+												<tr role="row">
+													<th class="" rowspan="1"
+														colspan="1" aria-label="Quote#" style="width: 70px;">글번호</th>
+													
+													<th class="" tabindex="0"
+														 rowspan="1" colspan="1"
+														
+														aria-sort="ascending" style="width: 51px;">공지사항제목</th>
+													
+													<th class="" tabindex="0" 
+														rowspan="1" colspan="1"
+														
+														style="width: 58px;">작성일자</th>
+													
+													<th class="" tabindex="0" 
+														rowspan="1" colspan="1"
+														
+														style="width: 43px;">조회수</th>
+													
+													<th class="" tabindex="0" 
+														rowspan="1" colspan="1"
+														
+														style="width: 59px;">작성자</th>
+												</tr>
+											</thead>
+											<tbody id = "noticeTbody">								
+												<%-- <c:forEach var="notice" items="${noticeList}" varStatus="stat">   
+							                        <tr onclick="location.href='/main'" style="cursor:hand">
+  							                             <td>${stat.count}</td>
+  							                         <td>${notice.noticeNo}</td>
+ 							                            <td>${notice.noticeSj}</td>
+ 							                            <td>${notice.noticeWritngDt}</td>
+ 							                            <td>${notice.noticeRdcnt}</td>
+ 							                            <td>${notice.mngrId}</td>
+ 							                          			                           
+							                        </tr>
+							                    </c:forEach> --%>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								
+								<div class= "row" id="divPagingArea">
+								</div>
+								
+								<div class="row">
+									<div class="col-sm-12 col-md-5"></div>
+									<div class="col-sm-12 col-md-7"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		
+	</div>
+</div>
+<!-- <button type="button" id="insert" class="btn btn-primary">글쓰기</button> -->
+<a href="/admin/create?register" class="btn btn-primary">글쓰기</a>
+</body>
+</html>

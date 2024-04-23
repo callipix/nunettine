@@ -1,0 +1,210 @@
+package kr.or.ddit.pro_service.service_request.service.impl;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import kr.or.ddit.pro_service.service_inquiry.mapper.SrvcBtfInqryMapper;
+import kr.or.ddit.pro_service.service_request.mapper.SrvcRequstMapper;
+import kr.or.ddit.pro_service.service_request.service.SrvcRequstService;
+import kr.or.ddit.pro_service.service_request.vo.V_SrvcRequstVO;
+import kr.or.ddit.vo.SprviseAtchmnflVO;
+import kr.or.ddit.vo.SrvcRequstVO;
+import kr.or.ddit.vo.UsersVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Service
+@Slf4j
+public class SrvcRequstSeviceImpl implements SrvcRequstService {
+
+	@Autowired
+	SrvcBtfInqryMapper srvcBtfInqryMapper;
+	
+	@Autowired
+	SrvcRequstMapper srvcRequstMapper;
+	
+	@Autowired
+	String uploadFolder;
+	
+	V_SrvcRequstVO vSrvcRequstVO = new V_SrvcRequstVO();
+
+	@Override
+	public UsersVO userChk(String userId) { 
+		
+		UsersVO usersVO = this.srvcBtfInqryMapper.userChk(userId);
+		
+		if(usersVO.getEmplyrTy().equals("ET01")) { // 회원일 경우, 프로 닉네임을 얻기 위함
+			usersVO.setEmplyrTy("ET02");
+			
+		}else if(usersVO.getEmplyrTy().equals("ET02")) { // 프로일 경우, 회원 닉네임을 얻기 위함
+			usersVO.setEmplyrTy("ET01");
+		}
+		log.info("userChk -> usersVO : " + usersVO.toString());
+		
+		return usersVO;
+	}
+
+	@Override
+	public List<V_SrvcRequstVO> srvcRqList(Map<String, Object> map) {
+		UsersVO usersVO = userChk((String)map.get("userId"));
+		vSrvcRequstVO.setUserId(usersVO.getUserId());
+		vSrvcRequstVO.setEmplyrTy(usersVO.getEmplyrTy());
+		
+		map.put("vSrvcRequstVO", vSrvcRequstVO);
+		
+		return this.srvcRequstMapper.srvcRqList(map);
+	}
+	
+	@Override
+	public int getTotal(Map<String, Object> map) {
+		UsersVO usersVO = userChk((String)map.get("userId"));
+		vSrvcRequstVO.setUserId(usersVO.getUserId());
+		vSrvcRequstVO.setEmplyrTy(usersVO.getEmplyrTy());
+		
+		map.put("vSrvcRequstVO", vSrvcRequstVO);
+		
+		return this.srvcRequstMapper.getTotal(map);
+	}
+
+	@Override
+	public V_SrvcRequstVO srvcRqDetail(V_SrvcRequstVO vSrvcRequstVO, String userId) {
+		UsersVO usersVO = userChk(userId);
+		vSrvcRequstVO.setUserId(usersVO.getUserId());
+		vSrvcRequstVO.setEmplyrTy(usersVO.getEmplyrTy());
+		
+		return this.srvcRequstMapper.srvcRqDetail(vSrvcRequstVO);
+	}
+	
+	// 첨부파일 가져오기
+	@Override
+	public List<SprviseAtchmnflVO> getsprviseAtchmnfl(int sprviseAtchmnflNo) {
+		
+		return this.srvcRequstMapper.getsprviseAtchmnfl(sprviseAtchmnflNo);
+	}
+
+	@Override
+	public int processFn(int srvcRequstNo, String userId) {
+		UsersVO usersVO = userChk(userId);
+		vSrvcRequstVO.setUserId(usersVO.getUserId());
+		vSrvcRequstVO.setEmplyrTy(usersVO.getEmplyrTy());
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>(); 
+		String emplyrTy = usersVO.getEmplyrTy();
+		String processUser = "";
+		if("ET01".equals(emplyrTy)) { // 프로
+			processUser = "SRVC_REQUST_PROCESS_PRO";
+		}else if("ET02".equals(emplyrTy)) { //회원
+			processUser = "SRVC_REQUST_PROCESS_MBER";
+		}
+		paramMap.put("emplyrTy", emplyrTy);
+		paramMap.put("processUser", processUser);
+		paramMap.put("userId", userId);
+		paramMap.put("srvcRequstNo", srvcRequstNo);
+		
+		return this.srvcRequstMapper.processFn(paramMap);
+	}
+
+	@Override
+	public int acceptRequst(Map<String, Object> acceptMap, String userId) {
+		acceptMap.put("proId", userId);
+		int res = 0;
+
+		res = this.srvcRequstMapper.acceptRequst(acceptMap);
+		
+		return res;
+	}
+
+	@Override
+	public int rejectRequst(Map<String, Object> rejectMap, String userId) {
+		rejectMap.put("proId", userId);
+		int res = 0;
+		
+		res = this.srvcRequstMapper.rejectRequst(rejectMap);
+		
+		return res;
+	}
+
+	@Override
+	public int srvcRqCreatePost(SrvcRequstVO srvcRequstVO, List<MultipartFile> uploadFiles) {
+		
+		int res = 0;
+		log.info("srvcRqCreatePost -> srvcRequstVO : " + srvcRequstVO);
+		log.info("srvcRqCreatePost -> 제목 : " + srvcRequstVO.getSrvcRequstSj());
+		log.info("srvcRqCreatePost -> 내용 : " + srvcRequstVO.getSrvcRequstCn());
+		
+		Map<String, Object>srvcRqInfoMap = new HashMap<String, Object>();
+		
+		srvcRqInfoMap.put("srvcRequstSj", srvcRequstVO.getSrvcRequstSj());
+		srvcRqInfoMap.put("srvcRequstCn", srvcRequstVO.getSrvcRequstCn());
+		srvcRqInfoMap.put("mberId", srvcRequstVO.getMberId());
+		srvcRqInfoMap.put("proId", srvcRequstVO.getProId());
+		
+		// 요청서 기본 정보
+		res = this.srvcRequstMapper.srvcRqCreatePost(srvcRqInfoMap);
+
+		// 사진 업로드 시 
+		if(uploadFiles != null) {
+
+			List<SprviseAtchmnflVO> sprviseAtchmnflVOList = new ArrayList<SprviseAtchmnflVO>();
+			String uploadFileOriginalName = "";
+			String uploadFileName ="";
+			String mime ="";
+			int seq = 1;
+			
+			// 파일 업로드
+			//uploadFolder = D:\\team2\\upload
+			//D:\\team2\\upload\\pro_service\\srvcRequstImage
+			String addPath = "pro_service\\srvcRequstImage";
+			File savePath = new File(uploadFolder+"\\"+addPath);
+			if(!savePath.exists()) {
+				savePath.mkdirs();
+			}
+			
+			for (MultipartFile file : uploadFiles) {
+				SprviseAtchmnflVO sprviseAtchmnflVO = new SprviseAtchmnflVO();
+				uploadFileOriginalName = file.getOriginalFilename();
+				// 파일 유형
+				mime = file.getContentType();
+				// 복사된 파일 이름 
+				uploadFileName = UUID.randomUUID().toString() + uploadFileOriginalName;
+				sprviseAtchmnflVO.setAtchmnflNo(seq++);
+				sprviseAtchmnflVO.setAtchmnflCours("/images/"+addPath.replaceAll("\\\\", "/")+"/"+uploadFileName);
+				sprviseAtchmnflVO.setAtchmnflNm(uploadFileOriginalName);
+				sprviseAtchmnflVO.setStoreAtchmnflNm(uploadFileName);
+				sprviseAtchmnflVO.setAtchmnflTy(mime);
+				sprviseAtchmnflVO.setUserId(srvcRequstVO.getMberId());
+				
+				sprviseAtchmnflVOList.add(sprviseAtchmnflVO);
+				
+				File saveFile = new File(savePath +"\\"+uploadFileName);
+				
+				if(res == 1) {
+					try {
+						file.transferTo(saveFile);
+					} catch (IllegalStateException | IOException e) {
+						log.warn(e.getMessage());
+					}
+				}
+					
+			}
+			srvcRqInfoMap.put("sprviseAtchmnflVOList", sprviseAtchmnflVOList);
+				
+			log.info("리스트 : " + sprviseAtchmnflVOList);
+			
+			
+			// 첨부파일 정보
+			res += this.srvcRequstMapper.insertSprviseAtchmnfl(srvcRqInfoMap);
+		}
+		
+		return res;
+	}
+}

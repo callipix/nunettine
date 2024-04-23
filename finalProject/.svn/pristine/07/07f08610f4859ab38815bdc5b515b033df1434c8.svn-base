@@ -1,0 +1,178 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<style>
+.chat-message {
+        max-width: 50%;
+        word-wrap: break-word; /* 긴 단어가 너비를 벗어나면 줄 바꿈 */
+        word-break: break-all; /* 단어가 너비를 벗어나도 줄 바꿈 */
+}
+</style>
+<script>
+function getTime(){
+	let day = new Date();
+	
+	let year = day.getFullYear();
+	let month = ('0'+ (day.getMonth()+1)).slice(-2);
+	let date = ('0'+ day.getDate()).slice(-2);
+
+	let hour =('0'+ day.getHours()).slice(-2);
+	let minutes = ('0'+ day.getMinutes()).slice(-2);
+	let secounds = ('0'+ day.getSeconds()).slice(-2);
+	
+//		var timeString = year+"년 " + month+"월 " + date+"일 " + hour+"시 " + minutes+"분 " + secounds+"초 ";
+//		console.log("day : " + timeString);
+	
+	let timeTT = year+"/"+month+"/"+date;
+	let timeString = year+month+date+hour+minutes+secounds;
+	
+	return timeString;
+}
+
+function getTime2(){
+	
+	let day = new Date();
+	
+	let year = day.getFullYear();
+	let month = ('0'+ (day.getMonth()+1)).slice(-2);
+	let date = ('0'+ day.getDate()).slice(-2);
+
+	let hour =('0'+ day.getHours()).slice(-2);
+	let minutes = ('0'+ day.getMinutes()).slice(-2);
+	let secounds = ('0'+ day.getSeconds()).slice(-2);
+	
+	let timeTT = year+"/"+month+"/"+date;
+	
+	return timeTT.trim();
+}
+console.log("myRoomChat" , "${myRoomChat}");
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	var myRoom = ${myList};
+ 	var roomMessageJson = ${roomMessageJson};
+
+ 	var roomNo = myRoom["roomNo"];
+	var userId = myRoom["userId"];
+
+	var sockJs = new SockJS("/stomp/chat");
+ 	var stomp = Stomp.over(sockJs);
+	
+ 	stomp.connect({}, function() {
+	console.log("STOMP Connection");
+	
+	stomp.subscribe("/sub/chat/room/" + roomNo, function(chat) {
+		
+	    var content = JSON.parse(chat.body);
+	    var roomNo  = content.roomNo;
+	    var message = content.msgCont;
+	    var writer = content.userId;
+	    var date = content.msgSendDate;
+	    
+	    let str = '';
+	    
+		console.log("content : " , content);
+		
+	    if (writer === userId) {
+	        str += "<div class='col-6'>";
+	        str += "<div class='alert alert-secondary'>";
+	        str += "<b>" + writer + " : " + message + "</b>";
+	        str += "</div></div>";
+	    } else {
+// 	    	console.log("유저아이디와 다를때" , userId);
+	        str += "<div class='col-6'>";
+	        str += "<div class='alert alert-warning'>";
+	        str += "<b>" + writer + " : " + message + "</b>";
+	        str += "</div></div>";
+	    }
+	    $("#msgArea").append(str);
+	});
+	console.log("테스트" , roomNo)
+	  stomp.send('/pub/chat/enter', {},
+			  JSON.stringify({ roomNo: roomNo, userId:userId})
+			  );
+	});
+	$("#msg").keydown(function(key) {
+	  var msg = document.getElementById("msg");
+	  
+	  var date = getTime();
+	  
+	  if (key.keyCode == 13) {
+	      stomp.send('/pub/chat/message', {},
+	          JSON.stringify({ roomNo: roomNo, msgCont: msg.value, msgSendDate: date , userId:userId , msgCheck:"T" })
+	      );
+	      console.log('Enter');
+	      msg.value = '';
+	  }
+	
+	});
+});
+</script>
+<!-- <body> -->
+<!-- <div id="startList"> -->
+    <div id="msgArea1" class="col"></div>
+    <div id="msgArea2" class="col" style="width: 50px;"></div>
+    
+<!--     <div id="chatMessages"> -->
+    <script type="text/javascript">
+        // JavaScript 코드 시작
+		var myRoom = ${myList};
+		var roomMessageJson = ${roomMessageJson};
+		let isMonth = false;		// 이전 날짜 출력 여부
+		let firstDate = roomMessageJson[0]["msgSendDate"].substring(0,10);
+		let previousDate = null;
+        // 채팅 메시지를 출력하는 함수
+        function displayChatMessages() {
+        	
+            for (let i = 0; i < roomMessageJson.length; i++) {
+                var msgData = {
+                	msgNo:roomMessageJson[i]["msgNo"],
+                    msgSendDate: roomMessageJson[i]["msgSendDate"],
+                    msgCont: roomMessageJson[i]["msgCont"],
+                    userId: roomMessageJson[i]["userId"],
+                    roomNo: roomMessageJson[i]["roomNo"]
+                };
+                
+				var str = '';
+				var str2 = '';
+
+				let currentDate = msgData.msgSendDate.substring(0,10).trim();
+				if(currentDate != previousDate){
+					str += "<h4 class='col-6 text-center'>"+currentDate+"</h4>";
+					previousDate = currentDate;
+				};
+				$("msgArea1").append(str);
+				
+				var newChatMessageDiv = document.createElement("div");
+
+				if (msgData.userId === myRoom.userId) {
+               	// 내가 보낸 내역
+	               	str += "<div class='col-6 text-right chat-message'>";
+	               	str += "<div class='alert alert-secondary style=width:50px;'>";
+	               	str += "<b>"+"roomNo : "+msgData.roomNo+"<br>";
+	               	str += "msgNo : "+msgData.msgNo+"<br>"
+	               	str += "sendDate : " + msgData.msgSendDate.substring(10 ,16)+"<br>";
+                	str += "메세지내용 : " +msgData.msgCont;
+	               	str += "</div></div>"
+                } else {
+                	str += "<div class='col-6 text-left chat-message'>";
+                	str += "<div class='alert alert-warning style=width:50px;'>";
+                	str += "<b>"+"roomNo : "+msgData.roomNo+"<br>";
+                	str += "msgNo : "+msgData.msgNo+"<br>"
+                	str += "sendDate : " +msgData.msgSendDate.substring(10 ,16)+"<br>";
+                	str += "Id : "+ msgData.userId+"<br>"
+                	str += "메세지내용 : " +msgData.msgCont;
+                	str += "</div></div>";
+                }
+				$("#msgArea1").append(str);
+				$("#theme-settings-sub").append(str);
+            }
+        }
+        // 페이지 로드 시 채팅 메시지 출력
+        displayChatMessages();
+        // JavaScript 코드 끝
+</script>

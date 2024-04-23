@@ -1,0 +1,570 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script src="/resources/js/jquery.min.js"></script>
+<style>
+.star_rating {
+  width: 100%; 
+  box-sizing: border-box; 
+  display: inline-flex; 
+  float: left;
+  flex-direction: row; 
+  justify-content: flex-start;
+}
+.star_rating .star {
+  width: 25px; 
+  height: 25px; 
+  margin-right: 10px;
+  display: inline-block; 
+  background: url('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FE2bww%2FbtsviSSBz4Q%2F5UYnwSWgTlFt6CEFZ1L3Q0%2Fimg.png') no-repeat; 
+  background-size: 100%; 
+  box-sizing: border-box; 
+}
+.star_rating .star.on {
+  width: 25px; 
+  height: 25px;
+  margin-right: 10px;
+  display: inline-block; 
+  background: url('https://blog.kakaocdn.net/dn/b2d6gV/btsvbDoal87/XH5b17uLeEJcBP3RV3FyDk/img.png') no-repeat;
+  background-size: 100%; 
+  box-sizing: border-box; 
+}
+
+.star_box {
+  width: 400px;
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 15px 0;
+  background: #F3F4F8;
+  border: 0;
+  border-radius: 10px;
+  height: 100px;
+  resize: none;
+  padding: 15px;
+  font-size: 13px;
+  font-family: sans-serif;
+}
+
+#showReviewModal{
+    width: 430px;
+    background-color: white;
+    padding-right: 17px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: auto;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+#modalBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 검은색 배경에 투명도 추가 */
+    z-index: 999; /* 다른 요소 위에 배치 */
+    display: none; 
+}
+
+.notification-dot {
+        position: absolute;
+        top: 3px;
+        right: 15px;
+        transform: translate(50%, -50%);
+        width: 10px;
+        height: 10px;
+        background-color: red;
+        border-radius: 50%;
+    }
+
+    .img-wrapper {
+        position: relative;
+        display: inline-block; /* 부모 요소의 크기를 자식 요소에 맞추기 위해 사용 */
+    }
+</style>
+<div class="col-md-12 grid-margin grid-margin-md-0">
+    <div class="card">
+        <div class="card-body text-center">
+            <div>
+                <img src="../../../assets/images/faces/face5.jpg" class="img-lg rounded-circle mb-2" alt="profile image">
+                <h4>Maria Johnson</h4>
+                <p class="text-muted mb-0">Developer</p>
+            </div>
+            <p class="mt-2 card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor. Lorem</p>
+            <button class="btn btn-info btn-sm mt-3 mb-4">Follow</button>
+            <div class="border-top pt-3">
+                <div class="row">
+                    <div class="col-4">
+                        <h6 id="srvcRqCnt">${rqrvTotal}</h6>
+                        <button type="button" id="srvcRqBtn" class="btn btn-outline-primary btn-sm" data-clicked="false">이용 완료 서비스</button>
+                    </div>
+                    <div class="col-4">
+                        <h6 id="reviewWrCnt">${rvTotal}</h6>
+                        <button type="button" id="reviewWrBtn" class="btn btn-outline-primary btn-sm">나의 리뷰</button>
+                    </div>
+                    <div class="col-4">
+                        <h6 id="reScoreAvg">${rvScoreAvg}</h6>
+                        <button type="button" id="reScoreChrtBtn"class="btn btn-outline-primary btn-sm">나의 평균 별점</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 리스트섹션 -->
+<div class="listGrid" ></div>
+<div id="divPaging"></div>
+
+<script>
+$(document).ready(function() {
+    //페이지 로드 시 초기 상태 확인
+    var srvcRqBtnClicked = localStorage.getItem('srvcRqBtnClicked');
+    var reviewBtnClicked = localStorage.getItem('reviewBtnClicked');
+    var reScoreChrtBtnClicked = localStorage.getItem('reScoreChrtBtnClicked');
+    
+    if (srvcRqBtnClicked === 'true') {
+        $("#srvcRqBtn").addClass("active");
+        loadSrvcRqList(); // 이용 완료 서비스 목록 로드
+    }else if(reviewBtnClicked === 'true'){
+    	$("#reviewWrBtn").addClass("active");
+    	loadReviewList();
+    }else if(reScoreChrtBtn == 'true'){
+    	$("#reScoreChrtBtn").addClass("active");
+    }
+
+    // 이용 완료 서비스 버튼 클릭 시
+    $("#srvcRqBtn").on("click", function() {
+    	$("#reviewWrBtn").removeClass("active");
+    	$("#reScoreChrtBtn").removeClass("active");
+        if (!$(this).hasClass("active")) {
+            $(this).addClass("active");
+            localStorage.setItem('srvcRqBtnClicked', 'true');
+            loadSrvcRqList(); // 
+        }
+    });
+    
+ // 작성 리뷰 버튼 클릭 시
+    $("#reviewWrBtn").on("click", function() {
+    	$("#srvcRqBtn").removeClass("active");
+    	$("#reScoreChrtBtn").removeClass("active");
+        if (!$(this).hasClass("active")) {
+            $(this).addClass("active");
+            localStorage.setItem('reviewBtnClicked', 'true');
+            loadReviewList(); // 
+        }
+    });
+
+ // 별점 버튼 클릭 시
+    $("#reScoreChrtBtn").on("click", function() {
+    	$("#srvcRqBtn").removeClass("active");
+    	$("#reviewWrBtn").removeClass("active");
+        if (!$(this).hasClass("active")) {
+            $(this).addClass("active");
+            localStorage.setItem('reScoreChrtBtnClicked', 'true');
+            loadReScoreChrt(); // 
+        }
+    });
+});
+
+window.addEventListener('beforeunload', function(event) {
+    // 현재 URL을 확인하고 특정 조건을 만족하면 localStorage를 초기화합니다.
+    if (window.location.href.indexOf('/srvcRqReview/reMgmt') === -1) {
+        localStorage.removeItem('srvcRqBtnClicked'); // localStorage 초기화
+        localStorage.removeItem('reviewBtnClicked'); // localStorage 초기화
+        localStorage.removeItem('reScoreChrtBtnClicked'); // localStorage 초기화
+    }
+});
+
+// 이용 완료 서비스 목록 로드
+function loadSrvcRqList() {
+    // 전체 목록
+    let currentPage = "${param.currentPage}";
+    if (currentPage == "") {
+        currentPage = "1";
+    }
+
+    let size = "5";
+
+    let data = {
+        "keyword": "${param.keyword}",
+        "currentPage": currentPage,
+        "size": size
+    }
+    console.log("기본 리스트 data : ", data);
+
+    $.ajax({
+        url: "/srvcRequst/srvcRqSuccessList",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data),
+        type: "post",
+        dataType: "json",
+        success: function(res) {
+            console.log("이용완료 res :", res);
+            $(".listGrid").html("");
+            $("#divPaging").html("");
+            var str = "";
+            str += "<div class='col-md-12 stretch-card grid-margin'>";
+            str += "<div class='card'>";
+            str += "<div class='card-body'>";
+            str += "<p class='card-title'>이용 완료 서비스</p>";
+            str += "<ul class='icon-data-list'>";
+            $.each(res.content, function(i, v) {
+                if (v.srvcRequstProcessMber == "1" && v.srvcRequstProcessPro == "1") {
+                    str += "<li>";
+                    str += "<div class='d-flex' id='srvcRqRow" + v.srvcRequstNo + "' data-value='" + v.srvcRequstNo + "'>";
+                    str += "<div class='img-wrapper'>"; // 이미지와 알림 점을 감싸는 래퍼 요소
+                    str += "<img src='" + v.proProflPhoto + "'>";
+                    str += "<div class='notification-dot' id='notiDot" + v.srvcRequstNo + "' style='display:block;'></div>"; // 알림 점 추가
+                    str += "</div>"; // img-wrapper 종료
+                    str += "<div>";
+                    str += "<p class='text-info mb-1'>" + v.userNcnm + "</p>";
+                    str += "<p class='mb-0' onclick=\"location.href='/srvcRequst/srvcRqDetail?srvcRequstNo=" + v.srvcRequstNo + "'\">" + v.srvcRequstSj + "</p>";
+                    str += "<small>" + (v.srvcRequstWrDt).substr(0, 10) + "</small>";
+                    str += "</div>";
+                    str += "</div>";
+                    str += "</li>";
+                }
+            }); //each 종료
+            str += "</ul></div></div></div>";
+            $(".listGrid").html(str);
+            $("#divPaging").html(res.pagingArea);
+
+            NotyreviewNoWr();
+        } //success 종료
+    });
+}
+
+// 요청서 목록에서 리뷰 미작성 요청서 표시
+function NotyreviewNoWr() {
+    var reviewVOList = ${reviewVOList}; // JSON 데이터 받아오기
+    $.each(reviewVOList, function(i, v) {
+        console.log(v);
+        var reRequstNo = v.srvcRequstNo;
+        var srvcRequstNo = $("#srvcRqRow" + reRequstNo).data("value");
+        if (reRequstNo == srvcRequstNo) {
+            $("#notiDot" + srvcRequstNo).css("display", "none");
+        }
+    });
+}
+// 작성 리뷰
+function loadReviewList(){
+	// 전체 목록
+	let currentPage = "${param.currentPage}";
+	if(currentPage == ""){
+		currentPage = "1";
+	}
+	
+	let size = "5";
+	
+	let data = {
+			"keyword" : "${param.keyword}",
+			"currentPage" : currentPage,
+			"size" : size
+	}
+	console.log("기본 리스트 data : ", data);
+	
+	$.ajax({
+		url : "/srvcRqReview/reviewList",
+	    contentType : "application/json; charset=utf-8",
+	    data : JSON.stringify(data),
+	    type : "post",
+	    dataType : "json",
+	    success : function(res){
+	    	console.log("이용완료 res :" , res);
+	    	$(".listGrid").html("");
+	    	$("#divPaging").html("");
+	    	str = "";
+	    	str += "<div class='col-md-12 stretch-card grid-margin'>";
+	    	str += "<div class='card'>";
+	    	str += "<div class='card-body'>";
+	    	str += "<p class='card-title'>나의 리뷰</p>";
+	    	if(res.reviewNoWrCnt > 0){
+	    		str += "<p class='card-description'>작성되지 않은 리뷰가 "+res.reviewNoWrCnt+"건 있습니다.</p>"
+	    	}
+	    	str += "<ul class='icon-data-list'>";
+	    	$.each(res.data.content, function(i, v){
+	    		str += "<li>";
+	    		str += "<div class='d-flex'>";
+	    		str += "<img src='"+v.PRO_PROFL_PHOTO+"'>";
+	    		str += "<div>";
+	    		str += "<p class='text-info mb-1' onclick=\"location.href='/proProfl/Detail?proId=" + v.PRO_ID + "'\">" + v.USER_NCNM + "</p>";
+	    		str += "<button type='button' class='btn btn-inverse-primary btn-sm' onclick=\showReview('"+v.RE_NO+"')\>리뷰 보기</button>"
+	    		str += "<p class='mb-0' onclick=\"location.href='/srvcRequst/srvcRqDetail?srvcRequstNo=" + v.SRVC_REQUST_NO + "'\">" +v.SRVC_REQUST_SJ+"</p>";
+	    		str += "<small>"+(v.RE_WR_DT)+"</small>";
+	    		str += "</div>";
+	    		str += "</div>";
+	    		str += "</li>";
+	    	});//each 종료
+	    	str += "</ul></div></div></div>";
+	    	$(".listGrid").html(str);
+	    	$("#divPaging").html(res.pagingArea);
+        }//success 종료
+	});// ajax 종료
+}// 작성 리뷰 보기 함수 종료
+
+// 리뷰 디테일 보기
+function showReview(no){
+	console.log("리뷰 디테일 보기");
+	$("#showReviewModal").show();
+	$("#modalBackdrop").show();
+	var reNo = no;
+	
+	$.ajax({
+		url : "/srvcRqReview/showReview?reNo="+reNo,
+		type : "post",
+		success : function(res){
+			console.log("가져온 리뷰 : ", res);
+			var reScore = res.reviewVO.reScore
+			var reTy = res.reviewVO.reTy;
+			var reCn = res.reviewVO.reCn;
+			console.log(reTy);
+			console.log(reCn);
+			console.log(reScore);
+			for(i=1; i<reScore+1; i++){
+			$(".reScoreVal"+i).addClass("on");
+			}
+			$.each(res.commonCdDetailVOList, function(i, v){
+				if(v.COMMON_CD_DETAIL == reTy){
+					reTy = v.COMMON_CD_DETAIL_NM;
+					$("#reTy").text(reTy);
+				}
+			});
+			if(reCn != null){
+				$("#reCn").css("display", "block");
+				$("#reCn").text(reCn);
+			}
+		}//success 종료
+	});
+}
+//모달 닫기 함수
+function closeModal() {
+    $('.star_rating > .star').removeClass('on');
+    $('#reTy').val('');
+    $('#reCn').text('');
+    $('#reCn').css("display", "none");
+    $('.star_box').val('');
+    $("#showReviewModal").hide();
+    $("#modalBackdrop").hide();
+}
+
+$('.star_rating > .star').click(function() {
+    $(this).parent().children('span').removeClass('on');
+    $(this).addClass('on').prevAll('span').addClass('on');
+});
+
+// 별점 차트 보기
+function loadReScoreChrt(){
+	
+	$.ajax({
+		url : "/srvcRqReview/reScoreChrtList",
+		contentType : "application/json; charset:UTF-8",
+		success : function(res){
+			console.log("별점 차트 res", res);
+			console.log("누적 : ", res.reScoreChrtList[0].REV01);
+			$(".listGrid").html("");
+			var str = "";
+			str += "<div class='row'><div class='col-md-12 grid-margin stretch-card'><div class='card position-relative'>";
+			str	+= "<div class='card-body'><div id='detailedReports' class='carousel slide detailed-report-carousel position-static pt-2' data-ride='carousel'>";
+			str	+= "<div class='carousel-inner'><div class='carousel-item active'>"
+			str	+= "<div class='row'>";
+			str	+= "<div class='col-md-12 col-xl-9'>";
+			str	+= "<div class='row'>";
+			str	+= "<div class='col-md-6 border-right'>";
+			str	+= "<div class='table-responsive mb-3 mb-md-0 mt-3'>";
+			str	+= "<table class='table table-borderless report-table'>";
+			str	+= "<tbody>";
+			$.each(res.reTyList, function(i, v){
+				$.each(res.reviewCodeNmList, function(i, codeNm){
+					if(v == codeNm.COMMON_CD_DETAIL){
+						var nm = v;
+						var percent = (res.reScoreChrtList[0][nm]/100)*100;
+						console.log(percent);
+						console.log(nm);
+						str += "<tr>";
+						str += "<td class='text-muted'>"+codeNm.COMMON_CD_DETAIL_NM+"</td>";
+						str += "<td class='w-100 px-0'>";
+						str += "<div class='progress progress-md mx-4'>";
+						str += "<div class='progress-bar bg-primary' role='progressbar' style='width: 70%' aria-valuenow='70' aria-valuemin='0' aria-valuemax='100'></div>";
+						str += "</div>";
+						str += "</td>";
+						str += "<td><h5 class='font-weight-bold mb-0'>"+res.reScoreChrtList[0][nm]+"</h5></td>";
+						str += "</tr>";
+					}
+				}); // 코드 세부명 each 끝
+			}); // 코드명 each 끝
+			$(".listGrid").html(str);
+		}// success 끝
+	}); //ajax 끝
+}
+
+
+
+</script>
+<!-- 리뷰 디테일 모달 -->
+<div class="modal" id="showReviewModal">
+        <h3>내가 쓴 리뷰</h3>
+        <p>욕설 및 비방은 관리자에 의해 삭제될 수 있습니다.</p>
+        
+        <div class ="star_rating">
+          <span class="star reScoreVal1" value="1" > </span>
+          <span class="star reScoreVal2" value="2"> </span>
+          <span class="star reScoreVal3" value="3"> </span>
+          <span class="star reScoreVal4" value="4"> </span>
+          <span class="star reScoreVal5" value="5"> </span>
+        </div>
+        
+        <div class="form-control" id=reTy style="height: 30px; margin-top: 43px;">
+        </div>
+        
+        <div>
+            <pre class="star_box" id="reCn" style="display:none"></pre>
+        </div>
+        
+        <div style="float: right">
+            <button type="button" class="btn btn-inverse-secondary btn-sm" onclick="closeModal()" style="margin-top: 10px;">닫기</button>
+        </div>
+</div>
+<div id="modalBackdrop"></div>
+<!-- 리뷰 및 별점 차트 -->
+<div class="row">
+	<div class="col-md-12 grid-margin stretch-card">
+		<div class="card position-relative">
+			<div class="card-body">
+				<div id="detailedReports"
+					class="carousel slide detailed-report-carousel position-static pt-2" data-ride="carousel">
+					<div class="carousel-inner">
+						<div class="carousel-item active">
+							<div class="row">
+								<div class="col-md-12 col-xl-9">
+									<div class="row">
+										<div class="col-md-6 border-right">
+											<div class="table-responsive mb-3 mb-md-0 mt-3">
+												<table class="table table-borderless report-table">
+													<tbody>
+														<tr>
+															<td class="text-muted">Illinois</td>
+															<td class="w-100 px-0">
+																<div class="progress progress-md mx-4">
+																	<div class="progress-bar bg-primary" role="progressbar"
+																		style="width: 70%" aria-valuenow="70"
+																		aria-valuemin="0" aria-valuemax="100"></div>
+																</div>
+															</td>
+															<td><h5 class="font-weight-bold mb-0">713</h5></td>
+														</tr>
+														<tr>
+															<td class="text-muted">Washington</td>
+															<td class="w-100 px-0">
+																<div class="progress progress-md mx-4">
+																	<div class="progress-bar bg-warning" role="progressbar"
+																		style="width: 30%" aria-valuenow="30"
+																		aria-valuemin="0" aria-valuemax="100"></div>
+																</div>
+															</td>
+															<td><h5 class="font-weight-bold mb-0">583</h5></td>
+														</tr>
+														<tr>
+															<td class="text-muted">Mississippi</td>
+															<td class="w-100 px-0">
+																<div class="progress progress-md mx-4">
+																	<div class="progress-bar bg-danger" role="progressbar"
+																		style="width: 95%" aria-valuenow="95"
+																		aria-valuemin="0" aria-valuemax="100"></div>
+																</div>
+															</td>
+															<td><h5 class="font-weight-bold mb-0">924</h5></td>
+														</tr>
+														<tr>
+															<td class="text-muted">California</td>
+															<td class="w-100 px-0">
+																<div class="progress progress-md mx-4">
+																	<div class="progress-bar bg-info" role="progressbar"
+																		style="width: 60%" aria-valuenow="60"
+																		aria-valuemin="0" aria-valuemax="100"></div>
+																</div>
+															</td>
+															<td><h5 class="font-weight-bold mb-0">664</h5></td>
+														</tr>
+														<tr>
+															<td class="text-muted">Maryland</td>
+															<td class="w-100 px-0">
+																<div class="progress progress-md mx-4">
+																	<div class="progress-bar bg-primary" role="progressbar"
+																		style="width: 40%" aria-valuenow="40"
+																		aria-valuemin="0" aria-valuemax="100"></div>
+																</div>
+															</td>
+															<td><h5 class="font-weight-bold mb-0">560</h5></td>
+														</tr>
+														<tr>
+															<td class="text-muted">Alaska</td>
+															<td class="w-100 px-0">
+																<div class="progress progress-md mx-4">
+																	<div class="progress-bar bg-danger" role="progressbar"
+																		style="width: 75%" aria-valuenow="75"
+																		aria-valuemin="0" aria-valuemax="100"></div>
+																</div>
+															</td>
+															<td><h5 class="font-weight-bold mb-0">793</h5></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+										<div class="col-md-6 mt-3">
+											<div class="chartjs-size-monitor">
+												<div class="chartjs-size-monitor-expand">
+													<div class=""></div>
+												</div>
+												<div class="chartjs-size-monitor-shrink">
+													<div class=""></div>
+												</div>
+											</div>
+											<canvas id="north-america-chart" width="376" height="187"
+												style="display: block; height: 150px; width: 301px;"
+												class="chartjs-render-monitor"></canvas>
+											<div id="north-america-legend">
+												<div class="report-chart">
+													<div
+														class="d-flex justify-content-between mx-4 mx-xl-5 mt-3">
+														<div class="d-flex align-items-center">
+															<div class="mr-3"
+																style="width: 20px; height: 20px; border-radius: 50%; background-color: #4B49AC"></div>
+															<p class="mb-0">Offline sales</p>
+														</div>
+														<p class="mb-0">88333</p>
+													</div>
+													<div
+														class="d-flex justify-content-between mx-4 mx-xl-5 mt-3">
+														<div class="d-flex align-items-center">
+															<div class="mr-3"
+																style="width: 20px; height: 20px; border-radius: 50%; background-color: #FFC100"></div>
+															<p class="mb-0">Online sales</p>
+														</div>
+														<p class="mb-0">66093</p>
+													</div>
+													<div
+														class="d-flex justify-content-between mx-4 mx-xl-5 mt-3">
+														<div class="d-flex align-items-center">
+															<div class="mr-3"
+																style="width: 20px; height: 20px; border-radius: 50%; background-color: #248AFD"></div>
+															<p class="mb-0">Returns</p>
+														</div>
+														<p class="mb-0">39836</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

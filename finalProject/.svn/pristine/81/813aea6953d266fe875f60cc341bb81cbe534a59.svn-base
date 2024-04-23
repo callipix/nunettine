@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.onedayclass.mapper.OnedayClassMapper">
+	
+	<!-- 원데이클래스 리스트 출력 -->
+	<resultMap type="vOndyclProUsersVO" id="vOndyclProUsersMap">
+		<result property="proId" column="PRO_ID"/>
+		<result property="proMbtlnum" column="PRO_MBTLNUM"/>
+		<result property="sexdstnTy" column="SEXDSTN_TY"/>
+		<result property="email" column="EMAIL"/>
+		<result property="proProflPhoto" column="PRO_PROFL_PHOTO"/>
+		<result property="spcltyRealmCode" column="SPCLTY_REALM_CODE"/>
+		<result property="ondyclNo" column="ONDYCL_NO"/>
+		<result property="ondyclNm" column="ONDYCL_NM"/>
+		<result property="ondyclCn" column="ONDYCL_CN" jdbcType="CLOB" javaType="java.lang.String"></result>
+		<result property="ondyclRegistDt" column="ONDYCL_REGIST_DT"/>
+		<result property="ondyclPc" column="ONDYCL_PC"/>
+		<result property="ondyclPsncpa" column="ONDYCL_PSNCPA"/>
+		<result property="ondyclDelType" column="ONDYCL_DEL_TYPE"/>
+		<result property="ondyclDelDt" column="ONDYCL_DEL_DT"/>
+		<result property="ondyclThumbPhoto" column="ONDYCL_THUMB_PHOTO"/>
+		<result property="sprviseAtchmnflNo" column="SPRVISE_ATCHMNFL_NO"/>
+		<result property="ondyclSchdulDe" column="ONDYCL_SCHDUL_DE"/>
+		<result property="ondyclSchdulBeginTime" column="ONDYCL_SCHDUL_BEGIN_TIME"/>
+		<result property="ondyclSchdulEndTime" column="ONDYCL_SCHDUL_END_TIME"/>
+		<result property="adresNo" column="ADRES_NO"/>
+		<result property="adres" column="ADRES"/>
+		<result property="detailAdres" column="DETAIL_ADRES"/>
+		<result property="zip" column="ZIP"/>
+		<result property="spcltyRealmNm" column="SPCLTY_REALM_NM"/>
+	<result property="ptprtSpcltyRealmCode" column="PTPRT_SPCLTY_REALM_CODE"/>
+	</resultMap>
+	<select id="vOndyclProUsersVOList" resultMap="vOndyclProUsersMap">
+		SELECT O.ONDYCL_NO, O.ONDYCL_NM, O.ONDYCL_CN, TO_DATE(O.ONDYCL_REGIST_DT,'YYYY.MM.DD HH24:MI')
+		    , O.ONDYCL_PC, O.ONDYCL_PSNCPA, O.ONDYCL_DEL_TYPE, O.ONDYCL_DEL_DT
+		    , O.ONDYCL_THUMB_PHOTO, O.PRO_ID, O.SPRVISE_ATCHMNFL_NO
+		    , P.PRO_MBTLNUM, P.SEXDSTN_TY, P.EMAIL, P.PRO_PROFL_PHOTO, P.SPCLTY_REALM_CODE
+		    , U.USER_NM, U.EMPLYR_TY, U.SECSN_AT, U.USER_NCNM
+		    , B.ONDYCL_SCHDUL_DE, B.ONDYCL_SCHDUL_BEGIN_TIME, B.ONDYCL_SCHDUL_END_TIME
+		    , F.SPCLTY_REALM_NM, F.PTPRT_SPCLTY_REALM_CODE
+		FROM ONDYCL O, PRO P, USERS U, ONDYCL_SCHDUL B, ADRES A, SPCLTY_REALM F
+		WHERE O.PRO_ID = P.PRO_ID
+		AND	P.PRO_ID = U.USER_ID
+		AND O.ONDYCL_NO = B.ONDYCL_NO
+		AND O.PRO_ID = A.USER_ID
+		AND P.SPCLTY_REALM_CODE = F.SPCLTY_REALM_CODE
+	</select>
+	
+	<!-- 원데이클래스 검색 -->
+	<select id="searchClass" parameterType="hashMap" resultMap="vOndyclProUsersMap">
+		SELECT O.ONDYCL_NO, O.ONDYCL_NM, O.ONDYCL_CN, TO_DATE(O.ONDYCL_REGIST_DT,'YYYY.MM.DD HH24:MI')
+		    , O.ONDYCL_PC, O.ONDYCL_PSNCPA, O.ONDYCL_DEL_TYPE, O.ONDYCL_DEL_DT
+		    , O.ONDYCL_THUMB_PHOTO, O.PRO_ID, O.SPRVISE_ATCHMNFL_NO
+		    , P.PRO_MBTLNUM, P.SEXDSTN_TY, P.EMAIL, P.PRO_PROFL_PHOTO, P.SPCLTY_REALM_CODE
+		    , U.USER_NM, U.EMPLYR_TY, U.SECSN_AT, U.USER_NCNM
+		    , B.ONDYCL_SCHDUL_DE, B.ONDYCL_SCHDUL_BEGIN_TIME, B.ONDYCL_SCHDUL_END_TIME
+		    , F.SPCLTY_REALM_NM, F.PTPRT_SPCLTY_REALM_CODE
+		FROM ONDYCL O, PRO P, USERS U, ONDYCL_SCHDUL B, ADRES A, SPCLTY_REALM F
+		WHERE O.PRO_ID = P.PRO_ID
+		AND	P.PRO_ID = U.USER_ID
+		AND O.ONDYCL_NO = B.ONDYCL_NO
+		AND O.PRO_ID = A.USER_ID
+		AND P.SPCLTY_REALM_CODE = F.SPCLTY_REALM_CODE
+		<if test="keyword == 'title'">
+			AND O.ONDYCL_NM LIKE '%'||#{firstInput}||'%'
+		</if>
+		<if test="keyword == 'writer'">
+			AND U.USER_NCNM LIKE '%'||#{firstInput}||'%'
+		</if>
+		<if test="keyword == 'date'">
+			AND B.ONDYCL_SCHDUL_DE BETWEEN TO_DATE(#{firstInput},'YYYYMMDD')
+			AND TO_DATE(#{secondInput},'YYYYMMDD')
+		</if>
+		<if test="keyword == 'category'">
+			AND P.SPCLTY_REALM_CODE = #{spcltyRealmCode}
+		</if>
+		<if test="keyword == 'city'">
+			AND TRIM(SUBSTR(A.ADRES,0,INSTR(A.ADRES,' ',1,2))) = #{cityName}
+		</if>
+		<if test="keyword == 'cityAll'">
+			AND TRIM(SUBSTR(A.ADRES,0,INSTR(A.ADRES,' ',1,1))) = #{cityName}
+		</if>
+	</select>
+	
+	<!-- 시군구 리스트  -->
+	<resultMap type="brtcVO" id="brtcMap">
+		<result property="brtcCode" column="BRTC_CODE"/>
+		<result property="bcityCode" column="BCITY_CODE"/>
+		<result property="brtcNm" column="BRTC_NM"/>
+	</resultMap>
+	<select id="brtcSelect" parameterType="String" resultMap="brtcMap">
+		SELECT BRTC_CODE, BCITY_CODE, BRTC_NM
+		FROM BRTC
+		WHERE BCITY_CODE = #{bcityCode}
+	</select>
+	
+	<!-- 광역시 리스트 -->
+	<resultMap type="bcityVO" id="bcityMap">
+		<result property="bcityCode" column="BCITY_CODE"/>
+		<result property="bcityNm" column="BCITY_NM"/>
+	</resultMap>
+	<select id="getBcity" resultMap="bcityMap">
+		SELECT BCITY_CODE, BCITY_NM FROM BCITY
+	</select>
+	
+	<!-- 전문분야 리스트 -->
+	<resultMap type="spcltyRealmVO" id="codeMap">
+		<result property="lev" column="lev"/>
+		<result property="spcltyRealmCode" column="SPCLTY_REALM_CODE"/>
+		<result property="spcltyRealmNm" column="SPCLTY_REALM_NM"/>
+		<result property="ptprtSpcltyRealmCode" column="PTPRT_SPCLTY_REALM_CODE"/>
+	</resultMap>
+	<select id="category" resultMap="codeMap">
+		SELECT 
+		    LEVEL AS lev
+		    , SPCLTY_REALM_CODE
+		    , SPCLTY_REALM_NM
+		    , PTPRT_SPCLTY_REALM_CODE
+		FROM SPCLTY_REALM
+		START WITH PTPRT_SPCLTY_REALM_CODE IS NULL
+		CONNECT BY PTPRT_SPCLTY_REALM_CODE = PRIOR SPCLTY_REALM_CODE
+		ORDER SIBLINGS BY SPCLTY_REALM_CODE
+	</select>
+	
+	<!-- 프로 카테고리 이름 출력 -->
+	<select id="getCodeNm"	parameterType="String" resultType="String">
+		SELECT SPCLTY_REALM_NM
+		FROM SPCLTY_REALM
+		WHERE SPCLTY_REALM_CODE = #{codeCd}
+	</select>
+	
+	<!-- 원데이클래스 상세페이지 조회 -->
+	<select id="detail" parameterType="String" resultType="vOndyclProUsersVO">
+		SELECT PRO_ID, PRO_MBTLNUM, SEXDSTN_TY, EMAIL, PRO_PROFL_PHOTO, SPCLTY_REALM_CODE
+			, ONDYCL_NO, ONDYCL_NM, ONDYCL_CN, ONDYCL_REGIST_DT, ONDYCL_PC, ONDYCL_PSNCPA
+			, ONDYCL_DEL_TYPE, ONDYCL_DEL_DT, ONDYCL_THUMB_PHOTO, SPRVISE_ATCHMNFL_NO, USER_NM, EMPLYR_TY, SECSN_AT, USER_NCNM
+			, ONDYCL_SCHDUL_DE, ONDYCL_SCHDUL_BEGIN_TIME, ONDYCL_SCHDUL_END_TIME, ADRES_NO, ADRES, DETAIL_ADRES, ZIP
+			, SPCLTY_REALM_NM, PTPRT_SPCLTY_REALM_CODE
+		FROM V_ONDYCL_PRO_USERS
+		WHERE ONDYCL_NO = #{ondyclNo}
+	</select>
+	
+	<!-- 원데이클래스 총 갯수 -->
+	<select id="countOndycl" resultType="int">
+		SELECT COUNT(*) FROM ONDYCL
+	</select>
+</mapper>

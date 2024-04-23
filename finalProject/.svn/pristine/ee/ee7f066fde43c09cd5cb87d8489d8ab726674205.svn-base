@@ -1,0 +1,19 @@
+package kr.or.ddit.todaymeeting;
+
+import java.util.List;
+
+import lombok.Getter;
+import lombok.Setter;
+@Getter
+@Setter
+public class InfinityScroll<T> {
+
+	private List<T> msgList;
+	
+	private int currentPage;
+	
+	private int pageSize;
+	
+	private boolean hasMore;
+		
+}

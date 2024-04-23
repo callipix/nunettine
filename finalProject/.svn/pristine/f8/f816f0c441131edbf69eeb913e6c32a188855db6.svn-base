@@ -1,0 +1,17 @@
+package kr.or.ddit.vo;
+
+import java.util.Date;
+
+import lombok.Data;
+@Data
+public class SrvcBtfInqryVO {
+	private int btfInqryNo;
+	private String mberId;
+	private String btfInqrySj;
+	private String btfInqryCn;
+	private Date btfInqryWrDt;
+	private String btfInqryAnswerCn;
+	private Date btfInqryAnswerWrDt;
+	private int sprviseAtchmnflNo;
+	private String proId;
+}

@@ -1,0 +1,65 @@
+package kr.or.ddit.admin.notice.service.impl;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.admin.notice.mapper.NoticeMapper;
+import kr.or.ddit.admin.notice.service.NoticeService;
+import kr.or.ddit.admin.notice.vo.NoticeVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Service
+public class NoticeServiceImpl implements NoticeService {
+	
+	@Autowired
+	NoticeMapper noticeMapper;
+
+	@Override
+	public List<NoticeVO> getAllNoticeList() {
+		// TODO Auto-generated method stub
+		return this.noticeMapper.getAllNoticeList();
+	}
+
+	@Override
+	public NoticeVO detail(int noticeNo) {
+		// TODO Auto-generated method stub
+		return this.noticeMapper.detail(noticeNo);
+	}
+
+	@Override
+	public int update(NoticeVO noticeVO) {
+		// TODO Auto-generated method stub
+		return this.noticeMapper.update(noticeVO);
+	}
+
+	@Override
+	public int delete(NoticeVO noticeVO) {
+		// TODO Auto-generated method stub
+		return this.noticeMapper.delete(noticeVO);
+	}
+
+	@Override
+	public int createRegister(NoticeVO noticeVO) {
+		// TODO Auto-generated method stub
+		return this.noticeMapper.createRegister(noticeVO);
+	}
+
+	@Override
+	public int getTotal(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return this.noticeMapper.getTotal(map);
+	}
+
+	@Override
+	public List<NoticeVO> list(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return this.noticeMapper.list(map);
+	}
+	
+	
+
+}

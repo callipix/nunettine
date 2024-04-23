@@ -1,0 +1,36 @@
+/* 참가중인 채팅방인지 체크 */
+function check(event){
+	event.preventDefault();
+	location.href = "http://localhost:8080/chat/main";
+}
+function allRoomList(event , roomNo){
+	event.preventDefault();
+	
+	var rslt = '';
+
+	if(confirm("방에 참가하시겠습니까?")){
+	console.log("여길 먼저 타야?")
+	$.ajax({
+		url : "http://localhost:8080/chat/check",
+		type : "post",
+		data : {roomNo:roomNo},
+		dataType : "text",
+		success : function(result){
+					rslt = result;
+					
+					if(result > 0){
+					
+					alert("이미 참가중인 방입니다\n방으로 이동합니다");
+					
+					return;
+					
+					} else {
+					
+					}	
+				}
+			})
+		} else {
+			return;
+		}
+	location.href = "http://localhost:8080/chat/join?roomNo="+roomNo;
+};

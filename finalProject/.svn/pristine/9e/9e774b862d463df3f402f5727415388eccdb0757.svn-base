@@ -1,0 +1,650 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<!-- <link rel="stylesheet" href="/resources/chat/chatFFF/bundle.css"> -->
+<!-- <link rel="stylesheet" href="/resources/chat/chatFFF/app.css"> -->
+<style>
+.btn-white {
+/*     --bs-btn-color: #475569; */
+    --bs-btn-bg: #ffffff;
+    --bs-btn-border-color: #ffffff;
+    --bs-btn-hover-color: #2563eb;
+    --bs-btn-hover-bg: #bfdbfe;
+    --bs-btn-hover-border-color: #bfdbfe;
+    --bs-btn-focus-shadow-rgb: 227, 230, 233;
+    --bs-btn-active-color: #2563eb;
+    --bs-btn-active-bg: #bfdbfe;
+    --bs-btn-active-border-color: #bfdbfe;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #475569;
+    --bs-btn-disabled-bg: #ffffff;
+    --bs-btn-disabled-border-color: #ffffff;
+}
+.end-0 {
+    right: 0 !important;
+}
+.top-0 {
+    top: 0 !important;
+}
+.bg-primary {
+    --bs-bg-opacity: 1;
+    background-color: rgba(37, 99, 235, var(--bs-bg-opacity)) !important;
+}
+/* .btn.btn-icon, .fc button.btn-icon, .ajax-upload-dragdrop .btn-icon.ajax-file-upload, .swal2-modal .swal2-buttonswrapper .btn-icon.swal2-styled, .wizard > .actions a.btn-icon { */
+/*     width: 42px; */
+/*     height: 42px; */
+/*     padding: 0; */
+/* } */
+.tyn-quick-chat-toggle {
+    position: fixed;
+    height: 4rem;
+    width: 4rem;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 999;
+    border-radius: 50%;
+    padding: 1rem;
+    border: 2px solid #ffffff;
+    background: #dbeafe;
+    box-shadow: 0 0 0 1px #bfdbfe;
+    transition: 0.3s ease 0.5s;
+    opacity: 1;
+    transform: translateY(0);
+}
+.tyn-quick-chat-box {
+
+	display: flex;
+    flex-direction: column;
+    background: #eff6ff;
+    justify-content: stretch;
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    height: 32rem;
+    max-height: calc(100% - 3rem + var(--appbar-height)* -1);
+    width: 20rem;
+    z-index: 999;
+    border-radius: 0.5rem;
+    border: 2px solid #ffffff;
+/*     transform: translateY(calc(100% + 4rem)); */
+/*     opacity: 0; */
+    transition: 0.5s ease 0.3s;
+    box-shadow: 0 0 0 1px #bfdbfe;
+}
+.alert {
+	width: 250px;
+	/* 원하는 가로 길이로 조절 */
+}
+.bg-light {
+    --bs-bg-opacity: 1;
+    background-color: rgb(226 232 240), var(--bs-bg-opacity)) !important;
+}
+.tyn-quick-chat-form {
+	display: flex;
+    align-items: flex-end;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-color: #ffffff;
+	/* 원하는 배경색으로 변경 가능 */
+	padding: 10px;
+	/* 필요에 따라 여백 조정 */
+	border-top: 1px solid #dddddd;
+	/* 원하는 테두리 설정 가능 */
+}
+::-webkit-scrollbar {
+/*     display: none; */
+}
+/*     --gray-dark: #0f1531; */
+/*     --blue: #5E50F9; */
+/*     --indigo: #6610f2; */
+/*     --purple: #6a008a; */
+/*     --pink: #E91E63; */
+/*     --red: #f96868; */
+/*     --orange: #f2a654; */
+/*     --yellow: #f6e84e; */
+/*     --green: #46c35f; */
+/*     --teal: #58d8a3; */
+/*     --cyan: #57c7d4; */
+/*     --white: #ffffff; */
+/*     --gray: #434a54; */
+/*     --gray-light: #aab2bd; */
+/*     --gray-lighter: #e8eff4; */
+/*     --gray-lightest: #e6e9ed; */
+/*     --black: #000000; */
+/*     --primary: #4B49AC; */
+/*     --secondary: #a3a4a5; */
+/*     --success: #57B657; */
+/*     --info: #248AFD; */
+/*     --warning: #FFC100; */
+/*     --danger: #FF4747; */
+/*     --light: #f8f9fa; */
+/*     --dark: #282f3a; */
+/*     --breakpoint-xs: 0; */
+/*     --breakpoint-sm: 576px; */
+/*     --breakpoint-md: 768px; */
+/*     --breakpoint-lg: 992px; */
+/*     --breakpoint-xl: 1200px; */
+/*     --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; */
+/*     --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; */
+/*     --bs-blue: #2563eb; */
+/*     --bs-indigo: #4F46E5; */
+/*     --bs-purple: #6f42c1; */
+/*     --bs-pink: #d63384; */
+/*     --bs-red: #E11D48; */
+/*     --bs-orange: #fd7e14; */
+/*     --bs-yellow: #ffc107; */
+/*     --bs-green: #10B981; */
+/*     --bs-teal: #20c997; */
+/*     --bs-cyan: #0dcaf0; */
+/*     --bs-black: #000000; */
+/*     --bs-white: #ffffff; */
+/*     --bs-primary-50: #eff6ff; */
+/*     --bs-primary-100: #dbeafe; */
+/*     --bs-primary-200: #bfdbfe; */
+/*     --bs-primary-300: #93c5fd; */
+/*     --bs-primary-400: #60a5fa; */
+/*     --bs-primary-500: #3b82f6; */
+/*     --bs-primary-600: #2563eb; */
+/*     --bs-primary-700: #1d4ed8; */
+/*     --bs-primary-800: #1e40af; */
+/*     --bs-primary-900: #1e3a8a; */
+/*     --bs-primary-dark: #1e40af; */
+/*     --bs-gray: #475569; */
+/*     --bs-gray-dark: #1e293b; */
+/*     --bs-gray-50: #f8fafc; */
+/*     --bs-gray-100: #f1f5f9; */
+/*     --bs-gray-200: #e2e8f0; */
+/*     --bs-gray-300: #cbd5e1; */
+/*     --bs-gray-400: #94a3b8; */
+/*     --bs-gray-500: #64748b; */
+/*     --bs-gray-600: #475569; */
+/*     --bs-gray-700: #334155; */
+/*     --bs-gray-800: #1e293b; */
+/*     --bs-gray-900: #0f172a; */
+/*     --bs-primary: #2563eb; */
+/*     --bs-secondary: #475569; */
+/*     --bs-success: #10B981; */
+/*     --bs-info: #0dcaf0; */
+/*     --bs-warning: #ffc107; */
+/*     --bs-danger: #E11D48; */
+/*     --bs-light: #e2e8f0; */
+/*     --bs-dark: #334155; */
+/*     --bs-darker: #0f172a; */
+/*     --bs-primary-rgb: 37, 99, 235; */
+/*     --bs-secondary-rgb: 71, 85, 105; */
+/*     --bs-success-rgb: 16, 185, 129; */
+/*     --bs-info-rgb: 13, 202, 240; */
+/*     --bs-warning-rgb: 255, 193, 7; */
+/*     --bs-danger-rgb: 225, 29, 72; */
+/*     --bs-light-rgb: 226, 232, 240; */
+/*     --bs-dark-rgb: 51, 65, 85; */
+/*     --bs-darker-rgb: 15, 23, 42; */
+/*     --bs-primary-text-emphasis: #052c65; */
+/*     --bs-secondary-text-emphasis: #2b2f32; */
+/*     --bs-success-text-emphasis: #0a3622; */
+/*     --bs-info-text-emphasis: #055160; */
+/*     --bs-warning-text-emphasis: #664d03; */
+/*     --bs-danger-text-emphasis: #58151c; */
+/*     --bs-light-text-emphasis: #495057; */
+/*     --bs-dark-text-emphasis: #495057; */
+/*     --bs-primary-bg-subtle: #cfe2ff; */
+/*     --bs-secondary-bg-subtle: #e2e3e5; */
+/*     --bs-success-bg-subtle: #d1e7dd; */
+/*     --bs-info-bg-subtle: #cff4fc; */
+/*     --bs-warning-bg-subtle: #fff3cd; */
+/*     --bs-danger-bg-subtle: #f8d7da; */
+/*     --bs-light-bg-subtle: #fcfcfd; */
+/*     --bs-dark-bg-subtle: #ced4da; */
+/*     --bs-primary-border-subtle: #9ec5fe; */
+/*     --bs-secondary-border-subtle: #c4c8cb; */
+/*     --bs-success-border-subtle: #a3cfbb; */
+/*     --bs-info-border-subtle: #9eeaf9; */
+/*     --bs-warning-border-subtle: #ffe69c; */
+/*     --bs-danger-border-subtle: #f1aeb5; */
+/*     --bs-light-border-subtle: #e9ecef; */
+/*     --bs-dark-border-subtle: #adb5bd; */
+/*     --bs-white-rgb: 255, 255, 255; */
+/*     --bs-black-rgb: 0, 0, 0; */
+/*     --bs-font-sans-serif: "Poppins"; */
+/*     --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; */
+/*     --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0)); */
+/*     --bs-body-font-family: var(--bs-font-sans-serif); */
+/*     --bs-body-font-size: 1rem; */
+/*     --bs-body-font-weight: 400; */
+/*     --bs-body-line-height: 1.5; */
+/*     --bs-body-color: #64748b; */
+/*     --bs-body-color-rgb: 100, 116, 139; */
+/*     --bs-body-bg: #dbeafe; */
+/*     --bs-body-bg-rgb: 219, 234, 254; */
+/*     --bs-emphasis-color: #000; */
+/*     --bs-emphasis-color-rgb: 0, 0, 0; */
+/*     --bs-secondary-color: rgba(33, 37, 41, 0.75); */
+/*     --bs-secondary-color-rgb: 33, 37, 41; */
+/*     --bs-secondary-bg: #e9ecef; */
+/*     --bs-secondary-bg-rgb: 233, 236, 239; */
+/*     --bs-tertiary-color: rgba(33, 37, 41, 0.5); */
+/*     --bs-tertiary-color-rgb: 33, 37, 41; */
+/*     --bs-tertiary-bg: #f8f9fa; */
+/*     --bs-tertiary-bg-rgb: 248, 249, 250; */
+/*     --bs-heading-color: #475569; */
+/*     --bs-link-color: #2563eb; */
+/*     --bs-link-color-rgb: 37, 99, 235; */
+/*     --bs-link-decoration: none; */
+/*     --bs-link-hover-color: #1e4fbc; */
+/*     --bs-link-hover-color-rgb: 30, 79, 188; */
+/*     --bs-code-color: #d63384; */
+/*     --bs-highlight-color: #212529; */
+/*     --bs-highlight-bg: #fff3cd; */
+/*     --bs-border-width: 1px; */
+/*     --bs-border-style: solid; */
+/*     --bs-border-color: #cbd5e1; */
+/*     --bs-border-color-translucent: rgba(51, 65, 85, 0.175); */
+/*     --bs-border-radius: 0.375rem; */
+/*     --bs-border-radius-sm: 0.25rem; */
+/*     --bs-border-radius-lg: 0.5rem; */
+/*     --bs-border-radius-xl: 1rem; */
+/*     --bs-border-radius-xxl: 2rem; */
+/*     --bs-border-radius-2xl: var(--bs-border-radius-xxl); */
+/*     --bs-border-radius-pill: 50rem; */
+/*     --bs-box-shadow: 0 0 1rem rgba(0, 0, 0, 0.15); */
+/*     --bs-box-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075); */
+/*     --bs-box-shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175); */
+/*     --bs-box-shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.075); */
+/*     --bs-focus-ring-width: 0.25rem; */
+/*     --bs-focus-ring-opacity: 0.25; */
+/*     --bs-focus-ring-color: rgba(13, 110, 253, 0.25); */
+/*     --bs-form-valid-color: #198754; */
+/*     --bs-form-valid-border-color: #198754; */
+/*     --bs-form-invalid-color: #dc3545; */
+/*     --bs-form-invalid-border-color: #dc3545; */
+/*     --bs-body-gap-x: 1.25rem; */
+/*     --bs-size-xs: 1.5rem; */
+/*     --bs-size-sm: 1.75rem; */
+/*     --bs-size-md: 2rem; */
+/*     --bs-size-rg: 2.5rem; */
+/*     --bs-size-lg: 3rem; */
+/*     --bs-size-xl: 3.75rem; */
+/*     --bs-size-2xl: 4.5rem; */
+/*     --bs-size-3xl: 6rem; */
+/*     --bs-size-4xl: 9rem; */
+/*     --bs-icon-size-xs: 0.675rem; */
+/*     --bs-icon-size-sm: 0.75rem; */
+/*     --bs-icon-size-md: 0.875rem; */
+/*     --bs-icon-size-rg: 1rem; */
+/*     --bs-icon-size-lg: 1.25rem; */
+/*     --bs-icon-size-xl: 1.5rem; */
+/*     --bs-icon-size-2xl: 1.75rem; */
+/*     --bs-breakpoint-xs: 0; */
+/*     --bs-breakpoint-sm: 576px; */
+/*     --bs-breakpoint-md: 768px; */
+/*     --bs-breakpoint-lg: 992px; */
+/*     --bs-breakpoint-xl: 1200px; */
+/*     --bs-breakpoint-xxl: 1400px; */
+/*     --swiper-theme-color: #2563eb; */
+/*     -webkit-font-smoothing: antialiased; */
+/*     font-family: var(--bs-body-font-family); */
+/*     font-size: var(--bs-body-font-size); */
+/*     font-weight: var(--bs-body-font-weight); */
+/*     line-height: var(--bs-body-line-height); */
+/*     color: var(--bs-body-color); */
+/*     text-align: var(--bs-body-text-align); */
+/*     -webkit-text-size-adjust: 100%; */
+/*     -webkit-tap-highlight-color: rgba(0, 0, 0, 0); */
+/*     --bs-gutter-x: 1.5rem; */
+/*     --bs-gutter-y: 0; */
+/*     --quick-chat-gap-x: 1rem; */
+/*     --quick-chat-gap-y: 1rem; */
+/*     --quick-chat-bg: var(--bs-primary-50); */
+/*     --quick-chat-toggle-bg: var(--bs-primary-100); */
+/*     --quick-chat-head-bg: var(--bs-white); */
+/*     --quick-chat-foot-bg: var(--bs-white); */
+/*     --quck-chat-border: var(--bs-primary-200); */
+/*     margin: 0; */
+/*     padding: 0; */
+/*     list-style: none; */
+/*     box-sizing: border-box; */
+/*     text-shadow: none; */
+/*     justify-content: stretch; */
+/*     position: fixed; */
+/*     right: 1.5rem; */
+/*     bottom: 1.5rem; */
+/*     height: 32rem; */
+/*     max-height: calc(100% - 3rem + var(--appbar-height) * -1); */
+/*     width: 20rem; */
+/*     z-index: 999; */
+/*     border-radius: var(--bs-border-radius-lg); */
+/*     border: 2px solid var(--quick-chat-head-bg); */
+/*     background: #eff6ff; */
+/*     box-shadow: 0 0 0 1px var(--quck-chat-border); */
+/*     transition: 0.5s ease 0.3s; */
+/*     display: flex; */
+/*     flex-direction: column; */
+/*     opacity: 1; */
+/*     transform: translateY(0); */
+</style>
+<script>
+var g_startRn = 0;
+document.addEventListener("DOMContentLoaded", function () {
+// 페이지 로드 후 필요한 동작 실행
+
+// document.location.reload(true);
+
+loadRoomList();
+});
+function loadRoomList() {
+	// 내방 목록 출력
+	console.log("룸테스트");
+	$.ajax({
+		url: "/todayMeeting/myList",
+		type: "post",
+		dataType: "json",
+		success: function (result) {
+			
+			var roomList = result;
+			var str = '';
+			
+			$.each(roomList, function (index, TdmtngVO) {
+				str += '<div class="tyn-media-group">';
+				str += '<div class="tyn-media tyn-size-lg">';
+				str += '</div>';
+				str += '<div class="tyn-media-col">';
+				str += '<h6 class="name"><br><a href="#" onclick="myRoom(event, \'' + TdmtngVO.tdmtngNo + '\')" class="roomLink" data-tdmtngNo="' + TdmtngVO.tdmtngNo + '">' + "모임명 : " + TdmtngVO.tdmtngNm + '</a></h6>';
+				str += '<p>@' + TdmtngVO.userId + '</p>';
+				str += '</div>';
+				str += '</div>';
+			});
+			$('#myList').html(str);
+		},
+		error: function (xhr, status, error) {
+			console.error('Error fetching room list:', status, error);
+		}
+	});
+}
+function getTime() {
+	let day = new Date();
+
+	let year       = day.getFullYear();
+	let month      = ('0' + (day.getMonth() + 1)).slice(-2);
+	let date       = ('0' + day.getDate()).slice(-2);
+
+	let hour       = ('0' + day.getHours()).slice(-2);
+	let minutes    = ('0' + day.getMinutes()).slice(-2);
+	let secounds   = ('0' + day.getSeconds()).slice(-2);
+
+	let timeTT     = year + ":" + month + ":" + date;
+	let timeString = year + month + date + hour + minutes + secounds;
+
+	return timeString.trim();
+}
+function getDay() {
+
+	let day = new Date();
+
+	let year     = day.getFullYear();
+	let month    = ('0' + (day.getMonth() + 1)).slice(-2);
+	let date     = ('0' + day.getDate()).slice(-2);
+
+	let hour     = ('0' + day.getHours()).slice(-2);
+	let minutes  = ('0' + day.getMinutes()).slice(-2);
+	let secounds = ('0' + day.getSeconds()).slice(-2);
+
+	let timeTT   = year + ":" + month + ":" + date;
+
+	return timeTT.trim();
+}
+function myRoom(event, tdmtngNo) {
+	
+	event.preventDefault();
+	console.log("asdasd : " +"" + event +" "+ tdmtngNo);
+	
+	$("#myList").hide();
+
+	$.ajax({
+		url: "/todayMeeting/join?tdmtngNo=" + tdmtngNo,
+		type: "post",
+		dataType: "json",
+		success: function (result) {
+			str = '';
+			console.log("result.userId : " , result.userId);
+// 				console.log("result.userId : ", result[0]["userId"]);
+				chat(tdmtngNo, result.userId);
+		}
+	})
+}
+	function chat(tdmtngNo, userId) {
+	
+		var sockJs = new SockJS("/stomp/chat");
+		var stomp = Stomp.over(sockJs);
+	
+				messageCheck(tdmtngNo);
+// 				console.log("asdasaa : " + g_startRn);
+				stomp.connect({}, function () {
+	
+				console.log("STOMP Connection : STOMP Connection");
+				//tdmtngNo : 163
+// 				console.log("tdmtngNo : " + tdmtngNo);
+						
+				stomp.subscribe("/sub/chat/room/" + tdmtngNo, function (chat) {
+				// 구독중인 방에서 채팅 확인 (받는영역 , 메세지 표시 영역)
+				var content = JSON.parse(chat.body);
+				var msgNo = content.tdmtngChSpMsgNo;
+				var roomNo = content.tdmtngNo;
+				var message = content.tdmtngChSpMsgCn;
+				var writer = content.userId;
+				var date = content.tdmtngChSpMsgTrnsmisDt;
+	
+				let str = '';
+				let dateStr = '';
+				dateStr = date.substring(8,10) + ":" + date.substring(10,12) + ":" + date.substring(12,14);
+				console.log("content : ", content);
+				
+				if (writer === userId) {
+					str += "<div class='col-6 text-right chat-message' style='clear:both;'>";
+					str += "<div class='alert alert-secondary style=width:50px text-align:right;'>";
+					str += "<b>"  + dateStr + "<br>";
+					str += "<b>"           + message + "</b>";
+					str += "</div></div>";
+					$("#msgArea").append(str);
+					
+				} else {
+					console.log("유저아이디와 다를때", userId);
+					str += "<div class='col-6 text-left chat-message' style='clear:both;'>";
+					str += "<div class='alert alert-warning style=width:50px; text-align:left;'>";
+					str += "<b>" + dateStr + "<br>";
+// 					str += "<b> ID : " + userId + "<br>";
+					str += "<b>" + message;
+					str += "</div></div>";
+					
+					$("#msgArea").append(str);
+				} // end else
+				
+				$('#scrolling').scrollTop($('#scrolling')[0].scrollHeight);
+			}); // end stomp.subscribe
+			
+			let date = getTime();
+			
+			setTimeout(function() {
+			    stomp.send('/pub/chat/enter', {},
+			        JSON.stringify({ tdmtngNo: tdmtngNo, userId: userId , tdmtngChSpMsgTrnsmisDt : date })
+			    );
+			}, 800); // 1000ms(1초) 지연
+			
+			$("#msgArea").append(str);
+		    $('#scrolling').scrollTop($('#scrolling')[0].scrollHeight);
+		}); //end stomp
+		
+			/** 보내는 영역 */
+		$('#tynQuickChatInput').on('keydown', function(e) {
+		  
+			if (e.key === 'Enter') {
+		    
+	            e.preventDefault();
+				e.stopPropagation(); // 이벤트 전파 중지
+
+				var date = getTime();
+		        var msg = $(this).text().trim();
+		        
+		        stomp.send('/pub/chat/message', {},
+		            JSON.stringify({ tdmtngNo: tdmtngNo, tdmtngChSpMsgCn: msg, tdmtngChSpMsgTrnsmisDt: date, userId: userId })
+		        );
+		        
+		        $(this).text(''); // 입력창 비우기
+		    }
+		});//end keydown
+	}
+let lastScrollTop = 0; // 스크롤 위치를 저장하는 변수를 전역으로 선언
+// let startRn = 0;
+	function messageCheck(tdmtngNo) {
+	    $.ajax({
+	        url: "/todayMeeting/msgList",
+	        type: "POST",
+	        data: { tdmtngNo: tdmtngNo},
+	        dataType: "json",
+	        success: function(result) {
+	            let isMonth = false;
+	            let previousDate = null;
+	            
+	            //result.startRn -= 19;
+	
+// 	            g_startRn = result.startRn - 19;
+	
+	            console.log("startRn : ", g_startRn);
+	            console.log("result : ", result);
+	
+	            let joinRoom = result["joinRoom"];
+	            let msgList = result["msgList"];
+	
+	            console.log("joinRoom : ", joinRoom);
+	            console.log("msgLost : ", msgList);
+	            displayChatMessages(result);
+			$('#scrolling').scrollTop($('#scrolling')[0].scrollHeight);
+	    	}
+	    });
+	    
+	    // 스크롤 이벤트 핸들러 등록
+		    $('#scrolling').on('scroll', function() {
+		        var scrollingElement = $(this)[0];
+		        var scrollTop = scrollingElement.scrollTop;
+		        lastScrollTop = scrollTop;
+		    });
+		    
+		    // 스크롤을 가장 아래로 이동
+		$('#scrolling').scrollTop($('#scrolling')[0].scrollHeight);
+	}
+//채팅 메시지를 출력하는 함수
+function displayChatMessages(result) {
+	let isMonth = false; // 이전 날짜 출력 여부
+	let previousDate = null;
+
+	console.log("result : ", result);
+
+	let joinRoom = result["joinRoom"];
+	let msgList = result["msgList"];
+
+	console.log("joinRoom : ", joinRoom);
+	console.log("msgLost : ", msgList);
+	
+	for (let i = 0; i < msgList.length; i++) { // msgList 배열의 길이로 수정
+			let msgData = {
+				msgNo: msgList[i]["tdmtngChSpMsgNo"],
+				msgSendDate: msgList[i]["tdmtngChSpMsgTrnsmisDt"],
+				msgCont: msgList[i]["tdmtngChSpMsgCn"],
+				userId: msgList[i]["userId"],
+				roomNo: msgList[i]["tdmtngNo"]
+			};
+			
+	console.log("asdas : " + msgData.msgSendDate);
+			let str = '';
+	
+			let date         = msgData.msgSendDate.substring(0, 8).trim();
+				
+			let	currentDate  = msgData.msgSendDate.substring(0, 4).trim() + "-";
+				currentDate	+= msgData.msgSendDate.substring(4, 6).trim() + "-";
+				currentDate	+= msgData.msgSendDate.substring(6, 8).trim();
+			
+			let dayWeek = (new Date(currentDate)).getDay();
+	
+			var weekdays = ['일', '월', '화', '수', '목', '금', '토'];
+	
+			let dayWeekString = weekdays[dayWeek];
+	
+				currentDate  = msgData.msgSendDate.substring(0, 4).trim() + "년 ";
+			    currentDate	+= msgData.msgSendDate.substring(4, 6).trim() + "월 ";
+			    currentDate	+= msgData.msgSendDate.substring(6, 8).trim() + "일 ";
+
+			    currentDate	+= dayWeekString + "요일";
+	
+			if (currentDate != previousDate) {
+				str += "<div class='col-12 text-center'>"+ currentDate +"</div><br>";
+				previousDate = currentDate;
+			}
+			
+			if (msgData.userId === joinRoom.userId) {
+							// 내가 보낸 내역
+				str += "<div class='col-6 text-right chat-message' style='clear:both; text-align:right;'>";
+				str += "<div class='alert alert-secondary style=width:50px;'>";
+				str += "<b>" + msgData.msgSendDate.substring(9, 17) + "<br>";
+				str += "<b>" + msgData.msgCont;
+				str += "</div></div>"
+
+			} else {
+				str += "<div class='col-6 text-left chat-message' style='clear:both; text-align:left;'>";
+				str += "<div class='alert alert-warning style=width:50px;'>";
+				str += "<b>" + msgData.msgSendDate.substring(9, 17) + "<br>";
+				str += "<b>Id : " + msgData.userId + "<br>";
+				str += "<b>" + msgData.msgCont;
+				str += "</div></div>";
+			}//end if
+					$("#msgArea").append(str);
+	}//end for
+	
+}//end displayChatMessages
+</script>
+<div class="tyn-quick-chat" id="tynQuickChat">
+	<button class="tyn-quick-chat-toggle js-toggle-quick">
+		<svg viewBox="0 0 43 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path
+				d="M37.2654 14.793C37.2654 14.793 45.0771 20.3653 41.9525 29.5311C41.9525 29.5311 41.3796 31.1976 39.0361 34.4264L42.4732 37.9677C42.4732 37.9677 43.3065 39.478 41.5879 39.9987H24.9229C24.9229 39.9987 19.611 40.155 14.8198 36.9782C14.8198 36.9782 12.1638 35.2076 9.76825 31.9787L18.6215 32.0308C18.6215 32.0308 24.298 31.9787 29.7662 28.3333C35.2344 24.6878 37.4217 18.6988 37.2654 14.793Z"
+				fill="#60A5FA"></path>
+			<path
+				d="M34.5053 12.814C32.2659 1.04441 19.3506 0.0549276 19.3506 0.0549276C8.31004 -0.674164 3.31055 6.09597 3.31055 6.09597C-4.24076 15.2617 3.6751 23.6983 3.6751 23.6983C3.6751 23.6983 2.99808 24.6357 0.862884 26.5105C-1.27231 28.3854 1.22743 29.3748 1.22743 29.3748H17.3404C23.4543 28.7499 25.9124 27.3959 25.9124 27.3959C36.328 22.0318 34.5053 12.814 34.5053 12.814ZM19.9963 18.7301H9.16412C8.41419 18.7301 7.81009 18.126 7.81009 17.3761C7.81009 16.6261 8.41419 16.022 9.16412 16.022H19.9963C20.7463 16.022 21.3504 16.6261 21.3504 17.3761C21.3504 18.126 20.7358 18.7301 19.9963 18.7301ZM25.3708 13.314H9.12245C8.37253 13.314 7.76843 12.7099 7.76843 11.96C7.76843 11.21 8.37253 10.6059 9.12245 10.6059H25.3708C26.1207 10.6059 26.7248 11.21 26.7248 11.96C26.7248 12.7099 26.1103 13.314 25.3708 13.314Z"
+				fill="#2563EB"></path>
+		</svg>
+		<span class="badge bg-primary top-0 end-0 position-absolute rounded-pill">2</span>
+	</button>
+	<div class="tyn-quick-chat-box">
+		<div id="myList" style="overflow: auto"></div>
+			<div id="scrolling" style="overflow: auto;">
+				<div>
+					<div class="tyn-reply-text">
+						<div id="msgArea"></div>
+					</div>
+						<div id="msgArea2"></div>
+				</div>
+			</div>
+		<div id="msgArea3"><br /><br /><br /></div>
+		<div>
+			<div class="tyn-quick-chat-form" id="chat_form">
+				<div class="tyn-chat-form-input bg-light" id="tynQuickChatInput" contenteditable=""></div>
+				<ul class="tyn-list-inline me-n2 my-1">
+					<li>
+						<button id="msg" class="btn btn-icon btn-white btn-sm btn-pill">
+							<!-- send-fill -->
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+								class="bi bi-send-fill" viewBox="0 0 16 16">
+								<path
+									d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z">
+								</path>
+							</svg>
+						</button>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,49 @@
+package kr.or.ddit.onedayclass.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import kr.or.ddit.onedayclass.service.OnedayClassService;
+import kr.or.ddit.vo.VOndyclProUsersVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@Slf4j
+@RequestMapping("/onedayClass")
+public class OnedayClassController {
+	
+	@Autowired
+	OnedayClassService onedayClassService;
+	
+	//원데이클래스 게시판 호출
+	@GetMapping("/main")
+	public String main(Model model) {
+		List<VOndyclProUsersVO> vOndyclProUsersVOList = this.onedayClassService.vOndyclProUsersVOList();
+		int countOndycl = this.onedayClassService.countOndycl();
+		String codeNm;
+		String codeCd;
+		
+		//카테고리 이름
+		for(int i=0;i<vOndyclProUsersVOList.size();i++) {
+//			log.info(vOndyclProUsersVOList.get(i).getSpcltyRealmCode());
+			codeCd = vOndyclProUsersVOList.get(i).getSpcltyRealmCode();
+			codeNm = this.onedayClassService.getCodeNm(codeCd);
+			
+			vOndyclProUsersVOList.get(i).setSpcltyRealmCode(codeNm);
+		}
+		model.addAttribute("vOndyclProUsersVOList", vOndyclProUsersVOList);
+		model.addAttribute("countOndycl", countOndycl);
+		return "onedayClass/main";
+	}
+	
+	@GetMapping("/onedayClassDetail")
+	public String detail() {
+		return "onedayClass/onedayClassDetail";
+	}
+	
+}

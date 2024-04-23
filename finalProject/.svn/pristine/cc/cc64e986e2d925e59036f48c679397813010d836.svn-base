@@ -1,0 +1,21 @@
+package kr.or.ddit.pro.join.service;
+
+import java.util.Map;
+
+import kr.or.ddit.vo.UsersVO;
+
+public interface ProJoinService {
+
+	public int emailCk(String email);
+
+	public int idCk(String userId);
+
+	public int ncnmCk(String userNcnm);
+
+	public void certifiedPhoneNumber(String mberMbtlnum, String numStr);
+
+	public UsersVO proLogin(Map<String, Object> userMap);
+
+	public int proInsert(Map<String, Object> map);
+
+}

@@ -1,0 +1,18 @@
+package kr.or.ddit.vo;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+public class ResveDetailVO {
+	private int resveNo;
+	private int ondyclSchdulNo;
+	private int ondyclNo;
+	private int resveTotqy;
+	private int resveTpprice;
+}

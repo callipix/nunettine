@@ -1,0 +1,16 @@
+package kr.or.ddit.vo;
+
+import java.util.Date;
+import lombok.Data;
+
+@Data
+public class OndyclReviewVO {
+	
+	private int ondyclReNo;
+	private String ondyclReCn;
+	private Date ondyclReWrDt;
+	private String mberNcnm;
+	private String mberId;
+	private int ondyclNo;
+
+}

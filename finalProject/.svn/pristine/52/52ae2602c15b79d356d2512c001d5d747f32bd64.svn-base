@@ -1,0 +1,253 @@
+/* header 부분 고정 */
+.header__wrapper {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+  background-color: white;
+  box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.3),
+    0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+}
+
+/* 다른 화면과 다르게 배경을 가득채우고 싶어서 padding값 초기화 */
+.chats-body {
+  padding: 10px 0px;
+  padding-top: 100px;
+}
+
+/* 패딩값 초기화되면 안되는 부분 다시 할당  */
+.chats-body .header,
+.chats-body .status-bar {
+  padding: 10px 25px;
+}
+
+/* 채팅방 배경화면 */
+.chats-body {
+  background-image: url("../images/circuit.png");
+  min-height: 200vh;
+}
+
+/* 채팅 치는 input 디자인 */
+.chat__write-container {
+  /* 페이지가 움직여도 고정되도록 position:fixed  */
+  position: fixed;
+  bottom: 0px;
+  /* 가운데정렬 방법 */
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  /* 컬럼들 flex 이용해서 가로 정렬 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.chat__icon-left {
+  position: absolute;
+  left: 10px;
+}
+
+.chat__icon-right {
+  position: absolute;
+  right: 10px;
+}
+
+@keyframes float {
+  0% {
+    box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25),
+      0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+  }
+
+  50% {
+    box-shadow: 0 30px 60px -60px rgba(50, 50, 93, 0.25),
+      0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+  }
+  100% {
+    box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25),
+      0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+  }
+}
+
+.chat__write {
+  bottom: 0px;
+  margin: 0 auto;
+  width: 100%;
+  border-radius: 0;
+  padding: 20px 60px;
+  border: none;
+  font-size: 14px;
+  background-color: #fcfcfc;
+  transition: width 0.3s ease-in, border-radius 0.3s ease-in,
+    transform 0.3s ease-in-out;
+}
+
+/* 커서가 올라갔을 때 효과 없앰 */
+.chat__write:focus {
+  outline: none;
+  width: 80%;
+
+  transform: translateY(-100px);
+  border-radius: 40px;
+  box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25),
+    0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+  animation: float 3s linear infinite forwards;
+}
+
+.chat__icon {
+  transition: opacity 0.2s ease-in-out;
+}
+
+.chat__write:focus ~ .chat__icon {
+  opacity: 0;
+}
+
+.chat__write-container i {
+  font-size: 22px;
+}
+
+/* 채팅을 입력하는 부분만 너비가 넓어야 함  ~~grid-column 1fr 8fr 1fr */
+.chat__write-column:nth-child(2) {
+  width: 80%;
+}
+
+/* 채팅을 입력하는 부분 */
+.chat__write-column input {
+  width: 100%;
+}
+
+/* 메시지 리스트  flex+ flex-direction:column으로 세로 정렬 */
+.chat__messages {
+  border-top: 1px solid #fcfcfc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 20px;
+  padding-top: 30px;
+}
+
+/* 채팅방 윗부분 타임스탬프 디자인 */
+.chat__messages .chat__timestamp {
+  background-color: white;
+  font-size: 14px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 8px 16px -8px,
+    rgba(0, 0, 0, 0.024) 0px -6px 16px -6px;
+  font-weight: 700;
+}
+
+/* 수신, 송신 메세지 공통 css  */
+.message {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 25px;
+}
+/* 수신, 송신 메세지 버블 공통 css  */
+.message .message__bubble {
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 8px 16px -8px,
+    rgba(0, 0, 0, 0.024) 0px -6px 16px -6px;
+  padding: 10px 20px;
+  border-radius: 30px;
+  display: block;
+}
+.message__timestamp {
+  font-size: 12px;
+}
+
+/* 수신 메시지 왼쪽 정렬 */
+.incoming-message {
+  align-self: flex-start;
+}
+
+@keyframes spin {
+  from {
+    transform: none;
+  }
+
+  to {
+    transform: rotateY(1turn);
+  }
+}
+
+/* 수신 메시지 아바타(이미지) 크기 설정 */
+.incoming-message img {
+  width: 50px;
+  border-radius: 15px;
+  margin-right: 20px;
+  /* animation: spin 1s linear infinite; */
+}
+/* 수신 메시지 타임 스탬프  */
+.incoming-message .message__timestamp {
+  margin-top: 25px;
+  margin-left: 10px;
+}
+
+/* 수신 메시지 메시지 작성자 */
+.incoming-message .message__author {
+  margin-bottom: 15px;
+  display: block;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+/* 수신 메시지 버블 왼쪽 윗부분 flat하게 만들기 + gradient 속성 */
+.incoming-message .message__bubble {
+  border-top-left-radius: 0px;
+  background-image: linear-gradient(to right, #bdc3c7, #2c3e50);
+}
+
+/* 송신 메시지 오른쪽 정렬 */
+.sent-message {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* 송신 메시지 타임스탬프 */
+.sent-message .message__timestamp {
+  margin-right: 10px;
+}
+
+/* 송신 메시지 버블 오른쪽 아래 flat + gradient 속성 */
+.sent-message .message__bubble {
+  border-bottom-right-radius: 0px;
+  background-image: linear-gradient(to left, #ffe259, #ffa751);
+}
+
+@keyframes incomingAnim {
+  from {
+    opacity: 0;
+    transform: translateX(-200px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.incoming-message {
+  animation: incomingAnim 0.5s ease-out forwards;
+}
+
+@keyframes sentAnim {
+  from {
+    opacity: 0;
+    transform: translateX(200px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.sent-message {
+  animation: sentAnim 0.5s ease-out forwards;
+}
+
+.chats__chat {
+  padding: 10px 0px;
+}

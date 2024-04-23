@@ -1,0 +1,467 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%-- <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%> --%>
+<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+<script type="text/javascript" src="/resources/js/jquery.min.js"></script>
+<script type="text/javascript" src="/resources/ckeditor5/ckeditor.js"></script>
+<script type="text/javascript" src="/resources/js/bootstrap.bundle.js"></script>
+<link type="text/css" rel="stylesheet"
+	href="/resources/ckeditor5/sample/css/sample.css" media="screen" />
+<style>
+.form-control {
+	background-attachment: local;
+	background-image: linear-gradient(to right, white 10px, transparent 10px),
+		linear-gradient(to left, white 10px, transparent 10px),
+		repeating-linear-gradient(white, white 30px, #ccc 30px, #ccc 31px, white
+		31px);
+	line-height: 31px;
+	padding: 8px 10px;
+}
+</style>
+<script type="text/javascript">
+function udtAns(no){
+	console.log("수정");
+	console.log(no);
+	
+	$("#lbrtyBbscttAnswerCn"+no).attr("readonly", false);
+	console.log("#ansUdt"+no);
+	console.log("#lbrtyBbscttAnswerCn"+no);
+	
+	$("#ansUdt"+no).show();
+	$("#ansUdt"+no).on("click",function(){
+		console.log("할룽");
+		console.log($("#lbrtyBbscttAnswerCn"+no).val())
+		let lbrtyBbscttAnswerCn = $("#lbrtyBbscttAnswerCn"+no).val();
+		console.log(no);
+		
+		let data = {
+			"lbrtyBbscttAnswerNo" : no,
+			"lbrtyBbscttAnswerCn" : lbrtyBbscttAnswerCn
+		}
+		
+		$.ajax({
+			url:"/lbrtybbsctt/updataAns",
+			type:"post",
+			data:JSON.stringify(data),
+			contentType:"application/json;charset=UTF-8",
+			dataType:"text",
+			success:function(res){
+				console.log("res",res);
+				listAns();
+				$("#ansUdt"+no).hide();
+				$("#lbrtyBbscttAnswerCn"+no).attr("readonly", true);
+			}
+		});
+	});
+	
+	$("#ansUdt"+no).val()
+	
+}
+
+//댓글 삭제
+function delAns(no){
+	console.log("삭제");
+	console.log(no);
+	let data = {
+		"lbrtyBbscttAnswerNo": no
+	}
+	console.log("no : ", no);
+	
+	$.ajax({
+		url:"/lbrtybbsctt/deleteAns",
+		type:"post",
+		data:JSON.stringify(data),
+		contentType:"application/json;charset=utf-8",
+		dataType:"text",
+		success:function(res){
+			console.log("res",res)
+			listAns();
+		}
+	});
+	
+}
+
+var lbrtyBbscttNo = "${detail.lbrtyBbscttNo}";
+//댓글 관련
+let data = {
+	"lbrtyBbscttNo" : lbrtyBbscttNo
+}
+// 댓글 조회
+listAns();
+function listAns(){
+	$.ajax({
+		url:"/lbrtybbsctt/listAns",
+		type:"post",
+		data:JSON.stringify(data),
+		contentType:"application/json;charset=utf-8",
+		dataType:"json",
+		success:function(res){
+			console.log("result : ",res);
+			
+			let str = "";
+			$("#ansRes").html("");
+			
+			//res : LbrtyBbscttAnswerVO
+			$.each(res,function(idx,LbrtyBbscttAnswerVO){
+				str+=`
+				<div class="gams\${idx}">
+				<a>댓글번호 : <span class="gam\${idx}">\${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerNo}</span></a><br>
+				<b>\${LbrtyBbscttAnswerVO.userNcnm} (\${LbrtyBbscttAnswerVO.userId})</b><br>
+				<textarea name="lbrtyBbscttCn" id="lbrtyBbscttAnswerCn\${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerNo}" class="form-control" 
+				readonly rows="1" cols="50" 
+				style="border: none" >\${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerCn}</textarea>
+				<button type="button" class="btn btn-block" style="width:2.5cm; display:none;"
+					id="ansUdt\${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerNo}">등록</button>
+				<a>작성일자 : \${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerWrDt} </a>
+				<div class="dropdown">
+				<button class="btn btn-secondary dropdown-toggle" type="button"
+					id="dropdownMenuButton1" data-bs-toggle="dropdown"
+					aria-expanded="false">Dropdown button
+					\${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerNo}</button>
+				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+					<li><a class="dropdown-item" href="javacsript:void(0);" onclick="udtAns(\${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerNo});" >수정</a></li>
+					<li><a class="dropdown-item" href="javacsript:void(0);" onclick="delAns(\${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerNo});">삭제</a></li>
+				</ul>
+				</div>
+				<button type="button" class="btn btn-block" style="width:2.5cm;"
+					id="ansInt2\${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerNo}" 
+					name="ansInt2\${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerNo}"
+					onclick="ansAnsInt(\${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerNo});">답글 </button>
+				<div id="ansAns\${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerNo}" style="display:none;">
+					<textarea class="form-control"
+					style="border: none" id="lbrtyBbscttAnswerCn2\${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerNo}"
+					name="lbrtyBbscttAnswerCn2\${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerNo}"
+					rows="1" cols="50" placeholder="답글을 입력해주세요..."></textarea>
+					<button type="button" class="btn" style="width:2.5cm;"
+						id="ansInt3\${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerNo}"
+						name="ansInt3\${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerNo}"
+						>등록</button>
+					<button type="button" class="btn" style="width:2.5cm;"
+						id="cnsInt\${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerNo}"
+						name="cnsInt\${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerNo}"
+						onclick="cnsInt(\${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerNo});">취소</button>
+				</div>
+					<button type="button" class="btn" style="width:4cm;"
+						id="ansAnsViewBtn\${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerNo}" 
+						name="ansAnsViewBtn\${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerNo}"
+						onclick="ansAnsViewBtn(\${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerNo})">
+						답글 보기 </button>
+					<button type="button" class="btn" style="width:4cm; display:none;"
+						id="ansAnsViewBtn2\${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerNo}" 
+						name="ansAnsViewBtn2\${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerNo}">
+						답글 보기 </button>
+					<div id="ansAnsView2\${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerNo}"
+					style="display:none;">
+					</div>
+				</div>
+				
+				<hr>
+				`; 
+			})
+			$("#ansRes").append(str);
+			
+		}
+	});
+	}
+
+//답글 달기
+function ansAnsInt(no){
+	console.log(no);
+	$("#ansAns"+no).show();
+	
+	$("#ansInt3"+no).on("click",function(){
+		console.log($("#lbrtyBbscttAnswerCn2"+no).val());
+		
+		let lbrtyBbscttAnswerCn = $("#lbrtyBbscttAnswerCn2"+no).val();
+	});
+};
+//답글 달기 취소
+function cnsInt(no){
+	$("#ansAns"+no).hide();
+};
+
+//답글 보기
+function ansAnsViewBtn(no){
+	console.log(no);
+	$("#ansAnsViewBtn"+no).hide();
+	$("#ansAnsViewBtn2"+no).show();
+	$("#ansAnsView2"+no).show();
+	
+	$("#ansAnsViewBtn2"+no).on("click",function(){
+		console.log("돨까요?");
+		$("#ansAnsViewBtn"+no).show();
+		$("#ansAnsViewBtn2"+no).hide();
+		$("#ansAnsView2"+no).hide();
+	});
+	
+};
+
+
+
+$(function(){
+	// 댓글 달기 
+	$("#ansInt").on("click",function(){
+		console.log("하요");
+		
+		let lbrtyBbscttAnswerCn = $("#lbrtyBbscttAnswerCn").val();
+		let data = {
+			"lbrtyBbscttAnswerCn":lbrtyBbscttAnswerCn,
+			"lbrtyBbscttNo" : lbrtyBbscttNo
+		}
+		console.log("data",data)
+		$.ajax({
+			url:"/lbrtybbsctt/insertAns",
+			type:"post",
+			data:JSON.stringify(data),
+			contentType:"application/json;charset=utf-8",
+			dataType:"text",
+			success:function(res){
+				console.log("result : ",res);
+				
+				$("#lbrtyBbscttAnswerCn").val("");
+				listAns();
+				/* let str = "";
+				$("#ansRes").html("");
+				
+				//res : LbrtyBbscttAnswerVO
+				$.each(res,function(idx,LbrtyBbscttAnswerVO){
+					str+=`
+					<a>작성자 : \${LbrtyBbscttAnswerVO.userNcnm} (\${LbrtyBbscttAnswerVO.userId})</a><br>
+					<a>내용 : \${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerCn}</a><br>
+					<a>작성일자 : \${LbrtyBbscttAnswerVO.lbrtyBbscttAnswerWrDt} </a>
+					<button type="button" class="btn btn-block" style="width:2.5cm;"
+						id="ansInt2" name="ansInt2">답글 </button>
+					<div class="input-group-append" id="ansans" style="display:none;">
+					<br><br>
+					<textarea class="form-control" 
+					style="border: none" id="lbrtyBbscttAnswerCn" name="lbrtyBbscttAnswerCn"
+					rows="1" placeholder="답글을 입력해주세요..."></textarea>
+					<button type="button" class="btn btn-block" style="width:2.5cm;"
+					id="ansInt3" name="ansInt3">등록</button>
+					</div>
+					<hr>
+					`;  */
+				//})
+				//$("#ansRes").append(str);
+				
+			}
+		});
+		
+		
+		
+	});
+	
+	//댓글 끝
+	
+	
+	
+	var fileNo = 0;
+	var filesArr = new Array();
+	
+	/* 첨부파일 추가  이미지 미리보기 시작*/
+	let sel_file = [];
+	$("#uploadFile").on("change",handleImgFileSelect);
+	function handleImgFileSelect(e){
+		let files = e.target.files;
+		console.log("files : "+ files);
+		
+		let fileArr = Array.prototype.slice.call(files);
+		console.log("fileArr : %o"+ fileArr);
+		
+		fileArr.forEach(function(str){
+			console.log("str : " + str);
+		});
+		
+		
+	}
+		
+	
+	console.log("개똥이");
+	
+	$(".ck-blurred").keydown(function(){
+		console.log("str : " + window.editor.getData());
+		
+		$("#lbrtyBbscttCn").val(window.editor.getData());
+	});
+	
+	$(".ck-blurred").on("focusout",function(){
+		$("#lbrtyBbscttCn").val(window.editor.getData());
+	});
+	
+	//게시글 수정
+	$("#bbsUdt").on("click",function(){
+		console.log("난 수정을 하겠다.");
+		
+		$("#cncn").hide();
+		$("#ansView").hide();
+		$("#ckCn").show();
+		$("#lbrtyBbscttSj").attr("readonly", false);
+		
+		$("#lbrtyBbscttCn").val();
+		$("#lbrtybbsUdt").on("click",function(){
+			let lbrtyBbscttCn = $("#lbrtyBbscttCn").val();
+			let lbrtyBbscttSj = $("#lbrtyBbscttSj").val();
+			let data = {
+				"lbrtyBbscttNo":lbrtyBbscttNo,
+				"lbrtyBbscttSj":lbrtyBbscttSj,
+				"lbrtyBbscttCn":lbrtyBbscttCn
+			} 
+			console.log(data);
+			$.ajax({
+				url:"/lbrtybbsctt/bbsUpdate",
+				type:"post",
+				data:JSON.stringify(data),
+				contentType:"application/json;charset=utf-8",
+				dataType:"text",
+				success:function(res){
+					console.log(res)
+					window.location.reload();
+				}
+			});
+		});
+		
+		
+		//$("#").attr("readonly", false);
+		
+		//게시글 수정시 가능한것, 제목, 내용, 첨부파일
+		
+		
+	});
+	
+	//게시글 삭제
+	$("#bbsDel").on("click",function(){
+		console.log("난 삭제를 하겠다.");
+		console.log(lbrtyBbscttNo);
+		var con = confirm("정말로 삭제하시겠습니까?");
+		
+		console.log(con);
+		
+		if(!con) return;
+		
+		console.log("취소 누르면 실행되면 안돼")
+		
+		let data = {
+			"lbrtyBbscttNo":lbrtyBbscttNo
+		}
+		$.ajax({
+			url:"/lbrtybbsctt/bbsDelete",
+			type:"post",
+			data:JSON.stringify({
+					"lbrtyBbscttNo":lbrtyBbscttNo
+				}),
+			dataType:"text",
+			contentType:"application/json;charset=utf-8",
+			success:function(res){
+				console.log(res)
+				window.location.href = "/lbrtybbsctt/read2"
+			}
+		});
+	});
+});
+</script>
+<div class="card card-primary">
+	<%-- ${detail} --%>
+	<button type="button" class="btn btn-block btn-secondary btn-sm w-25"
+		id="bbsUdt">수정</button>
+	<button type="button" class="btn btn-block btn-secondary btn-sm w-25"
+		id="bbsDel">삭제</button>
+	<div class="card-header">
+		<h3 class="card-title">게시글 상세보기</h3>
+	</div>
+
+
+
+	<!-- 
+	요청URI : /stud/create?register
+	요청파라미터 : {studId=a001,studNm=개똥이,studPw=java,studDet=학생상세내용
+				,gender=여성,nationality=korea,postNum=12345,studAddress=대전 중구
+				,studAddress2=123-33}
+	파람즈 : register
+	요청방식 : post
+	 -->
+	<form name="frm" id="frm" action="/lbrtybbsctt/create" method="post"
+		enctype="multipart/form-data">
+		<div class="card-body">
+			<div class="form-group">
+				<label for="userId">작성자 아이디</label> <input type="text" name="userId"
+					class="form-control" id="userId" placeholder="작성자 아이디" required
+					readonly
+					style="border: none; border-right: 0px; border-top: 0px; boder-left: 0px; boder-bottom: 0px;"
+					value="${detail.userId}" />
+			</div>
+			<div class="form-group">
+				<label for="lbrtyBbscttSj">게시글 제목</label> <input type="text"
+					name="lbrtyBbscttSj" class="form-control" id="lbrtyBbscttSj"
+					placeholder="게시글 제목" required readonly
+					style="border: none; border-right: 0px; border-top: 0px; boder-left: 0px; boder-bottom: 0px;"
+					value="${detail.lbrtyBbscttSj}" />
+			</div>
+			<div class="form-group">
+				<label for="uploadFile">첨부 파일</label>
+				<div class="custom-file">
+					<input type="file" name="uploadFile" id="uploadFile"
+						class="custom-file-input filebox"
+						style="border: none; border-right: 0px; border-top: 0px; boder-left: 0px; boder-bottom: 0px;"
+						multiple />
+					<div class="file-list"></div>
+					<label class="custom-file-label" for="uploadFile">Choose
+						file</label>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<hr>
+				<label for="lbrtyBbscttCn"></label>
+				<div id="cncn">${detail.lbrtyBbscttCn}</div>
+				<textarea name="lbrtyBbscttCn" id="lbrtyBbscttCn"
+					class="form-control" readonly rows="4" style="display: none;"></textarea>
+				<div class="form-group" id="ckCn" style="display: none;">
+					<label for="lbrtyBbscttCn2">게시글 내용</label>
+					<div id="cklbrtyBbscttCn" style="height: 150px;">${detail.lbrtyBbscttCn}</div>
+					<textarea name="lbrtyBbscttCn2" id="lbrtyBbscttCn2"
+						class="form-control" rows="4" style="display: none;"></textarea>
+					<button type="button"
+						class="btn btn-block btn-secondary btn-sm w-25" id="lbrtybbsUdt">수정</button>
+					<button type="button"
+						class="btn btn-block btn-secondary btn-sm w-25" id="lbrtybbsUdt">취소</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="card-footer">
+			<button type="submit" class="btn btn-primary" style="display: none;">등록</button>
+			<button type="reset" class="btn btn-secondary" style="display: none;">초기화</button>
+		</div>
+		<%-- <sec:csrfInput/> --%>
+	</form>
+	<div id="ansView">
+		<!--====================== 댓글 시작============================== -->
+		<!-- 드롭다운 -->
+		<!-- 드롭다운 끝 -->
+		<br> <br>
+		<div class="col-sm-6">
+
+			<div class="form-group">
+				<div>
+					<textarea class="form-control" style="border: none"
+						id="lbrtyBbscttAnswerCn" name="lbrtyBbscttAnswerCn" rows="1"
+						cols="100" placeholder="댓글을 입력해주세요..."></textarea>
+					<button type="button" class="btn btn-block" style="width: 2.5cm;"
+						id="ansInt" name="ansInt">등록</button>
+				</div>
+				<hr>
+				<div id="ansRes"></div>
+			</div>
+		</div>
+
+		<!--====================== 댓글 끝============================== -->
+	</div>
+	<script type="text/javascript">
+ClassicEditor
+ .create(document.querySelector('#cklbrtyBbscttCn'),
+		{ckfinder:{uploadUrl:'/upload/uploads?${_csrf.parameterName}=${_csrf.token}'}})
+ .then(editor=>{window.editor=editor;})
+ .catch(err=>{console.error(err.stack);});
+
+</script>

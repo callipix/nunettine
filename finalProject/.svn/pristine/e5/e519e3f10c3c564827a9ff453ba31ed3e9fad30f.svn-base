@@ -1,0 +1,117 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<style>
+    #hiddenElement {
+        display: none;
+    }
+</style>
+<script>
+$(document).ready(function() {
+	
+	    $.ajax({
+	        url: "/todayMeeting/listAjax",
+	        type: "post",
+	        contentType: "application/json;",
+	        dataType: "json",
+	        success: function(result) {
+	            var roomList = result;
+	            var allRoomContent = '';
+	            $.each(roomList, function(index, TdmtngVO) {
+	                allRoomContent += '<div class="tyn-media-group">';
+	                allRoomContent += '<div class="tyn-media tyn-size-lg">';
+	                allRoomContent += '</div>';
+	                allRoomContent += '<div class="tyn-media-col">';
+	                allRoomContent += '<h6 class="name"><a href="#" class="roomLink" data-tdmtngNo="' + TdmtngVO.tdmtngNo + '">' + "모임명 : " +TdmtngVO.tdmtngNm + '</a></h6>';
+	                allRoomContent += '<p class="content">@' + TdmtngVO.userId + '</p>';
+	                allRoomContent += '</div>';
+	                allRoomContent += '</div>';
+	            });
+	            $('#roomWrap').html(allRoomContent);
+	        },
+	        error: function(xhr, status, error) {
+	            console.error('Error fetching room list:', status, error);
+	        }
+    });
+});
+$(document).on('click', '.roomLink', function(e) {
+    e.preventDefault(); // 기본 동작 방지
+    console.log("테스트 : " + e);
+    
+    var tdmtngNo = $(this).attr('data-tdmtngNo'); // 클릭한 방의 tdmtngNo 가져오기
+    
+    $.ajax({
+        url: "/todayMeeting/join",
+        type: "post",
+        data: { tdmtngNo: tdmtngNo }, // 객체 형태로 전달
+        dataType : "json",
+//         contentType : "application/json;",
+        success: function(result) {
+        	console.log("result : " +  tdmtngNo);
+        	
+        	str = ''
+        	
+            // 가져온 페이지 HTML을 원하는 위치에 추가합니다.
+            $('#roomWrap').html(msgArea1);
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching room page:', status, error);
+        }
+    });
+    
+    var sockJs = new SockJS("/stomp/chat");
+ 	var stomp = Stomp.over(sockJs);
+	
+ 	stomp.connect({}, function() {
+	console.log("STOMP Connection");
+	
+	stomp.subscribe("/sub/chat/room/" + tdmtngNo, function(chat) {
+		
+	    var content = JSON.parse(chat.body);
+	    var roomNo  = content.tdmtngNo;
+	    var message = content.tdmtngChSpMsgCn;
+	    var writer = content.userId;
+	    var date = content.tdmtngChSpMsgTrnsmisDt;
+	    
+	    let str = '';
+	    
+		console.log("content : " , content);
+		
+	    if (writer === userId) {
+	        str += "<div class='col-6'>";
+	        str += "<div class='alert alert-secondary'>";
+	        str += "<b>" + writer + " : " + message + "</b>";
+	        str += "</div></div>";
+	    } else {
+	    	console.log("유저아이디와 다를때" , userId);
+	        str += "<div class='col-6'>";
+	        str += "<div class='alert alert-warning'>";
+	        str += "<b>" + writer + " : " + message + "</b>";
+	        str += "</div></div>";
+	    }
+	    $("#msgArea").append(str);
+	});
+	
+		console.log("테스트" , tdmtngNo)
+		stomp.send('/pub/chat/enter', {},
+			  JSON.stringify({ tdmtngNo: tdmtngNo, userId : userId })
+			  );
+	});
+	$("#msg").keydown(function(key) {
+	  var msg = document.getElementById("msg");
+	  
+	  var date = getTime();
+	  
+	  if (key.keyCode == 13) {
+	      stomp.send('/pub/chat/message', {},
+	          JSON.stringify({ tdmtngNo: tdmtngNo, tdmtngChSpMsgCn: msg.value, tdmtngChSpMsgTrnsmisDt: date , userId:userId})
+	      );
+	      console.log('Enter');
+	      msg.value = '';
+	  }
+	
+	});
+});
+</script>

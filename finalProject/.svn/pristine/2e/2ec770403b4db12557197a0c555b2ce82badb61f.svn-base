@@ -1,0 +1,14 @@
+package kr.or.ddit.vo;
+
+import lombok.Data;
+
+@Data
+public class OndyclSchdulVO {
+
+	private int ondyclSchdulNo;
+	private int ondyclNo;
+	private String ondyclSchdulDe;
+	private String ondyclSchdulBeginTime;
+	private String ondyclSchdulEndTime;
+}
+

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+      integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/mobile.css" />
+    <link rel="stylesheet" href="css/profile.css" />
+  </head>
+  <body>
+    <nav class="profile_nav">
+      <a href="friends.html"><span class="back_btn"><</span></a>
+      <ul class="profile_icon_list">
+        <li class="profile_icon"><i class="fas fa-cog"></i></li>
+        <li class="profile_icon"><i class="fas fa-cog"></i></li>
+        <li class="profile_icon"><i class="fas fa-cog"></i></li>
+      </ul>
+    </nav>
+    <div class="profile_music">
+      <img src="images/music.jpg" class="music_image" />
+      <div class="music">
+        <div class="music_title">I Wish I Missed MY Ex</div>
+        <div class="music_artist">Mahila</div>
+      </div>
+    </div>
+    <div class="profile_my">
+      <img src="images/profile.jpg" class="profile_avatar" />
+      <span class="profile__name">
+        강형민
+      </span>
+    </div>
+    <ul class="profile_under_nav">
+      <li class="more__btn">
+        <span class="more__btn-icon">
+          <i class="far fa-smile fa-2x"></i>
+        </span>
+        <span class="more__btn-title">나와의 채팅</span>
+      </li>
+      <li class="more__btn">
+        <span class="more__btn-icon">
+          <i class="far fa-smile fa-2x"></i>
+        </span>
+        <span class="more__btn-title">프로필 편집</span>
+      </li>
+      <li class="more__btn">
+        <span class="more__btn-icon">
+          <i class="far fa-smile fa-2x"></i>
+        </span>
+        <span class="more__btn-title">카카오스토리</span>
+      </li>
+    </ul>
+    <div class="bigScreen">
+      <img src="images/media.png" alt="" />
+      <span class="bigScreen__text"> 지원하지 않는 해상도입니다. 화면을 줄여주세요</span>
+    </div>
+  </body>
+</html>

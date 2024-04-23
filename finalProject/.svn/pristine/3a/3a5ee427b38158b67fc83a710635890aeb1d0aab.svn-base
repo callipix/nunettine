@@ -1,0 +1,17 @@
+/* setting sections 구분을 위한 border */
+.settings .settings__sections {
+  border-top: 1px solid black;
+  padding-top: 20px;
+}
+
+/* 각 setting 별 공간구분을 위한 margin-bottom */
+.settings__setting {
+  margin-bottom: 30px;
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+/* setting icon과 title 간격 */
+.settings__setting .settings__icon {
+  margin-right: 18px;
+}

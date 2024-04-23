@@ -1,0 +1,39 @@
+package kr.or.ddit.board.pro_story.vo;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+public class AddPaging {
+
+	/* 최소 페이지 번호 */
+	private int min;
+	
+	/* 최대 페이지 번호 */
+	private int max;
+	
+	/* 이전 페이지 번호 */
+	private int prevPage;
+	
+	/* 다음 페이지 번호 */
+	private int nextPage;
+	
+	/* 총 페이지 번호 */
+	private int totalPage;
+	
+	/* 최근 페이지 번호 */
+	private int currentPage;
+	
+	public AddPaging(int contentCnt , int currentPage , int contentPageCnt , int paginationCnt){
+		
+		this.currentPage = currentPage;
+		totalPage = contentCnt / contentPageCnt;
+		
+		
+	}
+}

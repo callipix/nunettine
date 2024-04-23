@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.board.review_board.mapper.ReviewBoardMapper">
+
+	<update id="updateCnt" parameterType="int">
+		UPDATE AFTUS_BBSCTT SET AFTUS_BBSCTT_RDCNT=AFTUS_BBSCTT_RDCNT+1
+		WHERE AFTUS_BBSCTT_NO=#{aftusBbscttNo}
+	</update>
+
+	<select id="list" parameterType="hashMap" resultType="aftusBbscttVO">
+		SELECT A.AFTUS_BBSCTT_NO, A.AFTUS_BBSCTT_SJ
+			, TO_CHAR(A.AFTUS_BBSCTT_WR_DT, 'YYYY.MM.DD') AFTUS_BBSCTT_WR_DT
+			, A.AFTUS_BBSCTT_RDCNT, B.USER_NCNM, SPRVISE_ATCHMNFL_NO
+		FROM AFTUS_BBSCTT A, USERS B
+		WHERE B.USER_ID=A.USER_ID
+		<if test="keyword!=null and keyword!=''">
+			AND (
+			<if test="searchKey == 'title'">
+					A.AFTUS_BBSCTT_SJ LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchKey == 'writher'">
+					B.USER_NCNM LIKE '%' || #{keyword} || '%'
+			</if>
+			)
+		</if>
+		ORDER BY A.AFTUS_BBSCTT_NO DESC
+	</select>
+	
+	<select id="listModal" parameterType="String" resultType="SrvcRequstVO">
+		SELECT DISTINCT A.SRVC_REQUST_NO, A.SRVC_REQUST_SJ, A.SRVC_REQUST_WR_DT, A.SRVC_REQUST_COMPT_DT 
+		FROM SRVC_REQUST A, AFTUS_BBSCTT B
+		WHERE A.SRVC_REQUST_PROCESS_AT=3 AND A.MBER_ID=#{userId} AND
+		NOT EXISTS(
+			SELECT B.SRVC_REQUST_NO FROM AFTUS_BBSCTT B 
+			WHERE A.SRVC_REQUST_NO = B.SRVC_REQUST_NO
+		)
+	</select>
+	
+	<select id="listMyReview" parameterType="String" resultType="AftusBbscttVO">
+		SELECT
+		A.AFTUS_BBSCTT_NO, A.AFTUS_BBSCTT_SJ, A.AFTUS_BBSCTT_WR_DT, A.AFTUS_BBSCTT_RDCNT, B.USER_NCNM
+		FROM AFTUS_BBSCTT A, USERS B
+		WHERE A.USER_ID=B.USER_ID AND A.USER_ID=#{userId}
+	</select>
+	
+	
+	<select id="detail" parameterType="int" resultType="aftusBbscttVO">
+		SELECT
+		A.AFTUS_BBSCTT_NO, A.AFTUS_BBSCTT_SJ, A.AFTUS_BBSCTT_CN
+			, TO_CHAR(A.AFTUS_BBSCTT_WR_DT, 'YYYY-MM-DD HH24:MI') AFTUS_BBSCTT_WR_DT
+			, A.AFTUS_BBSCTT_RDCNT, A.SPRVISE_ATCHMNFL_NO, A.SRVC_REQUST_NO, A.USER_ID, B.USER_NCNM
+		FROM AFTUS_BBSCTT A, USERS B
+		WHERE B.USER_ID=A.USER_ID AND A.AFTUS_BBSCTT_NO=#{aftusBbscttNo}
+	</select>
+	
+	<insert id="createAjax" parameterType="aftusBbscttVO">
+    	<selectKey keyProperty="aftusBbscttNo" resultType="int" order="BEFORE">
+        	SELECT AFTUS_BBSCTT_NO_seq.nextval FROM DUAL
+    	</selectKey>
+    	INSERT INTO AFTUS_BBSCTT (AFTUS_BBSCTT_NO, AFTUS_BBSCTT_SJ, AFTUS_BBSCTT_CN
+    		, AFTUS_BBSCTT_WR_DT, AFTUS_BBSCTT_RDCNT, SRVC_REQUST_NO, USER_ID
+    		<if test="sprviseAtchmnflNo == 0">
+    			, SPRVISE_ATCHMNFL_NO
+    		</if>
+    		)
+    	VALUES (#{aftusBbscttNo}, #{aftusBbscttSj}, #{aftusBbscttCn}, SYSDATE, #{aftusBbscttRdcnt}
+    	, #{srvcRequstNo}, #{userId}
+    		<if test="sprviseAtchmnflNo == 0">
+    			, SPRVISE_ATCHMNFL_NO_seq.nextval
+    		</if> 
+    	)
+	</insert>
+	
+	<insert id="insertFile" parameterType="sprviseAtchmnflVO">
+		INSERT INTO SPRVISE_ATCHMNFL(SPRVISE_ATCHMNFL_NO, ATCHMNFL_NO, ATCHMNFL_COURS
+			, ATCHMNFL_NM, STORE_ATCHMNFL_NM, ATCHMNFL_TY, REGIST_DT, USER_ID)
+		VALUES (SPRVISE_ATCHMNFL_NO_seq.currval, #{atchmnflNo}, #{atchmnflCours}
+			, #{atchmnflNm}, #{storeAtchmnflNm}, #{atchmnflTy}, SYSDATE, #{userId})
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM AFTUS_BBSCTT
+		WHERE AFTUS_BBSCTT_NO=#{aftusBbscttNo}
+	</delete>
+	
+	<update id="update" parameterType="aftusBbscttVO">
+		UPDATE AFTUS_BBSCTT SET AFTUS_BBSCTT_SJ=#{aftusBbscttSj}
+		<if test="aftusBbscttCn != '' and aftusBbscttCn != null">
+			, AFTUS_BBSCTT_CN=#{aftusBbscttCn}
+		</if>
+		<if test="sprviseAtchmnflNo == 0">
+			, SPRVISE_ATCHMNFL_NO=SPRVISE_ATCHMNFL_NO_seq.nextval
+		</if>
+		WHERE AFTUS_BBSCTT_NO=#{aftusBbscttNo}
+	</update>
+	
+	<insert id="updateFile" parameterType="sprviseAtchmnflVO">
+		<selectKey keyProperty="atchmnflNo" resultType="int" order="BEFORE"> 
+    		SELECT NVL(MAX(ATCHMNFL_NO),0)+1 FROM SPRVISE_ATCHMNFL
+				WHERE SPRVISE_ATCHMNFL_NO = #{sprviseAtchmnflNo}
+    	</selectKey>
+	
+		INSERT INTO SPRVISE_ATCHMNFL(SPRVISE_ATCHMNFL_NO, ATCHMNFL_NO, ATCHMNFL_COURS
+			, ATCHMNFL_NM, STORE_ATCHMNFL_NM, ATCHMNFL_TY, REGIST_DT, USER_ID)
+		VALUES (#{sprviseAtchmnflNo}, #{atchmnflNo}, #{atchmnflCours}
+			, #{atchmnflNm}, #{storeAtchmnflNm}, #{atchmnflTy}, SYSDATE, #{userId})
+	</insert>
+	
+	<select id="fileList" parameterType="int" resultType="sprviseAtchmnflVO">
+		SELECT SPRVISE_ATCHMNFL_NO, ATCHMNFL_NO, ATCHMNFL_COURS, ATCHMNFL_NM
+		FROM SPRVISE_ATCHMNFL
+		WHERE SPRVISE_ATCHMNFL_NO=#{sprviseAtchmnflNo}
+	</select>
+	
+	<delete id="fileDel" parameterType="sprviseAtchmnflVO">
+		DELETE FROM SPRVISE_ATCHMNFL
+		WHERE SPRVISE_ATCHMNFL_NO = ${sprviseAtchmnflNo} and
+		ATCHMNFL_NO = ${atchmnflNo}
+	</delete>
+	
+</mapper>

@@ -1,0 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<div class="sidebar">
+    <!-- 사이드바 내용 -->
+    <ul>
+        <li><a href="#">메뉴 항목 1</a></li>
+        <li><a href="#">메뉴 항목 2</a></li>
+        <li><a href="#">메뉴 항목 3</a></li>
+        <!-- 필요에 따라 다른 항목 추가 -->
+    </ul>
+</div>

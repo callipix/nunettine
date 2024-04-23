@@ -1,0 +1,18 @@
+package kr.or.ddit.vo;
+
+import java.util.Date;
+
+import lombok.Data;
+
+@Data
+public class ProStoryBbscttVO {
+	private int proStoryBbscttNo;
+	private String proStoryBbscttSj;
+	private String proStoryBbscttCn;
+	private Date proStoryBbscttWrDt;
+	private int proStoryBbscttRecommend;
+	private int proStoryBbscttRdcnt;
+	private String proStoryBbscttThumbPhoto;
+	private int sprviseAtchmnflNo;
+	private String proId;
+}

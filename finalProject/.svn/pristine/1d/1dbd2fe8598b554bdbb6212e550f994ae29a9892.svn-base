@@ -1,0 +1,281 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>  
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<style>
+ body { background-color: #f5f7ff; }
+ 
+@font-face {
+    font-family: 'seolleimcool-SemiBold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/seolleimcool-SemiBold.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 제목 */
+#balloon {
+    position: absolute;
+    margin-top: -90px;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+#modifyTitle,#proflPhoto {
+    position: absolute;
+    z-index: 1; /* 풍선 이미지 위에 나타나도록 설정 */
+}
+
+label {
+    font-family: 'GmarketSansMedium';
+    font-size: 17px !important;
+}
+
+input,p {
+	font-family: 'GmarketSansMedium';
+}
+</style>
+
+<script>
+		
+$(function(){
+	
+    /* 양식 자동입력 */
+    $("#autobtn").on("click", function(event){
+    	 event.preventDefault(); // 기본 제출 동작 막기
+    	 var info1=`오오오`
+    	 var info2=`오오오`
+    	 var info3=`오오오`
+    	 var info4=`오오오`
+    	 
+        $("#proProflOnLiIntrcn").val(info1);
+        $("#proProflContactPosblTime").val(info2);
+        $("#proProflReqForm").val(info3);
+        $("#proProflHist").val(info4);
+        
+    });
+	
+    console.log("지역코드를 이름으로");
+    var bcityCode = $("#bcityCode").val();
+    var brtcCode = $("#brtcCode").val();
+    console.log("bcityCode : " + bcityCode + ", brtcCode : " + brtcCode);
+    
+    // AJAX 호출 후 지역 코드를 이름으로 변경
+    $.ajax({
+        url: "/proProfl/getNm",
+        data: { "bcityCode": bcityCode, "brtcCode": brtcCode },
+        type: "post",
+        dataType: "json",
+        success: function(data) {
+            console.log("bcityNm : " + data.bcityNm +", brtcNm : " + data.brtcNm);
+            $("#bcityCode").text(data.bcityNm); 
+            $("#brtcCode").text(data.brtcNm); // 옵션의 텍스트 변경
+        	
+        },
+    });
+
+    // #bcityNm의 값이 변경될 때마다 호출됨
+    $("#bcityNm").change(function(){
+        var selecBcity = $(this).val(); // 선택된 광역시 이름
+        var brtcOptions = ""; // 시/구 옵션을 저장할 변수
+        
+        // AJAX 호출 후 시/구 목록 업데이트
+        $.ajax({
+            type: "GET",
+            url: "/proProfl/brtcList",
+            data: { bcityNm: selecBcity },
+            success: function(data){
+                $.each(data, function(index, list){
+                    brtcOptions += '<option value="' + list.brtcNm + '">' + list.brtcNm + '</option>';
+                });
+                $("#brtcNm").html('<option selected>지역(시/구)</option>' + brtcOptions);
+            },
+            error: function(xhr, status, error) {
+                console.log("Error: " + error);
+            }
+        });
+    });
+    
+    
+    /* 제출 폼 막기 */
+    $("#frm").submit(function(event){
+        var bcityNm = $("#bcityCode").text();
+		var brtcNm = $("#brtcNm").val();
+		var proProflOnLiIntrcn = $("#proProflOnLiIntrcn").val();
+		var proProflReqForm = $("#proProflReqForm").val();
+		var proProflHist = $("#proProflHist").val();
+		var proProflContactPosblTime = $("#proProflContactPosblTime").val();
+        
+        console.log("bcityNmㄴㄴ" , bcityNm);
+        console.log("brtcNmㄴㄴ" , brtcNm);
+        
+        if (!bcityNm || bcityNm === "") {
+            Swal.fire({
+                title: "지역을 선택해주세요",
+                confirmButtonText: "확인",
+                icon: 'warning',
+                customClass: {
+                    title: 'swal-title'
+                }
+            });
+            return false;
+        }
+        if (!brtcNm || brtcNm === "" || brtcNm === "지역(시/구)") {
+            Swal.fire({
+                title: "시/구를 선택해주세요",
+                confirmButtonText: "확인",
+                icon: 'warning',
+                customClass: {
+                    title: 'swal-title'
+                }
+            });
+            return false;
+        }
+        if (!proProflOnLiIntrcn || proProflOnLiIntrcn === ""){
+            Swal.fire({
+                title: "한줄소개를 입력해주세요",
+                confirmButtonText: "확인",
+                icon: 'warning',
+                customClass: {
+                    title: 'swal-title'
+                }
+            });
+            return false;
+        }
+        if (!proProflReqForm || proProflReqForm === ""){
+            Swal.fire({
+                title: "요청서 양식을 입력해주세요",
+                confirmButtonText: "확인",
+                icon: 'warning',
+                customClass: {
+                    title: 'swal-title'
+                }
+            });
+            return false;
+        }
+        if (!proProflHist || proProflHist === ""){
+            Swal.fire({
+                title: "서비스 상세설명을 입력해주세요",
+                confirmButtonText: "확인",
+                icon: 'warning',
+                customClass: {
+                    title: 'swal-title'
+                }
+            });
+            return false;
+        }
+        if (!proProflContactPosblTime || proProflContactPosblTime === ""){
+            Swal.fire({
+                title: "연락가능시간을 입력해주세요",
+                confirmButtonText: "확인",
+                icon: 'warning',
+                customClass: {
+                    title: 'swal-title'
+                }
+            });
+            return false;
+        }
+		event.preventDefault(); // 폼 제출 막기
+        
+        Swal.fire({
+            title: "수정이 완료되었습니다",
+            confirmButtonText: "확인",
+            icon: 'success', 
+            customClass: {
+                title: 'swal-title'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $("#frm").off("submit").submit(); // 확인 버튼을 누르면 폼 제출
+            }
+        });
+
+});
+});
+
+
+
+</script>
+<br><br>
+<!-- 제목 -->
+<div style="position: absolute; top: 0; left: 0; width: 100%;" id="title">
+    <img src="../resources/images/팻말1.png" id="balloon" style=" opacity: 0.5; width: 500px; height:auto; margin:-40px 0 0 700px;">
+    <br><br>
+    <h2 id="modifyTitle" style="margin:135px 0 0 830px; text-align:center; font-family: 'seolleimcool-SemiBold'; color:#4e4c7c; text-shadow: -2px 0px white, 0px 2px white, 2px 0px white, 0px -2px white;">프로 프로필 수정</h2>
+</div >
+<%-- <p>${proProflVO}</p> --%>
+
+<c:if test="${memSession == null && proSession != null}">
+<form id="frm" name="frm" action="/proProfl/modifyProfl?proId=${proProflVO.proId}" method="get" >
+	<div class="mb-3" style="margin: 150px 150px 0 150px;"> 
+		<div class="form-group" id="proflPhoto" style="margin-left:750px;">
+			<c:if test="${proVO.proProflPhoto==null}">
+				<img src="/images/2024/profile.jpg" alt="profile" style="width:300px; height:300px; border-radius: 70%;">
+			</c:if>
+			<c:if test="${proVO.proProflPhoto!=null}">
+				<img src="${proVO.proProflPhoto}" alt="profile" style="width:300px; height:300px; border-radius: 70%;">
+			</c:if>
+		</div>
+	    <div class="form-group">
+	        <label for="proId">👩‍💼 프로 아이디</label>
+	        <input type="text" name="proId" id="proId" value="${proProflVO.proId}" class="form-control" readonly style="width:200px;"/>
+	    </div>
+      <div class="form-group" >
+         <label for="proProflOnLiIntrcn">✔ 한줄소개</label>
+         <input type="text" name="proProflOnLiIntrcn" id ="proProflOnLiIntrcn" value="${proProflVO.proProflOnLiIntrcn}" class="form-control" style="width:600px; justify-content: center;"/>
+      </div>
+      <div class="form-group">
+          <label for="proProflContactPosblTime">🕐 연락 가능 시간</label>
+          <input type="text" name="proProflContactPosblTime" id="proProflContactPosblTime" value="${proProflVO.proProflContactPosblTime}" class="form-control" style="width:200px;"/>
+      </div>
+	<div style="display: flex; flex-wrap: wrap;">
+		<div class="form-group">
+			<label for="bcityNm">✔ 지역(광역시)</label>
+			   <select id="bcityNm" name="bcityNm" class="form-control" style="width:200px; font-family: 'GmarketSansMedium';">
+			      <option selected id="bcityCode">${proProflVO.bcityCode}</option>
+			      <c:forEach items="${bcityVOList}" var="bcityVO">
+			         <option><c:out value="${bcityVO.bcityNm}"/></option>
+			      </c:forEach>
+			   </select>
+		</div> 
+		<div class="form-group">
+			<label for="brtcNm" style="margin-left:15px;">✔ 지역(시/구)</label>
+				<select id="brtcNm" name="brtcNm" class="form-control" style="width:200px; margin-left:15px; font-family: 'GmarketSansMedium';">
+				    <option id="brtcCode" selected>${proProflVO.brtcCode}</option>
+				</select>
+		</div>
+	</div>
+		<p style="margin:-10px 0 30px 0 ; color:#adadad;">📌 상세 주소는 마이페이지에서 수정하세요!<p>
+	
+      <div style="display: flex; flex-wrap: wrap;">
+      <div class="form-group">
+         <label for="proProflReqForm">📃 요청서 양식</label>
+        <textarea name="proProflReqForm" id="proProflReqForm" class="form-control" style="font-family: 'GmarketSansMedium'; width:500px; height:400px; overflow: auto;">${proProflVO.proProflReqForm}</textarea>
+      </div>
+      <div class="form-group">
+         <label for="proProflHist" style="margin-left:15px;">💬 서비스 상세설명</label>
+		<textarea  rows="2" cols="20" wrap="hard" name="proProflHist" id="proProflHist" class="form-control" style="font-family: 'GmarketSansMedium'; width:500px; height:400px; margin-left:15px; overflow: auto;">${proProflVO.proProflHist}</textarea>
+      </div> 
+      </div>
+      <div class="form-group" style="float:right; margin-right:60px;">
+	      <button id="autobtn" style="border:none; background:none;">
+	      	<img src="../resources/images/버튼.png" style="width:50px; height:50px;" />
+	      </button>
+         <button id="submitBtn" class="btn btn-outline-primary btn-fw" style="font-family: 'GmarketSansMedium';">수정하기</button>
+         <button onclick="history.back()" class="btn btn-outline-secondary btn-fw" style="font-family: 'GmarketSansMedium';">뒤로가기</button>
+      </div>
+</div>
+
+</form>
+</c:if>
+

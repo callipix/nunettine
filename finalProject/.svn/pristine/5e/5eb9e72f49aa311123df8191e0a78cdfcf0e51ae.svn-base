@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KaKao | find</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+      integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- 상단 네비게이션바  **페이지공통부분**-->
+    <div class="status-bar">
+      <!-- 네비게이션 왼쪽- 시간 -->
+      <div class="status-bar__column">
+        <span class="status-clock">13:53</span>
+      </div>
+      <!-- 네비게이션 오른쪽- 아이콘 -->
+      <div class="status-bar__column">
+        <!-- 시계 -->
+        <i class="fas fa-clock"></i>
+        <!-- 음량 -->
+        <i class="fas fa-volume-mute"></i>
+        <i class="fas fa-wifi"></i>
+        <!-- 베터리 퍼센트 -->
+        <span class="status-battery-level">100%</span>
+        <!-- 베터리 아이콘-->
+        <i class="fas fa-battery-full"></i>
+      </div>
+    </div>
+    <!-- 헤더부분   title과 icon 페이지별 차이있음-->
+    <header class="header">
+      <div class="header__header-column">
+        <!-- 타이틀 -->
+        <h1 class="header__title">Find</h1>
+      </div>
+      <!-- 아이콘 리스트 -->
+      <div class="header__header-column">
+        <!-- 상단 네비게이션과 다르게 아이콘간 간격이 있음 - span 안에 넣은 이유 -->
+        <!-- 돋보기 -->
+        <span class="header__icon"><i class="fas fa-search"></i></span>
+        <!-- 톱니바퀴 -->
+        <span class="header__icon"><i class="fas fa-cog"></i></span>
+      </div>
+    </header>
+    <!-- find 콘텐츠 -->
+    <main class="find">
+      <!-- find 아이콘 리스트 부분 -->
+      <header class="find__header">
+        <!-- 아이콘 리스트 -->
+        <ul class="find__header-list">
+          <!-- 아이콘1 QR코드 -->
+          <li class="find__header-btn header-btn">
+            <span class="header-btn__icon">
+              <i class="fas fa-qrcode fa-2x"></i>
+            </span>
+            <span class="header-btn__title">QR Code</span>
+          </li>
+          <!-- 아이콘2  -->
+          <li class="find__header-btn header-btn">
+            <span class="header-btn__icon">
+              <i class="fas fa-user-plus fa-2x"></i>
+            </span>
+            <span class="header-btn__title">Add by Contact</span>
+          </li>
+          <!-- 아이콘3 -->
+          <li class="find__header-btn header-btn">
+            <span class="header-btn__icon">
+              <i class="fas fa-passport fa-2x"></i>
+            </span>
+            <span class="header-btn__title">Add by ID</span>
+          </li>
+          <!-- 아이콘 4 -->
+          <li class="find__header-btn header-btn">
+            <span class="header-btn__icon">
+              <i class="far fa-envelope fa-2x"></i>
+            </span>
+            <span class="header-btn__title">Invite</span>
+          </li>
+        </ul>
+      </header>
+      <!-- 추천친구 목록 -->
+      <ul class="find__recommend">
+        <!-- 서브 타이틀 -->
+        <h5 class="find__title">
+          추천친구
+        </h5>
+        <!-- friends의 friend 베이스 양식을 씀 클래스명만 friends__frind 에서 find__friend로-->
+        <li class="find__friend friend friend--lg">
+          <!-- 컬럼1 -->
+          <div class="friend__column">
+            <img src="images/avatar1.jpg" class="friend__avatar" />
+            <div class="friend__content">
+              <!-- 이름 -->
+              <span class="friend__name">
+                이영종
+              </span>
+            </div>
+          </div>
+          <!-- 컬럼2 -->
+          <div class="friend__column">
+            <div class="friend__add-btn">
+              <i class="fas fa-user-plus"></i>
+            </div>
+          </div>
+        </li>
+        <li class="find__friend friend friend--lg">
+          <!-- 컬럼1 -->
+          <div class="friend__column">
+            <img src="images/avatar2.jpg" class="friend__avatar" />
+            <div class="friend__content">
+              <!-- 이름 -->
+              <span class="friend__name">
+                이건
+              </span>
+            </div>
+          </div>
+          <!-- 컬럼2 -->
+          <div class="friend__column">
+            <div class="friend__add-btn">
+              <i class="fas fa-user-plus"></i>
+            </div>
+          </div>
+        </li>
+        <li class="find__friend friend friend--lg">
+          <!-- 컬럼1 -->
+          <div class="friend__column">
+            <img src="images/avatar6.jpg" class="friend__avatar" />
+            <div class="friend__content">
+              <!-- 이름 -->
+              <span class="friend__name">
+                박민욱
+              </span>
+            </div>
+          </div>
+          <!-- 컬럼2 -->
+          <div class="friend__column">
+            <div class="friend__add-btn">
+              <i class="fas fa-user-plus"></i>
+            </div>
+          </div>
+        </li>
+        <li class="find__friend friend friend--lg">
+          <!-- 컬럼1 -->
+          <div class="friend__column">
+            <img src="images/avatar5.jpg" class="friend__avatar" />
+            <div class="friend__content">
+              <!-- 이름 -->
+              <span class="friend__name">
+                양현진
+              </span>
+            </div>
+          </div>
+          <!-- 컬럼2 -->
+          <div class="friend__column">
+            <div class="friend__add-btn">
+              <i class="fas fa-user-plus"></i>
+            </div>
+          </div>
+        </li>
+        <li class="find__friend friend friend--lg">
+          <!-- 컬럼1 -->
+          <div class="friend__column">
+            <img src="images/avatar7.jpg" class="friend__avatar" />
+            <div class="friend__content">
+              <!-- 이름 -->
+              <span class="friend__name">
+                이호영
+              </span>
+            </div>
+          </div>
+          <!-- 컬럼2 -->
+          <div class="friend__column">
+            <div class="friend__add-btn">
+              <i class="fas fa-user-plus"></i>
+            </div>
+          </div>
+        </li>
+        <li class="find__friend friend friend--lg">
+          <!-- 컬럼1 -->
+          <div class="friend__column">
+            <img src="images/avatar4.jpg" class="friend__avatar" />
+            <div class="friend__content">
+              <!-- 이름 -->
+              <span class="friend__name">
+                수박
+              </span>
+            </div>
+          </div>
+          <!-- 컬럼2 -->
+          <div class="friend__column">
+            <div class="friend__add-btn">
+              <i class="fas fa-user-plus"></i>
+            </div>
+          </div>
+        </li>
+        <li class="find__friend friend friend--lg">
+          <!-- 컬럼1 -->
+          <div class="friend__column">
+            <img src="images/avatar6.jpg" class="friend__avatar" />
+            <div class="friend__content">
+              <!-- 이름 -->
+              <span class="friend__name">
+                M
+              </span>
+            </div>
+          </div>
+          <!-- 컬럼2 -->
+          <div class="friend__column">
+            <div class="friend__add-btn">
+              <i class="fas fa-user-plus"></i>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </main>
+    <!-- 하단 네비게이션바 -->
+    <nav class="nav">
+      <ul class="nav__list">
+        <!-- friends 링크 -->
+        <li class="nav__list-item">
+          <a href="friends.html" class="nav__list-link">
+            <i class="far fa-user"></i>
+          </a>
+        </li>
+        <!-- chats 링크 -->
+        <li class="nav__list-item">
+          <a href="index.html" class="nav__list-link">
+            <div class="nav__badge">8</div>
+            <i class="far fa-comment"></i>
+          </a>
+        </li>
+        <!-- find링크 -->
+        <li class="nav__list-item">
+          <a href="find.html" class="nav__list-link">
+            <i class="fas fa-search"></i>
+          </a>
+        </li>
+        <!-- more링크 -->
+        <li class="nav__list-item">
+          <a href="more.html" class="nav__list-link">
+            <i class="fas fa-ellipsis-h"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <div class="bigScreen">
+      <img src="images/media.png" alt="" />
+      <span class="bigScreen__text"
+        >지원하지 않는 해상도입니다. 화면을 줄여주세요</span
+      >
+    </div>
+  </body>
+</html>

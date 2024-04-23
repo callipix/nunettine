@@ -1,0 +1,56 @@
+package kr.or.ddit.board.pro_story.service.impl;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.board.pro_story.mapper.ProStoryMapper;
+import kr.or.ddit.board.pro_story.service.ProStoryService;
+import kr.or.ddit.board.pro_story.vo.ProStoryBbscttVO;
+@Service
+public class ProStoryServiceImpl implements ProStoryService {
+
+	
+	ProStoryMapper proStoryMapper;
+	
+	@Override
+	public int createStory() {
+		return this.proStoryMapper.createStory();
+	}
+
+	@Override
+	public List<ProStoryBbscttVO> storyList() {
+		return null;
+	}
+
+	@Override
+	public ProStoryBbscttVO getStory() {
+		return null;
+	}
+
+	@Override
+	public int updateStory() {
+		return 0;
+	}
+
+	@Override
+	public int deleteStory() {
+		return 0;
+	}
+
+	@Override
+	public int getStoryCount() {
+		return 0;
+	}
+	
+	@Override
+	public int updateGood() {
+		return 0;
+	}
+
+	@Override
+	public int updateGoodCancle() {
+		return 0;
+	}
+
+}

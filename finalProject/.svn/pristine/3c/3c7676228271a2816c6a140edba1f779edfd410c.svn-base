@@ -1,0 +1,18 @@
+package kr.or.ddit.pro_service.service_request.service;
+
+import java.util.List;
+
+import kr.or.ddit.pro_service.service_request.vo.V_SrvcRequstVO;
+import kr.or.ddit.vo.UsersVO;
+
+public interface SrvcRequstService {
+
+	public UsersVO userChk(String userId);
+
+	public List<V_SrvcRequstVO> srvcRqList(V_SrvcRequstVO vSrvcRequstVO);
+
+	public V_SrvcRequstVO srvcRqDetail(V_SrvcRequstVO vSrvcRequstVO);
+
+	public int processFn(int srvcRequstNo);
+
+}

@@ -1,0 +1,76 @@
+package kr.or.ddit.board.pro_story.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import kr.or.ddit.board.pro_story.service.ProStoryService;
+
+@Controller
+@RequestMapping("proMyStory")
+public class ProStroyController {
+	
+	@Autowired
+	ProStoryService proStoryService;
+	
+	@GetMapping("/home")
+	public String main() {
+		
+		return "proMyStory/main";
+	}
+	
+	@GetMapping("/create")
+	public String create() {
+		
+		return "proMyStory/create";
+	}
+	@ResponseBody
+	@PostMapping("/insert")
+	public String insert() {
+		// 프로이야기 등록
+		
+		return "proMyStory/insert";
+	}
+	
+	@ResponseBody
+	@PostMapping("/update")
+	public String update() {
+		// 프로이야기 수정
+		return "proMyStory/update";
+		
+	}
+	
+	@ResponseBody
+	@PostMapping("/delete")
+	public String delete() {
+		// 프로이야기 삭제
+		return "proMyStory/delete";
+		
+	}
+	
+	@ResponseBody
+	@GetMapping("/list")
+	public String list() {
+		// 프로이야기 리스트
+		return "proMyStory/list";
+		
+	}
+	
+	@ResponseBody	
+	@GetMapping("/getInfo")
+	public String getProStory() {
+		// 프로이야기 글보기(선택)
+		
+		return "proMyStory/getInfo";
+		
+	}
+	
+	public String goodPoint() {
+		
+		return "";
+	}
+	
+}

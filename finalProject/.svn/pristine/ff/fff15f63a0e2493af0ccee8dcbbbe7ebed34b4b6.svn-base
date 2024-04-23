@@ -1,0 +1,58 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<style>
+   
+</style>
+</head>
+<%-- <p>${proCprtnBbscttVO}</p> --%>
+
+<p>${proCprtnBbscttVO2}</p>
+<body>
+
+	<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">프로협업게시판</h4>
+        <br>
+        <blockquote class="blockquote blockquote-primary">
+        <div class="row"> 
+            <div class="col">            
+            <h4>${proCprtnBbscttVO.proId}</h4>
+            </div>
+            <div class="col" style="margin-left:-300px;"> 
+                <h4>${proCprtnBbscttVO.proCprtnBbscttSj}</h4>
+            </div>
+            <div class="col text-right"> 
+                 <h4><fmt:formatDate value="${proCprtnBbscttVO.proCprtnBbscttWrDt}" pattern="yyyy.MM.dd" /> </h4>           		
+            </div>
+        </div>
+        <blockquote class="blockquote">
+            <p class="mb-0">${proCprtnBbscttVO.proCprtnBbscttCn}</p>
+			<br>
+			<br>
+			<br>      	
+        	<p>첨부파일 : ${proCprtnBbscttVO.sprviseAtchmnflNo}</p>
+        	<p>활동지역 : ${proCprtnBbscttVO2.proProflList[0].brtcCode}</p>
+        	<p>전문분야 : ${proCprtnBbscttVO2.proList[0].spcltyRealmCode}</p>
+        	
+        </blockquote>
+       </blockquote>
+    </div>
+</div>
+
+<div>
+<br>
+<br>
+<br>
+
+</div>
+
+</body>
+
+
+</html>

@@ -1,0 +1,5 @@
+package kr.or.ddit.chatting.vo;
+
+public class ChatJoinMemberVO {
+
+}

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.pro.join.mapper.ProJoinMapper">
+
+	<select id="emailCk" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM MBER WHERE EMAIL=#{email}
+	</select>
+	
+	<select id="idCk" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM USERS WHERE USER_ID=#{userId}
+	</select>
+	
+	<select id="ncnmCk" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM USERS WHERE USER_NCNM=#{userNcnm}
+	</select>
+	
+	<resultMap type="usersVO" id="usersMap">
+			<result property="cnt" column="cnt"/>
+			<result property="emplyrTy" column="emplyrTy"/>
+			<result property="userNcnm" column="userNcnm"/>
+		</resultMap>
+	<select id="proLogin" parameterType="hashMap" resultMap="usersMap">
+		SELECT USER_ID AS userId, COUNT(*) AS cnt, EMPLYR_TY AS emplyrTy, USER_NCNM AS userNcnm
+		FROM USERS
+		WHERE USER_ID=#{userId} AND USER_PASSWORD=#{userPassword}
+		GROUP BY EMPLYR_TY, USER_NCNM, USER_ID
+	</select>
+	
+	<insert id="proInsert" parameterType="hashMap">
+		INSERT ALL
+		    INTO USERS(USER_ID, USER_NM, USER_PASSWORD, EMPLYR_TY,USER_NCNM)
+		    VALUES(#{userId},#{userNm},#{userPassword},'ET02',#{userNcnm})
+		    
+		    INTO PRO(PRO_ID, PRO_MBTLNUM, SEXDSTN_TY, EMAIL, PRO_PROFL_PHOTO, SPCLTY_REALM_CODE)
+		    VALUES(#{userId},#{proMbtlnum},#{sexdstnTy},#{email},#{proProflPhoto},'SR2301')
+<!-- 		    VALUES(#{userId},#{proMbtlnum},#{sexdstnTy},#{email},#{proProflPhoto},#{spcltyRealmCode}) -->
+		    
+		    INTO AUTHOR(AUTHOR, USER_ID)
+		    VALUES('ET02',#{userId})
+		    
+		    INTO ADRES(USER_ID, ADRES_NO, ADRES, DETAIL_ADRES, ZIP)
+		    VALUES(#{userId},ADRES_SEQ.NEXTVAL,#{adres},#{detailAdres},#{zip})
+		SELECT * FROM DUAL
+	</insert>
+	
+</mapper>

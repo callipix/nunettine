@@ -1,0 +1,166 @@
+package kr.or.ddit.onedayclass.controller;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import kr.or.ddit.onedayclass.service.OnedayClassService;
+import kr.or.ddit.vo.BcityVO;
+import kr.or.ddit.vo.BrtcVO;
+import kr.or.ddit.vo.SpcltyRealmVO;
+import kr.or.ddit.vo.VOndyclProUsersVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@Slf4j
+@RequestMapping("/onedayClass")
+public class OnedayClassController {
+	
+	@Autowired
+	OnedayClassService onedayClassService;
+	
+	//원데이클래스 게시판 호출
+	@GetMapping("/main")
+	public String main(Model model) {
+		List<VOndyclProUsersVO> vOndyclProUsersVOList = this.onedayClassService.vOndyclProUsersVOList();
+		int countOndycl = this.onedayClassService.countOndycl();
+		String codeNm;
+		String codeCd;
+		
+		//카테고리 이름
+		for(int i=0;i<vOndyclProUsersVOList.size();i++) {
+			codeCd = vOndyclProUsersVOList.get(i).getSpcltyRealmCode();
+			codeNm = this.onedayClassService.getCodeNm(codeCd);
+			
+			vOndyclProUsersVOList.get(i).setSpcltyRealmCode(codeNm);
+		}
+		
+		List<SpcltyRealmVO> codeList = this.onedayClassService.category();
+		model.addAttribute("codeList", codeList);
+		List<BcityVO> bcityVOList = this.onedayClassService.getBcity();
+		for(int i=0;i<bcityVOList.size();i++) {
+			if(bcityVOList.get(i).getBcityCode().equals("00")) {
+				bcityVOList.remove(i);
+			}
+		}
+		
+		model.addAttribute("bcityVOList", bcityVOList);
+		model.addAttribute("vOndyclProUsersVOList", vOndyclProUsersVOList);
+		model.addAttribute("countOndycl", countOndycl);
+		return "onedayClass/main";
+	}
+	
+	//전문분야 검색 실행
+	@ResponseBody
+	@GetMapping("/categorySearch")
+	public List<VOndyclProUsersVO> categorySearch(String spcltyRealmCode) {
+		Map<String, Object> searchMap = new HashMap<String, Object>();
+		searchMap.put("keyword","category");
+		searchMap.put("spcltyRealmCode",spcltyRealmCode);
+		List<VOndyclProUsersVO> vOndyclProUsersVOList = this.onedayClassService.searchClass(searchMap);
+		String codeNm;
+		String codeCd;
+		//카테고리 이름
+		for(int i=0;i<vOndyclProUsersVOList.size();i++) {
+			codeCd = vOndyclProUsersVOList.get(i).getSpcltyRealmCode();
+			codeNm = this.onedayClassService.getCodeNm(codeCd);
+			
+			vOndyclProUsersVOList.get(i).setSpcltyRealmCode(codeNm);
+		}
+		
+		return vOndyclProUsersVOList;
+	}
+	
+	//원데이클래스 검색
+	@ResponseBody
+	@GetMapping("/searchClass")
+	public List<VOndyclProUsersVO> searchClass(String keyword, String firstInput
+			, @RequestParam(required = false) String secondInput) {
+		String codeNm;
+		String codeCd;
+		Map<String, Object> searchMap = new HashMap<String, Object>();
+		searchMap.put("keyword",keyword);
+		if(secondInput!=null && !secondInput.isEmpty()) {
+			String rpFirst = firstInput.replaceAll("-","");
+			String rpSecond = secondInput.replaceAll("-","");
+			searchMap.put("firstInput",rpFirst);
+			searchMap.put("secondInput",rpSecond);
+		}else {
+			searchMap.put("firstInput",firstInput);
+		}
+		List<VOndyclProUsersVO> vOndyclProUsersVOList = this.onedayClassService.searchClass(searchMap);
+		//카테고리 이름
+		for(int i=0;i<vOndyclProUsersVOList.size();i++) {
+			codeCd = vOndyclProUsersVOList.get(i).getSpcltyRealmCode();
+			codeNm = this.onedayClassService.getCodeNm(codeCd);
+			
+			vOndyclProUsersVOList.get(i).setSpcltyRealmCode(codeNm);
+		}
+		
+		for(int i=0;i<vOndyclProUsersVOList.size();i++) {
+		}
+		return vOndyclProUsersVOList;
+	}
+	
+	//주소 검색
+	@ResponseBody
+	@GetMapping("/localSearch")
+	public List<VOndyclProUsersVO> localSearch(String cityName) {
+		Map<String, Object> searchMap = new HashMap<String, Object>();
+		if(cityName.length() >= 8) {
+			if(cityName.substring(6).equals("전체")) {
+				searchMap.put("keyword","cityAll");
+				searchMap.put("cityName",cityName.substring(0, 2));
+			}
+		}else if(cityName.substring(0, 2).equals("제주")){
+			if(cityName.length() == 8) {
+				searchMap.put("keyword","cityAll");
+				searchMap.put("cityName","제주특별자치도" + cityName.substring(5));
+			}else {
+				searchMap.put("keyword","city");
+				searchMap.put("cityName",cityName);
+			}
+		}else if(cityName.substring(0, 2).equals("세종")){
+			searchMap.put("keyword","cityAll");
+			searchMap.put("cityName","세종특별자치시" + cityName.substring(5));
+		}else {
+			searchMap.put("keyword","city");
+			searchMap.put("cityName",cityName);
+		}
+		List<VOndyclProUsersVO> vOndyclProUsersVOList = this.onedayClassService.searchClass(searchMap);
+		
+		return vOndyclProUsersVOList;
+	}
+	
+	//시군구 모달에 출력
+	@ResponseBody
+	@GetMapping("/brtcSelect")
+	public List<BrtcVO> brtcSelect(String bcityCode){
+		List<BrtcVO> brtcVOList = this.onedayClassService.brtcSelect(bcityCode);
+		
+		return brtcVOList;
+	}
+	
+	//원데이클래스 상세페이지
+	@GetMapping("/onedayClassDetail")
+	public String detail(String ondyclNo, Model model) {
+		log.info("ondyclNo : " + ondyclNo);
+		VOndyclProUsersVO vOndyclProUsersVO = this.onedayClassService.detail(ondyclNo);
+		
+		model.addAttribute("vOndyclProUsersVO", vOndyclProUsersVO);
+		
+		return "onedayClass/onedayClassDetail";
+	}
+	
+}

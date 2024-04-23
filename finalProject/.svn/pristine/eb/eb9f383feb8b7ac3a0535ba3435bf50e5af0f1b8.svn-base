@@ -1,0 +1,17 @@
+package kr.or.ddit.board.pro_collabo.mapper;
+
+import java.util.List;
+import java.util.Map;
+
+import kr.or.ddit.admin.notice.vo.NoticeVO;
+
+public interface ProCprtnBbscttMapper {
+
+//	public List<ProCprtnBbscttVO> proCprtnBbscttList();
+
+	public int getTotal(Map<String, Object> map);
+
+	public List<NoticeVO> list(Map<String, Object> map);
+
+	
+}

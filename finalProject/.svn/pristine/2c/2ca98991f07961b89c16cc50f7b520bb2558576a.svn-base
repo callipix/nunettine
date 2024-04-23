@@ -1,0 +1,20 @@
+package kr.or.ddit.vo;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+public class OndyclSchdulVO {
+
+	private int ondyclSchdulNo;
+	private int ondyclNo;
+	private String ondyclSchdulDe;
+	private String ondyclSchdulBeginTime;
+	private String ondyclSchdulEndTime;
+}
+

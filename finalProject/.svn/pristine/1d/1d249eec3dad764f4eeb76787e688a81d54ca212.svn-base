@@ -1,0 +1,426 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<script	src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+<script	src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
+<script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
+<style>
+.ck-editor__editable {
+	min-height: 400px;
+}
+label {
+	display: block;
+}
+/* 글 내용의 경계선 표시 */
+.content{
+	border: 1px dotted #cecece;
+}
+/* 글 내용안에 있는 이미지의 크기 제한 */
+.content img{
+	max-width: 100%;
+}
+/* 댓글에 관련된 css */
+.comments ul{
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+}
+.comments ul li{
+	border-top: 1px solid #888; /* li 의 윗쪽 경계선 */
+}
+.comments dt{
+	margin-top: 5px;
+}
+.comments dd{
+	margin-left: 26px;
+}
+.comments form textarea, .comments form button{
+	float: left;
+}
+.comments li{
+	clear: left;
+}
+.comments form textarea{
+	width: 85%;
+	height: 100px;
+}
+.comments form button{
+	width: 15%;
+	height: 100px;
+}
+/* 댓글에 댓글을 다는 폼과 수정폼을 일단 숨긴다. */
+.comment form{
+	display: block;
+}
+.comment{
+	position: relative;
+}
+.comment .reply_icon{
+	width: 8px;
+	height: 8px;
+	position: absolute;
+	top: 10px;
+	left: 30px;
+}
+.comments .user-img{
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+}
+/* sweet alert */
+.dialog-container {
+    width: 300px;
+    height: 200px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+/* sweet alert */
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto; /* 세 개의 열을 생성합니다. */
+    grid-gap: 10px; /* 그리드 아이템 사이의 간격을 지정합니다. */
+    justify-content: center; /* 그리드 아이템들을 가운데 정렬합니다. */
+}
+.list-item {
+    width: calc(33.33% - 20px);
+    margin: 5px;
+    overflow: hidden;
+}
+.list-star {
+/*     height: 100%; /* 부모 요소인 .list-item의 높이를 100%로 설정합니다. */
+    overflow-y: auto; /* 내용이 넘칠 경우 수직 스크롤을 추가합니다. */
+}
+.list-star img {
+max-width: 100%; /* 이미지의 최대 너비를 요소의 너비에 맞게 설정합니다. */
+height: auto; /* 이미지의 높이를 자동으로 조정하여 가로세로 비율을 유지합니다. */
+border-radius: 15px; /* 이미지를 원형으로 처리합니다. */
+overflow: hidden; /* 이미지를 부모 요소의 경계에 맞춰 자르기 위해 overflow 속성을 사용합니다. */
+}
+.btn-clicked {
+        background-color: #4CAF50; /* 변경할 색상 */
+        color: white;
+    }
+</style>
+<script>
+/*
+ 게시글 번호(자동증가 , sequence)		proStoryBbscttNo	
+ 게시글 제목(직접입력)					proStoryBbscttSj
+ 게시글 내용(직접입력)					proStoryBbscttCn
+ 게시글 작성일자(sysdate)				proStoryBbscttWrDt
+ 게시글 추천수(별도)					proStoryBbscttRecommend
+ 게시글 조회수(별도)					proStoryBbscttRdcnt
+ 프로이야기게시글썸네일사진(직접입력)		proStoryBbscttThumbPhoto
+ 통합첨부파일(사진, 직접입력)			sprviceAtchmnflNo
+ 프로아이디							proId
+ */
+$(function() {
+
+	let storyNo = ${getStory.proStoryBbscttNo};
+// 	let writer = ${getStory.proId};
+	const storyGood = document.querySelector("#good");
+	
+	var goodChk;
+	
+    $(document).ready(function() {
+        $(window).scroll( function(){
+            $('.thumb').each( function(i){
+
+                var bottom_of_element = $(this).offset().top + $(this).outerHeight();
+                var bottom_of_window = $(window).scrollTop() + $(window).height();
+
+                if( bottom_of_window > bottom_of_element ){
+                    $(this).animate({'opacity':'1','margin-bottom':'0px'},1000);
+                }
+
+            }); 
+        });
+        
+        $.ajax({
+        	url : "/prostory/goodChk" ,
+        	method : "get" , 
+        	data : {storyNo : storyNo},
+        	success : function(result){
+        		
+        		if(result > 0){
+        			goodChk = result;
+        			$("#storyGood").addClass("fa-solid fa-heart");
+	        		console.log("데이터 오나?? " + goodChk);
+	        		console.log("데이터 오나?? : result " + result);
+        		} else {
+        			goodChk = result
+        			$("#storyGood").addClass("fa-solid fa-heart");
+        			console.log("하트 안눌렀나? : " + goodChk);
+        			console.log("하트 안눌렀나? : result " + result)
+        		}
+        	}
+        })
+        
+        
+    });
+	
+	$(".heart-click").click(function() {
+
+//		게시물 번호(no)를 idx로 전달받아 저장
+// 	    no = $(this).attr('idx');
+// 	    console.log("heart-click" + no);
+
+	    // 빈하트를 눌렀을때
+	    if($(this).children('svg').attr('class') == "bi bi-suit-heart"){
+	        console.log("빈하트 클릭" + storyNo);
+
+	        $.ajax({
+	            url : '/prostory/goodUp',
+	            type : 'get',
+	            data : {
+	            	storyNo : storyNo,
+	            },
+	            success : function(result) {
+	                //페이지 새로고침
+// 	                document.location.reload(true);
+					console.log("result ::: " + result)
+	                let heart = result.heart;
+
+	                // 페이지, 모달창에 하트수 갱신
+	                $('#m_heart'+storyNo).text(heart);
+	                $('#heart'+storyNo).text(heart);
+
+	                alert("하트추가 성공!")
+	            },
+	            error : function() {
+	                alert('왜 실패했지');
+	            }
+	        });
+	        console.log("변경 성공?!");
+
+	        // 꽉찬하트로 바꾸기
+	        $(this).html("<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-suit-heart-fill' viewBox='0 0 16 16'><path d='M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z'/></svg>");
+	        $('.heart_icon'+storyNo).html("<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-suit-heart-fill' viewBox='0 0 16 16'><path d='M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z'/></svg>");
+
+	    // 꽉찬 하트를 눌렀을 때
+	    }else if($(this).children('svg').attr('class') == "bi bi-suit-heart-fill"){
+	        console.log("꽉찬하트 클릭" + storyNo);
+
+	        $.ajax({
+	            url : '/prostory/goodCancle',
+	            type : 'get',
+	            data : {
+	            	storyNo : storyNo,
+	            },
+	            success : function(pto) {
+	                //페이지 새로고침
+// 	                document.location.reload(true);
+
+	                let heart = pto.heart;
+	                // 페이지, 모달창에 하트수 갱신
+	                $('#m_heart'+storyNo).text(heart);
+	                $('#heart'+storyNo).text(heart);
+
+	                console.log("하트삭제 성공");
+	            },
+	            error : function() {
+	                alert('서버 에러');
+	            }
+	        });
+
+	        // 빈하트로 바꾸기
+	        $(this).html('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16"><path d="M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" /></svg>');
+
+	        $('.heart_icon'+storyNo).html('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16"><path d="M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" /></svg>');
+	    }
+
+	});
+	
+	$("#update").on("click" , function(){
+		
+		let writer = "${getStory.proId}";
+		console.log("writer 데이터 : " + writer);
+		if(confirm("게시글 수정?")){
+		
+			console.log("writer 체크 : " + writer);
+			
+			$.ajax({
+				url : "/prostory/idChk",
+				type : "get",
+				data : { writer : writer },
+				success : function(result){
+
+					if(result === "true"){
+						alert("수정페이지로 이동합니다...");
+						location.href = "/prostory/update?storyNo="+ storyNo;
+					} else{
+						alert("본인만 수정 가능");
+						return;
+					}
+				}
+			})
+		};
+	})
+	
+// 	function(){
+	
+// 	$.ajax({
+// 		url :
+	
+// 	})
+	
+	
+// 	}
+	
+	$("#delete").on("click" , function(){
+		
+		let writer = "${getStory.proId}";
+		
+		if(confirm("게시글 삭제?")){
+		
+				$.ajax({
+				url : "/prostory/idChk",
+				type : "get",
+				data : { writer : writer },
+				success : function(result){
+	
+						if(result === "true"){
+		
+							$.ajax({
+								url : "/prostory/delete?storyNo="+storyNo,
+								type : "post",
+								dataType : "text",
+								data : { storyNo : storyNo },
+								success : function(result){
+									
+									if(result > 0){
+										alert("삭제 성공");
+										location.href = "/prostory/main";
+									} else{
+										alert("삭제 실패");
+										location.href = "/prostory/main";
+									}
+									console.log("삭제 테스트 : " + result)
+								}
+							})
+		
+						} else {
+							alert("본인만 삭제 가능");
+							return;
+					}
+				}
+			})
+		}
+	})
+	
+	$("#comment").on("click" , function(){
+		
+		if(confirm("댓글 작성?"));
+		
+		$.ajax({
+			url : "localhost:8080/prostory/reply",
+			type : "post",
+	// 		data : ,
+			success : function(result){
+				
+				console.log("삭제 테스트 : " + result)
+			}
+		})
+	})
+	
+})
+</script>
+	<div class="col-sm-6 col-md-4 col-lg-3">
+	    <i class="mdi mdi-heart"></i> mdi mdi-heart
+	</div>
+	<div class="col-sm-6 col-md-4 col-lg-3">
+	    <i class="mdi mdi-heart-outline"></i> mdi mdi-heart-outline
+	</div>
+
+<div class="container col-lg-6">
+<div data-v-78548f8c="" data-v-09a142b7="" class="soomgo-life-post-detail is-test-b">
+	<div data-v-00e3049a="" data-v-78548f8c="" class="post-header">
+	
+	<span class="like-area">
+			<span>
+				<a idx="${storyList.storyNo}" href="javascript:" class="heart-click heart_icon${storyList.storyNo}">
+			     	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
+			     		<path d="M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" />
+			        </svg>
+				</a>
+			</span>
+			
+			<span>${getStory.proStoryBbscttRecommend}</span>
+			<!-- 좋아요를 누른 적이 없거나, 로그인 X -->
+			<c:if test="${empty goodChk}">
+			<i class="fa-regular fa-heart" id="storyGood"></i>
+			</c:if>
+			
+			<!-- 좋아요를 누른 적이 있을 때 -->
+			<c:if test="${goodChk > 0}">
+			<i class="fa-solid fa-heart" id="storyGood"></i>
+			</c:if>
+<%-- 			<c:if test="${!empty goodChk}"> --%>
+<!-- 			<i class="fa-solid fa-heart" id="boardLike"></i> -->
+<%-- 			</c:if> --%>
+			<span>조회수 : ${getStory.proStoryBbscttRdcnt}</span>
+	</span>
+			<p>${goodChk}</p>
+    <div class="list-item" style="display: flex; justify-content: flex-end;">
+    <button type="button" id="update" class="btn btn-primary mr-2">글수정</button>
+    <button type="button" id="delete" class="btn btn-primary mr-2">글삭제</button>
+    <br>
+	</div>
+
+<div id="get" class="list-container">
+	<div>
+		<div class="container col-lg-5">
+				<div data-v-796eb1b2="" class="body-contents">
+				<img style="border-radius: 20px;" src="/images/${getStory.proStoryBbscttThumbPhoto}" />
+				</div>
+		</div>
+		<br />
+		커뮤니티 > 프로이야기
+		<div class="container col-lg-5" style="text-align: left;">
+			<h5>분야 코드 : ${getStory.spcltyRealmNm}</h5><hr />
+			<h5>글제목 : ${getStory.proStoryBbscttSj}</h5>
+		</div>
+		<br>
+		<br>
+		<br>
+		<div class="container col-lg-5">
+				<div data-v-796eb1b2="" class="body-contents">${getStory.proStoryBbscttCn}</div>
+		</div>
+	</div>
+</div>
+<br />
+	<div class="card-footer">
+		<form action="#" name="frm" class="forms-sample" method="post" enctype="multipart/form-data">
+		    <div class="form-group">
+		      <input type="text" class="form-control" placeholder="댓글을 입력하세요" required>
+		    </div>
+		    <button type="button" id="comment" class="btn btn-primary">작성</button>
+		</form>
+		  <div class="comments mt-3"></div>
+	</div>
+	<hr data-v-78548f8c="" class="hr-divider wide-divider">
+</div>
+    </div>
+
+</div>

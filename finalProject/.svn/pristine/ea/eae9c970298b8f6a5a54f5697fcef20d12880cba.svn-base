@@ -1,0 +1,13 @@
+package kr.or.ddit.vo;
+
+import java.util.Date;
+import lombok.Data;
+
+@Data
+public class NtchVO {
+	private int ntchNo;
+	private String ntchCn;
+	private Date ntchDt;
+	private String ntchMvmnUrl;
+	private String urlMvmnTagetNm;
+}

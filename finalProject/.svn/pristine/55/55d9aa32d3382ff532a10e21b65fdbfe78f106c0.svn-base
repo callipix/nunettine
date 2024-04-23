@@ -1,0 +1,82 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<style>
+table{
+	text-align: center;
+}
+.hello{
+	text-align: center;
+}
+img{
+	width:400px;
+	height:300px;
+	margin-left: auto;
+	border-radius: 20px;
+}
+</style>
+<div class="col-lg-6 grid-margin stretch-card">
+	<div class="card">
+		<div class="card-body">
+			<h4 class="card-title">회원 마이페이지</h4>
+<!-- 			<p class="card-description"> -->
+<!-- 				Add class -->
+<%-- 				<code>.table-hover</code> --%>
+<!-- 			</p> -->
+			<div class="table-responsive pt-3 hello">
+				<img src="${memSession.profile}" style="float:left;" />
+				<button type="button" class="btn btn-link btn-fw" id="changePhoto">프로필사진 변경</button>
+				<table class="table table-hover">
+					<tbody>
+						<tr>
+							<th>아이디</td>
+							<td colspan="2">${memSession.userId}</td>
+						</tr>
+						<tr>
+							<th>닉네임</td>
+							<td><input type="text" value="${memSession.userNcnm}"></td>
+							<td><button type="button">중복확인</button></td>
+						</tr>
+						<tr>
+							<th>비밀번호</th>
+							<td colspan="2"><input type="password""></td>
+							
+						</tr>
+						<tr>
+							<th>비밀번호 확인</th>
+							<td colspan="2"><input type="password"></td>
+							
+						</tr>
+						<tr>
+							<th>이메일</th>
+							<td colspan="2">${memSession.email}</td>
+						</tr>
+						<tr>
+							<th>이름</th>
+							<td colspan="2">${memSession.userNm}</td>
+						</tr>
+						<tr>
+							<th>전화번호</th>
+							<td><input type="text" value="${memSession.mberMbtlnum}"></td>
+							<td><button type="button">본인인증</button></td>
+						</tr>
+						<tr>
+							<th>성별</th>
+							<td colspan="2">${memSession.sexdstnTy}</td>
+						</tr>
+						<tr>
+							<th>우편번호</th>
+							<td colspan="2">${memSession.zip}</td>
+						</tr>
+						<tr>
+							<th>주소</th>
+							<td>${memSession.adres}</td>
+							<td>${memSession.detailAdres}</td>
+						</tr>
+					</tbody>
+				</table>
+				<button type="button" class="btn btn-light btn-rounded btn-fw" id="updateMember">회원 정보 수정</button>
+				<button type="button" class="btn btn-light btn-rounded btn-fw" id="deleteMember">회원 탈퇴</button>
+			</div>
+		</div>
+	</div>
+</div>

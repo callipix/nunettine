@@ -1,0 +1,19 @@
+package kr.or.ddit.member.join.mapper;
+
+import java.util.Map;
+
+import kr.or.ddit.vo.UsersVO;
+
+public interface MemberJoinMapper {
+
+	public int emailCk(String email);
+
+	public int idCk(String userId);
+
+	public int ncnmCk(String userNcnm);
+
+	public UsersVO memberLogin(Map<String, Object> userMap);
+
+	public int memberInsert(Map<String, Object> map);
+
+}

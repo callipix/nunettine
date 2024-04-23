@@ -1,0 +1,93 @@
+package kr.or.ddit.onedayclass.service.impl;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.onedayclass.mapper.OnedayClassMapper;
+import kr.or.ddit.onedayclass.service.OnedayClassService;
+import kr.or.ddit.vo.BcityVO;
+import kr.or.ddit.vo.BrtcVO;
+import kr.or.ddit.vo.SpcltyRealmVO;
+import kr.or.ddit.vo.SprviseAtchmnflVO;
+import kr.or.ddit.vo.VOndyclProUsersVO;
+
+@Service
+public class OnedayClassServiceImpl implements OnedayClassService {
+	
+	@Autowired
+	OnedayClassMapper onedayClassMapper;
+
+	@Override
+	public List<VOndyclProUsersVO> vOndyclProUsersVOList() {
+		return this.onedayClassMapper.vOndyclProUsersVOList();
+	}
+
+	@Override
+	public int countOndycl() {
+		return this.onedayClassMapper.countOndycl();
+	}
+
+	@Override
+	public String getCodeNm(String codeCd) {
+		return this.onedayClassMapper.getCodeNm(codeCd);
+	}
+
+	@Override
+	public List<VOndyclProUsersVO> searchClass(Map<String, Object> searchMap) {
+		return this.onedayClassMapper.searchClass(searchMap);
+	}
+
+	@Override
+	public List<SpcltyRealmVO> category() {
+		return this.onedayClassMapper.category();
+	}
+
+	@Override
+	public List<BcityVO> getBcity() {
+		return this.onedayClassMapper.getBcity();
+	}
+
+	@Override
+	public List<BrtcVO> brtcSelect(String bcityCode) {
+		return this.onedayClassMapper.brtcSelect(bcityCode);
+	}
+
+	@Override
+	public VOndyclProUsersVO detail(String ondyclNo) {
+		return this.onedayClassMapper.detail(ondyclNo);
+	}
+
+	@Override
+	public int getAttachNo() {
+		return this.onedayClassMapper.getAttachNo();
+	}
+
+	@Override
+	public int addSprviseAtchmnfl(SprviseAtchmnflVO sprviseAtchmnflVO) {
+		return this.onedayClassMapper.addSprviseAtchmnfl(sprviseAtchmnflVO);
+	}
+
+	@Override
+	public int createOndycl(Map<String, Object> map) {
+		return this.onedayClassMapper.createOndycl(map);
+	}
+
+	@Override
+	public List<SprviseAtchmnflVO> fileList(String ondyclNo) {
+		return this.onedayClassMapper.fileList(ondyclNo);
+	}
+
+	@Override
+	public int getInsertClNum() {
+		return this.onedayClassMapper.getInsertClNum();
+	}
+
+	@Override
+	public int deleteClass(String classNO) {
+		return this.onedayClassMapper.deleteClass(classNO);
+	}
+
+}

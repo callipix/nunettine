@@ -1,0 +1,19 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="false" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
+<html>
+<head>
+	<title>Home</title>
+</head>
+<body>
+<h1>
+	2조
+<%-- 	<img alt="test2" src="<spring:url value='/images/2024/03/12/35b3c1ec-eb4f-4d17-9441-729e2b0bce06_Desert.jpg'/>">   --%>
+<!-- <figure class="image"><img src="http://localhost/resources/upload/8d1b79b0-b22c-4335-8b6b-470f4ca4660e.jpg"></figure> -->
+</h1>
+
+<P>  화이팅 </P>
+</body>
+</html>

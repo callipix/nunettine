@@ -1,0 +1,173 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<script type="text/javascript" src="/resources/js/jquery.min.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
+<script type="text/javascript">
+$(function() {
+	
+	
+	
+	
+	//폼으로 보내보기
+	//button type=submit으로 했더니 
+	//확인버튼을 누르기전에 submit돼서 상세화면으로 이동하는 이슈
+	//button type=button으로 변경 후
+	//$("#crForm").submit();으로 바꿔줌
+	$("#btnTmtInsert").on("click", function() {
+		Swal.fire({
+			title: '등록이 완료 됐습니다.',
+			icon: 'confirm',
+        	confirmButtonText: '확인',
+		}).then((result) => { 
+            if (result.isConfirmed) {
+            	$("#tmtInsertForm").submit();
+            }
+        });
+
+ 	})
+
+
+	
+	$("#uploadFile").on("change",handleImgFileSelect);
+	function handleImgFileSelect(e){
+		
+		
+		
+		//이벤트가 발생 된 타겟 안에 들어있는 이미지 파일 가져오기
+		let files = e.target.files;
+		
+
+		console.log(files);
+		let fileArr = Array.prototype.slice.call(files);
+	
+		fileArr.forEach(function(f){
+			//이미지 파일이 아닌 경우 이미지 미리보기 실패 처리(MIME타입)
+			console.log(f);
+			if(!f.type.match("image.*")){
+				Swal.fire({
+			          icon: 'error',
+			          title: '이미지 파일만 가능합니다',
+			          confirmButtonText: '확인',
+			        });
+				return;
+			}
+			//이미지 객체를 읽을 자바스크립트의 reader 객체 생성
+			let reader = new FileReader();
+			
+			$(".clsCiImgUrl").html("");
+			
+			//e : reader가 이미지 객체를 읽는 이벤트
+			reader.onload = function(e){
+
+				
+				$(".clsCiImgUrl").css({
+			          "background-image": "url(" + e.target.result + ")",
+			          "background-position": "center",
+			          "background-size": "cover",
+			          "width": "500px", 
+			          "height": "500px",
+		
+			    });
+// 				
+			}
+			//f : 이미지 파일 객체를 읽은 후 다음 이미지 파일(f)을 위해 초기화 함
+			reader.readAsDataURL(f);
+		});
+	}
+	
+	
+	
+	
+});
+
+function printName()  {
+	  const name = document.getElementById('name').value;
+	  document.getElementById("result").innerText = name;
+	}
+
+// onsubmit="return fn_chk()"
+
+// function fn_chk(){
+// 	Swal.fire({
+// 			title: '등록이 완료 됐습니다.',
+// 			icon: 'confirm',
+//     	confirmButtonText: '확인',
+// 		}).then((result) => { 
+//         if (result.isConfirmed) {
+//         	return true;
+//         }
+//     });
+// }
+</script>
+<h2>오늘 모임 등록</h2>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title"></h4>
+        <p class="card-description">
+            
+        </p>
+        <form action="/todayMeeting/create" id="tmtInsertForm" class="forms-sample" 
+        method="post" enctype="multipart/form-data">
+    <div class="form-group">
+                <label for="tdmtngNm">모임명</label>
+                <input type="text" class="form-control" id="tdmtngNm" name="tdmtngNm" required>
+            </div>
+
+            <div class="form-group">
+                <label for="tdmtngDt">모임일시</label>
+                <input type="datetime-local" class="form-control" id="tdmtngDt" name="tdmtngDt">
+            </div>
+            
+       
+            
+            <div class="form-group">
+                <label for="tdmtngCn">모임내용</label>
+                <textarea class="form-control" rows="10" id="tdmtngCn" name="tdmtngCn"></textarea>
+            </div>
+            <!-- 업로드 버튼을 눌러도 아무 반응이 없어서 js파일 확인해 봤으나 문제가 없었음
+            tiles에 <script src="/resources/skydash/js/dashboard.js"></script> 추가
+             -->
+             
+<!--              <textarea name="text" id="editor"></textarea> -->
+             
+             
+             
+             <div
+				class="clsCiImgUrl  col-xs-12">
+			
+			</div>        
+            <div class="form-group">
+                <label>이미지 파일</label>
+                <input type="file" id="uploadFile" name="uploadFile" class="file-upload-default">
+                <div class="input-group col-xs-12">
+                    <input type="text" id="file-upload-info" class="form-control file-upload-info" disabled="" placeholder="파일선택">
+                    <span class="input-group-append">
+                        <button class="file-upload-browse btn btn-primary" type="button">업로드</button>
+                    </span>
+                </div>
+            </div>
+            
+
+			
+
+
+            <button type="button" id="btnTmtInsert" class="btn btn-primary mr-2">등록</button>
+            <button class="btn btn-light">취소</button>
+        </form>
+    </div>
+</div>
+
+
+<!-- <script type="text/javascript">
+ClassicEditor.create(document.querySelector('#editor'), {
+	ckfinder:{uploadUrl:'/upload/uploads'},
+	language: "ko",
+	
+	})
+// 	plugins: [
+// 		'ImageResize',
+// 	]	
+ .then(editor=>{window.editor=editor;})
+ .catch(err=>{console.error(err.stack);});
+</script> -->
+

@@ -1,0 +1,15 @@
+package kr.or.ddit.member.join.mapper;
+
+import kr.or.ddit.vo.UsersVO;
+
+public interface MemberJoinMapper {
+
+	public int emailCk(String email);
+
+	public int idCk(String userId);
+
+	public int ncnmCk(String userNcnm);
+
+	public int memberLogin(UsersVO usersVO);
+
+}

@@ -1,0 +1,11 @@
+package kr.or.ddit.util;
+
+import lombok.Getter;
+import lombok.ToString;
+
+@Getter
+@ToString
+public class SessionInfo {
+	
+	
+}

@@ -1,0 +1,14 @@
+package kr.or.ddit.vo;
+
+import java.util.Date;
+
+import lombok.Data;
+
+@Data
+public class ResveVO {
+	private int resveNo;
+	private int resveTotqy;
+	private int resveTpprice;
+	private Date resveDt;
+	private String mberDi;
+}

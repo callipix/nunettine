@@ -1,0 +1,36 @@
+package kr.or.ddit.board.pro_story.mapper;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import kr.or.ddit.board.pro_story.vo.ProStoryBbscttVO;
+
+public interface ProStoryMapper {
+
+	// 게시글 리스트
+	public List<ProStoryBbscttVO> storyList();
+
+	// 게시글 선택
+	public ProStoryBbscttVO getStory(int storyNo);
+
+	// 게시글쓰기
+	public int insert(ProStoryBbscttVO proStoryBbscttVO);
+	
+	// 게시글 수정
+	public int updateStory(ProStoryBbscttVO proStoryBbscttVO);
+	
+	// 게시글 삭제
+	public int deleteStory(@Param("proId") String userId ,@Param("proStoryBbscttNo") int storyNo);
+	
+	// 게시글 조회수
+	public int getStoryCount(@Param("proStoryBbscttNo") int storyNo);
+	
+	// 게시글 좋아요 수
+	public int updateGood();
+
+	// 게시글 좋아요 취소
+	public int updateGoodCancle();
+		
+	
+}

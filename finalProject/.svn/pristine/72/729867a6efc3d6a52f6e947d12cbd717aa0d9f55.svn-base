@@ -1,0 +1,219 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+
+<html>
+<head>
+<script type="text/javascript" src="/resources/js/jquery.min.js"></script>
+<script type="text/javascript">
+
+
+
+function ajaxList(data){
+	var userId = `${userId}`;
+	console.log("userId = " + userId);
+	if(userId==null || userId==""){
+		console.log("세션 아이디가 없는디");
+		$("#wriBtn").hide();
+		
+	}
+	
+	$.ajax({
+		type:"post",		
+		url:"/lbrtybbsctt/ajaxLbList",
+		data:JSON.stringify(data),
+		contentType:"application/json;chatset=utf-8",
+		dataType:"json",
+		success:function(res){
+			console.log(res);
+			
+			let str = "";
+			$.each(res.content,function(idx,LbrtyBbscttVO2){
+				//각 각 vo에 뭐가 들어있는지 체크
+				console.log("LbrtyBbscttVO2["+idx+"] : ", LbrtyBbscttVO2)
+				str+=`
+					<tr onclick="location.href='/lbrtybbsctt/detail?lbrtyBbscttNo=\${LbrtyBbscttVO2.lbrtyBbscttNo}'">
+						<td>\${LbrtyBbscttVO2.rnum}</td>
+						<td>\${LbrtyBbscttVO2.lbrtyBbscttSj}</td>
+						<td>\${LbrtyBbscttVO2.userNcnm}</td>
+						<td>\${LbrtyBbscttVO2.userId}</td>
+					</tr> 
+					`
+				console.log("str : " + str)
+			});
+			$("#lbsBody").append(str);
+			$("#keyword").val("");
+			
+			//페이징 처리
+			$("#divPaging").html(res.pagingArea);
+		}
+			
+	});
+}
+$(function(){
+	$("#btnSearch").on("click",function(){
+		let currentPage = "1";
+		$("#lbsBody").html("");
+		console.log("keyword : " + $("#keyword").val());
+		let keword = $("#keyword").val();
+		
+		let data = {
+			"currentPage":currentPage,
+			"keyword":keword
+		}
+		console.log("data : " , data)
+		ajaxList(data);
+		
+	});
+	
+	
+	$("#insertBt").on("click",function(){
+		console.log("클릭 했습니다.");
+		
+	})
+	
+	// 전체 목록 출력
+	let currentPage = "${param.currentPage}"
+	if(currentPage == ""){
+		currentPage = "1";
+	}
+	
+	let data = {
+			"keyword":"${param.keyword}",
+			"currentPage":currentPage
+		}
+	console.log("data : " + data);
+	ajaxList(data)
+		/* $.ajax({
+			type:"post",		
+			url:"/lbrtybbsctt/ajaxLbList",
+			data:JSON.stringify(data),
+			contentType:"application/json;chatset=utf-8",
+			dataType:"json",
+			success:function(res){
+				console.log(res);
+				let str = "";
+				$.each(res.content,function(idx,LbrtyBbscttVO2){
+					//각 각 vo에 뭐가 들어있는지 체크
+					console.log("LbrtyBbscttVO2["+idx+"] : ", LbrtyBbscttVO2)
+					str+=`
+						<tr onclick="location.href='/lbrtybbsctt/detail?lbrtyBbscttNo=\${LbrtyBbscttVO2.lbrtyBbscttNo}'">
+							<td>\${LbrtyBbscttVO2.rnum}</td>
+							<td>\${LbrtyBbscttVO2.lbrtyBbscttSj}</td>
+							<td>\${LbrtyBbscttVO2.userNcnm}</td>
+							<td>\${LbrtyBbscttVO2.userId}</td>
+						</tr> 
+						`
+					console.log("str : " + str)
+				});
+				$("#lbsBody").append(str);
+				$("#keyword").val("");
+				
+				//페이징 처리
+				$("#divPaging").html(res.pagingArea);
+			}
+				
+		}); */
+});
+</script>
+<title></title>
+</head>
+
+
+<body>
+	<div class="row">
+		<div class="col-md-12 grid-margin stretch-card">
+			<div class="card">
+				<div class="card-body">
+
+					<p class="card-title">자유 게시판</p>
+
+
+					<div class="form-group">
+						<div class="input-group">
+							<input type="text" name="keyword" id="keyword"
+								value="${param.keyword}" class="form-control"
+								placeholder="검색어를 입력하세요" aria-label="">
+							<div class="input-group-append">
+								<button class="btn btn-sm btn-primary" id="btnSearch"
+									type="button">Search</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+
+						<div class="col-12">
+							<div class="table-responsive">
+								<div id="example_wrapper"
+									class="dataTables_wrapper dt-bootstrap4 no-footer">
+									<div class="row">
+										<div class="col-sm-12 col-md-6"></div>
+										<div class="col-sm-12 col-md-6"></div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12">
+											<table id=""
+												class="display expandable-table dataTable no-footer table-hover text-nowrap"
+												style="width: 100%;" role="grid">
+												<thead>
+													<tr role="row">
+														<th class="" rowspan="1" colspan="1" aria-label="Quote#"
+															style="width: 70px;">글번호</th>
+
+														<th class="" tabindex="0" rowspan="1" colspan="1"
+															aria-sort="ascending" style="width: 51px;">게시글 제목</th>
+
+														<th class="" tabindex="0" rowspan="1" colspan="1"
+															style="width: 58px;">닉네임</th>
+
+														<!-- <th class="" tabindex="0" 
+                                          rowspan="1" colspan="1"
+                                          
+                                          style="width: 43px;">조회수</th> -->
+
+														<th class="" tabindex="0" rowspan="1" colspan="1"
+															style="width: 59px;">작성자</th>
+													</tr>
+												</thead>
+												<tbody id="lbsBody">
+													<%-- <c:forEach var="lbrtyBbscttList" items="${lbrtyBbscttList}" 
+                                    varStatus="stat">
+                                             <tr onclick="location.href='/lbrtybbsctt/detail?lbrtyBbscttNo=${lbrtyBbscttList.lbrtyBbscttNo}'" style="cursor:hand">
+                                                 <td>${stat.count}</td>
+                                                 <td>${lbrtyBbscttList.lbrtyBbscttSj}</td>
+                                                 <td>${lbrtyBbscttList.userNcnm}</td>
+                                                 <td>${lbrtyBbscttList.userId}</td>
+                                                
+                                             </tr>
+                                    </c:forEach> --%>
+												</tbody>
+											</table>
+										</div>
+									</div>
+
+									<div id="divPaging" style="display: flex; flex-wrap: wrap;">
+
+									</div>
+
+									<div class="row">
+										<div class="col-sm-12 col-md-5"></div>
+										<div class="col-sm-12 col-md-7"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+	<!-- <button type="button" id="insert" class="btn btn-primary">글쓰기</button> -->
+	<!-- <a href="/admin/create?register" class="btn btn-primary">글쓰기</a> -->
+	<button type="button" class="btn btn-block btn-secondary btn-sm w-25"
+		id="wriBtn" onClick="location.href='/lbrtybbsctt/insert'">글
+		쓰기</button>
+</body>
+</html>

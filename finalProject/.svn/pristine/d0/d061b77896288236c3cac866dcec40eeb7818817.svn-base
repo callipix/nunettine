@@ -1,0 +1,29 @@
+package kr.or.ddit.chatting.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.chatting.mapper.MessageMapper;
+import kr.or.ddit.chatting.vo.MessageVO;
+
+@Service
+public class MessageServiceImpl implements MessageService {
+
+	@Autowired
+	private  MessageMapper messageMapper;
+	
+	@Override
+	public int insert(MessageVO message) {
+		
+		int result = this.messageMapper.insert(message);
+		return result;
+	}
+
+	@Override
+	public List<MessageVO> messageList(int roomNo) {
+		return this.messageMapper.messageList(roomNo);
+	}
+
+}

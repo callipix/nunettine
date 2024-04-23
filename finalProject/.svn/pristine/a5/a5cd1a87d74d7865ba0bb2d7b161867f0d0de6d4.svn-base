@@ -1,0 +1,371 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<script type="text/javascript" src="/resources/js/jquery.min.js"></script>
+<link href="/resources/css/main.css" rel="stylesheet" />
+<script type="text/javascript" src="/resources/fullcalendar/main.js"></script>
+<script type="text/javascript" src="/resources/fullcalendar/ko.js"></script>
+
+
+<style>
+	.searchForm {
+	margin-top: 30px;
+	}
+	.content-wrapper {
+		background: none;
+	
+	}
+</style>
+<script>
+    $(function () {
+
+        let userId = `${userId}`;
+        console.log(userId);
+
+        //로그인 상태에만 등록버튼 보이기
+        if (userId != "not") {
+            $("#btnTmtCreate").css("display", "block");
+        }
+
+        //오늘모임 탭 이동 이벤트  
+        /* $("#home-tab").on("click", function() {
+            $("#home-").
+        }) */
+        $("#tmtListTab").on("click", function () {
+            $("#tmtCalTab").attr('class', 'nav-link');
+            $("#tmtListTab").attr('class', 'nav-link active');
+            $("#tmtCal").attr('class', 'tab-pane fade');
+            $("#tmtList").attr('class', 'tab-pane fade active show');
+        })
+        $("#tmtCalTab").on("click", function () {
+            $("#tmtCalTab").attr('class', 'nav-link active');
+            $("#tmtListTab").attr('class', 'nav-link');
+            $("#tmtCal").attr('class', 'tab-pane fade active show');
+            $("#tmtList").attr('class', 'tab-pane fade');
+        })
+		
+        //모임 등록
+        $("#btnTmtCreate").on("click", function () {
+            location.href = "/todayMeeting/create";
+        })
+		
+        //검색 키 변화시
+        $("#search_key").on("change", function () {
+            console.log($("#search_key").val());
+            if ($("#search_key").val() == "date") {
+                $("#keyword").prop("type", "hidden");
+                $(".dateKeyword").prop("type", "datetime-local");
+
+                //  			$("#dateKeyword2").attr("min", "2023-03-11T10:00");
+            } else {
+                $("#keyword").prop("type", "text");
+                $(".dateKeyword").prop("type", "hidden");
+            }
+        })
+		
+        //엔터키 입력 검색
+        $("#keyword").on("keyup", function (key) {
+            if (key.keyCode == 13) {
+                meetingSearch();
+            }
+        })
+		
+        //검색 버튼 검색
+        $("#btnSearch").on("click", function () {
+
+        	meetingSearch();
+        })
+		
+        //전체리스트 출력
+        let currentPage = "${param.currentPage}";
+		console.log("currentPage : " + currentPage)
+	
+		if (currentPage == "") {
+			currentPage = "1";
+		}
+		
+		let data = {
+				"keyword" : "${param.keyword}",
+				"currentPage" : currentPage
+		}
+
+        
+        $.ajax({
+            url: "/todayMeeting/listAjax",
+            type: "post",
+            data:JSON.stringify(data),//
+    		contentType:"application/json;charset=utf-8",//페이징처리 해줄 때 넣어줌
+            dataType: "json",
+            success: function (result) {
+                let str = "";
+                console.log(result);
+                //content안에 있는 배열을 받아와야하는데 계속 result만 찍고 있어서
+                //전부 다 undefind가 떴음
+                //result.content
+                $.each(result.content, function (idx, tdmtngVO) {
+				
+                    str += "<tr>";
+                    str += "<td>" + tdmtngVO.rnum + "</td>";
+                    str += "<td><a href='/todayMeeting/detail?tdmtngNo=" + tdmtngVO.tdmtngNo + "'>" 
+                    		+ tdmtngVO.tdmtngNm + "</a></td>";
+                    str += "<td>" + tdmtngVO.tdmtngDt + "</td>";
+                    str += "<td>" + tdmtngVO.userNcnm + "</td>";
+                    str += "</tr>";
+                });
+                $("#tmtBody").append(str);
+                
+                $("#divPagingArea").html(result.pagingArea);
+
+            }
+        })
+		
+        //모달 닫기 버튼 클릭 이벤트
+		$("#btnModalClose").on("click", function() {	
+			$("#modal-calendar").modal("hide");
+		})
+        
+        
+        //캘린더
+        var request = $.ajax({
+            url: "/todayMeeting/calendarList", // 값 불러오기
+            data: {"userId" : userId},
+            method: "GET",
+            dataType: "json"
+        });
+        request.done(function (data) {
+            console.log(data); // log로 데이터 찍어주기
+            var calendarEl = document.getElementById('calendar');
+            calendar = new FullCalendar.Calendar(calendarEl, {
+                height: '700px',
+                slotMinTime: '08:00', // Day 캘린더에서 시작 시간
+                slotMaxTime: '20:00', // Day 캘린더에서 종료 시간
+                // 헤더에 표시할 툴바
+                headerToolbar: {
+                    left: 'prev, next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                },
+                initialView: 'dayGridMonth', // 초기 로드 될 때 보이는 캘린더 화면 (기본 설정 : 달)
+                navLinks: true, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
+                editable: true, // 수정 가능?
+                selectable: true, // 달력 일자 드래그 설정 가능
+                droppable: true, // 드래그 앤 드롭 
+                events: data,
+                locale: 'ko', // 한국어 설정
+
+                eventClick: function (info) {
+					
+                	$("#modal-calendar").modal("show");
+                		
+                	
+                	$("#btnGoDetail").on("click", function() {	
+                		 var tdmtngNo = info.event.id;
+                		 
+                		 //java.sql.SQLException: 부적합한 열 유형: 1111
+//                       //todayMeetngCode를 가져오고 싶었으나
+//                       //todayMeetngCode는 FullCalendar의 이벤트 객체에 포함되어 있지 않음 따라서 undefined
+//                       //title을 받아보니 잘 받아와짐
+//                       //해결 : info.event.extendedProps를 통해 확장 속성을 가져오거나
+//                       //      info.event.id에 todayMeetngCode를 담아서 가져옴
+                     	 location.href = "/todayMeeting/detail?tdmtngNo=" + tdmtngNo;
+            		})
+              
+                }
+
+            });
+            calendar.render();
+        });
+
+
+
+    });
+
+
+function meetingSearch() {
+    console.log($("#dateKeyword1").val());
+
+    let searchKey = $("#search_key").val();
+    let keyword = $("#keyword").val();
+    let dateKeyword1 = $("#dateKeyword1").val();
+    let dateKeyword2 = $("#dateKeyword2").val();
+
+    console.log($("#dateKeyword1").val());
+    console.log($("#dateKeyword2").val());
+
+    console.log($("#search_key").val());
+
+
+//        if (keyword == '' && (dateKeyword1 == '' || dateKeyword2 == '')) {
+
+//            Swal.fire({
+//                title: '검색어를 입력해주세요',
+//                icon: 'warning',
+//                confirmButtonText: '확인',
+//            }).then((result) => {
+//                if (result.isConfirmed) {
+//                    $('#keyword').focus();
+//                    return;
+//                }
+//            });
+
+//        }
+
+    console.log($("#search_key").val())
+    console.log("keyword : " + keyword);
+    
+    let currentPage = "1";
+	
+	if(currentPage=="") {
+		currentPage = "1";
+	}
+
+    
+    
+    
+
+    let data = {
+        "keyword": keyword,
+        "searchKey": searchKey,
+        "dateKeyword1": dateKeyword1,
+        "dateKeyword2": dateKeyword2,
+        "currentPage" : currentPage
+    };
+    console.log("data : ", data)
+
+    $.ajax({
+        url: "/todayMeeting/listAjax",
+        contentType: "application/json;charset=utf-8",
+        data: JSON.stringify(data),
+        type: "post",
+        dataType: "json",
+        success: function (result) {
+
+            let str = "";
+
+            $("#tmtBody").html("");
+
+            $.each(result.content, function (idx, tdmtngVO) {
+                str += "<tr>";
+                str += "<td>" + tdmtngVO.rnum + "</td>";
+                str += "<td><a href='/todayMeeting/detail?tdmtngNo=" + tdmtngVO.tdmtngNo + "'>" 
+                		+ tdmtngVO.tdmtngNm + "</a></td>";
+                //             str += "<td>" + new Date(tdmtngVO.tdmtngDt).toLocaleString() + "</td>";
+                str += "<td>" + tdmtngVO.tdmtngDt + "</td>";
+                str += "<td>" + tdmtngVO.userNcnm + "</td>";
+                str += "</tr>";
+            });
+
+            $("#tmtBody").append(str);
+            
+            $("#divPagingArea").html(result.pagingArea);
+
+        }
+    })
+}
+</script>
+
+<div id="title">
+	<h1>오늘 모임</h1>
+</div>
+
+<button type="button" class="btn btn-inverse-primary btn-fw" id="btnTmtCreate" style="display: none;">모임등록</button>
+
+
+<div class="card">
+	<div class="card-body">
+		<ul class="nav nav-tabs" role="tablist">
+			<li class="nav-item" role="presentation">
+				<a class="nav-link active" id="tmtCalTab" data-bs-toggle="tab" href="#tmtCal" role="tab" aria-controls="tmtCal"
+					aria-selected="true">내 모임</a>
+			</li>
+			<li class="nav-item" role="presentation">
+				<a class="nav-link" id="tmtListTab" data-bs-toggle="tab" href="#tmtList" data-bs-target="#tmtList"
+					role="tab" aria-controls="tmtList" aria-selected="false" tabindex="-1">모임 목록</a>
+			</li>
+
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane fade active show" id="tmtCal" role="tabpanel" aria-labelledby="tmtCalTab">
+				<div class="media">
+
+					<div class="media-body">
+						<div id="calendar" class=cal></div>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane fade" id="tmtList" role="tabpanel" aria-labelledby="tmtListTab">
+				<div class="media">
+
+					<div class="media-body">
+
+						<div class="form-group searchForm">
+							<div class="input-group">
+
+								<select class="form-control col-sm-2" id="search_key">
+									<option value="title">모임명</option>
+									<option value="reader">모임장</option>
+									<option value="date">모임일자</option>
+								</select>
+								<input type="text" class="form-control" id="keyword" name="keyword" placeholder="검색어를 입력해주세요">
+								<input type="hidden" id="dateKeyword1" name="dateKeyword1" class="form-control dateKeyword">
+								<input type="hidden" id="dateKeyword2" name="dateKeyword2" class="form-control dateKeyword">
+								<div class="input-group-append">
+									<button class="btn btn-sm btn-primary" type="button" id="btnSearch">검색</button>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="card">
+							<div class="card-body">
+								
+								<div class="table-responsive">
+									<table class="table">
+										<thead>
+											<tr>
+												<th>번호</th>
+												<th>모임명</th>
+												<th>모임일시</th>
+												<th>모임장</th>
+											</tr>
+										</thead>
+										<tbody id="tmtBody">
+
+										</tbody>
+									</table>
+								</div>
+						
+							</div>
+										<div class="row justify-content-center" id="divPagingArea">
+						
+					</div>
+						</div>
+					
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<!-- 캘린더 클릭 모달 -->
+<div class="modal fade" id="modal-calendar"  data-backdrop="static" tabindex="-1" aria-labelledby="exampleModalSmLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center"> 
+        <div>
+      	<button type="button" class="btn btn-inverse-primary" id="btnGoChat">채팅방입장</button>
+      	<button type="button" class="btn btn-inverse-primary" id="btnGoDetail">게시글상세</button>
+      </div>
+      </div>
+      <div class="modal-footer">
+      <button type="button" id="btnModalClose" class="btn btn-primary">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
+

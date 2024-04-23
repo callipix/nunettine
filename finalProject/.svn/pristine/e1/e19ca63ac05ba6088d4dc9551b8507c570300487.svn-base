@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.admin.notice.mapper.NoticeMapper">
+	
+	<sql id = "where">
+		<if test="keyword!=null and keyword!=''">
+			And ( 
+				notice_Cn Like '%' || #{keyword} || '%'
+				
+			or	notice_Sj Like '%' || #{keyword} || '%'
+			)
+		</if>
+	</sql>
+	
+	<select id="list" parameterType="hashMap" resultType="noticeVO">
+		with t as(
+			select ROW_NUMBER() OVER(order by f.notice_no DESC)RNUM
+				,f.*
+			from(
+				select notice_No, notice_Sj, notice_Cn,
+ 				notice_Writng_Dt, NOTICE_RDCNT, MNGR_ID 
+				from notice
+				where 1 = 1
+				<include refid="where"></include>
+			)f
+		)
+		select t.* from t
+		where t.rnum between(#{currentPage}*10)-(10-1) and (#{currentPage}*10)
+	</select>
+	
+	<select id="getAllNoticeList" parameterType="noticeVO" resultType="noticeVO" >
+		select * from notice
+	</select>
+	
+	<select id="detail" parameterType="int" resultType="noticeVO">
+    select NOTICE_NO, NOTICE_SJ, NOTICE_CN, NOTICE_WRITNG_DT, NOTICE_RDCNT, SPRVISE_ATCHMNFL_NO, MNGR_ID
+    from notice
+    where NOTICE_NO = #{noticeNo}
+	</select>
+	
+	<update id="update" parameterType="noticeVO">
+	update notice 
+	set NOTICE_CN = #{noticeCn} 
+	where notice_no =#{noticeNo} 
+	</update>
+	
+	<delete id = "delete" parameterType="noticeVO">
+		delete from notice
+		where notice_no = #{noticeNo}
+	</delete>
+	
+<!-- 	<insert id = "createRegister" parameterType="noticeVO"> -->
+<!-- 		insert into notice(notice_No, notice_Sj -->
+<!-- 		<if test = "noticeCn!=null and no noticeCn!=''"> -->
+<!-- 		, notice_Cn -->
+<!-- 		</if> -->
+<!-- 		) -->
+<!-- 		values(#{noticeNo},#{noticeSj} -->
+<!-- 		<if test = "noticeCn!=null and noticeCn!=''"> -->
+<!-- 		,#{noticeCn} -->
+<!-- 		</if> -->
+<!-- 		) -->
+<!-- 	</insert> -->
+	
+<!-- 	<insert id="createRegister" parameterType="noticeVO"> -->
+<!--     insert into notice(notice_No, notice_Sj -->
+<!--     <if test="noticeCn != null and noticeCn != ''"> -->
+<!--         , notice_Cn -->
+<!--     </if> -->
+<!--     ) -->
+<!--     values(#{noticeNo}, #{noticeSj} -->
+<!--     <if test="noticeCn != null and noticeCn != ''"> -->
+<!--         , #{noticeCn} -->
+<!--     </if> -->
+<!--     ) -->
+<!-- 	</insert> -->
+	
+	<insert id="createRegister" parameterType="noticeVO">
+	
+		<selectKey resultType="int" order="BEFORE" keyProperty="noticeNo">
+			SELECT NVL(MAX(notice_No),0)+1 FROM notice
+		</selectKey>
+		
+			insert into notice(notice_No, notice_Sj, notice_Cn,MNGR_ID)
+			values(#{noticeNo},#{noticeSj},#{noticeCn},#{mngrId})
+	
+	</insert>
+	
+	<select id = "getTotal" parameterType="hashMap" resultType="int">
+		select count(*) from notice
+		where 1 = 1
+		<include refid="where"></include>
+	</select>
+	
+	
+	
+</mapper>

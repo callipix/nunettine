@@ -1,0 +1,164 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<script type="text/javascript" src="/resources/js/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales-all.js"></script>
+
+<style>
+	.searchForm {
+	margin-top: 30px;
+	}
+</style>
+<script>
+  $(function () {
+	 
+	$("#btnTmtCreate").on("click", function () {
+		location.href = "/todayMeeting/create";
+	})
+
+    $("#btnSearch").on("click", function () {
+
+      let keyword = $("#keyword").val();
+      console.log("keyword : " + keyword);
+
+      let data = {
+        "keyword": keyword
+      };
+      console.log("data : ", data)
+
+      $.ajax({
+        url: "/todayMeeting/listAjax",
+        contentType: "application/json;charset=utf-8",
+        data: JSON.stringify(data),
+        type: "post",
+        dataType: "json",
+        success: function (result) {
+
+          let str = "";
+
+          $("#tmtBody").html("");
+
+          $.each(result, function (idx, tdmtngVO) {
+            str += "<tr>";
+            str += "<td>" + tdmtngVO.tdmtngNo + "</td>";
+            str += "<td><a href='/todayMeeting/detail?tdmtngNo=" + tdmtngVO.tdmtngNo + "'>" + tdmtngVO.tdmtngNm + "</a></td>";
+            str += "<td>" + new Date(tdmtngVO.tdmtngDt).toLocaleString() + "</td>";
+            str += "<td>" + tdmtngVO.userNcnm + "</td>";
+            str += "</tr>";
+          });
+
+          $("#tmtBody").append(str);
+        }
+      })
+    })
+
+    $.ajax({
+      url: "/todayMeeting/listAjax",
+      type: "post",
+      dataType: "json",
+      success: function (result) {
+        let str = "";
+        $.each(result, function (idx, tdmtngVO) {
+
+          str += "<tr>";
+          str += "<td>" + tdmtngVO.tdmtngNo + "</td>";
+          str += "<td><a href='/todayMeeting/detail?tdmtngNo=" + tdmtngVO.tdmtngNo + "'>" + tdmtngVO.tdmtngNm + "</a></td>";
+          str += "<td>" + new Date(tdmtngVO.tdmtngDt).toLocaleString() + "</td>";
+          str += "<td>" + tdmtngVO.userNcnm + "</td>";
+          str += "</tr>";
+        });
+        $("#tmtBody").append(str);
+      }
+    })
+
+    var request = $.ajax({
+      url: "/todayMeeting/calendarList", // 값 불러오기
+      method: "GET",
+      dataType: "json"
+    });
+    request.done(function (data) {
+      console.log(data); // log로 데이터 찍어주기
+      var calendarEl = document.getElementById('calendar');
+      calendar = new FullCalendar.Calendar(calendarEl, {
+        height: '700px',
+        slotMinTime: '08:00', // Day 캘린더에서 시작 시간
+        slotMaxTime: '20:00', // Day 캘린더에서 종료 시간
+        // 헤더에 표시할 툴바
+        headerToolbar: {
+          left: 'prev, next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        },
+        initialView: 'dayGridMonth', // 초기 로드 될 때 보이는 캘린더 화면 (기본 설정 : 달)
+        navLinks: true, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
+        editable: true, // 수정 가능?
+        selectable: true, // 달력 일자 드래그 설정 가능
+        droppable: true, // 드래그 앤 드롭 
+        events: data,
+        locale: 'ko', // 한국어 설정
+
+        eventClick: function (info) {
+
+          var tdmtngNo = info.event.id;
+
+          location.href = "/todayMeeting/detail?tdmtngNo=" + tdmtngNo;
+        }
+
+      });
+      calendar.render();
+    });
+
+  });
+  
+  
+  
+  
+  
+</script>
+
+<body>
+<div id="title">
+  <h1>오늘 모임</h1>
+</div>
+
+<button type="button" class="btn btn-inverse-primary btn-fw" id="btnTmtCreate">모임등록</button>
+
+
+<div id="calendar" class=cal></div>
+
+<div class="form-group searchForm">
+  <div class="input-group">
+  <select class="form-control col-sm-2" id="search_key">
+    <option value="title">모임명</option>
+    <option value="writer_name">모임장</option>
+  </select>
+    <input type="text" class="form-control" id="keyword" name="keyword" placeholder="검색어를 입력해주세요">
+    <div class="input-group-append">
+      <button class="btn btn-sm btn-primary" type="button" id="btnSearch">검색</button>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Basic Table</h4>
+    <p class="card-description">
+      Add class <code>.table</code>
+    </p>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>모임명</th>
+            <th>모임일시</th>
+            <th>모임장</th>
+          </tr>
+        </thead>
+        <tbody id="tmtBody">
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

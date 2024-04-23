@@ -1,0 +1,47 @@
+package kr.or.ddit.chatting.websocket;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.socket.WebSocketSession;
+
+import kr.or.ddit.chatting.Check;
+import kr.or.ddit.chatting.service.ChatService;
+import kr.or.ddit.chatting.vo.MessageVO;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
+@Controller
+@RequiredArgsConstructor
+public class StompChatController {
+	
+	private final SimpMessagingTemplate template;
+	@Autowired
+	private ChatService chatService;
+	
+	private Set<WebSocketSession> sessions = new HashSet<>();
+
+
+	@MessageMapping("/chat/enter")
+	public void enter(MessageVO message , WebSocketSession session) {
+		message.setMsgCont(message.getUserId() + "님이 채팅방에 참여하였습니다");
+		
+		
+		Check.sircleCall();
+		System.out.println("어디서 찍힐까" + message);
+		template.convertAndSend("/sub/chat/room/" + message.getRoomNo(), message);
+	}
+	@MessageMapping("/chat/message")
+	public void message(MessageVO message) {
+		template.convertAndSend("/sub/chat/room/" + message.getRoomNo() , message);
+		Check.sircleCall();
+//		int result = this.chatService.insertMSG(message);
+//		log.info("message" + result);
+		log.info("message" + message);
+		System.out.println("메세지 전송 성공");
+	}
+}

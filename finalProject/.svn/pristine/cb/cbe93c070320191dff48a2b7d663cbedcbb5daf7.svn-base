@@ -1,0 +1,15 @@
+package kr.or.ddit.vo;
+
+import java.util.Date;
+
+import lombok.Data;
+
+@Data
+public class SetleVO {
+	private int setleNo;
+	private int resveNo;
+	private Date setleDt;
+	private String canclAt;
+	private Date canclDt;
+	private String setleMnCode;
+}

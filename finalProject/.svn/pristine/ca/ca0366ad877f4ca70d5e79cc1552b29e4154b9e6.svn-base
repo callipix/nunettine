@@ -1,0 +1,100 @@
+package kr.or.ddit.util.echo;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import kr.or.ddit.alarm.vo.NtchDetailVO;
+import kr.or.ddit.chatting.service.MessageService;
+import kr.or.ddit.chatting.vo.MessageVO;
+import kr.or.ddit.vo.TdmtngChSpMshgVO;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
+@Controller
+@RequiredArgsConstructor
+public class StompChatController {
+	
+	@Autowired
+	private MessageService messageService;
+	
+	private final SimpMessagingTemplate template;
+	
+	@ResponseBody
+	@PostMapping("/chat/messageList")
+	public ModelMap messageListTest(@RequestParam("roomNo") int roomNo) throws JsonProcessingException {
+		ModelMap modelMap = new ModelMap();
+
+		List<MessageVO> messageList = this.messageService.messageList(roomNo);
+	    ObjectMapper objp =  new ObjectMapper();
+	    String myRoomChat = objp.writeValueAsString(messageList);
+	    modelMap.addAttribute("messageList", messageList);
+	    modelMap.addAttribute("myRoomChat", myRoomChat);
+	    
+
+	    return modelMap;
+	    
+	}
+	
+	@MessageMapping("/chat/enter")
+	public void enter(TdmtngChSpMshgVO message) {
+		// 수신 영역
+		System.out.println("enter->messageNo : " + message.getTdmtngNo());
+		
+		message.setTdmtngChSpMsgCn(message.getUserId() +"님이 접속하였습니다");
+		
+		template.convertAndSend("/sub/chat/room/" + message.getTdmtngNo(), message);
+			
+	}
+	@Transactional
+	@MessageMapping("/chat/message")
+	public void message(TdmtngChSpMshgVO message) {
+		// 전송영역
+		log.info("채팅전송체크{}");
+
+		template.convertAndSend("/sub/chat/room/" + message.getTdmtngNo() , message);
+		
+		int result = this.messageService.insert(message);
+		
+		if(result > 0) {
+			log.info("메세지 전송 성공 " + result);
+		} else {
+			log.info("메세지 전송 실패 " + result);
+		}
+	}
+	
+///////////// 알람 기능 삭제되었음!!
+	@MessageMapping("/alarm/get")
+	public void alram(NtchDetailVO alarmInfo) {
+		// 수신영역
+		
+		System.out.println("알람 수신 체크");
+		
+		template.convertAndSend("/sub/alarm/"+ alarmInfo.getUserId() , alarmInfo);
+
+	}
+	
+	@MessageMapping("/alarm/send")
+	public void alramSend(NtchDetailVO alarmInfo) {
+		// 전송영역
+		
+		System.out.println("알람 전송 체크");
+		
+		template.convertAndSend("/sub/alarm/"+ alarmInfo.getUserId() , alarmInfo);
+
+		System.out.println("알람 내용 : " + alarmInfo);
+	}
+	
+}
+

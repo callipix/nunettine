@@ -1,0 +1,15 @@
+package kr.or.ddit.member.mypage.mapper;
+
+import java.util.Map;
+
+public interface MemberMypageMapper {
+
+	public int updTel(Map<String, Object> map);
+
+	public int updPW(Map<String, Object> map);
+
+	public int updNcnm(Map<String, Object> map);
+
+	public int updPhoto(Map<String, Object> map);
+
+}

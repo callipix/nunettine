@@ -1,0 +1,331 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script type="text/javascript" src="/resources/js/jquery.min.js"></script>
+<link rel="stylesheet" href="/resources/skydash/vendors/font-awesome/css/font-awesome.min.css">
+<style>
+	.nav-link.dropdown-toggle::after {
+    	display: none;
+	}
+	ul.chatMemList {
+		list-style-type: none;
+	}
+	
+	ul.chatMemList li {
+		overflow: hidden;
+		margin-bottom: 1.5em;
+		display: flex;
+    	align-items: center;
+    	
+	}
+
+	ul.chatMemList li img {
+		width: 30px;
+		height: 30px;
+		margin-right: 10px;
+
+	}
+	
+
+	
+</style>
+<script type="text/javascript">
+
+$(function() {
+	let userId = `${tdmtngVO.userId}`;
+	console.log(userId);
+	
+	let sessionId = `${sessionId}`;
+	console.log(sessionId);
+	
+	if(userId == sessionId) {
+		$("#btnsUpdate").css("display", "inline");	
+	}
+
+	//모임 참여 여부
+	let tdmtngNo = `${tdmtngVO.tdmtngNo}`;
+	
+	let myChatCk = {
+			"userId" : sessionId,
+			"tdmtngNo" : tdmtngNo
+			}
+	
+	$.ajax({
+        url: "/todayMeeting/selectMyChat",
+        contentType: "application/json;charset=utf-8",
+        type: "post",
+        data: JSON.stringify(myChatCk),
+        dataType: "json",
+        success: function (tdmtngPrtcpntVO) {
+        	console.log(tdmtngPrtcpntVO.tdmtngNo);
+        	console.log(tdmtngNo);
+        	if(tdmtngPrtcpntVO.tdmtngNo == tdmtngNo) {
+        		console.log("참가중");
+        		$("#btnPrctChat").css("display", "none");
+        		$("#btnPrctedChat").css("display", "block");
+        	} 
+        	
+        }
+    });
+	
+	//모임 멤버 리스트
+	$("#iconChatMem").on("click", function() {
+		
+		$("#chatMemList").html("");
+		
+		let tdmtngNo = `${tdmtngVO.tdmtngNo}`;
+
+		console.log(tdmtngNo);
+		
+		$.ajax ({
+			url: "/todayMeeting/chatMemList",
+			type: "post",
+			data: {"tdmtngNo" : tdmtngNo},
+			dataType: "json",
+			success: function(result) {
+				console.log(result);
+				
+				let str ="";
+				
+				
+				$.each(result, function(idx, tdmtngPrtcpntVO) {
+					let sexdstnTy = tdmtngPrtcpntVO.mberVOList[0].sexdstnTy;
+	                 
+					if(sexdstnTy == "SD01") sexdstnTy = "남자";
+	               	else if(sexdstnTy == "SD02") sexdstnTy = "여자";
+	               	else sexdstnTy = "기타";
+	                 
+	               	let emplyrTy = tdmtngPrtcpntVO.usersVOList[0].emplyrTy;
+	                 
+					if(emplyrTy == "ET01") emplyrTy = "회원";
+	               	else if(emplyrTy == "ET02") emplyrTy = "프로";
+					str += "<li>";	
+					str += "<img src='" + tdmtngPrtcpntVO.mberVOList[0].mberProflPhoto + "' alt='' class='left' />";
+					str += "<h6>" + tdmtngPrtcpntVO.usersVOList[0].userNcnm + "(" + tdmtngPrtcpntVO.usersVOList[0].userId + ")</h6>";
+					str += "<p>" + sexdstnTy + emplyrTy + "</p>";
+					str += "</li>";
+				})
+				$("#chatMemList").append(str);
+			}
+			
+		})
+	})
+	
+	//채팅 참여 버튼 이벤트
+	$("#btnPrctChat").on("click", function() {
+		
+		let aftusBbscttNo = $("#aftusBbscttNo").val();
+		Swal.fire({
+			title: '모임에 참여 하시겠습니까?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: '확인',
+	        cancelButtonText: '취소',
+	        reverseButtons: false,
+		}).then((result) => {
+			if (result.isConfirmed) {
+				let tdmtngNo = `${tdmtngVO.tdmtngNo}`;
+				
+				console.log(tdmtngNo);
+
+				$.ajax({
+					url: "/todayMeeting/joinChat",
+					type: "post",
+					data: {"tdmtngNo" : tdmtngNo},
+					dataType: "json",
+					success: function(result) {
+						
+						console.log(result);
+						
+						$("#btnPrctChat").css("display", "none");
+		        		$("#btnPrctedChat").css("display", "block");
+						
+					}
+				})
+			}
+		})
+		
+		
+	
+	})
+	
+	//수정하기
+	$("#btnTmtEdit").on("click", function() {
+		
+		let tdmtngDt = $("#tdmtngDt").val();
+		console.log(tdmtngDt);
+		
+		let formattedTdmtngDt = tdmtngDt.replace(/\./g, '-').replace(' ', 'T') + ':00';
+
+		console.log(formattedTdmtngDt);
+		$("#tdmtngDt").val(formattedTdmtngDt);
+
+		
+		$("#btnsUpdate").css("display", "none");
+		$("#btnsCkUpdate").css("display", "block");
+ 		$("#imgUpDiv").css("display", "block");
+ 		$("#imgPreDiv").css("display", "block");
+		$("#tdmtngDt").prop("type", "datetime-local");
+		$(".tmtDetail").removeAttr("readonly");
+		
+		$("#uploadFile").on("change", function() {
+			$("#imgDiv").css("display", "none");
+		});
+		
+		$("#uploadFile").on("change",handleImgFileSelect);
+		function handleImgFileSelect(e){
+		
+			let files = e.target.files;
+			
+			console.log(files);
+			let fileArr = Array.prototype.slice.call(files);
+		
+			fileArr.forEach(function(f){
+				//이미지 파일이 아닌 경우 이미지 미리보기 실패 처리(MIME타입)
+				console.log(f);
+				if(!f.type.match("image.*")){
+					alert("이미지 파일만 가능합니다.");
+					//함수 종료
+					return;
+				}
+				//이미지 객체를 읽을 자바스크립트의 reader 객체 생성
+				let reader = new FileReader();
+				
+				$(".clsCiImgUrl").html("");
+				
+				//e : reader가 이미지 객체를 읽는 이벤트
+				reader.onload = function(e){
+					$(".clsCiImgUrl").css({
+				          "background-image": "url(" + e.target.result + ")",
+				          "background-position": "center",
+				          "background-size": "cover",
+				          "width": "500px", 
+				          "height": "500px",
+			
+				    });
+//	 				
+				}
+				//f : 이미지 파일 객체를 읽은 후 다음 이미지 파일(f)을 위해 초기화 함
+				reader.readAsDataURL(f);
+			});//end forEach
+		}
+	})
+	
+	//삭제
+	$("#btnTmtDel").on("click", function() {
+		location.href = "/todayMeeting/delete?tdmtngNo="+${tdmtngVO.tdmtngNo};
+	})
+	
+	//목록
+	$("#btnTmtList").on("click", function() {
+		location.href = "/todayMeeting/main";
+	})
+	
+	//수정 화면에서 취소 버튼 클릭시
+    $("#btnTmtCancel").on("click", function() {
+    	location.href = "/todayMeeting/detail?tdmtngNo="+${tdmtngVO.tdmtngNo};
+    })
+	
+
+})
+</script>
+
+<div class="content-wrapper"
+	style="border-top-left-radius: 45px; border-top-right-radius: 45px;">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card px-2">
+				<div class="card-body">
+					<form action="/todayMeeting/update" class="forms-sample" name="tmtUpdate" method="post" enctype="multipart/form-data">
+						<div class="container-fluid">
+							<input type="hidden" id="tdmtngNo" name="tdmtngNo" value="${tdmtngVO.tdmtngNo}">
+							<h2 class="text-center my-5" style="font-family: GMarketSansMedium">${tdmtngVO.tdmtngNm}</h2>
+							<div style="margin-left: 83%;">
+								<p style="font-family: GMarketSansLight; display: inline; margin-right: 15px;">모임장</p>
+								<p style="display: inline;">${tdmtngVO.userNcnm}</p>
+								<br />
+								<p style="font-family: GMarketSansLight; display: inline;">작성일시</p>
+								<p style="display: inline;">${tdmtngVO.tdmtngCreatDt}</p>
+								<br />
+								<p style="font-family: GMarketSansLight; display: inline;">모임일시</p>
+								<p style="display: inline;">${tdmtngVO.tdmtngDt}</p>
+							</div>
+							<hr>
+						</div>
+						<div class="container-fluid mt-5 w-100">
+							<h5 class="mb-5" style="font-family: GmarketSansLight; padding-left: 20px;">${tdmtngVO.tdmtngCn}</h5>
+							<hr>
+						</div>
+						
+						<!-- 수정 버튼 클릭시 보이게 하기 -->
+						<div id="tmtUdtFormDiv" style="display: none;">
+							<label for="tdmtngNm">제목</label>
+							<input type="text" class="form-control" id="tdmtngNm"
+							name="tdmtngNm" value="${tdmtngVO.tdmtngNm}">
+							
+							
+			                <label for="tdmtngDt">모임일시</label>
+							<input type="text" class="form-control tmtDetail" id="tdmtngDt" name="tdmtngDt" value="${tdmtngVO.tdmtngDt}" readonly>
+			            
+						
+							<label for="tdmtngCn">내용</label>
+							<div id="ckEditor">${tdmtngVO.tdmtngCn}</div>
+							<textarea class="form-control" rows="10" id="tdmtngCn" name="tdmtngCn"
+								style="display: none;"></textarea>	
+						</div>
+						
+						<div class="form-group">
+			            	<div class="dropdown" id="fileGroup">
+			            		<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="dropdownChatMem">
+			            		<i class="fa fa-group" id="iconChatMem"></i>
+			            		</a>
+			            		<div class="dropdown-menu" aria-labelledby="dropdownMenuIconButton6" style="">	
+			                    	<ul id="chatMemList" class="chatMemList">			
+									</ul>  
+			                	</div>		
+			            	</div>
+			            	<p>참여 인원  : ${chatMemCount}</p>
+			            </div>
+			         	
+			            <div id="imgDiv" class="form-group">
+			                <img src="${tdmtngVO.tdmtngThumbPhoto}" class="img-fluid mb-2" onerror="this.style.display='none'">
+			            </div>
+			       	
+			       		<div id="imgPreDiv" class="clsCiImgUrl  col-xs-12" style="display: none;">
+						</div>		
+							       	
+			            <div id="imgUpDiv" class="form-group" style="display: none;">
+			                <label>이미지 파일</label>
+			                <input type="file" id="uploadFile" name="uploadFile" class="file-upload-default" >
+			                <div class="input-group col-xs-12">
+			                    <input type="text" class="form-control file-upload-info" disabled="" placeholder="파일선택">
+			                    <span class="input-group-append">
+			                        <button class="file-upload-browse btn btn-primary" type="button">업로드</button>
+			                    </span>
+			                </div>
+			            </div>
+						
+						<div class="container-fluid w-100" style="display: flex; flex-wrap: wrap; float: right;">
+							
+							<div id="btnsUpdate" style="display: none; margin-right: 5px;">
+								<button type="button" id="btnTmtEdit" class="btn btn-outline-primary">수정</button>
+								<button type="button" id="btnTmtDel" class="btn btn-outline-primary">삭제</button>
+							</div>
+								<button type="button" class="btn btn-outline-secondary" id="btnTmtList">목록</button>
+								<button type="button" class="btn btn-inverse-primary" id="btnPrctChat">모임 참여</button>
+            					<button type="button" class="btn btn-primary" id="btnPrctedChat" disabled style="display: none;">참여중</button>
+							<div id="btnsCkUpdate" style="display: none;">
+								<button type="submit" id="btnTmtCkEdit" class="btn btn-primary mr-2">확인</button>
+								<button type="button" id="btnTmtCancel" class="btn btn-light">취소</button>
+							</div>
+							
+						</div>
+						
+						
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

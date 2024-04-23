@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.chatting.mapper.ChatMapper">
+	<!-- 1. 방생성 -> 끝 -->
+	<insert id="insertRoom"
+		parameterType="kr.or.ddit.chatting.vo.ChatRoomVO">
+		<selectKey resultType="int" order="BEFORE"
+			keyProperty="roomNo">
+			SELECT CHAT_ROOM_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT ALL
+
+		INTO CHAT_ROOM(ROOM_NO , ROOM_NAME , CREATE_DATE , USER_ID)
+		VALUES(#{roomNo}, #{roomName} , SYSDATE , #{userId})
+
+		INTO CHAT_RELAY(USER_ID, ROOM_NO)
+		VALUES(#{userId} , #{roomNo})
+
+		SELECT * FROM DUAL
+	</insert>
+
+	<!-- 2.채팅방 목록 불러오기 -> 끝 -->
+	<select id="chatRoomList"
+		resultType="kr.or.ddit.chatting.vo.ChatRoomVO">
+		SELECT ROOM_NO, ROOM_NAME, CREATE_DATE, USER_ID
+		FROM CHAT_ROOM
+		ORDER BY ROOM_NO DESC
+	</select>
+
+	<!-- 3.방개설자가 아닐시 채팅방 참가정보 등록 -->
+	<insert id="joinChat"
+		parameterType="kr.or.ddit.chatting.vo.ChatRelayVO">
+		INSERT INTO CHAT_RELAY(USER_ID, ROOM_NO)
+		VALUES (#{userId} , #{roomNo})
+	</insert>
+
+	<!-- 4.해당 채팅방 접속 -->
+	<select id="getRoomJoin" parameterType="int"
+		resultType="kr.or.ddit.chatting.vo.ChatRoomVO">
+		SELECT A.ROOM_NO, A.ROOM_NAME, A.CREATE_DATE
+		, B.USER_ID
+		FROM CHAT_ROOM A LEFT JOIN CHAT_RELAY B ON
+		A.ROOM_NO = B.ROOM_NO
+		WHERE A.ROOM_NO = #{roomNo}
+	</select>
+
+	<!-- 5.해당 채팅방에 존재하는 유저 -->
+	<select id="getRoomUsers" parameterType="int"
+		resultType="java.util.List">
+		SELECT A.ROOM_NO
+		, B.USER_ID
+		FROM CHAT_ROOM A LEFT JOIN CHAT_RELAY B ON
+		A.ROOM_NO = B.ROOM_NO
+		WHERE A.ROOM_NO = #{roomNo}
+	</select>
+
+<!-- 	<select id=choice parameterType="int"	resultType="java.util.List"> -->
+<!-- 		SELECT TEST -->
+<!-- 		FROM TEST_TBL -->
+<!-- 		WHERE -->
+<!-- 		TEST_VAL IN -->
+<!-- 		<foreach collection="list" item="value" index="idx" -->
+<!-- 			separator="," open="(" close=")"> -->
+<!-- 			#{value} -->
+<!-- 		</foreach> -->
+<!-- 	</select> -->
+
+	<!-- <select id="joinMember" parameterType="int" resultType=""> -->
+
+	<!-- </select> -->
+
+	<!-- 6.해당 채팅방에 존재하는 인원수 -->
+	<select id="roomMemberCount">
+		SELECT COUNT(G.ROOM_NO)
+		FROM
+		(
+		SELECT A.ROOM_NO
+		,B.USER_ID
+		FROM CHAT_ROOM A LEFT JOIN CHAT_RELAY B
+		ON A.ROOM_NO = B.ROOM_NO
+		WHERE A.ROOM_NO = #{roomNo} ) G
+	</select>
+
+	<resultMap type="kr.or.ddit.chatting.vo.ChatJoinView"
+		id="chatType">
+		<result property="roomNo" column="ROOM_NO" />
+		<result property="roomName" column="ROOM_NAME" />
+		<result property="createDate" column="CREATE_DATE" />
+		<result property="userId" column="USER_ID" />
+		<result property="relayUserId" column="RELAY_USER_ID" />
+		<result property="userNcnm" column="USER_NCNM" />
+<!-- 		<collection property="chatList" resultMap=""></collection> -->
+	</resultMap>
+
+
+	<!-- <select id="roomJoin" parameterType="int" resultMap="kr.or.ddit.chatting.vo.ChatJoinView"> -->
+	<!-- <select id="roomJoin" parameterType="hashMap" resultMap="chatType"> -->
+	<!-- <select id="choiceRoom" parameterType="int" resultMap="chatType"> -->
+	<!-- select a.ROOM_NO, a.ROOM_NAME, a.CREATE_DATE, a.USER_ID , b.user_id 
+		, c.user_ncnm -->
+	<!-- from chat_room a , chat_relay b , users c -->
+	<!-- where a.room_no = b.room_no(+) -->
+	<!-- and c.user_id = a.user_id -->
+	<!-- and a.room_no = #{roomNo} -->
+	<!-- order by a.room_no -->
+	<!-- </select> -->
+
+	<select id="choiceRoom" parameterType="int"
+		resultType="kr.or.ddit.chatting.vo.ChatJoinView">
+		select ROOM_NO, ROOM_NAME, CREATE_DATE, USER_ID,
+		RELAY_USER_ID, USER_NCNM
+		from v_join_info
+		where ROOM_NO = #{roomNo}
+	</select>
+	
+	<select id="isInRoom" parameterType="kr.or.ddit.chatting.vo.ChatRelayVO" resultType="int">
+		SELECT COUNT(*) AS count FROM CHAT_RELAY
+		WHERE ROOM_NO = #{roomNo} AND USER_ID = #{userId}
+	</select>
+
+	<!-- 해당 회원이 참가중인 채팅방인지 체크 -->
+	<select id="joinCheck" parameterType="hashMap" resultType="int">
+		SELECT COUNT(*) AS "1이면 참가중"
+		FROM
+		(
+		SELECT A.USER_ID AS 중계테이블아이디
+		, A.ROOM_NO 중계테이블번호
+		, B.ROOM_NO 채팅방번호
+		, B.ROOM_NAME 채팅방이름
+		, B.CREATE_DATE 채팅방개설일
+		, B.USER_ID 개설자아이디
+
+		FROM CHAT_RELAY A LEFT OUTER JOIN CHAT_ROOM B ON A.ROOM_NO = B.ROOM_NO
+		WHERE A.ROOM_NO = #{roomNo}
+		AND A.USER_ID = #{userId}) H
+	</select>
+	<!-- 7.채팅방 검색 -->
+
+</mapper>

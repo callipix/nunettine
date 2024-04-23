@@ -1,0 +1,56 @@
+package kr.or.ddit.board.pro_story.controller;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+
+public class JsoupUtil {
+
+    public static String category = "D:/data/1.category/";
+    public static String list = "D:/data/2.list/";
+    public static String book = "D:/data/3.book/";
+    public static String detail = "D:/data/4.detail/";
+
+    public static String getRoot(){
+    
+    	return "https://soomgo.com/community/soomgo-life/soomgo-story";
+    
+    }
+
+    public static String url2String(String url){
+        return url.replace(getRoot(), "").replace("/", "@").replace("?", "_").replace("=", "_").replace("&", "_");
+    }
+
+    public static void mkdir(String path){
+        File dir = new File(path);
+        if(!dir.exists()){
+            if(dir.mkdirs()){
+                System.out.println(path + "디렉토리 생성");
+            }
+        }
+    }
+
+    public static String String2Url(String url){
+        return getRoot()+""+url.replace("@","/");
+    }
+
+    public static void saveHtml(File file, String html){
+        html = html.replace("text/html;charset=euc-kr","text/html;charset=utf-8");
+        try {
+            Files.write(file.toPath(), html.getBytes());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+//    public static String getHtml(String url){
+//        Document doc = null;
+//        try {
+//            doc = Jsoup.connect(url).get();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        String html = doc.html();
+//        return html;
+//    }
+}

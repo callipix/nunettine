@@ -1,0 +1,16 @@
+package kr.or.ddit.vo;
+
+
+import java.util.Date;
+
+import lombok.Data;
+
+@Data
+public class TdmtngChSpMshgVO {
+	private int tdmtngChSpMsgNo;
+	private Date tdmtngChSpMsgTrnsmisDt;
+	private String tdmtngChSpMsgCn;
+	private int tdmtngChSpMsgCnfirmAt;
+	private String userId;
+	private int tdmtngNo;
+}

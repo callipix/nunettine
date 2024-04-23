@@ -1,0 +1,16 @@
+package kr.or.ddit.pro_service.service_request.mapper;
+
+import java.util.List;
+import java.util.Map;
+
+import kr.or.ddit.pro_service.service_request.vo.V_SrvcRequstVO;
+
+public interface SrvcRequstMapper {
+
+	public List<V_SrvcRequstVO> srvcRqList(V_SrvcRequstVO vSrvcRequstVO);
+
+	public V_SrvcRequstVO srvcRqDetail(V_SrvcRequstVO vSrvcRequstVO);
+
+	public int processFn(Map<String, Object> paramMap);
+
+}

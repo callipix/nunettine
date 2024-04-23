@@ -1,0 +1,40 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<script>
+	const memberJoin = function(){
+		location.href="/member/memberJoin";
+	}
+	const proJoin = function(){
+		location.href="/pro/proJoin"
+	}
+</script>
+<div class="card-body">
+	<h4 class="card-title">환영합니다.</h4>
+	<p class="card-description">일반회원과 프로 중 선택해주세요</p>
+	<div class="form-group row">
+		<div class="col">
+			<div id="the-basics">
+				<span class="twitter-typeahead" style="position: relative; display: inline-block;">
+					<button type="button" class="btn btn-success btn-lg" onclick="memberJoin()">일반 회원가입</button>
+					<pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: pre; font-family: Nunito, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: auto; text-transform: none;">
+					</pre>
+					<div class="tt-menu" style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none;">
+						<div class="tt-dataset tt-dataset-states"></div>
+					</div>
+				</span>
+			</div>
+		</div>
+		<div class="col">
+			<div id="bloodhound">
+				<span class="twitter-typeahead" style="position: relative; display: inline-block;">
+					<button type="button" class="btn btn-warning btn-lg" onclick="proJoin()">프로 회원가입</button>
+					<pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: pre; font-family: Nunito, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: auto; text-transform: none;">
+					</pre>
+					<div class="tt-menu" style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none;">
+						<div class="tt-dataset tt-dataset-states"></div>
+					</div>
+				</span>
+			</div>
+		</div>
+	</div>
+</div>

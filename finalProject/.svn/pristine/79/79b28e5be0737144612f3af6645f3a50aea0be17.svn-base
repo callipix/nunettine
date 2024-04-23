@@ -1,0 +1,16 @@
+package kr.or.ddit.admin.faq.vo;
+
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Data
+public class FaqVO {
+									// FAQ테이블(자주묻는 질문)
+	private int faqNo;				// faq 글번호
+	private String faqQestn;		// FAQ 질문
+	private String faqAnswer;		// FAQ 답변
+	private String mngrId;			// 관리자 아이디
+}

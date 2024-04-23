@@ -1,0 +1,47 @@
+/* find header 부분 아이콘 리스트 정렬 */
+.find__header .find__header-list {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 30px;
+}
+
+.header-btn__icon {
+  padding: 0px 20px;
+}
+
+.header-btn__title {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 15px;
+}
+
+/* find main 부분 추천친구 정렬 */
+.find__recommend {
+  padding-top: 20px;
+  border-top: 1px solid black;
+}
+
+/* 추천친구 서브타이틀 */
+.find__recommend .find__title {
+  font-size: 14px;
+  opacity: 0.6;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+/* 추천친구 횡별로 정렬 */
+.friend__column .friend__add-btn {
+  background-color: bisque;
+  padding: 15px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 각 횡별 간격 */
+.find__friend {
+  margin-bottom: 15px;
+}

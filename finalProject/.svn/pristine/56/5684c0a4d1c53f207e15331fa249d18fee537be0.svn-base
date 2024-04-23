@@ -1,0 +1,99 @@
+package kr.or.ddit.chatting.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import kr.or.ddit.chatting.Check;
+import kr.or.ddit.chatting.service.ChatRoomRepository;
+import kr.or.ddit.chatting.service.ChatService;
+import kr.or.ddit.chatting.vo.ChatRelayVO;
+import kr.or.ddit.chatting.vo.ChatRoomVO;
+import kr.or.ddit.vo.UsersVO;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@RequiredArgsConstructor
+@RequestMapping("/chat")
+@Slf4j
+public class RoomController {
+	
+	private final ChatRoomRepository repository;
+	
+	@Autowired
+	private ChatService chatService;
+	
+	// 채팅방 목록 조회
+	@GetMapping("/rooms")
+	public ModelAndView rooms() {
+		log.info("# All Chat Rooms");
+		System.out.println("채팅방 목록 조회");
+		ModelAndView mav = new ModelAndView("chat/rooms");
+		mav.addObject("list" , repository.findAllRooms());
+		return mav;
+	}
+	
+	// 채팅방 목록 조회
+	@GetMapping("/roomList")
+	public String RoomList(ModelAndView mav){
+		
+		List<ChatRoomVO> chatRoomList = new ArrayList<>();
+		chatRoomList = this.chatService.chatRoomList();
+		
+		if(!chatRoomList.isEmpty()) {
+			mav.addObject("chatRoomList", chatRoomList);
+		}
+		mav.setViewName("chat/roomList");
+		return "chat/roomList";
+	}
+	
+	// 채팅방 개설
+	@ResponseBody
+	@PostMapping("/roomCreate")
+	public String create(@RequestBody String name , RedirectAttributes rttr , HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		ChatRoomVO chatRoomVO = new ChatRoomVO();
+		ChatRelayVO chatRelayVO = new ChatRelayVO();
+		Check.sircleCall();
+		System.out.println("방제목 : " + name);
+	//	chatRelayVO에 설정해줄것 -> 유저 아이디
+	//  chatRoomVO에 설정해줄것 -> 유저 아이디 , 닉네임
+		chatRoomVO.setUserId(((UsersVO)session.getAttribute("memSession")).getUserId());		//
+		chatRelayVO.setUserId(((UsersVO)session.getAttribute("memSession")).getUserId());		//
+		chatRoomVO.setRoomName(name);		// 채팅방에 방제목
+		
+		System.out.println("중계테이블 유저 아이디" +chatRelayVO.getUserId());
+		int result = this.chatService.insertRoom(chatRoomVO);
+		log.info("insertRoom result : " + result);
+//		rttr.addFlashAttribute("roomName" , repository.createChatRoomVO(name));
+		return "success";
+//		return "redirect:chat/rooms";
+	}
+	@GetMapping("/roomCreate")
+	public String roomCreate() {
+		System.out.println("roomCreate 이동성공");
+		return "chat/roomCreate";
+	}
+	
+	// 특정 채팅방 조회
+	@GetMapping("/room")
+	public void getRoom(int roomNo , Model model) {
+		log.info("# get Chat Room , roomNo : " + roomNo);
+		model.addAttribute("room" , repository.findRoomById(roomNo));
+	}
+
+}

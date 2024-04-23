@@ -1,0 +1,17 @@
+package kr.or.ddit.vo;
+
+import java.util.Date;
+import lombok.Data;
+
+@Data
+public class OneInqryVO {
+
+	private int oneInqryNo;
+	private String userId;
+	private String oneInqrySj;
+	private String oneInqryCn;
+	private Date oneInqryWritngDt;
+	private int sprviseAtchmnflNo;
+	
+}
+

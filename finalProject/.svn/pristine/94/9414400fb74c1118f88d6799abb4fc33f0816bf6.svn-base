@@ -1,0 +1,328 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<script type="text/javascript" src="/resources/js/jquery.min.js"></script>
+<script type="text/javascript">
+$(function () {
+	
+	let userId = `${userId}`;
+		console.log(userId);
+	
+	if(userId != null && userId != "") {
+		$("#btnRvCreate").css("display", "block");
+	}
+	
+	//체크박스 체크 이벤트
+	$("#ckMyReview").change(function() {
+	
+		//체크박스 체크시 로그인한 회원의 후기 리스트만 출력
+		//체크박스 해제시 전체 후기 리스트 출력
+		if($("#ckMyReview").is(":checked")) {
+			
+			if(userId == null || userId == "") {
+				Swal.fire({
+					title: '로그인을 해주세요.',
+					icon: 'warning',
+					showCancelButton: false,
+					confirmButtonText: '확인',
+				}).then((result) => {
+					location.href = "/member/memberLogin";
+				})
+				
+			}
+			
+// 			alert("체크");
+			$.ajax({
+				url: "/reviewBoard/listMyReview",
+				type: "post",
+				data: { "userId" : userId },
+				dataType: "json",
+				success: function(result) {					
+					$("#rvBrdBody").html("");
+					reviewList(result);
+				}
+			})
+		} else {
+			$.ajax({
+				url: "/reviewBoard/listAjax",
+				type: "post",
+				dataType: "json",
+				success: function(result) {
+					$("#rvBrdBody").html("");
+					reviewList(result);
+				}
+			})
+		}		
+	
+	})
+
+	//등록 버튼 클릭시 서비스 요청 완료 목록 출력 모달
+	$("#btnRvCreate").on("click",function(){
+		
+		//리스트가 추가되어 출력되는 걸 방지 하기 위해 body를 비워줌
+		$("#svcComModal").html("");
+		
+		$.ajax({
+			url: "/reviewBoard/listModal",
+			type: "post",
+			data: { "userId" : userId },
+			dataType: "json",
+			success: function(result) {
+				let str = "";
+				$.each(result, function(idx, srvcRequesVO) {
+					str += "<tr>";
+					str += "<td>" + srvcRequesVO.srvcRequstNo + "</td>";
+					str += "<td><a href='/reviewBoard/create?srvcRequstNo="+ srvcRequesVO.srvcRequstNo + "'>" 
+							
+							+ srvcRequesVO.srvcRequstSj + "</a></td>";
+					str += "<td>" + srvcRequesVO.srvcRequstWrDt + "</td>";
+					str += "<td>"  + srvcRequesVO.srvcRequstComptDt + "</td>";
+					str += "</tr>";
+				})
+				$("#svcComModal").append(str);
+			}
+		})
+	});
+	
+	//모달 닫기 버튼 클릭 이벤트
+	$("#btnModalClose").on("click", function() {	
+		$("#modal-Create").modal("hide");
+	})
+	
+
+	
+	
+	//엔터키 입력 검색
+	$("#keyword").on("keyup", function (key) {
+		if (key.keyCode == 13) {
+			searchList();
+		}
+	})
+	
+	//검색 버튼 검색
+	$("#btnSearch").on("click", function () {
+
+		searchList();
+	})
+	
+	
+	//검색 리스트 출력
+// 	$("#btnSearch").on("click", function() {
+// 		let keyword = $("#keyword").val();
+		
+// 		console.log("keyword : " + keyword);
+		
+// 		let data = {
+// 				"keyword" : keyword
+// 		}
+// 		console.log("data :" + data)
+		
+// 		$.ajax({
+// 		url: "/reviewBoard/listAjax",
+// 		contentType: "application/json;charset=utf-8",
+// 		data: JSON.stringify(data),
+// 		type: "post",
+// 		dataType: "json",
+// 		success: function(result) {
+		
+// 			$("#rvBrdBody").html("");
+
+// 			meetingList();
+// 		}
+// 	})
+	
+// 	})
+	
+	//전체 리스트 출력
+	$.ajax({
+		url: "/reviewBoard/listAjax",
+		type: "post",
+		dataType: "json",
+		success: function(result) {
+			reviewList(result);
+		}
+	})
+	
+	
+	
+})
+
+
+
+//리스트 출력 함수
+function reviewList(result) {
+	let str = "";
+	$.each(result, function(idx, aftusBbscttVO) {
+		str += "<tr>";
+		str += "<td>" + aftusBbscttVO.aftusBbscttNo + "</td>";
+		str += "<td>" + "<a href='/reviewBoard/detail?aftusBbscttNo="
+				+ aftusBbscttVO.aftusBbscttNo + "'>" 
+				+ aftusBbscttVO.aftusBbscttSj + "</a></td>";
+		str += "<td>" + aftusBbscttVO.userNcnm + "</td>";
+		str += "<td>"  + aftusBbscttVO.aftusBbscttWrDt + "</td>";
+		str += "<td>" + aftusBbscttVO.aftusBbscttRdcnt + "</td>";
+		str += "</tr>";
+	})
+	$("#rvBrdBody").append(str);
+}
+
+function searchList() {
+    console.log($("#dateKeyword1").val());
+
+    let searchKey = $("#search_key").val();
+    let keyword = $("#keyword").val();
+
+    console.log($("#search_key").val());
+
+
+    console.log($("#search_key").val())
+    console.log("keyword : " + keyword);
+
+    let data = {
+        "keyword": keyword,
+        "searchKey": searchKey,
+    };
+    console.log("data : ", data)
+
+	$.ajax({
+		url: "/reviewBoard/listAjax",
+        contentType: "application/json;charset=utf-8",
+        data: JSON.stringify(data),
+		type: "post",
+		dataType: "json",
+		success: function(result) {
+			
+			$("#rvBrdBody").html("");
+			
+			reviewList(result);
+		}
+	})
+}
+
+
+
+
+
+</script>
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <p class="card-title">서비스 후기</p>
+        <p>${userId}</p>
+
+        <div class="form-group">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+        <button type="button" class="btn btn-inverse-primary btn-fw col-sm-2" 
+        	data-toggle="modal" data-target="#modal-Create" 
+			id="btnRvCreate" style="display: none;">후기등록</button>
+          
+			
+							<div class="input-group col-sm-7">
+						
+								<select class="form-control col-sm-2" id="search_key">
+									<option value="title">제목</option>
+									<option value="writer">작성자</option>
+								</select>
+								<input type="text" class="form-control col-sm-7" id="keyword" name="keyword" placeholder="검색어를 입력해주세요">
+								<div class="input-group-append">
+									<button class="btn btn-sm btn-primary" type="button" id="btnSearch">검색</button>
+								</div>
+							</div>
+					
+
+
+   </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="table-responsive">
+              <div id="example_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+
+                <div class="row">
+                  <div class="col-sm-12">
+                  
+                  <div class="form-check">
+                    <label class="form-check-label">
+                       <input type="checkbox" id="ckMyReview" class="form-check-input">
+                                             내가 쓴 후기
+                       <i class="input-helper"></i>
+                    </label>
+                  </div>
+                  
+                  
+                    <table id="" class="display expandable-table dataTable no-footer" style="width: 100%;" role="grid">
+                      <thead>
+                        <tr role="row">           
+                        
+                          <th class="" rowspan="1" colspan="1" aria-label="Quote#" style="width: 70px;">번호</th>                   
+                          <th class="" tabindex="0" rowspan="1" colspan="1" style="width: 58px;">제목</th>
+                          <th class="" tabindex="0" rowspan="1" colspan="1" style="width: 59px;">작성자</th>
+                          <th class="" tabindex="0" rowspan="1" colspan="1" style="width: 43px;">작성일</th>
+                          <th class="" tabindex="0" rowspan="1" colspan="1" style="width: 59px;">조회수</th>
+                        </tr>    
+                      </thead>
+                      <tbody id="rvBrdBody">                 	
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="row" id="divPagingArea">
+                </div>
+                <div class="row">
+                  <div class="col-sm-12 col-md-5"></div>
+                  <div class="col-sm-12 col-md-7"></div>
+                </div>
+              </div>
+            </div>  
+          </div>
+        </div>
+      </div>
+    </div>
+	
+
+  </div>
+</div>
+
+
+
+
+
+<!-- 내 서비스 모달 -->
+<div class="modal fade" id="modal-Create"  data-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenteredScrollableTitle">이용한 서비스</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="card" id="">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>요청일자</th>
+            <th>완료일자</th>
+          </tr>
+        </thead>
+        <tbody id="svcComModal">
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+      </div>
+      <div class="modal-footer">
+      <button type="button" id="btnModalClose" class="btn btn-primary">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

@@ -1,0 +1,64 @@
+package kr.or.ddit.chatting.websocket;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import kr.or.ddit.chatting.service.MessageService;
+import kr.or.ddit.chatting.vo.MessageVO;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
+@Controller
+@RequiredArgsConstructor
+public class StompChatController {
+	
+	@Autowired
+	private final MessageService messageService;
+	private final SimpMessagingTemplate template;
+
+	public ModelAndView messageList(int roomNo) throws JsonProcessingException{
+		
+		List<MessageVO> messageList = this.messageService.messageList(roomNo);
+		ObjectMapper objp =  new ObjectMapper();
+		String myRoomChat = objp.writeValueAsString(messageList);
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("myRoomChat", myRoomChat);
+		return mav;
+	}
+	
+	@MessageMapping("/chat/enter")
+	public void enter(MessageVO message) throws JsonProcessingException {
+		message.setMsgCont(" 님이 채팅방에 참여하였습니다");
+		messageList(message.getRoomNo());
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("myRoomChat",  messageList(message.getRoomNo()));
+		System.out.println(messageList(message.getRoomNo()));
+		template.convertAndSend("/sub/chat/room/" + message.getRoomNo(), message);
+		
+	}
+	@MessageMapping("/chat/message")
+	public void message(MessageVO message) {
+		log.info("채팅전송체크{}");
+		template.convertAndSend("/sub/chat/room/" + message.getRoomNo() , message);
+		
+		int result = this.messageService.insert(message);
+		
+		if(result > 0) {
+			System.out.println("메세지 전송 성공");
+		} else {
+			System.out.println("실패");
+		}
+	}
+}

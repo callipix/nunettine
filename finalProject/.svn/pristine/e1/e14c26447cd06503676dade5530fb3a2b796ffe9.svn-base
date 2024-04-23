@@ -1,0 +1,77 @@
+package kr.or.ddit.todaymeeting.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import kr.or.ddit.chatting.service.MessageService;
+import kr.or.ddit.chatting.vo.MessageVO;
+import kr.or.ddit.vo.TdmtngChSpMshgVO;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
+//@Controller
+//@Transactional
+@RequiredArgsConstructor
+public class StompChatController {
+	
+	@Autowired
+	private MessageService messageService;
+	
+	private final SimpMessagingTemplate template;
+	
+	@ResponseBody
+	@PostMapping("/chat/messageList")
+	public ModelMap messageListTest(@RequestParam("roomNo") int roomNo) throws JsonProcessingException {
+		ModelMap modelMap = new ModelMap();
+
+		List<MessageVO> messageList = this.messageService.messageList(roomNo);
+	    ObjectMapper objp =  new ObjectMapper();
+	    String myRoomChat = objp.writeValueAsString(messageList);
+	    modelMap.addAttribute("messageList", messageList);
+	    modelMap.addAttribute("myRoomChat", myRoomChat);
+
+	    return modelMap;
+	    
+	}
+	
+	@MessageMapping("/chat/enter")
+	public void enter(TdmtngChSpMshgVO message) {
+		System.out.println("messageNo : " + message.getTdmtngNo());
+		
+		message.setTdmtngChSpMsgCn(message.getUserId() +"님이 채팅방에 참여하였습니다");
+		
+		template.convertAndSend("/sub/chat/room/" + message.getTdmtngNo(), message);
+			
+	}
+	@MessageMapping("/chat/message")
+	public void message(TdmtngChSpMshgVO message) {
+		log.info("채팅전송체크{}");
+		System.out.println("message : " + message);
+		template.convertAndSend("/sub/chat/room/" + message.getTdmtngNo() , message);
+		
+//		int result = this.messageService.insert(message);
+//		
+//		if(result > 0) {
+//			System.out.println("메세지 전송 성공 " + result);
+//		} else {
+//			System.out.println("메세지 전송 실패 ");
+//		}
+	}
+	@MessageMapping("/chat/alram")
+	public void alram(TdmtngChSpMshgVO message) {
+		
+	}
+	
+}
