@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -98,18 +99,25 @@ public class MemberJoinController {
 	
 	//휴대폰 본인인증
 	@ResponseBody
-	@PostMapping("/check/sendSMS")
-    public String sendSMS(String mberMbtlnum) {
+	@PostMapping("/check/sendSMS")	
+    public String sendSMS(String mberMbtlnum) {			 // 1.
         Random rand  = new Random();
-        String numStr = "";
-        for(int i=0; i < 6; i++) {
-            String ran = Integer.toString(rand.nextInt(10));
-            numStr+=ran;
-        }
+        StringBuilder numStr = new StringBuilder();
+
+        numStr.append(rand.ints(6, 0, 10)  	  	  // 2.
+              .mapToObj(Integer::toString)  	  // 3.
+        	  .collect(Collectors.joining()));    // 4.
+
         log.info("인증번호 : " + numStr);
-        this.memberJoinService.certifiedPhoneNumber(mberMbtlnum,numStr);
-        return numStr;
+        this.memberJoinService.certifiedPhoneNumber(mberMbtlnum,numStr.toString());	// 5. 
+        return numStr.toString();
     }
+    
+// 1. 클라이언트에서 입력한 수신번호를 매개변수로 해당요청이 실행된다.     
+// 2. 0 이상 10 미만의 임의의 수 생성                    
+// 3. 각 숫자를 문자열로 변환한다                         
+// 4. 각각의 문자열을 연결하여 하나의 문자열로 만든다
+// 5. 인증번호와 수신번호를 매개변수로 certifiedPhoneNumber메소드를 호출한다
 	
 	//회원가입
 	@PostMapping("/memberInsert")

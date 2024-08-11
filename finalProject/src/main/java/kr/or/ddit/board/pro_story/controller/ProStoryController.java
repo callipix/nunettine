@@ -248,7 +248,6 @@ public class ProStoryController {
 		
 		int count = 0;
 		
-		
 		Cookie orgCookie = null;
 		Cookie[] cookies = request.getCookies();
 		if(cookies != null) {
@@ -270,7 +269,7 @@ public class ProStoryController {
 				
 				orgCookie.setValue(orgCookie.getValue() + "["+ storyNo + "]");
 				orgCookie.setPath("/");
-				orgCookie.setMaxAge(0);
+				orgCookie.setMaxAge(60 * 60 * 24);
 				response.addCookie(orgCookie);
 			}
 		}
@@ -279,7 +278,7 @@ public class ProStoryController {
 				
 				Cookie newCookie = new Cookie("vistiNo" , "["+ storyNo + "]");
 				newCookie.setPath("/");
-				newCookie.setMaxAge(0);
+				newCookie.setMaxAge(60 * 60 * 24);
 				response.addCookie(newCookie);
 			}
 		log.debug("조회수 : " + count);
@@ -320,6 +319,7 @@ public class ProStoryController {
 		
 		return proStoryBbscttVO;
 	}
+	
 	/* 좋아요 취소 */
 	@ResponseBody
 	@GetMapping("/goodCancle")

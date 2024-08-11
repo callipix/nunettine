@@ -388,7 +388,7 @@ console.log("currentScreen :: " + currentScreen );
 				
 				console.log("result22 : " + result);
 				
-			let str  = '';
+			let str  = "";
 				str += "<div style='display : flex; font-family : GmarketSansMedium; margin : 20px 40px; 40px; 100px;'>";
 				str += result.tdmtngNm + "<br>";
 // 				str += "생성일 "+result.tdmtngCreateDt.substring(5, 10) + "<br>";

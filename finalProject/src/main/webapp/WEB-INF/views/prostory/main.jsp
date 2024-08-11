@@ -1,144 +1,178 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 @font-face {
-    font-family: 'TTHakgyoansimKossuyeomR';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_keris@1.0/TTHakgyoansimKossuyeomR.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
+	font-family: 'TTHakgyoansimKossuyeomR';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_keris@1.0/TTHakgyoansimKossuyeomR.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
 }
+
 @font-face {
-    font-family: 'seolleimcool-SemiBold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/seolleimcool-SemiBold.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
+	font-family: 'seolleimcool-SemiBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/seolleimcool-SemiBold.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
 }
+
 @font-face {
-    font-family: 'GmarketSansMedium';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+	font-family: 'GmarketSansMedium';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
 }
-@media (max-width: 992px) {
-    .list-item {
-        width: 48%; /* 화면이 작아지면 한 줄에 2개씩 배치됩니다. */
-    }
+
+@media ( max-width : 992px) {
+	.list-item {
+		width: 48%; /* 화면이 작아지면 한 줄에 2개씩 배치됩니다. */
+	}
 }
-@media (min-width: 992px)
-.col-lg-5 {
-    max-width: 100%;
+
+@media ( min-width : 992px) .col-lg-5 {
+	max-width
+	:
+	 
+	100
+	%;
+	
+
 }
+
 #balloon {
-    position: absolute;
-    margin-top: -45px;
-    top: 0;
-    left: 0;
-    z-index: 0;
+	position: absolute;
+	margin-top: -45px;
+	top: 0;
+	left: 0;
+	z-index: 0;
 }
+
 #storybbsctt {
-    position: absolute;
-    z-index: 1; /* 풍선 이미지 위에 나타나도록 설정 */
+	position: absolute;
+	z-index: 1; /* 풍선 이미지 위에 나타나도록 설정 */
 }
+
 .button-container {
-    text-align: center;
-    margin-top: 20px;
+	text-align: center;
+	margin-top: 20px;
 }
-.a{
-color : none;
+
+.a {
+	color: none;
 }
+
 .button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+	padding: 10px 20px;
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
 }
+
 .grid-container {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    grid-gap: 10px;
-    justify-content: center;
+	display: grid;
+	grid-template-columns: auto auto auto;
+	grid-gap: 10px;
+	justify-content: center;
 }
+
 .list-container {
-    justify-content: center;
-    flex-wrap: wrap;
+	justify-content: center;
+	flex-wrap: wrap;
 }
+
 .list-item {
-    width: 23%; 			/* 각 요소 너비를 조절 */
-    float: left; 			/* 왼쪽 정렬 */
-    margin-bottom: 20px; 	/* 아래 여백추가 */
+	width: 23%; /* 각 요소 너비를 조절 */
+	float: left; /* 왼쪽 정렬 */
+	margin-bottom: 20px; /* 아래 여백추가 */
 }
+
 .list-item {
-    overflow-y: auto;
+	overflow-y: auto;
 }
+
 .list-item img {
-    width: 90%; 			/* 이미지를 부모 요소의 너비에 맞춤 */
-    height: auto; 			/* 이미지의 비율을 유지 */
-    border-radius: 13px; 	/* 이미지의 모서리를 둥글게 */
-    overflow: hidden;
+	width: 90%; /* 이미지를 부모 요소의 너비에 맞춤 */
+	height: auto; /* 이미지의 비율을 유지 */
+	border-radius: 13px; /* 이미지의 모서리를 둥글게 */
+	overflow: hidden;
 }
+
 .btn-clicked {
-    background-color: #4CAF50;
-    color: white;
+	background-color: #4CAF50;
+	color: white;
 }
+
 .icon-container {
-    display: inline-block;
-    vertical-align: middle;
+	display: inline-block;
+	vertical-align: middle;
 }
+
 .dropdown-item.active, .dropdown-item:active {
-/*     color: #fff; */
-    text-decoration: none;
-    background-color: #fff;
-    color: inherit;
+	/*     color: #fff; */
+	text-decoration: none;
+	background-color: #fff;
+	color: inherit;
 }
+
 .btn-primary {
-    background-color: rgba(75, 73, 172, 0.2);
-    color: #4B49AC;
-    background-image: none;
-    border-color: rgba(75, 73, 172, 0);
+	background-color: rgba(75, 73, 172, 0.2);
+	color: #4B49AC;
+	background-image: none;
+	border-color: rgba(75, 73, 172, 0);
 }
+
 .progress {
-    border-radius: 7px;
-    height: 20px;
-    width: 100%;
-	background-color: rgb(0 0 0 / 20%); /* 흐린 배경 */
+	border-radius: 7px;
+	height: 20px;
+	width: 100%;
+	background-color: rgb(0 0 0/ 20%); /* 흐린 배경 */
 	z-index: 9999;
-	line-height : normal;
+	line-height: normal;
 }
-.progress-text{
-align-content : center;
-/* margin: 5px; */
+
+.progress-text {
+	align-content: center;
+	/* margin: 5px; */
 }
+
 .progress-text::after {
-    content: "\00a0\00a0"; /* 공백 문자 추가 */
+	content: "\00a0\00a0"; /* 공백 문자 추가 */
 }
 /* 모달 오버레이 스타일 */
 .modal-overlay {
-  border: 1px solid transparent; 
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgb(0 0 0 / 24%); 	/* 반투명한 검은색 배경 */
-  z-index: 999; 						/* 프로그래스 바보다 위에 표시 */
+	border: 1px solid transparent;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgb(0 0 0/ 24%); /* 반투명한 검은색 배경 */
+	z-index: 999; /* 프로그래스 바보다 위에 표시 */
 }
 /* 모달 내용 스타일 */
 .modal-content {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 300px;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  border-radius : 20px;
-  padding: 20px;
-  z-index: 1000; /* 모달 오버레이보다 위에 표시 */
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 300px;
+	transform: translate(-50%, -50%);
+	background-color: #fff;
+	border-radius: 20px;
+	padding: 20px;
+	z-index: 1000; /* 모달 오버레이보다 위에 표시 */
 }
 </style>
 <script>
@@ -146,21 +180,14 @@ $(document).ready(function() {
 
     let imgTT = document.querySelectorAll("imgTest");
 	$("#imgTest").hide();
-    // 진행률 표시 함수를 호출
-    imagesProgress();
-    
-    // 진행률 표시 함수를 호출
+	imagesProgress(); // 진행률 표시 함수를 호출
     function imagesProgress () {
 
-        var $container    = $('#progress'),                    // 1
-            $progressBar  = $container.find('.progress-bar'),  // 2
-            $progressText = $container.find('.progress-text'), // 3
-            // 1. 진행률 표시 전체 컨테이너
-            // 2. 진행률 표시 막대 부분
-            // 3. 진행률 표시 텍스트 부분
+        var $container    = $('#progress'),                    // 1. 진행률 표시 전체 컨테이너  
+            $progressBar  = $container.find('.progress-bar'),  // 2. 진행률 표시 막대 부분    
+            $progressText = $container.find('.progress-text'), // 3. 진행률 표시 텍스트 부분   
 
-            // imagesLoaded 라이브러리에서 body 요소의 이미지 로딩을 모니터링
-            // 동시에 body 전체 이미지 수를 저장
+            // imagesLoaded 라이브러리에서 body 요소의 이미지 로딩을 모니터링 & 동시에 body 전체 이미지 수를 저장
             imgLoad       = imagesLoaded('body'),
             imgTotal      = imgLoad.images.length,
 
@@ -169,7 +196,7 @@ $(document).ready(function() {
             imgLoaded     = 0,
             current       = 0,
 
-            // 1 초에 40 번씩 읽어 여부 확인
+            // 1 초에 40 번씩 읽어 여부 확인(숫자로 원하는 수치 조절)
             progressTimer = setInterval(updateProgress, 1000 / 40);
 
         // imagesLoaded을 이용하여 이미지를로드 할 때마다 카운터를 가산
@@ -249,7 +276,7 @@ $(document).ready(function() {
 	let storyData       = [];
 	let storySearchData = [];
 
-	<% /* 최초 실행 */%>
+	<%/* 최초 실행 */%>
 	addPage("${param.currentPage}");
 	
 	const addBtn     = document.querySelector("#addBtn");
@@ -289,50 +316,35 @@ $(document).ready(function() {
 		
 	});// end create click
 
-	/* 좋아요순 정렬	*/	
+	<%/* 좋아요순 정렬	*/%>	
 	goodCnt.addEventListener("click", function() {
-	    
 	   	console.log("storyData 추천수 버튼:: " + storyData["proStoryBbscttRecommend"]);
-	   	
 	    storyData.sort((a, b) => b.proStoryBbscttRecommend - a.proStoryBbscttRecommend);
-
 	    displaySortedData(storyData);
-	    
-	});// end goodCnt -> 좋아요순 정렬
+	});// end goodCnt
 	
-	/* 조회수 정렬	*/	
+	<%/* 조회수 정렬	*/%>	
 	getCnt.addEventListener("click", function() {
-	    
 	   	console.log("storyData 조회수 버튼:: " + storyData["proStoryBbscttRdcnt"]);
-	   	
 	    storyData.sort((a, b) => b.proStoryBbscttRdcnt - a.proStoryBbscttRdcnt);
-
 	    displaySortedData(storyData);
-	   	
-	});// end getCnt -> 조회수 정렬
+	});// end getCnt
 	
-	/* 최신순 정렬	*/	
+	<%/* 최신순 정렬	*/%>	
 	nowCnt.addEventListener("click", function() {
-	    
 	   	console.log("storyData 최신순 버튼:: " + storyData["proStoryBbscttWrDt"]);
-	   	
 	    storyData.sort((a, b) => new Date(b.proStoryBbscttWrDt) - new Date(a.proStoryBbscttWrDt));
-
 	    displaySortedData(storyData);
-	    
-	});// end nowCnt -> 최신순 정렬
+	});// end nowCnt
 	
-	/* 오래된순 정렬	*/	
+	<%/* 오래된순 정렬	*/%>	
 	reverseNow.addEventListener("click", function() {
-	    
 	   	console.log("storyData 오래된순 버튼:: " + storyData["proStoryBbscttWrDt"]);
-	   	
 	   	storyData.sort((a, b) => new Date(a.proStoryBbscttWrDt) - new Date(b.proStoryBbscttWrDt));
-		
 	   	displaySortedData(storyData);
-		
-	});// end nowCnt -> 오래된순 정렬
+	});// end nowCnt
 
+	<%/* 화면 출력 메소드 */%>
 	function displaySortedData(resultData) {
 		
 	    let str = "";
@@ -343,18 +355,13 @@ $(document).ready(function() {
 	    	str += '<div class="list-item" style="margin : 0px;">';
 			str += '<ul class="text-center">';
 			str += '<li><a style="font-family : GmarketSansMedium; font-size : 1.3rem; word-break :keep-all;  color : black;" href="/prostory/getStory?storyNo=' + story.proStoryBbscttNo + '">';
-// 			str += '<li><img id="imgTest" src="/resources/images/엑박.jpg" onload="this.src=\'/images/' + story.proStoryBbscttThumbPhoto + '\'" /></li>';
 			str += '<li><img id="imgTest" src="/images/' + story.proStoryBbscttThumbPhoto + '" /></li>';
-// 			str += '<li><img src="/images/' + story.proStoryBbscttThumbPhoto + '" /></li>';
 			str += '<br>' + story.proStoryBbscttSj + '</a></li>';
 			str += '<li class="vertical-center">';
 			str += '<img src="/resources/images/free-icon-like.png" alt="이미지" style="width:25px"> ' +story.proStoryBbscttRecommend + '&nbsp;&nbsp;';
 			str += '<img src="/resources/images/click.png" alt="이미지" style="width:25px"> ' +story.proStoryBbscttRdcnt + '</li>';
 			str += '</ul>';
 			str += '</div>';
-			
-//				str += '<li><img id="imgTest" src="/resources/images/엑박.jpg" onload="this.src=\'/images/' + story.proStoryBbscttThumbPhoto + '\'" /></li>';
-			
 	    }
 	    document.getElementById('listContent').innerHTML = str;
 	    applyStylesToNewItems();
@@ -461,8 +468,7 @@ $(document).ready(function() {
 			}
 		})
 	})
-
-	<% // start addPage function %>
+	<%// start addPage function%>
 	function addPage(currentPage){
 		
 		$.ajax({
@@ -474,34 +480,25 @@ $(document).ready(function() {
 			success : function(result , textStatus){
 				
 				let data = result.content;
-	
 				let str = "";
-				
 				//result : ArticlePage
 				$.each(data , function(idx , story){
 					str += '<div class="list-item">';
 					str += '<ul class="text-center">';
 					str += '<li><a style="font-family : GmarketSansMedium; font-size : 1.3rem; word-break :keep-all;  color : black;" href="/prostory/getStory?storyNo=' + story.proStoryBbscttNo + '">';
-// 					str += '<li><img id="imgTest" src="/resources/images/엑박.jpg" onload="this.src=\'/images/' + story.proStoryBbscttThumbPhoto + '\'" /></li>';
 					str += '<li><img id="imgTest" src="/images/' + story.proStoryBbscttThumbPhoto + '" /></li>';
-					
 					str += '<br>' + story.proStoryBbscttSj + '</a></li>';
 					str += '<li class="vertical-center">';
 					str += '<img src="/resources/images/free-icon-like.png" alt="이미지" style="width:25px"> ' +story.proStoryBbscttRecommend + '&nbsp;&nbsp;';
 					str += '<img src="/resources/images/click.png" alt="이미지" style="width:25px"> ' +story.proStoryBbscttRdcnt + '</li>';
 					str += '</ul>';
 					str += '</div>';
-							
 					storyData.push(story);
 				});// end for
-	
 				document.getElementById('listContent').innerHTML += str;
-	// 			applyStylesToNewItems();
 				$("#divPagingArea").html(result.pagingArea);
 			}// end success
-			
 		})// end ajax
-		
 	}// end addPage
 
 function applyStylesToNewItems() {
@@ -521,87 +518,117 @@ $(document).on('keydown', function(e){
 	   }
 });
 </script>
-<% /* 로딩 스피너*/%>
+<%
+	/* 로딩 스피너 시작 */
+%>
 <div class="modal-overlay" id="modal-overlay"></div>
 
 <!-- 모달 내용 -->
 <div class="modal-content" id="modal-content">
-    <!-- 모달 내용 -->
+	<!-- 모달 내용 -->
 	<div style="text-align: center; font-family: 'GmarketSansMedium';">
-	    <img id="imgIcon" src="/resources/images/로딩아이콘.gif" style="width: 60px; height: 60px;">
-		<br>잠시만 기다려 주세요
-		<br>
+		<img id="imgIcon" src="/resources/images/로딩아이콘.gif"
+			style="width: 60px; height: 60px;"> <br>잠시만 기다려 주세요 <br>
 	</div>
-		<br>
+	<br>
 	<div class="progress" id="progress">
-	    <div class="progress-bar" id="progress-bar">
-	    </div>
-	    <div class="progress-text" id="progress-text">&nbsp;0%</div>
+		<div class="progress-bar" id="progress-bar"></div>
+		<div class="progress-text" id="progress-text">&nbsp;0%</div>
 	</div>
 	<br>
 </div>
-<% /* 로딩 스피너*/%>
-  <!-- 제목 -->
+<%
+	/* 로딩 스피너 끝 */
+%>
+<!-- 제목 -->
 <div>
-<div class="list-container" style="text-align: center;">
-	<div class="container col-lg-5" style="text-align:center; position: absolute; top: 0; left: 0; width: 100%; max-width: 100%">
-    	<div>
-		<!-- 제목 -->
-		<div >
-			<img alt="프로이야기" src="../resources/images/프로이야기.png" style="width:100px; height:auto; margin:150px 0 20px 0;">
-			<h2 id="freeTitle" style="text-align:center; font-family: 'seolleimcool-SemiBold'; color:#4e4c7c; text-shadow: -2px 0px white, 0px 2px white, 2px 0px white, 0px -2px white;">프로이야기</h2>
-			<hr style="border-top: 50px solid #f5f7ff; margin:-50px 750px 0 750px;">
-		</div>
-	    </div>
-	</div>
-		<br>
-<div class="container col-lg-8">
-	<br><br><br><br><br><br><br><br><br>
-	
-	<div class="d-flex justify-content-center align-items-center mb-3">
-		<div class="dropdown" style="float: right; margin-right: 0">
-			<button class="btn btn-inverse-primary btn-sm dropdown-toggle" type="button" id="searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right: 10px;">제목</button>
-			<input type="text" name="keyword" id="searchKeyword" value="${param.keyword}" style="width: 250px; border-radius: 15px; border: 0; outline: none; background-color: rgb(233, 233, 233); height: 30px; padding-left:11px; font-family: GmarketSansMedium; text-indent: 10px;">
-			<button type="button" class="btn btn-inverse-primary btn-sm" id="btnSearch" style="margin-left: 10px;">
-				<i class="mdi mdi-yeast"></i>
-			</button>
-			<div class="dropdown-menu" id="dropdown-menu2" aria-labelledby="dropdownMenuSizeButton3" style="min-width: 150px;">
-				<p class="dropdown-item" id="title">제목</p>
-				<p class="dropdown-item" id="content">내용</p>
-				<p class="dropdown-item" id="writer">작성자</p>
+	<div class="list-container" style="text-align: center;">
+		<div class="container col-lg-5"
+			style="text-align: center; position: absolute; top: 0; left: 0; width: 100%; max-width: 100%">
+			<div>
+				<!-- 제목 -->
+				<div>
+					<img alt="프로이야기" src="../resources/images/프로이야기.png"
+						style="width: 100px; height: auto; margin: 150px 0 20px 0;">
+					<h2 id="freeTitle"
+						style="text-align: center; font-family: 'seolleimcool-SemiBold'; color: #4e4c7c; text-shadow: -2px 0px white, 0px 2px white, 2px 0px white, 0px -2px white;">프로이야기</h2>
+					<hr
+						style="border-top: 50px solid #f5f7ff; margin: -50px 750px 0 750px;">
+				</div>
 			</div>
 		</div>
-        <c:if test="${memSession==null && proSession != null}">
-            <button class="btn btn-inverse-primary btn-sm" type="button" id="create" style="margin-left: 10px;">글쓰기</button>
-        </c:if>
-	</div>
-    <div class="d-flex justify-content-end align-items-center">
-    </div>
+		<br>
+		<div class="container col-lg-8">
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
 
-	<div class="container col-lg-8 d-flex justify-content-center">
-	    <nav class="scroll-hidden flex space-x-3 lg:space-x-8" aria-label="Tabs">
-			<button id="nowCnt" class="btn btn-primary flex shrink-0 rounded-md px-3 py-2 text-sm font-medium sm:text-base sm:leading-5">최신순</button>
-	        <button id="reverseNow" class="btn btn-primary flex shrink-0 rounded-md px-3 py-2 text-sm font-medium sm:text-base sm:leading-5" >오래된순</button>
-			<button id="getCnt" class="btn btn-primary flex shrink-0 rounded-md px-3 py-2 text-sm font-medium sm:text-base sm:leading-5">조회수</button>
-			<button id="goodCnt" class="btn btn-primary flex shrink-0 rounded-md px-3 py-2 text-sm font-medium sm:text-base sm:leading-5">좋아요</button>
-	    </nav>
+			<div class="d-flex justify-content-center align-items-center mb-3">
+				<div class="dropdown" style="float: right; margin-right: 0">
+					<button class="btn btn-inverse-primary btn-sm dropdown-toggle"
+						type="button" id="searchType" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false"
+						style="margin-right: 10px;">제목</button>
+					<input type="text" name="keyword" id="searchKeyword"
+						value="${param.keyword}"
+						style="width: 250px; border-radius: 15px; border: 0; outline: none; background-color: rgb(233, 233, 233); height: 30px; padding-left: 11px; font-family: GmarketSansMedium; text-indent: 10px;">
+					<button type="button" class="btn btn-inverse-primary btn-sm"
+						id="btnSearch" style="margin-left: 10px;">
+						<i class="mdi mdi-yeast"></i>
+					</button>
+					<div class="dropdown-menu" id="dropdown-menu2"
+						aria-labelledby="dropdownMenuSizeButton3"
+						style="min-width: 150px;">
+						<p class="dropdown-item" id="title">제목</p>
+						<p class="dropdown-item" id="content">내용</p>
+						<p class="dropdown-item" id="writer">작성자</p>
+					</div>
+				</div>
+				<c:if test="${memSession==null && proSession != null}">
+					<button class="btn btn-inverse-primary btn-sm" type="button"
+						id="create" style="margin-left: 10px;">글쓰기</button>
+				</c:if>
+			</div>
+			<div class="d-flex justify-content-end align-items-center"></div>
+
+			<div class="container col-lg-8 d-flex justify-content-center">
+				<nav class="scroll-hidden flex space-x-3 lg:space-x-8"
+					aria-label="Tabs">
+					<button id="nowCnt"
+						class="btn btn-primary flex shrink-0 rounded-md px-3 py-2 text-sm font-medium sm:text-base sm:leading-5">최신순</button>
+					<button id="reverseNow"
+						class="btn btn-primary flex shrink-0 rounded-md px-3 py-2 text-sm font-medium sm:text-base sm:leading-5">오래된순</button>
+					<button id="getCnt"
+						class="btn btn-primary flex shrink-0 rounded-md px-3 py-2 text-sm font-medium sm:text-base sm:leading-5">조회수</button>
+					<button id="goodCnt"
+						class="btn btn-primary flex shrink-0 rounded-md px-3 py-2 text-sm font-medium sm:text-base sm:leading-5">좋아요</button>
+				</nav>
+			</div>
+		</div>
+		<br />
+		<div style="text-align: left; margin-left: 90px;">
+			<h3 style="font-family: 'seolleimcool-SemiBold'; color: #a7a7a7;">
+				<img src="/resources/images/다이어리.gif" style="width: 60px"> 프로의
+				특별한 이야기를 만나보세요
+			</h3>
+		</div>
+
+		<div class="list-container" id="listContent"
+			style="display: flex; justify-content: center;"></div>
 	</div>
-</div>
-	<br />
-	<div style="text-align: left; margin-left: 90px; ">
-		<h3 style="font-family: 'seolleimcool-SemiBold'; color:#a7a7a7;">
-		<img src="/resources/images/다이어리.gif" style="width: 60px ">	프로의 특별한 이야기를 만나보세요 </h3>
-	</div>
-	
-	<div class="list-container" id="listContent" style="display: flex; justify-content: center; ">
-	</div>
-</div>
-<!--  -->
-<div class="col-12 grid-margin stretch-card">
-	<div class="card">
-		<div class="card-body">
-			<div id="divPagingArea" style="position: relative; margin-left: 48%; margin-top: 20px;"></div>
+	<!--  -->
+	<div class="col-12 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				<div id="divPagingArea"
+					style="position: relative; margin-left: 48%; margin-top: 20px;"></div>
+			</div>
 		</div>
 	</div>
-</div>
 </div>

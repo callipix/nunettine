@@ -71,11 +71,6 @@ public class MessageController {
 			return userId != null ? userId.toString() : null;
 		
 		}
-
-		// 로그인 하면 내 방에 해당하는 메세지의 내역을 불러온다
-//		list = this.messageService.messageList(roomNo);
-			
-			
 		
 		return "";
 	}

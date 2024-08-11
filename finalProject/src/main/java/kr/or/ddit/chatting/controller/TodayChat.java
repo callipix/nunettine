@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @SuppressWarnings({ "unused", "unchecked" })
-@RequestMapping("/todayChat")
+@RequestMapping("/todayChat22")
 public class TodayChat {
 	
 	@Inject
@@ -46,6 +46,10 @@ public class TodayChat {
 	@GetMapping("/create")
 	public String create() {
 		return "todayChat/create";
+	}
+	@GetMapping("/mainTest")
+	public String main22() {
+		return "prostory/mainTest";
 	}
 
 	private String userId(HttpServletRequest request) {

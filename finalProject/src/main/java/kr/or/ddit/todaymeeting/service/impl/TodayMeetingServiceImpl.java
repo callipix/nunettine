@@ -55,12 +55,6 @@ public class TodayMeetingServiceImpl implements TodayMeetingService {
 		return this.todayMeetingMapper.detail(tdmtngNo);
 	}
 	
-//	@Override
-//	public int update(TdmtngVO tdmtngVO) {
-//	
-//		return this.todayMeetingMapper.update(tdmtngVO);
-//	}
-	
 	//모임 생성
 	@Override
 	public int create(TdmtngVO tdmtngVO) {
@@ -69,7 +63,7 @@ public class TodayMeetingServiceImpl implements TodayMeetingService {
 		//formdata로 보내니 파일 업로드를 안 하면 upload파일이 null로 옴
 		//null조건 추가..
 		if (tdmtngVO.getUploadFile() != null && !tdmtngVO.getUploadFile().isEmpty()) {
-		    log.info("이미지파일 처리하러~" + tdmtngVO.getUploadFile().getOriginalFilename());
+		    log.info("이미지파일 처리" + tdmtngVO.getUploadFile().getOriginalFilename());
 		    imageUpload(tdmtngVO);
 		}
 
@@ -81,7 +75,7 @@ public class TodayMeetingServiceImpl implements TodayMeetingService {
 	public int update(TdmtngVO tdmtngVO) {
 		log.info("update : " + tdmtngVO);
 		if (!tdmtngVO.getUploadFile().getOriginalFilename().isEmpty()) {
-			log.info("이미지파일 처리하러~" + tdmtngVO.getUploadFile().getOriginalFilename());
+			log.info("이미지파일 처리" + tdmtngVO.getUploadFile().getOriginalFilename());
 	        imageUpload(tdmtngVO);
 	    }
 		return this.todayMeetingMapper.update(tdmtngVO);
@@ -142,8 +136,6 @@ public class TodayMeetingServiceImpl implements TodayMeetingService {
 		log.info("이미지 크기 : " + multipartFile.getSize());
 		log.info("MIME 타입 : " + multipartFile.getContentType());
 		
-
-		
 		// 저장될 폴더 설정
 		File uploadPath = new File(uploadFolder, getFolder());
 
@@ -191,7 +183,8 @@ public class TodayMeetingServiceImpl implements TodayMeetingService {
 		
 	@Override
 	public List<VChatRoom> myList(String userId) {
-		System.out.println("userId 유저 아이디 : " + userId);
+		
+		log.info("userId 유저 아이디 : " + userId);
 		
 		List<VChatRoom> myList = this.todayMeetingMapper.myList(userId);
 		
@@ -200,8 +193,8 @@ public class TodayMeetingServiceImpl implements TodayMeetingService {
 		for(VChatRoom chat : myList) {
 			chat.setUserInfo(userInfo);
 		}
-				
-		System.out.println("myList myList myList : " + myList);
+		
+		log.info("myList myList myList : " + myList);
 		
 		return myList;
 	}
@@ -224,13 +217,13 @@ public class TodayMeetingServiceImpl implements TodayMeetingService {
 			log.info("테스트 : " + test);
 		}
 		
-		System.out.println("방번호로 리스트 체크 : " + list);
+		log.info("방번호로 리스트 체크 : " + list);
+		
 		return list;
 	}
 
 	@Override
 	public List<TdmtngChSpMshgVO> scrollTest(Map<String, Object> map) {
-		
 		
 		return this.todayMeetingMapper.scrollTest(map);
 

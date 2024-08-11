@@ -50,8 +50,6 @@ public class ChatController {
 	private List<ChatRoomVO> allRoomList;
 	
 	private List<AllChatRoomViewVO> myRoomList;
-	
-	private HttpSession session;
 
 	private String userId(HttpServletRequest request) {
 	//세션값으로 아이디 가져오기

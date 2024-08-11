@@ -7,8 +7,10 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 // 웹소켓 설정을 위한 클래스
+@Slf4j
 @RequiredArgsConstructor
 @Configuration						// 설정 파일을 만들기 위한 어노테이션 선언
 @EnableWebSocketMessageBroker		// websocket 메세지 브로커 활성화(stomp 사용 선언)
@@ -25,7 +27,7 @@ public class StompWebSocketConfig implements WebSocketMessageBrokerConfigurer {
 	public void configureMessageBroker(MessageBrokerRegistry config) {
 		config.setApplicationDestinationPrefixes("/pub");		// 클라이언트에서 send요청 처리
 		config.enableSimpleBroker("/sub");						// 해당 경로로 SimpleBroker 등록O
-		System.out.println(config);
+		log.info(config.toString());
 	}
 
 }

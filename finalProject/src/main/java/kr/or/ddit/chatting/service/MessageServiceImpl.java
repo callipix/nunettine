@@ -8,13 +8,9 @@ import org.springframework.stereotype.Service;
 
 import kr.or.ddit.chatting.mapper.MessageMapper;
 import kr.or.ddit.chatting.vo.MessageVO;
-import kr.or.ddit.todaymeeting.controller.TestVO;
 import kr.or.ddit.vo.TdmtngChSpMshgVO;
-import kr.or.ddit.vo.TdmtngVO;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
-@Slf4j
 public class MessageServiceImpl implements MessageService {
 
 	@Autowired
@@ -48,24 +44,8 @@ public class MessageServiceImpl implements MessageService {
 	}
 	
 	@Override
-	public List<TdmtngChSpMshgVO> messageTest(TestVO testVO){
-		return this.messageMapper.messageTest(testVO);
-		
-	}
-
-	@Override
 	public int getMsgCount(int roomNo) {
 		return this.messageMapper.getMsgCount(roomNo);
-	}
-
-	@Override
-	public List<TdmtngChSpMshgVO> scroll(int tdmtngNo) {
-		return null;
-	}
-
-	@Override
-	public List<TdmtngChSpMshgVO> scrollTest(Map<String , Object> map) {
-		return this.messageMapper.scrollTest(map);
 	}
 
 }

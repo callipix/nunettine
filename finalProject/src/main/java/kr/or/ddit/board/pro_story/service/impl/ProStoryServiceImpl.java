@@ -58,31 +58,23 @@ public class ProStoryServiceImpl implements ProStoryService {
 		UUID uuid = UUID.randomUUID();
 		// 원래의 파일 이름과 구분하기 위해 _를 붙임(sdafjasdlfksadj_개똥이.jpg)
 		uploadFileName = uuid.toString() + "_" + uploadFileName;
-		// 같은 날 같은 이미지 업로드 시 파일 중복 방지 끝----------------
 
-		// 설계 -> , 의 역할 : \\
-		// uploadFolder : ...upload\\2024\\01\\30 + \\ + 개똥이.jpg
-//		File saveFile = new File(uploadFolder + "\\" + multipartFile.getOriginalFilename());
-//		↕↕↕↕↕↕↕ 동일
+		// 같은 날 같은 이미지 업로드 시 파일 중복 방지 끝----------------
 		File saveFile = new File(uploadPath, uploadFileName);
 		log.info("uploadPath : " + uploadPath);
 		log.info("uploadFileName : " + uploadFileName);
 		// 스프링파일객체.transferTo -> 실제 파일을 복사하기 때문에 try-catch로 예외처리 해야한다
 		try {
 
-			multipartFile.transferTo(saveFile);
-			// 썸네일 처리 -> 이미지만 가능하기때문에 이미지인지 사전체크
-			if (checkImageType(saveFile)) { // 이미지가 맞다면
+			multipartFile.transferTo(saveFile); // 썸네일 처리 -> 이미지만 가능하기때문에 이미지인지 사전체크
+			if (checkImageType(saveFile)) { 	// 이미지가 맞다면
 				FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + uploadFileName));
 				// 썸네일 생성 -> 기존 이미지를 해당 사이즈로 축소시킨다(400 * 400)
 				Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 300, 300);
 				thumbnail.close();
 			};
-			// /2024/01/30 sdafjasdlfksadj_개똥이.jpg
-//			proStoryBbscttVO.setProStoryBbscttThumbPhoto(uploadPath + getFolder().replace("\\" , "/") + "/"	+ uploadFileName);
-			// getFolder() : 2024\\04\\01(윈도우경로) => 2024/04/01(웹경로)
-			proStoryBbscttVO
-					.setProStoryBbscttThumbPhoto("/" + getFolder().replace("\\", "/") + "/" + "s_" + uploadFileName);
+			
+			proStoryBbscttVO.setProStoryBbscttThumbPhoto("/" + getFolder().replace("\\", "/") + "/" + "s_" + uploadFileName);
 
 			result = this.proStoryMapper.insert(proStoryBbscttVO);
 

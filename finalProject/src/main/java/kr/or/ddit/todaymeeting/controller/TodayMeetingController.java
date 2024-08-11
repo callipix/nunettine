@@ -220,7 +220,6 @@ public class TodayMeetingController {
 		return "todayMeeting/index";
 	}
 	
-	
 	//내 채팅 불러오기
 	@ResponseBody
 	@PostMapping("/selectMyChat")
@@ -353,13 +352,13 @@ public class TodayMeetingController {
 	    		
 	    		if(aa.getUserId().equals(bb.getUserId())){
 	    			
-	    			if(bb.getMberProflPhoto() !=null) {
-	    				
+	    			if(bb.getMberProflPhoto() !=null)
+	    			{
 	    				aa.setProflPhoto(bb.getMberProflPhoto());
 	    				break;
 	    			} 
-	    			if(bb.getProProflPhoto() != null) {
-	    				
+	    			if(bb.getProProflPhoto() != null)
+	    			{
 	    				aa.setProflPhoto(bb.getProProflPhoto());
 	    				break;
 	    			}
@@ -373,40 +372,6 @@ public class TodayMeetingController {
 	    System.out.println("해당 방 : " + joinRoom);
 	    System.out.println("메세지 리스트: " + msgList);
 	    return roomInfo;
-	}
-	
-	@ResponseBody
-	@PostMapping("/scroll")
-	public Map<String, Object> scroll(@RequestParam("tdmtngNo") int tdmtngNo , @RequestParam("startRn") int startRn , HttpServletRequest request){
-		
-		System.out.println("startRn 체크 (BEFORE): " + startRn);
-		Map<String , Object> roomInfo = new HashMap<String, Object>();
-		
-		VChatRoom joinRoom = this.todayMeetingSerive.join(tdmtngNo , userId(request));
-		
-		System.out.println("startRn 체크(AFTER) : " + startRn);
-		
-		if(startRn == 0) {
-			System.out.println("tdmtngNo " + tdmtngNo);
-			System.out.println("startRn " + startRn);
-			startRn = this.messageService.getMsgCount(tdmtngNo);
-			//return null;
-		} else {
-			System.out.println("tdmtngNo " + tdmtngNo);
-			System.out.println("startRn " + startRn);
-		}
-		
-		roomInfo.put("tdmtngNo",tdmtngNo );
-		roomInfo.put("startRn",startRn );
-		log.info("test : " + startRn);
-		List<TdmtngChSpMshgVO> list = this.messageService.scrollTest(roomInfo);
-		for(TdmtngChSpMshgVO asd : list) {
-			log.info("메세지목록 : " + asd);
-		}
-		roomInfo.put("joinRoom", joinRoom);
-		roomInfo.put("msgList" , list);
-		return roomInfo;
-		
 	}
 
 }
