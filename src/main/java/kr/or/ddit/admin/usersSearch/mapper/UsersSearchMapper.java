@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.admin.usersSearch.vo.UsersVO;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface UsersSearchMapper {
 
 	public int getTotal(Map<String, Object> map);

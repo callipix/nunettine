@@ -6,7 +6,6 @@ import java.util.Map;
 
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +20,6 @@ import kr.or.ddit.admin.usersSearch.vo.UsersVO;
 //import kr.or.ddit.util.ArticlePage;
 import kr.or.ddit.util.ArticlePage2;
 import lombok.extern.slf4j.Slf4j;
-
 
 @Slf4j
 @RequestMapping("/usersSearch")

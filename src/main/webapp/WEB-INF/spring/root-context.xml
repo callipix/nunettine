@@ -3,9 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
-           				http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+           				http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+						http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 		<!-- Root Context: defines shared resources visible to all other web components -->
 		<bean id="uploadFolder" class="java.lang.String">
 			<constructor-arg value="D:\\team2\\upload"></constructor-arg>
@@ -34,6 +36,10 @@
 	<!-- Mapper 인터페이스 설정 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="kr.or.ddit.**.**.mapper" />
+	</bean>
+	<!-- Mapper 인터페이스 설정 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="kr.or.ddit.**.**.**.mapper" />
 	</bean>
 	<!-- Mapper 인터페이스 설정 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

@@ -8,7 +8,9 @@ import kr.or.ddit.vo.PunshVO;
 import kr.or.ddit.vo.SntncDeclVO;
 import kr.or.ddit.vo.UserDeclVO;
 import kr.or.ddit.vo.UsersVO;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface DeclMapper {
 
 	public List<SntncDeclVO> decllbrSelect(Map<String, Object> map);
