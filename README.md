@@ -40,11 +40,11 @@
 
 <h2 style="color: #282d33;"> 🧑‍💻 Contact me </h2>
   <div align="center">
-<a href="https://github.com/callipix/myApp/edit/main/README.md">
+<a href="https://github.com/callipix/myApp">
   <img src="https://img.shields.io/badge/Portfolio : Personal Mini Project-F44336?style=flat&logo=Task&logoColor=white" alt="Portfolio" />
 </a>
   <br>
-  <a href="https://github.com/callipix/nunettine/edit/main/README.md">
+  <a href="https://github.com/callipix/nunettine">
   <img src="https://img.shields.io/badge/Portfolio : nunettine Team Project-F44336?style=flat&logo=BookStack&logoColor=white" alt="Portfolio" />
 </a>
     <br>
