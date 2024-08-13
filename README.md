@@ -3,7 +3,7 @@
 </div>
 
 <div> 
-  <h2 style="color: #282d33;"> ✈️ 프로젝트 누네띠네(작성중..) </h2>  
+  <h2 style="color: #282d33;"> ✈️ 프로젝트 누네띠네(이하 모든 부분 현재 작성중..) </h2>  
   <div style="font-weight: 700; font-size: 15px; color: #282d33; align:center">
     생활 서비스에 대한 전문가(이하 프로)들을 보다 쉽게 찾고 제공하는 시스템을 주제로 기존에 존재하는 ‘숨고’ 라는 플랫폼을 모티브로 하여 우리만의 스타일로 재구성하였으며, 내게 필요한 프로가 어디에서나 쉽게 눈에 띄었으면 하는 의미로 ‘누네띠네’ 라고 이름지었습니다.
   </div>
@@ -14,6 +14,11 @@
   <h2 style="color: #282d33;"> 📜 웹사이트 전체 구성 </h2>
 </div>
 
+<div align: "center">
+<img src="https://github.com/user-attachments/assets/899e33e9-ecf1-4d92-834f-4a54c08183a2" />
+</div>
+  <br>
+<br>
 <div align: "center">
   <h2 style="color: #282d33;"> 🛠️ 프로젝트 사용기술(버전명시) </h2>
 </div>
@@ -32,16 +37,24 @@
 </div>
 
 <div align: "center">
+  <h2 style="color: #282d33;"> 🧾 요구사항 기능 및 정의 </h2>
+  <h4>회원/비회원 공통기능</h4>
+   <h5>
+     게시판(후기, 자유, 프로구인, 프로이야기), 프로랭킹, 프로 별점 평가 및 리뷰, 원데이클래스, 사이트 이용 FAQ)
+     <br>→ 가입 여부와 관계 없이 모든 이용자(회원/비회원) 검색 및 조회 가능
+  </h5>
+     회원/전문가(이하프로)로 구분된 회원가입/로그인 기능
+     <br>
+     회원이 내가 필요로 하는 서비스에 맞는 프로를 검색/조회할 수 있는 검색 및 프로필 조회 기능
+     <br>  
+</div>
+<div align: "center">
   <h2 style="color: #282d33;"> 🏹 서비스 구성 및 개요 </h2>
 </div>
 
-<div align: "center">
-  <h2 style="color: #282d33;"> 🧾 요구사항 기능 및 정의 </h2>
-</div>
-
-
 
 <h2 style="color: #282d33;"> 🧑‍💻 개발 환경 </h2>
+
 
 <div align="center">
   <img src="https://img.shields.io/badge/Java-007396?style=Plastic&logo=java&logoColor=white" />
