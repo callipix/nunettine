@@ -40,7 +40,7 @@
 
 <h2 style="color: #282d33;"> 🧑‍💻 Contact me </h2>
   <div align="center">
-<a href="https://github.com/callipix/myApp">
+<a href="http://www.myportfolio.p-e.kr/">
   <img src="https://img.shields.io/badge/Portfolio : Personal Mini Project-F44336?style=flat&logo=Task&logoColor=white" alt="Portfolio" />
 </a>
   <br>
@@ -54,5 +54,7 @@
 <h2 style="color: #282d33;"> 🏅 Stats </h2>
 
 <div align="center">
+  <a href="https://gmail.com/avooov">
   <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=callipix&hide=css&layout=compact&bg_color=180,000000,&title_color=000000&text_color=000000" />
-</div>
+  </a>
+  </div>
