@@ -12,9 +12,12 @@
   </div>
 
 </div>
+<h2 style="color: #282d33;"> 🗓️ 프로젝트 개발 및 테스트 기간 </h2>
 
-  <h2 style="color: #282d33;"> 📜 웹사이트 전체 구성 </h2>
+<h2 style="color: #282d33;"> 🗂️ 프로젝트 ERD 구조도 </h2>
 
+
+<h2 style="color: #282d33;"> 📜 웹사이트 전체 구성 </h2>
 <div align= "center">
 <img style="width: 900px;" src="https://github.com/user-attachments/assets/899e33e9-ecf1-4d92-834f-4a54c08183a2" />
 </div>
@@ -27,37 +30,49 @@
 <div align="center">
 
 <h4>BackEnd</h4>
-  <img src="https://img.shields.io/badge/Java 1.8-007396?style=Plastic&logo=java&logoColor=white" />
+
   <img src="https://img.shields.io/badge/Spring 5.2.5 RELEASE-6DB33F?style=Plastic&logo=Spring&logoColor=white">
 <h4>DataBase</h4>
   <img src="https://img.shields.io/badge/Oracle SQL 11g-F80000?style=Plastic&logo=Oracle&logoColor=white" />
 <h4>FrontEnd</h4>
+  <img src="https://img.shields.io/badge/jQuery 3.7.1-0769AD?style=Plastic&logo=jQuery&logoColor=white" />
+  <img src="https://img.shields.io/badge/Javascript ES6-F7DF1E?style=Plastic&logo=Javascript&logoColor=white" />
+<br>
   <img src="https://img.shields.io/badge/HTML5-E34F26?style=Plastic&logo=HTML5&logoColor=white" />
   <img src="https://img.shields.io/badge/CSS3-1572B6?style=Plastic&logo=CSS3&logoColor=white" />
   <img src="https://img.shields.io/badge/Bootstrap5-7952B3?style=Plastic&logo=Bootstrap&logoColor=white" />
-  <img src="https://img.shields.io/badge/jQuery 3.7.1-0769AD?style=Plastic&logo=jQuery&logoColor=white" />
-  <img src="https://img.shields.io/badge/Javascript ES6-F7DF1E?style=Plastic&logo=Javascript&logoColor=white" />
   <br><br>
 </div>
 
+인원
+내 역할
+구현사항 및 성과
+
 <div>
-  <h2 style="color: #282d33;"> 📖 서비스 구성 및 개요 </h2>
+  <h2 style="color: #282d33;"> 🧾 서비스 구성 및 개요 </h2>
+</div>
+<br>
+<div align="center">
+    <img style="width:30%; border-radius: 25px" src="https://github.com/user-attachments/assets/4e709d25-70be-428e-8fda-36dbdd6ef5b4">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <img style="width:25%; border-radius: 25px" src="https://github.com/user-attachments/assets/49221a49-46b4-4195-9d8e-c2e450065ad5">
+&nbsp;&nbsp;&nbsp;
+    <img style="width:25%; border-radius: 25px" src="https://github.com/user-attachments/assets/413df461-c903-495a-9fd1-498f0cc140aa">
+    <br>
+    <img style="width:30%; border-radius: 25px" src="https://github.com/user-attachments/assets/555daf3d-3c78-4aa6-a046-eb6fb4507ff9">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <img style="width:25%; border-radius: 25px" src="https://github.com/user-attachments/assets/75af85c2-14c6-4b86-a1d7-f409003e478a">
+&nbsp;&nbsp;&nbsp;
+    <img style="width:25%; border-radius: 25px" src="https://github.com/user-attachments/assets/1a7ab495-18a9-4973-9ec7-e20c13b8c53a">
 </div>
 <div align="center">
-<img style="width:30%;" src="https://github.com/user-attachments/assets/49221a49-46b4-4195-9d8e-c2e450065ad5">
-<img style="width:30%;" src="https://github.com/user-attachments/assets/413df461-c903-495a-9fd1-498f0cc140aa">
-<img style="width:30%;" src="https://github.com/user-attachments/assets/75af85c2-14c6-4b86-a1d7-f409003e478a">
-<img style="width:30%;" src="https://github.com/user-attachments/assets/1a7ab495-18a9-4973-9ec7-e20c13b8c53a">
+<br>
 </div>
 
 
 <div style="color: black">
-  <h2 style="color: #282d33;"> 🧾 요구사항 기능 및 정의 </h2>
-  
-  <div align="center">
-  <img style="width:30%;" src="https://github.com/user-attachments/assets/555daf3d-3c78-4aa6-a046-eb6fb4507ff9">
-  <img style="width:30%;" src="https://github.com/user-attachments/assets/4e709d25-70be-428e-8fda-36dbdd6ef5b4">
-  </div>
+
+
 <div style="font-weight: bold">모든 이용자 공통</div>
      게시글 조회(후기, 자유, 프로구인, 프로이야기), 프로랭킹, 프로 별점 평가 및 리뷰, 원데이클래스, 사이트 이용 FAQ<br>
 <br>
@@ -79,12 +94,14 @@ ID/PW 찾기, 오늘모임 생성 및 참가, 마이페이지, 신고, 관리자
 내가 작성한 게시글에 대한 답글, 사전문의 혹은 요청에 대한 답변, 신고에 대한 알림
 </div>
 
+ <h2 style="color: #282d33;"> 🔎 프로젝트에서 내가 기여한 부분 </h2>
+
 <div>
 <h2 style="color: #282d33;"> 🧑‍💻 개발 환경 </h2>
 </div>
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Java-007396?style=Plastic&logo=java&logoColor=white" />
+<img src="https://img.shields.io/badge/Java 1.8-007396?style=Plastic&logo=java&logoColor=white" />
   <img src="https://img.shields.io/badge/Spring-6DB33F?style=Plastic&logo=Spring&logoColor=white">
   <img src="https://img.shields.io/badge/Amazon AWS-232F3E?style=Plastic&logo=Amazon&logoColor=white" />
   <img src="https://img.shields.io/badge/Oracle-F80000?style=Plastic&logo=Oracle&logoColor=white" />
