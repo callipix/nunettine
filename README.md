@@ -68,7 +68,7 @@ FrontEnd
   <br><br>
 </div>
 
-<h4>Library & Developer Tools</h4>
+<h4>Library & IDE Tools</h4>
 
 <img src="https://img.shields.io/badge/Eclipse Egov 3.10 IDE-2C2255?style=Plastic&logo=Eclipse&logoColor=white" />
 
