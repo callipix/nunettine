@@ -182,7 +182,7 @@
         <img style="width: 50%;" src="https://github.com/user-attachments/assets/80f461d8-0435-4147-aa60-4fc68c3eadb2">
         <details>
             <summary>자세히보기</summary>
-            <img style="width: 100%;" src="https://github.com/user-attachments/assets/4eb966c9-f4f4-4efd-b8cd-1cb1100068c6">
+            <img style="width: 100%;" src="https://github.com/user-attachments/assets/d47e206d-aba8-4406-aea0-18c393049045">
         </details>
     </div>
 </div>
