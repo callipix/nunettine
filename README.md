@@ -161,23 +161,28 @@
 <br><br>
 <h2 style="color: #282d33;"> 🔎 프로젝트에서 내가 기여한 부분 </h2>
 <br>
-<div>
-  <!-- 첫 번째 줄의 이미지들 -->
-  <div style="display: inline-block;">
-    <img style="width:30%" src="https://github.com/user-attachments/assets/f472e937-5847-46a3-b9cc-c259a3dbd53a">
-       <details>
-    <summary>Click to expand</summary>
-    <img style="width:30%" src="https://github.com/user-attachments/assets/8eafd404-17d0-4f72-b420-d44d8989ad13">
-  </details>   
-  </div>
-  &nbsp;&nbsp;&nbsp;
-  <div style="display: inline-block;">
-    <img style="width:30%" src="https://github.com/user-attachments/assets/8707283d-7c73-44b0-ac1a-bea54c7d8bb1">
-  </div>
-  &nbsp;&nbsp;&nbsp;
-  <div style="display: inline-block;">
-    <img style="width:30%" src="https://github.com/user-attachments/assets/80f461d8-0435-4147-aa60-4fc68c3eadb2">
-  </div>
+<div align="center">
+    <div style="text-align: center; margin: 10px;">
+        <img style="width: 50%;" src="https://github.com/user-attachments/assets/f472e937-5847-46a3-b9cc-c259a3dbd53a">
+        <details>
+            <summary>자세히보기</summary>
+            <img style="width: 100%;" src="https://github.com/user-attachments/assets/34b2adb5-7504-4c0d-9d61-8df8ee4b4fe1">
+        </details>
+    </div>
+    <div style="text-align: center; margin: 10px;">
+        <img style="width: 50%;" src="https://github.com/user-attachments/assets/8707283d-7c73-44b0-ac1a-bea54c7d8bb1">
+        <details>
+            <summary>자세히보기</summary>
+            <img style="width: 100%;" src="https://github.com/user-attachments/assets/37ce6a7b-37ba-4f4e-b9bc-09384d7630af">
+        </details>
+    </div>
+    <div style="text-align: center; margin: 10px;">
+        <img style="width: 50%;" src="https://github.com/user-attachments/assets/80f461d8-0435-4147-aa60-4fc68c3eadb2">
+        <details>
+            <summary>자세히보기</summary>
+            <img style="width: 100%;" src="https://github.com/user-attachments/assets/4eb966c9-f4f4-4efd-b8cd-1cb1100068c6">
+        </details>
+    </div>
 </div>
 
 <br><br>
