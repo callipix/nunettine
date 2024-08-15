@@ -162,7 +162,7 @@
 <h2 style="color: #282d33;"> 🔎 프로젝트에서 내가 기여한 부분 </h2>
 <br>
  <div align="center">
-  <img style="width:30%" src="https://github.com/user-attachments/assets/6df23bd8-1a59-4581-a40c-6aa44b1eee6b">
+  <img style="width:30%" src="https://github.com/user-attachments/assets/c8e7967a-d6f8-4115-8c6c-8bf6a44c7b7b">
   &nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;
 <img style="width:30%" src="https://github.com/user-attachments/assets/8707283d-7c73-44b0-ac1a-bea54c7d8bb1">
   &nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;
