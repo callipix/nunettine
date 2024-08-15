@@ -27,7 +27,7 @@
 <br><br>
 <h2 style="color: #282d33;"> 🗂️ ERD 구조도 </h2>
 <div align="center">
-<img style="width: 80%" src="https://github.com/user-attachments/assets/28de56c1-1d02-472c-8c8e-60e039abd2b8">
+<img style="width: 80%" src="https://github.com/user-attachments/assets/dd34b958-822b-4021-a674-7c577ae55fb0">
 </div>
 
 <br><br>
