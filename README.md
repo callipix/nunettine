@@ -19,7 +19,7 @@
   </div>
 <br><br>
 </div>
-<h2 style="color: #282d33;"> 🗓️ 개발 및 테스트 기간 </h2>
+<h2 style="color: #282d33;"> 🗓️ 개발기간 및 일정 </h2>
 <div align="center">  
 <img style="width: 80%" src="https://github.com/user-attachments/assets/de618e2b-ddc2-4429-a129-6dd9e4a46f38">
 </div>
