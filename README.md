@@ -161,13 +161,23 @@
 <br><br>
 <h2 style="color: #282d33;"> 🔎 프로젝트에서 내가 기여한 부분 </h2>
 <br>
- <div align="center">
-  <img style="width:30%" src="https://github.com/user-attachments/assets/f472e937-5847-46a3-b9cc-c259a3dbd53a">
-  &nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;
-<img style="width:30%" src="https://github.com/user-attachments/assets/8707283d-7c73-44b0-ac1a-bea54c7d8bb1">
-  &nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;
-<img style="width:30%" src="https://github.com/user-attachments/assets/80f461d8-0435-4147-aa60-4fc68c3eadb2">
-
+<div>
+  <!-- 첫 번째 줄의 이미지들 -->
+  <div style="display: inline-block;">
+    <img style="width:30%" src="https://github.com/user-attachments/assets/f472e937-5847-46a3-b9cc-c259a3dbd53a">
+       <details>
+    <summary>Click to expand</summary>
+    <img style="width:30%" src="https://github.com/user-attachments/assets/8eafd404-17d0-4f72-b420-d44d8989ad13">
+  </details>   
+  </div>
+  &nbsp;&nbsp;&nbsp;
+  <div style="display: inline-block;">
+    <img style="width:30%" src="https://github.com/user-attachments/assets/8707283d-7c73-44b0-ac1a-bea54c7d8bb1">
+  </div>
+  &nbsp;&nbsp;&nbsp;
+  <div style="display: inline-block;">
+    <img style="width:30%" src="https://github.com/user-attachments/assets/80f461d8-0435-4147-aa60-4fc68c3eadb2">
+  </div>
 </div>
 
 <br><br>
