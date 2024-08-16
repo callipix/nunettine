@@ -191,10 +191,9 @@
 <h2 style="color: #282d33;"> 🧑‍💻 Contact Me..</h2>
 </div>
   <div align="center">
-<a href="http://www.myportfolio.p-e.kr/">
-  <img src="https://img.shields.io/badge/Portfolio : Personal Mini Project-F44336?style=flat&logo=Task&logoColor=white" alt="Portfolio" />
-</a>
-  <img src="https://img.shields.io/badge/Gmail-30B980?style=flat&logo=Gmail&logoColor=white" />
+    <a href="avooov@gmail.com">
+    <img src="https://img.shields.io/badge/Gmail-30B980?style=flat&logo=Gmail&logoColor=white" />
+    </a>
 </div>
 </div>
 </div>
