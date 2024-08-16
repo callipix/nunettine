@@ -165,7 +165,7 @@
     <div style="text-align: center; margin: 10px;">
         <img style="width: 50%;" src="https://github.com/user-attachments/assets/f472e937-5847-46a3-b9cc-c259a3dbd53a">
         <details>
-            <summary>자세히보기</summary>
+            <summary>펼쳐보기</summary>
             <img style="width: 100%;" src="https://github.com/user-attachments/assets/34b2adb5-7504-4c0d-9d61-8df8ee4b4fe1">
         </details>
     </div>
@@ -173,7 +173,7 @@
     <div style="text-align: center; margin: 10px;">
         <img style="width: 50%;" src="https://github.com/user-attachments/assets/8707283d-7c73-44b0-ac1a-bea54c7d8bb1">
         <details>
-            <summary>자세히보기</summary>
+            <summary>펼쳐보기</summary>
             <img style="width: 100%;" src="https://github.com/user-attachments/assets/ded1e0ae-20cc-40ff-b027-36cd0fbbb3f2">
         </details>
     </div>
@@ -181,7 +181,7 @@
     <div style="text-align: center; margin: 10px;">
         <img style="width: 50%;" src="https://github.com/user-attachments/assets/80f461d8-0435-4147-aa60-4fc68c3eadb2">
         <details>
-            <summary>자세히보기</summary>
+            <summary>펼쳐보기</summary>
             <img style="width: 100%;" src="https://github.com/user-attachments/assets/d47e206d-aba8-4406-aea0-18c393049045">
         </details>
     </div>
