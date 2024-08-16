@@ -191,7 +191,7 @@
 <h2 style="color: #282d33;"> 🧑‍💻 Contact Me..</h2>
 </div>
   <div align="center">
-    <a href="avooov@gmail.com">
+    <a href="mailto:avooov@gmail.com">
     <img src="https://img.shields.io/badge/Gmail-30B980?style=flat&logo=Gmail&logoColor=white" />
     </a>
 </div>
