@@ -4,7 +4,6 @@
 </div>
 
 <div style="margin: 0px 20px 0px 20px;">
-  <img style="width:22px;" src="https://github.com/user-attachments/assets/19cc11fe-265f-493f-a0fe-6b36987fe2b5">
 
 <div> 
   <h2 style="color: #282d33;"> ✈️ 프로젝트 간략 소개 </h2>  
