@@ -18,7 +18,6 @@ import kr.or.ddit.vo.UserDeclVO;
 import kr.or.ddit.vo.UsersVO;
 import lombok.extern.slf4j.Slf4j;
 
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -37,7 +36,6 @@ public class DeclServiceImpl implements DeclService {
 		return this.declMapper.lbrtyBbscttVo(sntncDeclVO);
 	}
 
-
 	@Override
 	public List<SntncDeclVO> declResnList(SntncDeclVO sntncDeclVO) {
 		return this.declMapper.declResnList(sntncDeclVO);
@@ -51,28 +49,25 @@ public class DeclServiceImpl implements DeclService {
 		// 이곳에서 두가지 실행
 		// 1번 해당 게시글 삭제 여부가 1로 업데이가 되면서
 		result = this.declMapper.declSet1(lbrtyBbscttNo);
-		log.info("1번째 결과 값 : " + result);
+		log.info("1번째 결과 값 : {}" , result);
 		// 2번 신고에 대한 처리를 완료로 뜨게 해야된다.(DECL_PROCESS_AT = 1)
 		result += this.declMapper.declSet2(lbrtyBbscttNo);
-		log.info("2번째 결과 값 : " + result);
+		log.info("2번째 결과 값 : {}" ,result);
 		result += this.declMapper.declSet3(lbrtyBbscttNo);
-		log.info("3번째 결과 값 : " + result);
+		log.info("3번째 결과 값 : {}" , result);
 		 
 		return result;
 	}
-
 
 	@Override
 	public List<UsersVO> userList() {
 		return this.declMapper.userList();
 	}
 
-
 	@Override
 	public int getDeclCount(String userId2) {
 		return this.declMapper.getDeclCount(userId2);
 	}
-
 
 	@Override
 	public List<UserDeclVO> userDeclList(String userId) {
@@ -89,7 +84,6 @@ public class DeclServiceImpl implements DeclService {
 		return result;
 		
 	}
-
 
 	@Override
 	public List<PunshVO> declHistoryList(String userId) {

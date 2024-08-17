@@ -2,6 +2,7 @@ package kr.or.ddit.vo;
 
 import java.util.List;
 
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,6 +13,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class AftusBbscttVO {
 	
 	private int rnum;

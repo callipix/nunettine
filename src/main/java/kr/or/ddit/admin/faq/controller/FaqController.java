@@ -36,9 +36,9 @@ public class FaqController {
 	@PostMapping("/update")
 	public int faqUpdate(@RequestBody FaqVO faqVO){
 		faqVO.setMngrId("testAdmin");
-		log.info("update여기"+faqVO);
+		log.info("update여기 {}" ,faqVO);
 		int result = this.faqService.faqUpdate(faqVO);
-		log.info("update->result:"+result);
+		log.info("update->result: {}" ,result);
 		return result;
 	}
 	
@@ -46,16 +46,16 @@ public class FaqController {
 	@PostMapping("/delete")
 	public int faqDelete(@RequestBody FaqVO faqVO) {
 		faqVO.setMngrId("testAdmin");
-		log.info("delete:"+faqVO);
+		log.info("delete: {}" ,faqVO);
 		int result = this.faqService.delete(faqVO);
-		log.info("delete->result:"+result);
+		log.info("delete->result: {}" ,result);
 		return result;
 	}
 	
 	@GetMapping(value="/create", params="register")
 	public String createRegister(FaqVO faqVO) {
 		
-		log.info("createRegister->faqVO:" + faqVO);
+		log.info("createRegister->faqVO:{}" , faqVO);
 		
 		return "faq/create";
 	}
@@ -64,12 +64,12 @@ public class FaqController {
 	public String createRegisterPost(FaqVO faqVO) {
 		
 		faqVO.setMngrId("testAdmin");
-		log.info("createRegisterPost->faqVO:" + faqVO);
+		log.info("createRegisterPost->faqVO: {}" , faqVO);
 		
 		int result = this.faqService.createRegister(faqVO);
-		log.info("createRegister->result:"+ result);
+		log.info("createRegister->result: {}" , result);
 		
 		return "redirect:/faq/list";
-		//return "redirect:/admin/notice?noticeNo="+noticeVO.getNoticeNo();
+
 	}
 }

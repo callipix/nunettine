@@ -771,7 +771,7 @@ function displayChatMessages(result) {
 		<div id = "check" style="text-align: center">
 		<br>
     <div>
-    
+
     <div id="listTT" class="top-0 end-5 position-absolute rounded-pill translate-middle" style="border-color: black;"></div>
     <button id="list" class="btn btn-secondary btn-sm btn-icon top-0 end-1 position-absolute rounded-pill translate-middle" style="right: 40px; border-color: transparent;">
         <img src="/resources/images/리스트.gif" alt="List Icon" style="width: 40px; background-color: #eff6ff; border-radius : 100%;">
@@ -783,8 +783,6 @@ function displayChatMessages(result) {
         <img src="/resources/images/종료.png" alt="List Icon" style="width: 36px; border-radius : 100%;">
     </button>
 </div>
-
-
 	</div>
 </div>
 </div>

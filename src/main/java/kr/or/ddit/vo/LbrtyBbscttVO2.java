@@ -4,11 +4,12 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @ToString
+@NoArgsConstructor
 public class LbrtyBbscttVO2 {
 	private int    rnum;
 	private int lbrtyBbscttNo;

@@ -1,5 +1,6 @@
 package kr.or.ddit.vo;
 
+import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class VMberUsersVO {
 	private String mberId;
 	private String mberMbtlnum;

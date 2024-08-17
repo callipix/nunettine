@@ -1,14 +1,16 @@
 package kr.or.ddit.vo;
 
+import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Setter
 @Getter
+@Setter
 @ToString
+@NoArgsConstructor
 public class VProUsersVO {
 	private String proId;
 	private String proMbtlnum;

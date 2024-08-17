@@ -1,8 +1,11 @@
 package kr.or.ddit.vo;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class BundleOndyclVO {
 	private int shopngBundleNo;	//장바구니번호
 	private String mberId;	//회원아이디

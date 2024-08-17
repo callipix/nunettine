@@ -1,8 +1,11 @@
 package kr.or.ddit.vo;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class CommonCdDetailVO {
 	private String commonCdDetail;
 	private String commonCd;

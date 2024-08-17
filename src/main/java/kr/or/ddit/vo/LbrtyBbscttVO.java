@@ -2,15 +2,15 @@ package kr.or.ddit.vo;
 
 import java.util.Date;
 
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import lombok.Data;
-import lombok.ToString;
-
-@Data
+@Getter
+@Setter
 @ToString
+@NoArgsConstructor
 public class LbrtyBbscttVO {
 	private int    rnum;
 	private int lbrtyBbscttNo;

@@ -1,8 +1,11 @@
 package kr.or.ddit.admin.usersSearch.vo;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class UsersVO {
 	private int rnum;
 	private String userId;

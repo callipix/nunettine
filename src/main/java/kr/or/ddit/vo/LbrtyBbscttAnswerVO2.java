@@ -4,9 +4,12 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class LbrtyBbscttAnswerVO2 {
 	private int lbrtyBbscttAnswerNo;
 	private int lbrtyBbscttNo;

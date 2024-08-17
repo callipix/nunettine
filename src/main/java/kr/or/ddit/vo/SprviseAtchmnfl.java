@@ -2,9 +2,12 @@ package kr.or.ddit.vo;
 
 import java.util.Date;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class SprviseAtchmnfl {
 	private int sprviseAtchmnflNo;
 	private int atchmnflNo;

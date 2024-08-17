@@ -1,8 +1,11 @@
 package kr.or.ddit.admin.faq.vo;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Setter
+@Getter
+@AllArgsConstructor
+@ToString
 public class FaqVO {
 	private int rnum;
 	private int faqNo;

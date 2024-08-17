@@ -1,11 +1,13 @@
 package kr.or.ddit.vo;
 
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
-import lombok.Data;
-
-@Data
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class TdmtngVO {
 	
 	private int rnum;

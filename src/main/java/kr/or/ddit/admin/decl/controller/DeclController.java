@@ -62,7 +62,7 @@ public class DeclController {
 	public List<SntncDeclVO> ajaxList(Map<String,Object> map) {
 		
 		List<SntncDeclVO> lbrbbsList = this.declService.decllbrSelect(map);
-		log.info("lbrbbs-> lbrbbsList : " + lbrbbsList);
+		log.info("lbrbbs-> lbrbbsList : {} " , lbrbbsList);
 		
 		return lbrbbsList;
 	}
@@ -70,10 +70,10 @@ public class DeclController {
 	@ResponseBody
 	@PostMapping("/selectList")
 	public LbrtyBbscttVO2 selectList(@RequestBody SntncDeclVO sntncDeclVO) {
-		log.info("selectList-> sntncDeclVO : " + sntncDeclVO);
+		log.info("selectList-> sntncDeclVO : {}" , sntncDeclVO);
 		
 		LbrtyBbscttVO2 selectVo = this.declService.lbrtyBbscttVo(sntncDeclVO);
-		log.info("selectList-> selectList : " + selectVo);
+		log.info("selectList-> selectList : {}" , selectVo);
 		
 		return selectVo;
 	}
@@ -81,10 +81,10 @@ public class DeclController {
 	@ResponseBody
 	@PostMapping("/declResnList")
 	public List<SntncDeclVO> declResnList(@RequestBody SntncDeclVO sntncDeclVO) {
-		log.info("declResnList-> sntncDeclVO : " + sntncDeclVO);
+		log.info("declResnList-> sntncDeclVO : {}" , sntncDeclVO);
 		
 		List<SntncDeclVO> declResnList = this.declService.declResnList(sntncDeclVO);
-		log.info("declResnList-> declResnList : " + declResnList);
+		log.info("declResnList-> declResnList : {}" , declResnList);
 		
 		return declResnList;
 	}
@@ -92,22 +92,21 @@ public class DeclController {
 	@ResponseBody
 	@GetMapping("/declSet")
 	public int declSet(int lbrtyBbscttNo) {
-		log.info("declSet-> lbrtyBbscttNo : " + lbrtyBbscttNo);
+		log.info("declSet-> lbrtyBbscttNo : {}" , lbrtyBbscttNo);
 		
 		int result = 0;
 		result = this.declService.declSet(lbrtyBbscttNo);
-		log.info("declSet-> result : " + result);
+		log.info("declSet-> result : {}" , result);
 		
 		return result;
 	}
-	
-	
+
 	@ResponseBody
 	@GetMapping("/userList")
 	public List<UsersVO> userList() {
 		
 		List<UsersVO> userList = this.declService.userList();
-		log.info("userIist-> userList : " + userList);
+		log.info("userIist-> userList : {}" , userList);
 		
 		return userList;
 	}
@@ -115,80 +114,44 @@ public class DeclController {
 	@ResponseBody
 	@PostMapping("/getDeclCount")
 	public int getDeclCount(String userId2) {
-		log.info("userId2 : " + userId2);
+		log.info("userId2 : {}" , userId2);
 		int count = 0;
 		count = this.declService.getDeclCount(userId2);
 		if(count==0) {
 			return 0;
 		}
-		
-		log.info("getDeclCount-> count : " + count);
-		
+		log.info("getDeclCount-> count : {}" , count);
 		return count;
 	}
 	
 	@ResponseBody
 	@PostMapping("/userDeclList")
 	public List<UserDeclVO> userDeclList(String userId) {
-		log.info("userId : " + userId);
+		log.info("userId : {}" , userId);
 		List<UserDeclVO> userDeclList = this.declService.userDeclList(userId);
-		log.info("userDeclList-> userDeclList : " + userDeclList);
-		
+		log.info("userDeclList-> userDeclList : {}" , userDeclList);
+
 		return userDeclList;
 	}
 	
 	@ResponseBody
 	@PostMapping("/userDeclSet")
 	public int userDeclSet(@RequestBody Map<String, Object> map) {
-		log.info("userDeclSet -> map : " + map);
+		log.info("userDeclSet -> map : {}" , map);
 		int result = 0;
 		result = this.declService.userDeclSet(map);
-		log.info("userDeclSet-> result : " + result);
+		log.info("userDeclSet-> result : {}" , result);
 		
 		return result;
 	}
-	
 	@ResponseBody
 	@PostMapping("/declHistoryList")
 	public List<PunshVO> declHistoryList(String userId) {
-		log.info("declHistoryList -> userId : " + userId);
+		log.info("declHistoryList -> userId : {}" , userId);
 		List<PunshVO> hisoryList = null;
 		hisoryList = this.declService.declHistoryList(userId);
-		log.info("declHistoryList-> hisoryList : " + hisoryList);
+		log.info("declHistoryList-> hisoryList : {}" , hisoryList);
 		
 		return hisoryList;
 	}
-	
-	// 검색 목록 출력
-	/*
-	 * @ResponseBody
-	 * 
-	 * @PostMapping("/ajaxLbList") public ArticlePage<LbrtyBbscttVO2>
-	 * ajaxLbList(@RequestBody(required = false) Map<String, Object> map,
-	 * HttpServletRequest request) { log.info("ajaxLbList -> map : " + map);
-	 * 
-	 * // map : {"keyword : "","currentPage":1}
-	 * 
-	 * List<LbrtyBbscttVO2> ajaxLbList =
-	 * this.lbrtyBbscttService.lbrtyBbscttListPage(map);
-	 * log.info("ajaxLbList -> ajaxLbList : " + ajaxLbList);
-	 * 
-	 * int total = this.lbrtyBbscttService.getTotal(map);
-	 * log.info("ajaxLbList -> total : " + total);
-	 * 
-	 * int size = 10;
-	 * 
-	 * String currentPage = map.get("currentPage").toString(); String keyword =
-	 * map.get("keyword").toString(); log.info("ajaxLbList -> currentPage : " +
-	 * total); log.info("ajaxLbList -> keyword : " + total);
-	 * 
-	 * ArticlePage<LbrtyBbscttVO2> data = new ArticlePage<LbrtyBbscttVO2>(total,
-	 * Integer.parseInt(currentPage), size, ajaxLbList, keyword);
-	 * 
-	 * String url = "/decl/lbrbbs"; data.setUrl(url);
-	 * 
-	 * return data;
-	 * 
-	 * }
-	 */
 }
