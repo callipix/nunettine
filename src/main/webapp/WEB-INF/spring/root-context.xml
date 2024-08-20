@@ -9,9 +9,9 @@
            				http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 						http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 		<!-- Root Context: defines shared resources visible to all other web components -->
-		<bean id="uploadFolder" class="java.lang.String">
-			<constructor-arg value="D:\\team2\\upload"></constructor-arg>
-		</bean>
+<!--		<bean id="uploadFolder" class="java.lang.String">-->
+<!--			<constructor-arg value="D:\\team2\\upload"></constructor-arg>-->
+<!--		</bean>-->
 	 
 	<bean id="dataSource" 
 		class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
@@ -21,18 +21,17 @@
 		<property name="password" value="java" />
 	</bean>
 	
-	<bean id="sqlSessionFactory"
-	class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"></property>
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
 		<property name="mapperLocations" value="classpath:/sqlmap/**/*_SQL.xml" />
-		<property name="configLocation" value="/WEB-INF/mybatisAlias/mybatisAlias.xml" />
+		<property name="configLocation" value="/mybatisAlias.xml" />
 	</bean>
 	
 	<bean id="sqlSessionTemplate"
 	class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
-	
+	<context:component-scan base-package="kr.or.ddit.*" />
 	<!-- Mapper 인터페이스 설정 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="kr.or.ddit.**.**.mapper" />

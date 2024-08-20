@@ -13,6 +13,7 @@ import java.util.UUID;
 import javax.inject.Inject;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,12 +28,18 @@ import net.coobird.thumbnailator.Thumbnailator;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class ProStoryServiceImpl implements ProStoryService {
-
 
 	private final String uploadFolder;
 	private final ProStoryMapper proStoryMapper;
+
+	@Autowired
+	ProStoryServiceImpl(ProStoryMapper proStoryMapper,String uploadFolder) {
+		this.proStoryMapper = proStoryMapper;
+		this.uploadFolder = uploadFolder;
+	}
+
 
 	@Override
 	@Transactional
