@@ -13,7 +13,7 @@
 <br>어디에서나 쉽게 눈에 띄었으면 하는 바람으로 ‘누네띠네’ 라고 이름지었습니다.
 <br>
     <br>
-   팀원은 PL을 포함한 총 7명으로 구성되어있습니다.<br>
+   팀원은 PL을 포함한 총 7명입니다.<br>
    ERDCloud를 사용하여 ERD를 작성하였고 44개의 테이블을 사용하였습니다.
   </div>
 <br><br>
@@ -129,7 +129,7 @@
         <img style="width: 50%;" src="https://github.com/user-attachments/assets/80f461d8-0435-4147-aa60-4fc68c3eadb2">
         <details>
             <summary>펼쳐보기</summary>
-            <img style="width: 100%;" src="https://github.com/user-attachments/assets/f82767fe-54db-40de-b343-b7e93e4de4c2">
+            <img style="width: 100%;" src="https://github.com/user-attachments/assets/e1d18ddd-5d20-4d23-8236-7073738501be">
         </details>
     </div>
 </div>
