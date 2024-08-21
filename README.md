@@ -104,67 +104,7 @@
     <img style="width:25%; border-radius: 25px" src="https://github.com/user-attachments/assets/1a7ab495-18a9-4973-9ec7-e20c13b8c53a">
 </div>
 <br><br>
-
-<div style="color: black">
-<b><font size="6">모든 이용자 공통</font></b>
-  <p>
-  게시글 조회(후기, 자유, 프로구인, 프로이야기), 프로랭킹, 프로 별점 평가 및 리뷰, 원데이클래스, 사이트 이용 FAQ
-  </p>
-<br>
-  
-  <p>  
-<b><font size="6">회원 공통(일반/프로)</font></b>
-    <br>
-  ID/PW 찾기, 오늘모임 생성 및 참가, 신고, 관리자 문의
-  <br>
-  게시글 혹은 문의,요청에 대한 답변, 신고에 관한 알림
-  <br>
-  마이페이지 - 정보수정, (받은/보낸 서비스) 사전문의 및 요청서 확인, 작성 게시글 관리, 1:1 문의내역 확인
-  <br>
-  게시판 내 게시글 및 댓글 작성, 수정, 삭제
-  <br>
-  오늘모임 - 모임 생성과 동시에 기본적으로 채팅방이 존재 하며 가입회원이라면 누구든 이용 가능
-  </p>
-
-<br>
-<b><font size="6">일반회원</font></b>
-  <p>
-  서비스 문의 및 요청, 이용한 서비스와 프로에 대해 별점 평가 및 리뷰작성
-  <br>
-  회원 마이페이지 - 원데이 클래스 예약 및 결제, 서비스와 별점 평가 및 작성 리뷰 확인
-  <br>
-  원하는 프로를 즐겨찾기 등록기능
-  </p>
-
-<br>
-<b><font size="6">프로</font></b>
-  <p>
-  문의받은 서비스에 대한 답변 및 견적 안내, 요청자가 서비스를 원할시 서비스 제공
-  <br>
-  프로 마이페이지 - 원데이 클래스 등록, 원데이 클래스 월별 이용자 및 금액 통계 확인, 서비스 요청 리뷰 관리
-  <br>
-  프로프로필 - 마이페이지와는 별도로 자신의 서비스분야에 대한 소개와 요청서를 안내하고 포트폴리오를 등록하는곳
-  <br>
-  프로이야기 - 프로만 작성가능하며 자신의 에피소드 등을 이야기 형식으로 풀어내는 게시판
-  <br>
-  회원탈퇴 - 원데이클래스에서의 결제로 인한 금전문제를 방지하고자 탈퇴시 관리자의 승인하에 탈퇴 가능
-  </p>
-
-<br>
-<b><font size="6">관리자</font></b>
-  <p>
-  해당 사이트에서 활동중인 전문분야별 프로의 비율을 확인 가능
-  <br>
-  FAQ 및 공지사항 페이지 등록 및 수정
-  <br>
-  1:1 문의 내역 확인 및 답변
-  <br>
-  프로의 탈퇴 요청 확인 및 처리
-  <br>
-  이용중인 회원들의 신고내역에 대한 확인 및 제재
-  </p>
-</div>
-
+<img style="width: 100%;" src="https://github.com/user-attachments/assets/60ea5b62-3dc1-4b72-b6cd-0165ff8dfec0">
 <br><br>
 <h2 style="color: #282d33;"> 🔎 프로젝트에서 내가 기여한 부분 </h2>
 <br>
@@ -173,7 +113,7 @@
         <img style="width: 50%;" src="https://github.com/user-attachments/assets/f472e937-5847-46a3-b9cc-c259a3dbd53a">
         <details>
             <summary>펼쳐보기</summary>
-            <img style="width: 100%;" src="https://github.com/user-attachments/assets/34b2adb5-7504-4c0d-9d61-8df8ee4b4fe1">
+            <img style="width: 100%;" src="https://github.com/user-attachments/assets/575ed3fe-e8a4-4b17-8c9e-73774532019a">
         </details>
     </div>
 <br><br>  
@@ -189,7 +129,7 @@
         <img style="width: 50%;" src="https://github.com/user-attachments/assets/80f461d8-0435-4147-aa60-4fc68c3eadb2">
         <details>
             <summary>펼쳐보기</summary>
-            <img style="width: 100%;" src="https://github.com/user-attachments/assets/d47e206d-aba8-4406-aea0-18c393049045">
+            <img style="width: 100%;" src="https://github.com/user-attachments/assets/f82767fe-54db-40de-b343-b7e93e4de4c2">
         </details>
     </div>
 </div>
