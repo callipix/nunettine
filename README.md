@@ -17,23 +17,22 @@
   <h4>
     1. 참여인원 : 7명<br><br>
     2. 제작기간 : 2024.02.19 - 2024.04.17
-  <br><br>
+  <br><br><br>
   </h4>
    <h2 style="color: #282d33;"> 🏷️ 목차 </h2>
-  1. 프로젝트 개요(상단) <br>
-  2. ERD 구조도<br>
-  3. 사용기술 및 개발환경<br>
-  4. 프로젝트 내에서 내가 맡은부분
+  1. ERD<br>
+  2. 사용기술 및 개발환경<br>
+  3. 서비스 구성 및 개요<br>
+  4. 프로젝트 내에서 내가 맡은 부분
 </div>
 <br><br><br>
 <h2 style="color: #282d33;"> 🗂️ ERD </h2>
 <div align="center">
 <img style="width: 80%" src="https://github.com/user-attachments/assets/dd34b958-822b-4021-a674-7c577ae55fb0">
 </div>
-<br>
+<br><br><br>
   <h2 style="color: #282d33;"> 🛠️ 사용기술 및 개발환경</h2>
 </div>
-
 <div align="center">
 <h3>Programming Language</h3>
 <div>
@@ -71,7 +70,7 @@
 
 </div>
 </div>
-<br>
+<br><br><br>
 <div>
   <h2 style="color: #282d33;"> 🧾 서비스 구성 및 개요 </h2>
 </div>
@@ -93,12 +92,18 @@
 <img style="width: 100%;" src="https://github.com/user-attachments/assets/60ea5b62-3dc1-4b72-b6cd-0165ff8dfec0">
 <br><br>
 <h2 style="color: #282d33;"> 🔎 프로젝트에서 내가 기여한 부분 </h2>
+<br>
 <h3>
   1. 사용자 경험 개선을 위한 로딩바 추가<br>
   </h3>
   <details>
             <summary>펼쳐보기</summary>
-    <div align="center">
+     <h6>
+    이미지가 많아지거나 이미지크기(용량)이 커질것에 대비해 기존에 이미지 등록시 썸네일 처리를 하도록 하였으나 그럼에도<br>
+    로딩시간이 지연될 경우를 고려해 이미지 자체를 처리하기보다는 사용자 경험 개선을 통해 해결해보고자 이미지 로딩 상황을 알 수있는 로딩 프로그래스바를 추가
+    </h6>
+    <br>
+  <div align="center">
   <img style="width:100%" src="https://github.com/user-attachments/assets/9d3ee15b-0ace-424d-88f7-d5b3719a4214">
     </div>
   </details>
@@ -108,8 +113,8 @@
             <summary>펼쳐보기</summary>
       <h4>계속해서 증가하는 조회수를 방지하기 위해 고려한 방법은 크게 2가지</h4>
 <h5>
-  1.&nbsp;&nbsp;DB컬럼추가<br>
-  2.&nbsp;&nbsp;쿠키를 사용하여 방문자 체크
+  1.&nbsp;&nbsp;DB에 게시글 읽음여부 컬럼추가 → 해당 값에 따른 조회수 증가 or 유지<br>
+  2.&nbsp;&nbsp;쿠키를 사용하여 방문여부 체크 → 해당 값에 따른 조회수 증가 or 유지
 </h5>
     <h6>
     이외에도 여러 방법들이 있었으나 학습한 지식내에서 활용가능하며 서버의 부담을 줄일수 있는 쿠키를 사용
