@@ -6,45 +6,31 @@
 <div style="margin: 0px 20px 0px 20px;">
 
 <div> 
-  <h2 style="color: #282d33;"> ✈️ 프로젝트 간략 소개 </h2>  
+  <h2 style="color: #282d33;"> ✈️ 프로젝트 개요 </h2>  
   <div style="font-weight: 700; font-size: 15px; color: #282d33;" align="center">
-   생활 서비스에 대한 전문가(프로)들을 제공하는 시스템입니다.
+   생활 서비스 검색 및 제공 플랫폼
 <br>기존에 존재하는 ‘숨고’ 라는 플랫폼을 모티브로, 내게 필요한 프로가
 <br>어디에서나 쉽게 눈에 띄었으면 하는 바람으로 ‘누네띠네’ 라고 이름지었습니다.
-<br>
-    <br>
-   팀원은 PL을 포함한 총 7명입니다.<br>
-   ERDCloud를 사용하여 ERD를 작성하였고 44개의 테이블을 사용하였습니다.
-  </div>
 <br><br>
+  </div>
+  <br>
+  <h4>
+    1. 참여인원 : 7명<br><br>
+    2. 제작기간 : 2024.02.19 - 2024.04.17
+  <br><br>
+  </h4>
    <h2 style="color: #282d33;"> 🏷️ 목차 </h2>
   1. 프로젝트 개요(상단) <br>
-  2. 개발기간 및 일정<br>
-  3. ERD 구조도<br>
-  4. 웹사이트 전체구성<br>
-  5. 사용기술 및 개발환경<br>
-  6. 서비스 구성 및 개요<br>
-  7. 프로젝트 내에서 내가 맡은부분<br>
+  2. ERD 구조도<br>
+  3. 사용기술 및 개발환경<br>
+  4. 프로젝트 내에서 내가 맡은부분
 </div>
-<h2 style="color: #282d33;"> 🗓️ 개발기간 및 일정 </h2>
-<div align="center">  
-<img style="width: 80%" src="https://github.com/user-attachments/assets/de618e2b-ddc2-4429-a129-6dd9e4a46f38">
-</div>
-
-<br><br>
-<h2 style="color: #282d33;"> 🗂️ ERD 구조도 </h2>
+<br><br><br>
+<h2 style="color: #282d33;"> 🗂️ ERD </h2>
 <div align="center">
 <img style="width: 80%" src="https://github.com/user-attachments/assets/dd34b958-822b-4021-a674-7c577ae55fb0">
 </div>
-
-<br><br>
-<h2 style="color: #282d33;"> 📜 웹사이트 전체 구성 </h2>
-<div align= "center">
-<img style="width: 900px;" src="https://github.com/user-attachments/assets/899e33e9-ecf1-4d92-834f-4a54c08183a2" />
-</div>
-  <br>
 <br>
-<div>
   <h2 style="color: #282d33;"> 🛠️ 사용기술 및 개발환경</h2>
 </div>
 
@@ -107,33 +93,77 @@
 <img style="width: 100%;" src="https://github.com/user-attachments/assets/60ea5b62-3dc1-4b72-b6cd-0165ff8dfec0">
 <br><br>
 <h2 style="color: #282d33;"> 🔎 프로젝트에서 내가 기여한 부분 </h2>
-<br>
-<div align="center">
-    <div style="text-align: center; margin: 10px;">
-        <img style="width: 50%;" src="https://github.com/user-attachments/assets/f472e937-5847-46a3-b9cc-c259a3dbd53a">
-        <details>
+<h3>
+  1. 사용자 경험 개선을 위한 로딩바 추가<br>
+  </h3>
+  <details>
             <summary>펼쳐보기</summary>
-            <img style="width: 100%;" src="https://github.com/user-attachments/assets/575ed3fe-e8a4-4b17-8c9e-73774532019a">
-        </details>
+    <div align="center">
+  <img style="width:100%" src="https://github.com/user-attachments/assets/9d3ee15b-0ace-424d-88f7-d5b3719a4214">
     </div>
-<br><br>  
-    <div style="text-align: center; margin: 10px;">
-        <img style="width: 50%;" src="https://github.com/user-attachments/assets/8707283d-7c73-44b0-ac1a-bea54c7d8bb1">
-        <details>
+  </details>
+  <br>
+  <h3>2. 무분별한 조회수 증가를 막기 위한 쿠키사용</h3>
+  <details>
             <summary>펼쳐보기</summary>
-            <img style="width: 100%;" src="https://github.com/user-attachments/assets/ded1e0ae-20cc-40ff-b027-36cd0fbbb3f2">
-        </details>
-    </div>
-  <br><br>
-    <div style="text-align: center; margin: 10px;">
-        <img style="width: 50%;" src="https://github.com/user-attachments/assets/80f461d8-0435-4147-aa60-4fc68c3eadb2">
-        <details>
+      <h4>계속해서 증가하는 조회수를 방지하기 위해 고려한 방법은 크게 2가지</h4>
+<h5>
+  1.&nbsp;&nbsp;DB컬럼추가<br>
+  2.&nbsp;&nbsp;쿠키를 사용하여 방문자 체크
+</h5>
+    <h6>
+    이외에도 여러 방법들이 있었으나 학습한 지식내에서 활용가능하며 서버의 부담을 줄일수 있는 쿠키를 사용
+    </h6>
+    <br>
+    <div align="center">
+    <h6>쿠키를 사용한 조회수 증가 방지 순서도</h6>
+      <img style="width: 100%;" src="https://github.com/user-attachments/assets/9b6de6f2-afc1-4637-a76b-5067956dd548">
+      </div>
+  </details>
+  <br>
+  <h3>3. 웹소켓을 사용한 실시간 통신(채팅)</h3>
+  <details>
             <summary>펼쳐보기</summary>
-            <img style="width: 100%;" src="https://github.com/user-attachments/assets/e1d18ddd-5d20-4d23-8236-7073738501be">
-        </details>
+      <h4>
+    모임 채팅 구현시 고려 했던 부분
+  </h4>
+  <h6>1. 실시간 통신 처리 방법 → WebSocket 사용<br>
+    2. 대화 내용을 I/O 하기 위한 DB : 실제로는 RDBMS보다는 NoSQL을 사용<br>
+  &nbsp;&nbsp;&nbsp;→ NoSQL의 경우 새로운 학습, 일부 설정충돌 가능성등을 고려해 기존의 RDBMS를 사용하기로 결정<br>
+  3. 채팅에서의 메시리 처리를 위한 STOMP 프로토콜 사용</h6>
+  <h4>STOMP 특징</h4>
+  <h6>1. 서버 ↔ 클라이언트의 양방향 통신, 웹소켓과 함께 사용<br>
+    2. 간단한 프로토콜로 구조파악이 쉽다.<br>
+    3. 스프링과의 쉬운 연동으로 다양한 기능을 함께 사용<br>
+    4. 메시지브로커를 통한 구독/발행 패턴으로 메시지 전송 및 관리를 간편히 사용<br>
+    5. 표준화된 프로토콜로 다양한 시스템에서의 운용 및 확장성 편리
+  </h6>
+    <br>
+    <div align="center">
+          <h6>채팅 과정 구조도</h6>
+    <img style="width: 90%;" src="https://github.com/user-attachments/assets/dc675021-82a3-47f9-bbd2-ff15c2267ad2">
+    <br>
+      <h6>채팅 뷰 & DB 저장 내역</h6>
+    <img style="width: 60%;" src="https://github.com/user-attachments/assets/8e5d573e-6645-4cc1-9bae-fb2d9b84464e">
     </div>
-</div>
-
+  </details>
+  <br>
+  <h3>4. 서버 부하를 줄이기 위한 정렬 기능<br></h3>
+ <details>
+            <summary>펼쳐보기</summary>
+   <h6>
+     정렬버튼을 클릭 할 때마다 서버에서 비즈니스 로직 → 데이터베이스 쿼리를 실행하여 정렬을 수행하고자 했으나<br>
+     이러한 방법은 정렬을 할 때 마다 서버에 부담이 커질 수 있다는 문제점이 존재<br><br>
+     따라서 정렬을 반복해서 수행하더라도 서버 요청 없이 부하를 줄이며 문제를 해결할 방법 고려
+   </h6>
+   <br>
+   <div align="center">
+          <h6>정렬과정 살펴보기</h6>
+   <img src="https://github.com/user-attachments/assets/4a1ac87b-2ee2-4bd5-bd27-2f934c16941a">
+   </div>
+   </details>
+<h4>
+</h4>
 <br><br>
 <div>
 <h2 style="color: #282d33;"> 🧑‍💻 Contact Me..</h2>
