@@ -28,7 +28,7 @@
 <br><br><br>
 <h2 style="color: #282d33;"> 🗂️ ERD </h2>
 <div align="center">
-<img style="width: 80%" src="https://github.com/user-attachments/assets/dd34b958-822b-4021-a674-7c577ae55fb0">
+<img style="width: 100%" src="https://github.com/user-attachments/assets/dd34b958-822b-4021-a674-7c577ae55fb0">
 </div>
 <br><br><br>
   <h2 style="color: #282d33;"> 🛠️ 사용기술 및 개발환경</h2>
