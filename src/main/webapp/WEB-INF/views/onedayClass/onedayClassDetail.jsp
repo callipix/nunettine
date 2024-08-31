@@ -160,8 +160,8 @@ function starTitColor(num){
 	return str;
 }
 $(function(){
-	if(${vOndyclProUsersVO.dayCheck}){
-		// console.log("과연" + ${vOndyclProUsersVO.dayCheck});
+	if(${vOndyclProUsersDto.dayCheck}){
+		// console.log("과연" + ${vOndyclProUsersDto.dayCheck});
 		//끝난 클래스들 리뷰 리스트 출력
 		let ondyclNo = $("#classNo").val();
 		// console.log("여기??" + ondyclNo);
@@ -232,8 +232,8 @@ $(function(){
 		<button type="button" id="updateBtn" class="btn btn-inverse-primary btn-fw" style="float:right;">수정</button>
 		<button type="button" id="deleteBtn" class="btn btn-inverse-dark btn-fw" style="float:right;">삭제</button>
 	`;
-	console.log("참거짓 " + ${vOndyclProUsersVO.dayCheck});
-	if(sessionId == classId && !${vOndyclProUsersVO.dayCheck}){
+	console.log("참거짓 " + ${vOndyclProUsersDto.dayCheck});
+	if(sessionId == classId && !${vOndyclProUsersDto.dayCheck}){
 		$("#buyDelBtn").append(str)
 	}
 	
@@ -378,8 +378,8 @@ $(document).ready(function(){
 	let detailAdres = $("#detailAdres").val();
 	let zip = $("#zip").val();
 	let mberId = "${memSession.userId}";
-	let ondyclSchdulNo = "${vOndyclProUsersVO.ondyclSchdulNo}";
-	let ondyclNo = "${vOndyclProUsersVO.ondyclNo}";
+	let ondyclSchdulNo = "${vOndyclProUsersDto.ondyclSchdulNo}";
+	let ondyclNo = "${vOndyclProUsersDto.ondyclNo}";
 
 	$("#buyClassBtn").on("click", function () {
 		IMP.request_pay({
@@ -436,9 +436,9 @@ $(document).ready(function(){
 	
 	$("#putShoppingCart").on("click",function(){
 		let mberId = '${memSession.userId}';
-		let ondyclSchdulNo = '${vOndyclProUsersVO.ondyclSchdulNo}';
-		let ondyclNo = '${vOndyclProUsersVO.ondyclNo}';
-		let prdPc = '${vOndyclProUsersVO.ondyclPc}'
+		let ondyclSchdulNo = '${vOndyclProUsersDto.ondyclSchdulNo}';
+		let ondyclNo = '${vOndyclProUsersDto.ondyclNo}';
+		let prdPc = '${vOndyclProUsersDto.ondyclPc}'
 		
 		console.log("장바구니 담기 " + mberId + "/" + ondyclNo + "/" + ondyclSchdulNo + "/" + prdPc);
 		
@@ -517,7 +517,7 @@ $(document).ready(function(){
 	<!-- 제목 -->
 		<div >
 			<img alt="원데이클래스" src="../resources/images/클래스.png" style="width:100px; height:auto; margin:0 0 20px 500px;">
-			<h2 id="ondayTitle" style="text-align:center; font-family: 'seolleimcool-SemiBold'; color:#4e4c7c; text-shadow: -2px 0px white, 0px 2px white, 2px 0px white, 0px -2px white;">${vOndyclProUsersVO.userNcnm}님의 원데이클래스</h2>
+			<h2 id="ondayTitle" style="text-align:center; font-family: 'seolleimcool-SemiBold'; color:#4e4c7c; text-shadow: -2px 0px white, 0px 2px white, 2px 0px white, 0px -2px white;">${vOndyclProUsersDto.userNcnm}님의 원데이클래스</h2>
 			<hr style="border-top: 50px solid #f5f7ff; margin:-50px 300px 0 300px;">
 			<br><br><br>
 		</div>
@@ -539,7 +539,7 @@ $(document).ready(function(){
 			</c:when>
 			<c:when test="${memSession != null && proSession == null}">
 				<c:choose>
-					<c:when test="${vOndyclProUsersVO.dayCheck}">
+					<c:when test="${vOndyclProUsersDto.dayCheck}">
 <!-- 						<button type="button" class="btn btn-inverse-primary btn-fw" style="float:left;" data-toggle="modal" data-target="#buyModal">연습용 구매버튼</button> -->
 						<button type="button" class="btn btn-inverse-dark btn-fw backBtnClass" style="float:left;">목록으로</button>
 						<p style="float:left; font-family: 'GmarketSansMedium'; margin-top:15px; margin-left:10px;">종료된 클래스입니다.</p>
@@ -551,7 +551,7 @@ $(document).ready(function(){
 					</c:when>
 					<c:otherwise>
 						<c:choose>
-							<c:when test="${vOndyclProUsersVO.peopleCheck}">
+							<c:when test="${vOndyclProUsersDto.peopleCheck}">
 								<button type="button" class="btn btn-inverse-dark btn-fw backBtnClass" style="float:left;">목록으로</button>
 <!-- 								<button type="button" class="btn btn-inverse-primary btn-fw" style="float:left;" data-toggle="modal" data-target="#buyModal">연습용 구매버튼</button> -->
 								<p style="float:left; font-family: 'GmarketSansMedium'; margin-top:15px; margin-left:10px;">마감된 클래스 입니다.</p>
@@ -574,7 +574,7 @@ $(document).ready(function(){
 <!-- 				<button type="button" id="putShoppingCart" class="btn btn-inverse-primary btn-fw" style="float:right;"><i class="mdi mdi-cart-plus icon-lg"></i>연습용 장바구니 추가</button> -->
 				<input type="hidden" value="${memSession.userId}" id="sessionUserId">
 				<c:choose>
-					<c:when test="${!vOndyclProUsersVO.dayCheck}">
+					<c:when test="${!vOndyclProUsersDto.dayCheck}">
 						<c:choose>
 							<c:when test="${param.startPoint eq 'myClass'}">
 								<button type="button" disabled class="btn btn-success btn-fw" style="float:right;"><i class="mdi mdi-checkbox-marked-circle-outline icon-lg"></i></button>
@@ -609,22 +609,22 @@ $(document).ready(function(){
 		<c:if test="${not empty proSession}">
 			<input type="hidden" id="sessionId" value="${proSession.userId}">
 		</c:if>
-		<input type="hidden" id="classId" name="proId" value="${vOndyclProUsersVO.proId}">
-		<input type="hidden" id="classNo" name="ondyclNo" value="${vOndyclProUsersVO.ondyclNo}">
-		<input type="hidden" id="fileNo" name="sprviseAtchmnflNo" value="${vOndyclProUsersVO.sprviseAtchmnflNo}">
-		<input type="hidden" id="classDay" name="ondyclSchdulDe" value="${vOndyclProUsersVO.ondyclSchdulDe}">
-		<input type="hidden" id="ondyclSchdulNo" name="ondyclSchdulNo" value="${vOndyclProUsersVO.ondyclSchdulNo}">
-		<input type="hidden" id="ondyclNm" name="ondyclNm" value="${vOndyclProUsersVO.ondyclNm}">
-		<input type="hidden" id="ondyclCn" name="ondyclCn" value="${vOndyclProUsersVO.ondyclCn}">
-		<input type="hidden" id="ondyclPc" name="ondyclPc" value="${vOndyclProUsersVO.ondyclPc}">
-		<input type="hidden" id="ondyclPsncpa" name="ondyclPsncpa" value="${vOndyclProUsersVO.ondyclPsncpa}">
-		<input type="hidden" id="ondyclResvpa" name="ondyclResvpa" value="${vOndyclProUsersVO.ondyclResvpa}">
-		<input type="hidden" id="ondyclThumbPhoto" name="ondyclThumbPhoto" value="${vOndyclProUsersVO.ondyclThumbPhoto}">
-		<input type="hidden" id="ondyclSchdulBeginTime" name="ondyclSchdulBeginTime" value="${vOndyclProUsersVO.ondyclSchdulBeginTime}">
-		<input type="hidden" id="ondyclSchdulEndTime" name="ondyclSchdulEndTime" value="${vOndyclProUsersVO.ondyclSchdulEndTime}">
-		<input type="hidden" id="ondyclAdres" name="ondyclAdres" value="${vOndyclProUsersVO.ondyclAdres}">
-		<input type="hidden" id="ondyclDetailAdres" name="ondyclDetailAdres" value="${vOndyclProUsersVO.ondyclDetailAdres}">
-		<input type="hidden" id="ondyclZip" name="ondyclZip" value="${vOndyclProUsersVO.ondyclZip}">
+		<input type="hidden" id="classId" name="proId" value="${vOndyclProUsersDto.proId}">
+		<input type="hidden" id="classNo" name="ondyclNo" value="${vOndyclProUsersDto.ondyclNo}">
+		<input type="hidden" id="fileNo" name="sprviseAtchmnflNo" value="${vOndyclProUsersDto.sprviseAtchmnflNo}">
+		<input type="hidden" id="classDay" name="ondyclSchdulDe" value="${vOndyclProUsersDto.ondyclSchdulDe}">
+		<input type="hidden" id="ondyclSchdulNo" name="ondyclSchdulNo" value="${vOndyclProUsersDto.ondyclSchdulNo}">
+		<input type="hidden" id="ondyclNm" name="ondyclNm" value="${vOndyclProUsersDto.ondyclNm}">
+		<input type="hidden" id="ondyclCn" name="ondyclCn" value="${vOndyclProUsersDto.ondyclCn}">
+		<input type="hidden" id="ondyclPc" name="ondyclPc" value="${vOndyclProUsersDto.ondyclPc}">
+		<input type="hidden" id="ondyclPsncpa" name="ondyclPsncpa" value="${vOndyclProUsersDto.ondyclPsncpa}">
+		<input type="hidden" id="ondyclResvpa" name="ondyclResvpa" value="${vOndyclProUsersDto.ondyclResvpa}">
+		<input type="hidden" id="ondyclThumbPhoto" name="ondyclThumbPhoto" value="${vOndyclProUsersDto.ondyclThumbPhoto}">
+		<input type="hidden" id="ondyclSchdulBeginTime" name="ondyclSchdulBeginTime" value="${vOndyclProUsersDto.ondyclSchdulBeginTime}">
+		<input type="hidden" id="ondyclSchdulEndTime" name="ondyclSchdulEndTime" value="${vOndyclProUsersDto.ondyclSchdulEndTime}">
+		<input type="hidden" id="ondyclAdres" name="ondyclAdres" value="${vOndyclProUsersDto.ondyclAdres}">
+		<input type="hidden" id="ondyclDetailAdres" name="ondyclDetailAdres" value="${vOndyclProUsersDto.ondyclDetailAdres}">
+		<input type="hidden" id="ondyclZip" name="ondyclZip" value="${vOndyclProUsersDto.ondyclZip}">
 	</form>
 	<div class="row">
 		<div class="innerDiv col-7">
@@ -632,9 +632,9 @@ $(document).ready(function(){
 				<div class="slideDiv">
 					<ul id="ulPrt">
 						<c:choose>
-							<c:when test="${not empty sprviseAtchmnflVOList[0].atchmnflCours}">
+							<c:when test="${not empty sprviseAtchmnflDtoList[0].atchmnflCours}">
 								<c:choose>
-									<c:when test="${not empty sprviseAtchmnflVOList[1].atchmnflCours}">
+									<c:when test="${not empty sprviseAtchmnflDtoList[1].atchmnflCours}">
 										<li style="list-style-type: none; display: inline-block;">
 											<button type="button" aria-label="Previous slide"
 													style="background: none; margin-left: -15px; border: none; position: absolute; top: 18%;">
@@ -642,7 +642,7 @@ $(document).ready(function(){
 													style="font-size: 35px;"></i>
 											</button>
 										</li>
-											<c:forEach var="imgFile" items="${sprviseAtchmnflVOList}" varStatus="stat">
+											<c:forEach var="imgFile" items="${sprviseAtchmnflDtoList}" varStatus="stat">
 												<li style='list-style-type: none; display: inline-block;'>
 													<img src='${imgFile.atchmnflCours}'
 														style='width: 400px; height: 400px; margin-left: 25px; border-radius:40px'>
@@ -658,7 +658,7 @@ $(document).ready(function(){
 									</c:when>
 									<c:otherwise>
 										<li style='list-style-type: none; display: inline-block;'>
-											<img src='${sprviseAtchmnflVOList[0].atchmnflCours}'
+											<img src='${sprviseAtchmnflDtoList[0].atchmnflCours}'
 												style='width: 400px; height: 400px; margin-left: 35px;'>
 										</li>
 									</c:otherwise>
@@ -678,7 +678,7 @@ $(document).ready(function(){
 			<h3 style="position: relative; z-index: 1; text-shadow: -2px 0px white, 0px 2px white, 2px 0px white, 0px -2px white;">✏️ 원데이 클래스 상세 설명</h3>
 			<hr style="border: 0; border-top: 10px solid #fbecbe; position: relative; z-index: 0; margin-top:-20px;">
 				<br>
-				<h5 style='width:100%; max-width:1100px; height:500px; padding:10px; overflow-y: auto; word-wrap: break-word; position: relative; z-index: 1;'>${vOndyclProUsersVO.ondyclCn}</h5>
+				<h5 style='width:100%; max-width:1100px; height:500px; padding:10px; overflow-y: auto; word-wrap: break-word; position: relative; z-index: 1;'>${vOndyclProUsersDto.ondyclCn}</h5>
 			</div>
 		</div>
 		<div class="innerDiv col-5">
@@ -688,39 +688,39 @@ $(document).ready(function(){
 						<tr>
 							<td colspan='2' style="border-top: none;">
 								<h3>
-									<c:if test="${empty vOndyclProUsersVO.proProflPhoto}">
+									<c:if test="${empty vOndyclProUsersDto.proProflPhoto}">
 										<img class="profile" src="/images/2024/profile.jpg">
 									</c:if>
-									<c:if test="${not empty vOndyclProUsersVO.proProflPhoto}">
-										<img class="profile" src="${vOndyclProUsersVO.proProflPhoto}">
+									<c:if test="${not empty vOndyclProUsersDto.proProflPhoto}">
+										<img class="profile" src="${vOndyclProUsersDto.proProflPhoto}">
 									</c:if>
-									&nbsp;<c:out value="${vOndyclProUsersVO.userNcnm}"></c:out>
+									&nbsp;<c:out value="${vOndyclProUsersDto.userNcnm}"></c:out>
 								</h3>
 							</td>
 						</tr>
 						<tr>
 							<th>제목</th>
-							<td><c:out value="${vOndyclProUsersVO.ondyclNm}"></c:out></td>
+							<td><c:out value="${vOndyclProUsersDto.ondyclNm}"></c:out></td>
 						</tr>
 						<tr>
 							<th>전문분야</th>
-							<td><c:out value="${vOndyclProUsersVO.spcltyRealmNm}"></c:out></td>
+							<td><c:out value="${vOndyclProUsersDto.spcltyRealmNm}"></c:out></td>
 						</tr>
 						<tr>
 							<th>시작일</th>
-							<td><c:out value="${vOndyclProUsersVO.ondyclSchdulDe}"></c:out></td>
+							<td><c:out value="${vOndyclProUsersDto.ondyclSchdulDe}"></c:out></td>
 						</tr>
 						<tr>
 							<th>시간</th>
-							<td><c:out value="${vOndyclProUsersVO.ondyclSchdulBeginTime}~${vOndyclProUsersVO.ondyclSchdulEndTime}"></c:out></td>
+							<td><c:out value="${vOndyclProUsersDto.ondyclSchdulBeginTime}~${vOndyclProUsersDto.ondyclSchdulEndTime}"></c:out></td>
 						</tr>
 						<tr>
 							<th>정원</th>
-							<td><c:out value="${vOndyclProUsersVO.ondyclResvpa} / ${vOndyclProUsersVO.ondyclPsncpa}"></c:out></td>
+							<td><c:out value="${vOndyclProUsersDto.ondyclResvpa} / ${vOndyclProUsersDto.ondyclPsncpa}"></c:out></td>
 						</tr>
 						<tr>
 							<th>가격</th>
-							<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${vOndyclProUsersVO.ondyclPc}" />원</td>
+							<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${vOndyclProUsersDto.ondyclPc}" />원</td>
 						</tr>
 						<tr>
 							<td colspan='2' class="btnPlus">
@@ -728,7 +728,7 @@ $(document).ready(function(){
 									<h3 style="text-align:center; position: relative; z-index: 1; margin-top:20px; text-shadow: -2px 0px white, 0px 2px white, 2px 0px white, 0px -2px white;">🙋‍♀️ 참여자 명단</h3>
 									<hr style="border: 0; border-top: 10px solid #bedffb; position: relative; z-index: 0; margin-top:-20px;">
 									
-									<c:if test="${empty userNcnmMberPhotoVOList}">
+									<c:if test="${empty userNcnmMberPhotoDtoList}">
 										<div style="text-align: center;">
 											<img src="../resources/images/우는모양.png" style="width: 60px; height: 60px; margin: 20px 0 " />
 											<h3 style="padding: 20px 0 40px 0; color: #c6c9cc;">
@@ -737,7 +737,7 @@ $(document).ready(function(){
 										</div>
 									</c:if>
 									
-									<c:forEach var="userNcnmMberPhotoVO" items="${userNcnmMberPhotoVOList}" varStatus="stat">
+									<c:forEach var="userNcnmMberPhotoVO" items="${userNcnmMberPhotoDtoList}" varStatus="stat">
 										<div style="margin-bottom:10px;">
 											<c:choose>
 												<c:when test="${not empty userNcnmMberPhotoVO.mberProflPhoto}">
@@ -755,19 +755,19 @@ $(document).ready(function(){
 					</tbody>
 				</table>
 			</div>
-			<input type="hidden" id="email" name="email" value="${vOndyclProUsersVO.email}">
-			<input type="hidden" id="userNm" name="userNm" value="${vOndyclProUsersVO.userNm}">
-			<input type="hidden" id="proMbtlnum" name="proMbtlnum" value="${vOndyclProUsersVO.proMbtlnum}">
-			<input type="hidden" id="adres" name="adres" value="${vOndyclProUsersVO.adres}">
-			<input type="hidden" id="detailAdres" name="detailAdres" value="${vOndyclProUsersVO.detailAdres}">
-			<input type="hidden" id="zip" name="zip" value="${vOndyclProUsersVO.zip}">
+			<input type="hidden" id="email" name="email" value="${vOndyclProUsersDto.email}">
+			<input type="hidden" id="userNm" name="userNm" value="${vOndyclProUsersDto.userNm}">
+			<input type="hidden" id="proMbtlnum" name="proMbtlnum" value="${vOndyclProUsersDto.proMbtlnum}">
+			<input type="hidden" id="adres" name="adres" value="${vOndyclProUsersDto.adres}">
+			<input type="hidden" id="detailAdres" name="detailAdres" value="${vOndyclProUsersDto.detailAdres}">
+			<input type="hidden" id="zip" name="zip" value="${vOndyclProUsersDto.zip}">
 			<div class="hrDiv co-10"></div>
 			
 			<div id="map" style="width:450px;height:350px; border-radius: 30px;">
 				<!-- 카카오맵 위치할 부분 -->
 			</div>
 			
-			<div class="hrDiv co-10" style="font-family: 'GmarketSansMedium'; text-align: center; margin: 10px;">🚩  ${vOndyclProUsersVO.ondyclAdres} ${vOndyclProUsersVO.ondyclDetailAdres}</div>
+			<div class="hrDiv co-10" style="font-family: 'GmarketSansMedium'; text-align: center; margin: 10px;">🚩  ${vOndyclProUsersDto.ondyclAdres} ${vOndyclProUsersDto.ondyclDetailAdres}</div>
 			<!-- 원래있던곳 -->
 		</div>
 	</div>
@@ -776,7 +776,7 @@ $(document).ready(function(){
 <div>
 <h3 style="margin-top:20px ; text-align:center; position: relative; z-index: 1; text-shadow: -2px 0px white, 0px 2px white, 2px 0px white, 0px -2px white;"><b>🧾 REVIEW</b></h3>
 <hr style="margin:-10px 400px 0 400px; border: 0; border-top: 10px solid #e5d7ff; position: relative; z-index: 0; margin-top:-20px;">
-<c:if test="${!vOndyclProUsersVO.dayCheck}">
+<c:if test="${!vOndyclProUsersDto.dayCheck}">
 	<div class="innerDiv co-10 table-responsive" style="margin:15px 0 0 130px; width:1100px;">
 		<table class="table table-striped text-center">
 			<thead>
@@ -799,7 +799,7 @@ $(document).ready(function(){
 	</div>
 </c:if>
 
-<c:if test="${vOndyclProUsersVO.dayCheck}">
+<c:if test="${vOndyclProUsersDto.dayCheck}">
 	<div class="innerDiv co-10 table-responsive" style="margin:15px 0 0 130px; width:1100px;">
 		<table class="table table-striped text-center">
 			<thead>
@@ -833,25 +833,25 @@ $(document).ready(function(){
 			<div class="modal-body" id="buyModalBody">
 				<div id="codeDiv" class="container">
 					<div class="innerDiv col-12">
-						<c:if test="${empty vOndyclProUsersVO.ondyclThumbPhoto}">
+						<c:if test="${empty vOndyclProUsersDto.ondyclThumbPhoto}">
 							<img src="/images/profile.jpg" class="modalThumb" style="margin: 0 0 20px 130px; border-radius:70%;">
 						</c:if>
-						<c:if test="${not empty vOndyclProUsersVO.ondyclThumbPhoto}">
-							<img src="${vOndyclProUsersVO.ondyclThumbPhoto}" class="modalThumb" style="margin: 0 0 20px 130px; border-radius:70%;">
+						<c:if test="${not empty vOndyclProUsersDto.ondyclThumbPhoto}">
+							<img src="${vOndyclProUsersDto.ondyclThumbPhoto}" class="modalThumb" style="margin: 0 0 20px 130px; border-radius:70%;">
 						</c:if>
 					</div>
 					<div class="innerDiv col-12">
 						<table class="table">
 							<tr>
-								<th colspan='2'><b><c:out value="${vOndyclProUsersVO.ondyclNm}"></c:out></b></th>
+								<th colspan='2'><b><c:out value="${vOndyclProUsersDto.ondyclNm}"></c:out></b></th>
 							</tr>
 							<tr>
-								<th><c:out value="${vOndyclProUsersVO.ondyclSchdulDe}"></c:out></th>
-								<td><c:out value="${vOndyclProUsersVO.ondyclSchdulBeginTime} ~ ${vOndyclProUsersVO.ondyclSchdulEndTime}"></c:out></td>
+								<th><c:out value="${vOndyclProUsersDto.ondyclSchdulDe}"></c:out></th>
+								<td><c:out value="${vOndyclProUsersDto.ondyclSchdulBeginTime} ~ ${vOndyclProUsersDto.ondyclSchdulEndTime}"></c:out></td>
 							</tr>
 							<tr>
-								<td>${vOndyclProUsersVO.ondyclPc}원</td>
-								<td><c:out value="${vOndyclProUsersVO.ondyclAdres}"></c:out></td>
+								<td>${vOndyclProUsersDto.ondyclPc}원</td>
+								<td><c:out value="${vOndyclProUsersDto.ondyclAdres}"></c:out></td>
 							</tr>
 						</table>
 					</div>
@@ -908,7 +908,7 @@ var map = new kakao.maps.Map(container, options);
 var geocoder = new kakao.maps.services.Geocoder();
 
 //주소로 좌표를 검색합니다
-var adres = '${vOndyclProUsersVO.ondyclAdres}';
+var adres = '${vOndyclProUsersDto.ondyclAdres}';
 geocoder.addressSearch(adres, function(result, status) {
     // 정상적으로 검색이 완료됐으면 
      if (status === kakao.maps.services.Status.OK) {
@@ -928,7 +928,7 @@ geocoder.addressSearch(adres, function(result, status) {
             image: markerImage
         });
      	// 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
-        var iwContent = '<div style="padding:5px;">${vOndyclProUsersVO.ondyclDetailAdres}</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+        var iwContent = '<div style="padding:5px;">${vOndyclProUsersDto.ondyclDetailAdres}</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
             iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
 
         // 인포윈도우를 생성합니다
@@ -945,7 +945,7 @@ geocoder.addressSearch(adres, function(result, status) {
 
         // 인포윈도우로 장소에 대한 설명을 표시합니다
 //         var infowindow = new kakao.maps.InfoWindow({
-//             content: '<div style="width:150px;text-align:center;padding:6px 0;">${vOndyclProUsersVO.ondyclDetailAdres}</div>'
+//             content: '<div style="width:150px;text-align:center;padding:6px 0;">${vOndyclProUsersDto.ondyclDetailAdres}</div>'
 // //         	content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
 //         });
 //         infowindow.open(map, marker);

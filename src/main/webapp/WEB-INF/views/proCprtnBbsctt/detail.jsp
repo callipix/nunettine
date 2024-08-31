@@ -56,9 +56,9 @@ $(document).ready(function() {
 </script>
 
 </head>
-<%-- <p>${proCprtnBbscttVO}</p> --%>
+<%-- <p>${proCprtnBbscttDto}</p> --%>
 
-<%-- <p>${proCprtnBbscttVO2}</p> --%>
+<%-- <p>${proCprtnBbscttDto2}</p> --%>
 
 <body>
 <div class="content-wrapper"
@@ -68,28 +68,28 @@ $(document).ready(function() {
 			<div class="card px-2">
 				<div class="card-body">
 					<div class="container-fluid">
-						<h2 class="text-center my-5" style="font-family: GMarketSansMedium;">${proCprtnBbscttVO.proCprtnBbscttSj}</h2>
+						<h2 class="text-center my-5" style="font-family: GMarketSansMedium;">${proCprtnBbscttDto.proCprtnBbscttSj}</h2>
 						<div style="margin-left: 76%;">
 							<p style="font-family: GmarketSansMedium; display: inline; margin-right: 15px;">작성자</p>
 							<p style="display: inline;">
 <%-- 							<c:choose> --%>
-<%-- 								<c:when test="${empty proCprtnBbscttVO.proProflPhoto}"> --%>
+<%-- 								<c:when test="${empty proCprtnBbscttDto.proProflPhoto}"> --%>
 <!-- 									<img class="profileImage" src="/images/2024/profile.jpg"/> -->
 <%-- 								</c:when> --%>
 <%-- 								<c:otherwise> --%>
-<%-- 									<img class="profileImage" src="${proCprtnBbscttVO.proProflPhoto}"/>							 --%>
+<%-- 									<img class="profileImage" src="${proCprtnBbscttDto.proProflPhoto}"/>							 --%>
 <%-- 								</c:otherwise> --%>
 <%-- 							</c:choose> --%>
-							${proCprtnBbscttVO.userNcnm}</p>
+							${proCprtnBbscttDto.userNcnm}</p>
 							<br />
 							<p style="font-family: GmarketSansMedium; display: inline;">작성일시</p>
-							<p style="font-family: GmarketSansMedium;"><fmt:formatDate value="${proCprtnBbscttVO.proCprtnBbscttWrDt}" pattern="yyyy.MM.dd HH:mm:ss" /></p>
+							<p style="font-family: GmarketSansMedium;"><fmt:formatDate value="${proCprtnBbscttDto.proCprtnBbscttWrDt}" pattern="yyyy.MM.dd HH:mm:ss" /></p>
 						</div>
 						
 						<hr>
 					</div>
 					<div class="container-fluid mt-5 w-100">
-						<h5 class="mb-5" style="font-family: 'GmarketSansMedium'; padding-left: 20px;">${proCprtnBbscttVO.proCprtnBbscttCn}</h5>
+						<h5 class="mb-5" style="font-family: 'GmarketSansMedium'; padding-left: 20px;">${proCprtnBbscttDto.proCprtnBbscttCn}</h5>
 						<hr>
 					</div>
 					<div class="container-fluid w-100"
@@ -129,9 +129,9 @@ $(document).ready(function() {
 					
 					<ul class="icon-data-list">
 						<c:if
-							test="${proJoBbscttVOList[0].proJoBbscttAnswerVOList[0].proJoAnswerNo > 0 }">
+							test="${proJoBbscttDtoList[0].proJoBbscttAnswerVOList[0].proJoAnswerNo > 0 }">
 							<c:forEach var="proJoAnswerVO"
-								items="${proJoBbscttVOList[0].proJoBbscttAnswerVOList}">
+								items="${proJoBbscttDtoList[0].proJoBbscttAnswerVOList}">
 								<li>
 									<div class="d-flex">
 										<img src="${proJoAnswerVO.proProflPhoto}">

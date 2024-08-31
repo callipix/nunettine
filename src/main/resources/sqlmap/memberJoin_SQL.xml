@@ -17,13 +17,13 @@
 		</select>
 		
 		<!-- 아이디 찾기 -->
-		<select id="idSearch" resultType="usersVO" parameterType="vMberUsersVO">
+		<select id="idSearch" resultType="usersDto" parameterType="vMberUsersDto">
 			SELECT USER_ID AS userId, EMPLYR_TY AS emplyrTy
 			FROM V_MBER_USERS
 			WHERE USER_NM=#{userNm}
 			AND EMAIL=#{email}
 		</select>
-		<select id="idSearch2" resultType="vProUsersVO" parameterType="vMberUsersVO">
+		<select id="idSearch2" resultType="vProUsersDto" parameterType="vMberUsersDto">
 			SELECT USER_ID AS userId, EMPLYR_TY AS emplyrTy
 			FROM V_PRO_USERS
 			WHERE USER_NM=#{userNm}
@@ -31,14 +31,14 @@
 		</select>
 		
 		<!-- 비밀번호 찾기 -->
-		<select id="pwSearch" resultType="usersVO" parameterType="vMberUsersVO">
+		<select id="pwSearch" resultType="usersDto" parameterType="vMberUsersDto">
 			SELECT USER_PASSWORD AS userPassword, EMPLYR_TY AS emplyrTy
 			FROM V_MBER_USERS
 			WHERE MBER_ID=#{mberId}
 			AND EMAIL=#{email}
 			AND MBER_MBTLNUM=#{mberMbtlnum}
 		</select>
-		<select id="pwSearch2" resultType="String" parameterType="vMberUsersVO">
+		<select id="pwSearch2" resultType="String" parameterType="vMberUsersDto">
 			SELECT EMPLYR_TY AS emplyrTy
 			FROM V_PRO_USERS
 			WHERE PRO_ID=#{mberId}
@@ -54,7 +54,7 @@
 		</update>
 		
 		<!-- 회원 로그인 -->
-		<resultMap type="usersVO" id="usersMap">
+		<resultMap type="usersDto" id="usersMap">
 			<result property="cnt" column="cnt"/>
 			<result property="emplyrTy" column="emplyrTy"/>
 			<result property="userNcnm" column="userNcnm"/>
@@ -68,14 +68,14 @@
 		</select>
 		
 		<!-- 세션에 들어갈 정보 출력 -->
-		<select id="getProfile" parameterType="hashMap" resultType="vMberUsersVO">
+		<select id="getProfile" parameterType="hashMap" resultType="vMberUsersDto">
 			SELECT MBER_ID, MBER_MBTLNUM, SEXDSTN_TY, EMAIL, MBER_PROFL_PHOTO, USER_NM, USER_PASSWORD, EMPLYR_TY, SECSN_AT, USER_NCNM, USER_ID, CHANGE_PW_CK
 			FROM V_MBER_USERS
 			WHERE MBER_ID = #{userId}
 		</select>
 		
 		<!-- 주소 출력 -->
-		<select id="getAdres" parameterType="hashMap" resultType="adresVO">
+		<select id="getAdres" parameterType="hashMap" resultType="adresDto">
 			SELECT ADRES, DETAIL_ADRES, ZIP
 			FROM ADRES WHERE USER_ID = #{userId}
 		</select>

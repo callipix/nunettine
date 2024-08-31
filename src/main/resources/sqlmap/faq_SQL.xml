@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ddit.admin.faq.mapper.FaqMapper">
 	
-	<select id="faqList" parameterType="faqVO" resultType="faqVO" >
+	<select id="faqList" parameterType="faqDto" resultType="faqDto" >
 		select * from faq
 	</select>
 	
-	<update id="faqUpdate" parameterType="faqVO">
+	<update id="faqUpdate" parameterType="faqDto">
 		update faq
 		set FAQ_QESTN = #{faqQestn},
 			FAQ_ANSWER = #{faqAnswer}	
@@ -14,12 +14,12 @@
 		
 	</update>
 	
-	<delete id = "delete" parameterType="faqVO">
+	<delete id = "delete" parameterType="faqDto">
 		delete from faq
 		where faq_no = #{faqNo}
 	</delete>
 	
-	<insert id="createRegister" parameterType="faqVO">
+	<insert id="createRegister" parameterType="faqDto">
 	
 		<selectKey resultType="int" order="BEFORE" keyProperty="faqNo">
 			SELECT NVL(MAX(faq_No),0)+1 FROM faq

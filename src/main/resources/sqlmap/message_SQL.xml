@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ddit.chatting.mapper.MessageMapper">
 
-	<insert id="insert" parameterType="kr.or.ddit.vo.TdmtngChSpMshgVO">
+	<insert id="insert" parameterType="kr.or.ddit.vo.TdmtngChSpMshgDto">
 	/** kr.or.ddit.chatting.mapper.MessageMapper INSERT */
 		INSERT INTO TDMTNG_CH_SP_MSG(
 										  TDMTNG_CH_SP_MSG_NO
@@ -20,7 +20,7 @@
 									 , #{tdmtngNo} )
 	</insert>
 	
-	<select id="firstMsg" parameterType="tdmtngVO" resultType="tdmtngVO">
+	<select id="firstMsg" parameterType="tdmtngDto" resultType="tdmtngDto">
 		
 		SELECT TDMTNG_NO, TDMTNG_NM, FIRST_MSG
 		  FROM TDMTNG
@@ -29,7 +29,7 @@
 		   AND TDMTNG_NO = #{tdmtngNo}
 	</select>
 	
-	<select id="messageList" parameterType="int" resultType="kr.or.ddit.chatting.vo.MessageVO">
+	<select id="messageList" parameterType="int" resultType="kr.or.ddit.chatting.dto.MessageDto">
 	/** kr.or.ddit.chatting.mapper.MessageMapper messageList 채팅방 메세지 리스트 */
 		SELECT
 			     A.MSG_NO
@@ -46,7 +46,7 @@
 		ORDER BY MSG_SEND_DATE ASC
 	</select>
 	
-	<select id="roomMsgList" parameterType="int" resultType="kr.or.ddit.vo.TdmtngChSpMshgVO">
+	<select id="roomMsgList" parameterType="int" resultType="kr.or.ddit.vo.TdmtngChSpMshgDto">
 	/** kr.or.ddit.chatting.mapper.MessageMapper roomMsgList 채팅방 메세지 리스트 */
 		SELECT
 			     A.TDMTNG_CH_SP_MSG_NO

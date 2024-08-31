@@ -411,14 +411,14 @@ function updateFormSubmit(){
 <div class="col-lg-8 container">
 	<div class="card">
 		<div class="card-body">
-<%-- 			<p>vOndyclSchdulVO : ${vOndyclSchdulVO}</p> --%>
+<%-- 			<p>vOndyclSchdulDto : ${vOndyclSchdulDto}</p> --%>
 			<h2 id="modifyTitle" style="margin:20px 0 0 255px; text-align:center; font-family: 'seolleimcool-SemiBold'; color:#4e4c7c; text-shadow: -2px 0px white, 0px 2px white, 2px 0px white, 0px -2px white;">원데이 클래스 수정</h2>
 			<h3 class="card-description" style="text-align:center; margin-top:150px;">🛠️  ${proSession.userNcnm} 님의 원데이클래스 수정페이지 입니다.</h3>
 			<br>
 			 <img src="../resources/images/팻말1.png" id="balloon" style=" opacity: 0.5; width: 500px; height:auto; margin:-180px 0 0 165px;">
 			<form class="forms-sample" id="updateForm" name="updateForm" method="post"
 				enctype="multipart/form-data" action="/onedayClass/updateOndycl">
-				<input type="hidden" value="${vOndyclSchdulVO.ondyclNo}" id="ondyclNo" name="ondyclNo">
+				<input type="hidden" value="${vOndyclSchdulDto.ondyclNo}" id="ondyclNo" name="ondyclNo">
 				<input type="hidden" id="proId" name="proId" value="${proSession.userId}">
 				<input type="hidden" id="spcltyRealmNm" name="spcltyRealmNm" value="${proSession.spcltyRealmNm}">
 				<input type="hidden" id="spcltyRealmCode" name="spcltyRealmCode" value="${proSession.spcltyRealmCode}">
@@ -426,11 +426,11 @@ function updateFormSubmit(){
 				<div class="box_container">
 					<div class="box">
 						<div id="photoZone">
-							<c:if test="${not empty vOndyclSchdulVO.ondyclThumbPhoto}">
-								<img id="imgProfile" src="${vOndyclSchdulVO.ondyclThumbPhoto}"
+							<c:if test="${not empty vOndyclSchdulDto.ondyclThumbPhoto}">
+								<img id="imgProfile" src="${vOndyclSchdulDto.ondyclThumbPhoto}"
 										style="float: left;" />
 							</c:if>
-							<c:if test="${empty vOndyclSchdulVO.ondyclThumbPhoto}">
+							<c:if test="${empty vOndyclSchdulDto.ondyclThumbPhoto}">
 								<img id="imgProfile" src="/images/2024/profile.jpg"
 									style="float: left;" />
 							</c:if>
@@ -451,7 +451,7 @@ function updateFormSubmit(){
 							<input type="file" id="uploadProfile" name="uploadProfile" accept=".gif, .jpg, .png"
 								class="file-upload-browse btn btn-inverse-primary btn-fw">
 						</span>
-						<c:if test="${not empty vOndyclSchdulVO.ondyclThumbPhoto}">
+						<c:if test="${not empty vOndyclSchdulDto.ondyclThumbPhoto}">
 							<button type='button' class='btn btn-inverse-link btn-fw photoDelete'>사진 삭제</button>
 						</c:if>
 						<button type='button' class='btn btn-inverse-link btn-fw photoDelete' id="delBtn" style="display:none;">사진 삭제</button>
@@ -461,27 +461,27 @@ function updateFormSubmit(){
 					<label for="ondyclNm">✏️ 원데이클래스 제목</label>
 					<div class="form-group input-group">
 						<input type="text" class="form-control" id="ondyclNm" name="ondyclNm"
-							placeholder="제목을 입력하세요" value="${vOndyclSchdulVO.ondyclNm}" required />
+							placeholder="제목을 입력하세요" value="${vOndyclSchdulDto.ondyclNm}" required />
 					</div>
 					
 					<label for=ondyclCn>📝 원데이클래스 상세내용</label>
 					<div class="form-group input-group">
-					<textarea rows="5" cols="120" id="ondyclCn" name="ondyclCn" class="form-control" placeholder="나만의 클래스를 설명해주세요." required>${vOndyclSchdulVO.ondyclCn}</textarea>
+					<textarea rows="5" cols="120" id="ondyclCn" name="ondyclCn" class="form-control" placeholder="나만의 클래스를 설명해주세요." required>${vOndyclSchdulDto.ondyclCn}</textarea>
 					</div>
 					<table class="table table-hover">
 						<tbody>
 							<tr>
 								<td>
-									<label for="ondyclPsncpa">🙋‍♀️ 원데이클래스 정원 (현재 예약 인원 : ${vOndyclSchdulVO.ondyclResvpa} 명)</label>
+									<label for="ondyclPsncpa">🙋‍♀️ 원데이클래스 정원 (현재 예약 인원 : ${vOndyclSchdulDto.ondyclResvpa} 명)</label>
 									<div class="form-group input-group">
-										<input type="number" class="form-control" value="${vOndyclSchdulVO.ondyclPsncpa}" id="ondyclPsncpa" name="ondyclPsncpa"
+										<input type="number" class="form-control" value="${vOndyclSchdulDto.ondyclPsncpa}" id="ondyclPsncpa" name="ondyclPsncpa"
 											placeholder="정원 입력" required />  <p style="margin:15px 0 0 10px;">명</p>
 									</div>
 								</td>
 								<td colspan='2'>
 									<label for="ondyclPc">💸 원데이클래스 희망가격</label>
 									<div class="form-group input-group">
-										<input type="number" class="form-control" value="${vOndyclSchdulVO.ondyclPc}" id="ondyclPc" name="ondyclPc"
+										<input type="number" class="form-control" value="${vOndyclSchdulDto.ondyclPc}" id="ondyclPc" name="ondyclPc"
 											placeholder="금액 입력" required />  <p style="margin:15px 0 0 10px;">원</p>
 									</div>
 								</td>
@@ -489,7 +489,7 @@ function updateFormSubmit(){
 							<tr>
 								<td>
 									<label for="ondyclSchdulDe">📆 시행날짜</label>
-									<input type="hidden" value="${vOndyclSchdulVO.ondyclSchdulDe}" id="startDay">
+									<input type="hidden" value="${vOndyclSchdulDto.ondyclSchdulDe}" id="startDay">
 									<div class="form-group input-group">
 										<input type="date" class="form-control" id="ondyclSchdulDe" value=""
 											name="ondyclSchdulDe" required />
@@ -498,7 +498,7 @@ function updateFormSubmit(){
 								<td>
 									<label for="ondyclSchdulBeginTime">⏰ 시작 예정시간</label>
 									<div class="form-group input-group">
-										<input type="time" class="form-control" id="ondyclSchdulBeginTime" value="${vOndyclSchdulVO.ondyclSchdulBeginTime}"
+										<input type="time" class="form-control" id="ondyclSchdulBeginTime" value="${vOndyclSchdulDto.ondyclSchdulBeginTime}"
 										name="ondyclSchdulBeginTime"
 											placeholder="시작 예정시간" required />
 									</div>
@@ -506,7 +506,7 @@ function updateFormSubmit(){
 								<td>
 									<label for="ondyclSchdulDe">⏰ 종료 예정시간</label>
 									<div class="form-group input-group">
-										<input type="time" class="form-control" id="ondyclSchdulEndTime" name="ondyclSchdulEndTime" value="${vOndyclSchdulVO.ondyclSchdulEndTime}"
+										<input type="time" class="form-control" id="ondyclSchdulEndTime" name="ondyclSchdulEndTime" value="${vOndyclSchdulDto.ondyclSchdulEndTime}"
 											placeholder="정원 입력" required />
 									</div>
 								</td>
@@ -515,7 +515,7 @@ function updateFormSubmit(){
 								<td>
 									<label for="ondyclSchdulDe">📮 우편번호</label>
 									<div class="form-group input-group">
-										<input type="text" readonly class="form-control" id="ondyclZip" name="ondyclZip" value="${vOndyclSchdulVO.ondyclZip}"
+										<input type="text" readonly class="form-control" id="ondyclZip" name="ondyclZip" value="${vOndyclSchdulDto.ondyclZip}"
 											placeholder="우편번호">
 										<span class="input-group-append">
 											<button type="button" id="zipSelect" class="file-upload-browse btn btn-inverse-primary btn-fw">우편번호 찾기</button>
@@ -525,14 +525,14 @@ function updateFormSubmit(){
 								<td>
 									<label for="ondyclSchdulBeginTime">🚩 주소</label>
 									<div class="form-group input-group">
-										<input type="text" readonly class="form-control" id="ondyclAdres" name="ondyclAdres" value="${vOndyclSchdulVO.ondyclAdres}"
+										<input type="text" readonly class="form-control" id="ondyclAdres" name="ondyclAdres" value="${vOndyclSchdulDto.ondyclAdres}"
 										placeholder="주소" required>
 									</div>
 								</td>
 								<td>
 									<label for="ondyclSchdulDe">🚩 상세주소</label>
 									<div class="form-group input-group">
-										<input type="text" class="form-control" id="ondyclDetailAdres" name="ondyclDetailAdres" value="${vOndyclSchdulVO.ondyclDetailAdres}"
+										<input type="text" class="form-control" id="ondyclDetailAdres" name="ondyclDetailAdres" value="${vOndyclSchdulDto.ondyclDetailAdres}"
 											placeholder="상세주소" required>
 									</div>
 								</td>
@@ -552,8 +552,8 @@ function updateFormSubmit(){
 		                </div>
 <!-- 		                <input type="text" class="form-control" readonly id="uploadFile"> -->
 			            <div class="table-responsive" style="width:100%;">
-<%-- 							<c:forEach var="sprviseAtchmnflVO" items="${sprviseAtchmnflVOList}" varStatus="stat"> --%>
-<%-- 								<input type="text" class="fileCours" value="${sprviseAtchmnflVO.atchmnflCours}"> --%>
+<%-- 							<c:forEach var="sprviseAtchmnflDto" items="${sprviseAtchmnflDtoList}" varStatus="stat"> --%>
+<%-- 								<input type="text" class="fileCours" value="${sprviseAtchmnflDto.atchmnflCours}"> --%>
 <%-- 							</c:forEach> --%>
 							<table class="table table-striped">
 								<tr id="uploadFileList">

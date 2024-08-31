@@ -267,13 +267,13 @@ $(document).ready(function() {
 		        	if(result.total == 0){
 						str += "<tr><td colspan='4'>작성한 글이 없습니다</td></tr>";
 					}
-		        	$.each(result.content, function(idx, aftusBbscttVO) {
-		        		let mberPhoto = aftusBbscttVO.mberProflPhoto;
-		        		str += `<tr onclick="location.href='/reviewBoard/detail?aftusBbscttNo=\${aftusBbscttVO.aftusBbscttNo}'">`;
-		        		str += `<td>\${aftusBbscttVO.rnum}</td>`;
-		        		str += `<td>\${aftusBbscttVO.aftusBbscttSj}</td>`;
-		        		str += `<td>\${aftusBbscttVO.aftusBbscttWrDt}</td>`;
-		        		str += `<td>\${aftusBbscttVO.aftusBbscttRdcnt}</td>`;
+		        	$.each(result.content, function(idx, aftusBbscttDto) {
+		        		let mberPhoto = aftusBbscttDto.mberProflPhoto;
+		        		str += `<tr onclick="location.href='/reviewBoard/detail?aftusBbscttNo=\${aftusBbscttDto.aftusBbscttNo}'">`;
+		        		str += `<td>\${aftusBbscttDto.rnum}</td>`;
+		        		str += `<td>\${aftusBbscttDto.aftusBbscttSj}</td>`;
+		        		str += `<td>\${aftusBbscttDto.aftusBbscttWrDt}</td>`;
+		        		str += `<td>\${aftusBbscttDto.aftusBbscttRdcnt}</td>`;
 		        		str += `</tr>`;
 		        	})
 		        	

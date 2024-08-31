@@ -252,37 +252,37 @@ $(function(){
     <br><br>
     <h2 id="modifyTitle" style="margin:135px 0 0 830px; text-align:center; font-family: 'seolleimcool-SemiBold'; color:#4e4c7c; text-shadow: -2px 0px white, 0px 2px white, 2px 0px white, 0px -2px white;">프로 프로필 수정</h2>
 </div >
-<%-- <p>${proProflVO}</p> --%>
+<%-- <p>${proProflDto}</p> --%>
 
 <c:if test="${memSession == null && proSession != null}">
-<form id="frm" name="frm" action="/proProfl/modifyProfl?proId=${proProflVO.proId}" method="get" >
+<form id="frm" name="frm" action="/proProfl/modifyProfl?proId=${proProflDto.proId}" method="get" >
 	<div class="mb-3" style="margin: 150px 150px 0 150px;"> 
 		<div class="form-group" id="proflPhoto" style="margin-left:750px;">
-			<c:if test="${proProflVO.proProflPhoto==null}">
+			<c:if test="${proProflDto.proProflPhoto==null}">
 				<img src="/images/2024/profile.jpg" alt="profile" style="width:300px; height:300px; border-radius: 70%;">
 			</c:if>
-			<c:if test="${proProflVO.proProflPhoto!=null}">
-				<img src="${proProflVO.proProflPhoto}" alt="profile" style="width:300px; height:300px; border-radius: 70%;">
+			<c:if test="${proProflDto.proProflPhoto!=null}">
+				<img src="${proProflDto.proProflPhoto}" alt="profile" style="width:300px; height:300px; border-radius: 70%;">
 			</c:if>
 		</div>
 	    <div class="form-group">
 	        <label for="proId">👩‍💼 프로 아이디</label>
-	        <input type="text" name="proId" id="proId" value="${proProflVO.proId}" class="form-control" readonly style="width:200px;"/>
+	        <input type="text" name="proId" id="proId" value="${proProflDto.proId}" class="form-control" readonly style="width:200px;"/>
 	    </div>
       <div class="form-group" >
          <label for="proProflOnLiIntrcn">✔ 한줄소개</label>
-         <input type="text" name="proProflOnLiIntrcn" id ="proProflOnLiIntrcn" value="${proProflVO.proProflOnLiIntrcn}" class="form-control" style="width:600px; justify-content: center;"/>
+         <input type="text" name="proProflOnLiIntrcn" id ="proProflOnLiIntrcn" value="${proProflDto.proProflOnLiIntrcn}" class="form-control" style="width:600px; justify-content: center;"/>
       </div>
       <div class="form-group">
           <label for="proProflContactPosblTime">🕐 연락 가능 시간</label>
-          <input type="text" name="proProflContactPosblTime" id="proProflContactPosblTime" value="${proProflVO.proProflContactPosblTime}" class="form-control" style="width:200px;"/>
+          <input type="text" name="proProflContactPosblTime" id="proProflContactPosblTime" value="${proProflDto.proProflContactPosblTime}" class="form-control" style="width:200px;"/>
       </div>
 	<div style="display: flex; flex-wrap: wrap;">
 		<div class="form-group">
 			<label for="bcityNm">✔ 지역(광역시)</label>
 			   <select id="bcityNm" name="bcityNm" class="form-control" style="width:200px; font-family: 'GmarketSansMedium';">
-			      <option selected id="bcityCode">${proProflVO.bcityCode}</option>
-			      <c:forEach items="${bcityVOList}" var="bcityVO">
+			      <option selected id="bcityCode">${proProflDto.bcityCode}</option>
+			      <c:forEach items="${bcityDtoList}" var="bcityVO">
 			         <option><c:out value="${bcityVO.bcityNm}"/></option>
 			      </c:forEach>
 			   </select>
@@ -290,7 +290,7 @@ $(function(){
 		<div class="form-group">
 			<label for="brtcNm" style="margin-left:15px;">✔ 지역(시/구)</label>
 				<select id="brtcNm" name="brtcNm" class="form-control" style="width:200px; margin-left:15px; font-family: 'GmarketSansMedium';">
-				    <option id="brtcCode" selected>${proProflVO.brtcCode}</option>
+				    <option id="brtcCode" selected>${proProflDto.brtcCode}</option>
 				</select>
 		</div>
 	</div>
@@ -299,11 +299,11 @@ $(function(){
       <div class="row">
       <div class="form-group">
          <label for="proProflReqForm">📃 요청서 양식</label>
-        <textarea name="proProflReqForm" id="proProflReqForm" class="form-control" style="font-family: 'GmarketSansMedium'; width:500px; height:400px; overflow: auto;">${proProflVO.proProflReqForm}</textarea>
+        <textarea name="proProflReqForm" id="proProflReqForm" class="form-control" style="font-family: 'GmarketSansMedium'; width:500px; height:400px; overflow: auto;">${proProflDto.proProflReqForm}</textarea>
       </div>
       <div class="form-group">
          <label for="proProflHist" style="margin-left:15px;">💬 서비스 상세설명</label>
-		<textarea  rows="2" cols="20" wrap="hard" name="proProflHist" id="proProflHist" class="form-control" style="font-family: 'GmarketSansMedium'; width:500px; height:400px; margin-left:15px; overflow: auto;">${proProflVO.proProflHist}</textarea>
+		<textarea  rows="2" cols="20" wrap="hard" name="proProflHist" id="proProflHist" class="form-control" style="font-family: 'GmarketSansMedium'; width:500px; height:400px; margin-left:15px; overflow: auto;">${proProflDto.proProflHist}</textarea>
       </div> 
       </div>
       <div class="form-group" style="float:right; margin-right:60px;">

@@ -3,30 +3,30 @@ package kr.or.ddit.admin.oneInqry.service;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.ddit.vo.OneInqryDto;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.or.ddit.vo.OneInqryVO;
-import kr.or.ddit.vo.UsersVO;
+import kr.or.ddit.vo.UsersDto;
 
 public interface OneInqryService {
 	
-	public UsersVO userChk(String userId);
+	public UsersDto userChk(String userId);
 
-	public List<OneInqryVO> searchList(Map<String, Object> map);
+	public List<OneInqryDto> searchList(Map<String, Object> map);
 
 	public int getTotal(Map<String, Object> map);
 
-	public List<OneInqryVO> oneInqryNoAnswerList(Map<String, Object> map);
+	public List<OneInqryDto> oneInqryNoAnswerList(Map<String, Object> map);
 
 	public int getNoAnswerTotal(Map<String, Object> map);
 
-	public List<OneInqryVO> oneInqrySuccessList(Map<String, Object> map);
+	public List<OneInqryDto> oneInqrySuccessList(Map<String, Object> map);
 
 	public int getSuccessTotal(Map<String, Object> map);
 
-	public int oneInqryCreatePost(OneInqryVO oneInqryVO, List<MultipartFile> uploadFiles);
+	public int oneInqryCreatePost(OneInqryDto oneInqryDto, List<MultipartFile> uploadFiles);
 
-	public OneInqryVO oneInqryDetail(OneInqryVO oneInqryVO, String userId);
+	public OneInqryDto oneInqryDetail(OneInqryDto oneInqryDto, String userId);
 
 	public int oneInqryUpdatePost(Map<String, Object> oneInqryUpdateMap, List<MultipartFile> uploadFiles,
 			String userId);
@@ -35,7 +35,7 @@ public interface OneInqryService {
 
 	public int resignPro(Map<String, Object> map);
 
-	public List<OneInqryVO> resignProList(Map<String, Object> map);
+	public List<OneInqryDto> resignProList(Map<String, Object> map);
 
 	public int getTotalResignPro(Map<String, Object> map);
 

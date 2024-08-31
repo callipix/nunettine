@@ -6,8 +6,8 @@ import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import kr.or.ddit.vo.PrtfolioDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.pro.prtFolio.service.PrtfolioService;
-import kr.or.ddit.vo.PrtfolioVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -34,8 +33,8 @@ public class PrtfolioController {
 	}
 	
 	@PostMapping("/createPost")
-	public String createPost(PrtfolioVO prtfolioVO) {
-		log.info("createPost->prtfolioVO : " + prtfolioVO );
+	public String createPost(PrtfolioDto prtfolioDto) {
+		log.info("createPost->prtfolioVO : " + prtfolioDto);
 		
 		File uploadPath = new File(uploadFolder,getFolder());
 		
@@ -44,10 +43,10 @@ public class PrtfolioController {
 			uploadPath.mkdirs();
 		}
 		
-		int result =this.prtfolioService.createPost(prtfolioVO);
+		int result =this.prtfolioService.createPost(prtfolioDto);
 		log.info("createPost->result : " + result);
 		
-		return "redirect:/proProfl/detail?proId="+prtfolioVO.getProId();
+		return "redirect:/proProfl/detail?proId="+ prtfolioDto.getProId();
 	}
 	
 	//연/월/일 폴더 생성

@@ -2,18 +2,18 @@ package kr.or.ddit.admin.faq.mapper;
 
 import java.util.List;
 
-import kr.or.ddit.admin.faq.vo.FaqVO;
+import kr.or.ddit.admin.faq.dto.FaqDto;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface FaqMapper {
 	
-	public List<FaqVO> faqList();
+	public List<FaqDto> faqList();
 
-	public int faqUpdate(FaqVO faqVO);
+	public int faqUpdate(FaqDto faqDto);
 
-	public int delete(FaqVO faqVO);
+	public int delete(FaqDto faqDto);
 
-	public int createRegister(FaqVO faqVO);
+	public int createRegister(FaqDto faqDto);
 
 }

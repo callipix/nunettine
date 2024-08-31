@@ -80,7 +80,7 @@
       ) 
       </select>
       
-      <resultMap type="oneInqryVO" id="oneInqryVOMap">
+      <resultMap type="oneInqryDto" id="oneInqryVOMap">
          <result property="num" column="NUM"/>
       <result property="oneInqryNo" column="ONE_INQRY_NO"/>
       <result property="userId" column="USER_ID"/>
@@ -88,7 +88,7 @@
       <result property="oneInqryCn" column="ONE_INQRY_CN"/>
       <result property="oneInqryWritngDt" column="ONE_INQRY_WRITNG_DT"/>
       <result property="sprviseAtchmnflNo" column="SPRVISE_ATCHMNFL_NO"/>
-      <collection property="sprviseAtchmnflVOList" resultMap="sprviseAtchMap"></collection>
+      <collection property="sprviseAtchmnflDtoList" resultMap="sprviseAtchMap"></collection>
       <collection property="oneInqryAnswerVOList" resultMap="oneInqryAnswerMap"></collection>
       </resultMap>
       
@@ -101,7 +101,7 @@
       <result property="mngrId" column="MNGR_ID"/>
       </resultMap>
       
-      <resultMap type="sprviseAtchmnflVO" id="sprviseAtchMap">
+      <resultMap type="sprviseAtchmnflDto" id="sprviseAtchMap">
       <result property="sprviseAtchmnflNo" column="SPRVISE_ATCHMNFL_NO"/>
       <result property="atchmnflNo" column="ATCHMNFL_NO"/>
       <result property="atchmnflCours" column="ATCHMNFL_COURS"/>
@@ -223,7 +223,7 @@
        VALUES(ONE_INQRY_NO_SEQ.NEXTVAL,#{userId}, #{oneInqrySj}, #{oneInqryCn},SYSDATE, SPRVISE_ATCHMNFL_NO_SEQ.NEXTVAL)
    </insert>
    
-   <select id="oneInqryDetail" parameterType="oneInqryVO" resultMap="oneInqryVOMap">
+   <select id="oneInqryDetail" parameterType="oneInqryDto" resultMap="oneInqryVOMap">
       SELECT *
       FROM ONE_INQRY A
       LEFT JOIN ONE_INQRY_ANSWER B
@@ -239,7 +239,7 @@
       
    </select>
    
-   <update id="oneInqryUpdatePost" parameterType="oneInqryVO">
+   <update id="oneInqryUpdatePost" parameterType="oneInqryDto">
       UPDATE ONE_INQRY SET ONE_INQRY_SJ = #{oneInqrySj}, ONE_INQRY_CN = #{oneInqryCn} WHERE ONE_INQRY_NO = #{oneInqryNo}
    </update>
    
@@ -253,7 +253,7 @@
        VALUES(ONE_INQRY_NO_SEQ.NEXTVAL, #{userId}, '[탈퇴]', #{oneIqnryCn}, SYSDATE)
    </insert>
    
-   <select id="resignProList" parameterType="map" resultType="oneInqryVO">
+   <select id="resignProList" parameterType="map" resultType="oneInqryDto">
       SELECT D.*
       FROM
       (SELECT ROW_NUMBER() OVER (ORDER BY ONE_INQRY_WRITNG_DT ASC) NUM, C.*

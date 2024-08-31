@@ -123,19 +123,19 @@ $(function(){
             
             $("#noticeTbody").html("");
          
-            $.each(result.content,function(idx, noticeVO){
+            $.each(result.content,function(idx, noticeDto){
             	// 공지사항 제목 자르기
-                let trimmedNoticeSj = noticeVO.noticeSj;
+                let trimmedNoticeSj = noticeDto.noticeSj;
                 if (trimmedNoticeSj.length > maxLength) {
                     trimmedNoticeSj = trimmedNoticeSj.substring(0, maxLength) + "..."; // 최대 길이 초과 시 생략 부호 추가
                 }
             	
-               str += "<tr onclick=\"location.href='/manage/detail?noticeNo=" + noticeVO.noticeNo + "'\" style=\"cursor: pointer;\">";              
-               str += "<td>"+noticeVO.rnum+"</td>";
+               str += "<tr onclick=\"location.href='/manage/detail?noticeNo=" + noticeDto.noticeNo + "'\" style=\"cursor: pointer;\">";
+               str += "<td>"+noticeDto.rnum+"</td>";
                str += "<td>"+trimmedNoticeSj+"</td>";
-               str += "<td>"+formatDate(noticeVO.noticeWritngDt)+"</td>";
-               str += "<td>"+noticeVO.noticeRdcnt+"</td>";              
-               str += "<td>"+convertMngrId(noticeVO.mngrId)+"</td>";
+               str += "<td>"+formatDate(noticeDto.noticeWritngDt)+"</td>";
+               str += "<td>"+noticeDto.noticeRdcnt+"</td>";
+               str += "<td>"+convertMngrId(noticeDto.mngrId)+"</td>";
                str += "</tr>";
             
             });   
@@ -190,25 +190,25 @@ $(function(){
 				
 				$("#usersTbody").html("");
 			
-				$.each(result.content,function(idx, usersVO){
-					str += "<tr onclick=\"location.href='/manage/userDetail?userId=" + usersVO.userId + "'\" style=\"cursor: pointer;\">";
+				$.each(result.content,function(idx, usersDto){
+					str += "<tr onclick=\"location.href='/manage/userDetail?userId=" + usersDto.userId + "'\" style=\"cursor: pointer;\">";
 					/* str += "<tr>"; */
 					
 					
-					str += "<td>"+usersVO.rnum+"</td>";
-					str += "<td>"+usersVO.userId+"</td>";
-					str += "<td>"+usersVO.userNcnm+"</td>";
-					str += "<td>"+usersVO.userNm+"</td>";
-					//str += "<td>"+usersVO.userPassword+"</td>";
+					str += "<td>"+usersDto.rnum+"</td>";
+					str += "<td>"+usersDto.userId+"</td>";
+					str += "<td>"+usersDto.userNcnm+"</td>";
+					str += "<td>"+usersDto.userNm+"</td>";
+					//str += "<td>"+usersDto.userPassword+"</td>";
 					str += "<td>";
-					if (usersVO.emplyrTy === "ET01") {
+					if (usersDto.emplyrTy === "ET01") {
 					    str += "<div class='col-sm-6 col-md-4 col-lg-3 text-info'><i class='mdi mdi-face'></i> 회원</div>";
-					} else if (usersVO.emplyrTy === "ET02") {
+					} else if (usersDto.emplyrTy === "ET02") {
 					    str += "<div class='col-sm-6 col-md-4 col-lg-3 text-primary'><i class='mdi mdi-emoticon-cool'></i> 프로</div>";
 					} else {
-					    str += convertUserType(usersVO.emplyrTy); // 기타 사용자 유형 처리
+					    str += convertUserType(usersDto.emplyrTy); // 기타 사용자 유형 처리
 					}
-					str += "<td>"+convertUserType2(usersVO.secsnAt)+"</td>";
+					str += "<td>"+convertUserType2(usersDto.secsnAt)+"</td>";
 					
 					str += "</tr>";
 				
@@ -257,19 +257,19 @@ function leftList(currentPage, keyword, searchKey){
 	         
 	         $("#noticeTbody").html("");
 	         
-	         $.each(result.content,function(idx, noticeVO){
+	         $.each(result.content,function(idx, noticeDto){
 	        	// 공지사항 제목 자르기
-	             let trimmedNoticeSj = noticeVO.noticeSj;
+	             let trimmedNoticeSj = noticeDto.noticeSj;
 	             if (trimmedNoticeSj.length > maxLength) {
 	                 trimmedNoticeSj = trimmedNoticeSj.substring(0, maxLength) + "..."; // 최대 길이 초과 시 생략 부호 추가
 	             }
 	        	 
-	            str += "<tr onclick=\"location.href='/manage/detail?noticeNo=" + noticeVO.noticeNo + "'\" style=\"cursor: pointer;\">";   
-	            str += "<td>"+noticeVO.rnum+"</td>";
+	            str += "<tr onclick=\"location.href='/manage/detail?noticeNo=" + noticeDto.noticeNo + "'\" style=\"cursor: pointer;\">";
+	            str += "<td>"+noticeDto.rnum+"</td>";
 	            str += "<td>"+trimmedNoticeSj+"</td>";
-	            str += "<td>"+formatDate(noticeVO.noticeWritngDt)+"</td>";
-	            str += "<td>"+noticeVO.noticeRdcnt+"</td>";
-	            str += "<td>"+convertMngrId(noticeVO.mngrId)+"</td>";
+	            str += "<td>"+formatDate(noticeDto.noticeWritngDt)+"</td>";
+	            str += "<td>"+noticeDto.noticeRdcnt+"</td>";
+	            str += "<td>"+convertMngrId(noticeDto.mngrId)+"</td>";
 	            str += "</tr>";
 	            
 	            
@@ -314,26 +314,26 @@ function rightList(currentPage, keyword, searchKey){
 			
 			$("#usersTbody").html("");
 			
-			$.each(result.content,function(idx, usersVO){
+			$.each(result.content,function(idx, usersDto){
 
-				str += "<tr onclick=\"location.href='/manage/userDetail?userId=" + usersVO.userId + "'\" style=\"cursor: pointer;\">";
+				str += "<tr onclick=\"location.href='/manage/userDetail?userId=" + usersDto.userId + "'\" style=\"cursor: pointer;\">";
 				/* str += "<tr>"; */
 				
 				
-				str += "<td>"+usersVO.rnum+"</td>";
-				str += "<td>"+usersVO.userId+"</td>";
-				str += "<td>"+usersVO.userNcnm+"</td>";
-				str += "<td>"+usersVO.userNm+"</td>";
-				//str += "<td>"+usersVO.userPassword+"</td>";
+				str += "<td>"+usersDto.rnum+"</td>";
+				str += "<td>"+usersDto.userId+"</td>";
+				str += "<td>"+usersDto.userNcnm+"</td>";
+				str += "<td>"+usersDto.userNm+"</td>";
+				//str += "<td>"+usersDto.userPassword+"</td>";
 				str += "<td>";
-				if (usersVO.emplyrTy === "ET01") {
+				if (usersDto.emplyrTy === "ET01") {
 				    str += "<div class='col-sm-6 col-md-4 col-lg-3 text-info'><i class='mdi mdi-face'></i> 회원</div>";
-				} else if (usersVO.emplyrTy === "ET02") {
+				} else if (usersDto.emplyrTy === "ET02") {
 				    str += "<div class='col-sm-6 col-md-4 col-lg-3 text-primary'><i class='mdi mdi-emoticon-cool'></i> 프로</div>";
 				} else {
-				    str += convertUserType(usersVO.emplyrTy); // 기타 사용자 유형 처리
+				    str += convertUserType(usersDto.emplyrTy); // 기타 사용자 유형 처리
 				}
-				str += "<td>"+convertUserType2(usersVO.secsnAt)+"</td>";
+				str += "<td>"+convertUserType2(usersDto.secsnAt)+"</td>";
 				
 				str += "</tr>";
 				

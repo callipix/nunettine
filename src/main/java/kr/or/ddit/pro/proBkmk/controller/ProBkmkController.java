@@ -7,8 +7,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import kr.or.ddit.vo.MberDto;
+import kr.or.ddit.vo.ProBkmkDto;
+import kr.or.ddit.vo.ProDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,9 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.pro.proBkmk.service.ProBkmkService;
 import kr.or.ddit.pro.proProfl.service.ProProflService;
-import kr.or.ddit.vo.MberVO;
-import kr.or.ddit.vo.ProBkmkVO;
-import kr.or.ddit.vo.ProVO;
 import lombok.extern.slf4j.Slf4j;
 
 @RequestMapping("/proBkmk")
@@ -35,7 +34,7 @@ public class ProBkmkController {
 	private final ProProflService proProflService;
 	
 	@GetMapping("/detail")
-	public String detail(Model model, @ModelAttribute("mberVO") MberVO mberVO,HttpSession session) {
+	public String detail(Model model, @ModelAttribute("mberVO") MberDto mberDto, HttpSession session) {
 		 if (session.getAttribute("memSession") == null) {
 		        // 로그인되어 있지 않은 경우 로그인 페이지로 리다이렉트 또는 다른 처리를 수행
 		        return "redirect:/member/memberLogin";
@@ -44,13 +43,13 @@ public class ProBkmkController {
 		String memId = ((HashMap)(session.getAttribute("memSession"))).get("userId").toString();
 		log.info("detail->memId : " +memId);
 		
-		List<ProBkmkVO> proBkmkVOList = this.proBkmkService.getFavInfo(memId);
-		log.info("detail->proBkmkVO : " + proBkmkVOList);
+		List<ProBkmkDto> proBkmkDtoList = this.proBkmkService.getFavInfo(memId);
+		log.info("detail->proBkmkVO : " + proBkmkDtoList);
 		
 		List<String> spcltyRealmCodeList = new ArrayList<>();
-		for (ProBkmkVO proBkmkVO : proBkmkVOList) {
-		    List<ProVO> bkmkVOList = proBkmkVO.getBkmkVOList();
-		    for (ProVO bkmkVO : bkmkVOList) {
+		for (ProBkmkDto proBkmkDto : proBkmkDtoList) {
+		    List<ProDto> bkmkVOList = proBkmkDto.getBkmkVOList();
+		    for (ProDto bkmkVO : bkmkVOList) {
 		        String spcltyRealmCode = bkmkVO.getSpcltyRealmCode();
 		        String proBun = this.proProflService.getBunryu(spcltyRealmCode);
 		        spcltyRealmCodeList.add(proBun);
@@ -58,7 +57,7 @@ public class ProBkmkController {
 		}
 		log.info("detail->spcltyRealmCodeList : " + spcltyRealmCodeList);
 		
-		model.addAttribute("proBkmkVO", proBkmkVOList);
+		model.addAttribute("proBkmkVO", proBkmkDtoList);
 		model.addAttribute("spcltyCL",  spcltyRealmCodeList);
 		return "proBkmk/detail";
 	}

@@ -266,15 +266,15 @@ $(function () {
 //리스트 출력 함수
 function reviewList(result) {
 	let str = "";
-	$.each(result.content, function(idx, aftusBbscttVO) {
-		let mberPhoto = aftusBbscttVO.mberProflPhoto;
+	$.each(result.content, function(idx, aftusBbscttDto) {
+		let mberPhoto = aftusBbscttDto.mberProflPhoto;
 		console.log("프사", mberPhoto);
-		str += `<tr onclick="location.href='/reviewBoard/detail?aftusBbscttNo=\${aftusBbscttVO.aftusBbscttNo}'">`;
-		str += `<td>\${aftusBbscttVO.rnum}</td>`;
-		str += `<td>\${aftusBbscttVO.aftusBbscttSj}</td>`;
-		str += `<td>\${aftusBbscttVO.userNcnm}</td>`;
-		str += `<td>\${aftusBbscttVO.aftusBbscttWrDt}</td>`;
-		str += `<td>\${aftusBbscttVO.aftusBbscttRdcnt}</td>`;
+		str += `<tr onclick="location.href='/reviewBoard/detail?aftusBbscttNo=\${aftusBbscttDto.aftusBbscttNo}'">`;
+		str += `<td>\${aftusBbscttDto.rnum}</td>`;
+		str += `<td>\${aftusBbscttDto.aftusBbscttSj}</td>`;
+		str += `<td>\${aftusBbscttDto.userNcnm}</td>`;
+		str += `<td>\${aftusBbscttDto.aftusBbscttWrDt}</td>`;
+		str += `<td>\${aftusBbscttDto.aftusBbscttRdcnt}</td>`;
 		str += `</tr>`;
 	})
 	

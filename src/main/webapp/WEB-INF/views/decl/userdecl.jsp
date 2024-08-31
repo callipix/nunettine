@@ -127,20 +127,20 @@ function userList(){
 		success: function(res){
 			console.log("res : ",res)
 			let str = "";
-			for (const usersVO of res) {
+			for (const usersDto of res) {
 				str+=`
-				//console.log("usersVO:",usersVO);
-				//console.log("userId2 : ",usersVO.userId);
-					<tr onclick="modalView('\${usersVO.userId}');" 
+				//console.log("usersDto:",usersDto);
+				//console.log("userId2 : ",usersDto.userId);
+					<tr onclick="modalView('\${usersDto.userId}');"
 						data-toggle="modal" data-target="#modal-xl">
-						<td>\${usersVO.declCount}</td>
-						<td>\${usersVO.userNm}</td>
-						<td>\${usersVO.userNcnm}</td>
-						<td>\${usersVO.userId}</td>
+						<td>\${usersDto.declCount}</td>
+						<td>\${usersDto.userNm}</td>
+						<td>\${usersDto.userNcnm}</td>
+						<td>\${usersDto.userId}</td>
 					</tr>
 				`
 				
-				/* let userId2 = usersVO.userId;
+				/* let userId2 = usersDto.userId;
 				let data = {
 					"userId2":userId2
 				}
@@ -156,12 +156,12 @@ function userList(){
 					//여기서 str에 결과 추가
 					str+=`
 					
-						<tr onclick="modalView('\${usersVO.userId}');" 
+						<tr onclick="modalView('\${usersDto.userId}');"
 						data-toggle="modal" data-target="#modal-xl">
 							<td>\${declCount}</td>
-							<td>\${usersVO.userNm}</td>
-							<td>\${usersVO.userNcnm}</td>
-							<td>\${usersVO.userId}</td>
+							<td>\${usersDto.userNm}</td>
+							<td>\${usersDto.userNcnm}</td>
+							<td>\${usersDto.userId}</td>
 						</tr>
 					`
 					

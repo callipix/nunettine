@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.or.ddit.board.pro_hunting.mapper.ProHuntingMapper">
+<mapper namespace="kr.or.ddit.board.prohunting.mapper.ProHuntingMapper">
 
 
 	<delete id="delProAnswer" parameterType="map">
@@ -151,7 +151,7 @@
 		ORDER BY A.NUM DESC
 	</select>
 	
-	<resultMap type="proJoBbscttVO" id="proHuntMap">
+	<resultMap type="proJoBbscttDto" id="proHuntMap">
 		<result property="num" column="NUM"/>
 		<result property="proJoBbscttNo" column="PRO_JO_BBSCTT_NO"/>
 		<result property="proJoBbscttSj" column="PRO_JO_BBSCTT_SJ"/>
@@ -162,7 +162,7 @@
 		<result property="sprviseAtchmnflNo" column="SPRVISE_ATCHMNFL_NO"/>
 		<collection property="proJoBbscttAnswerVOList" resultMap="proJoBbscttAnswerMap"></collection>
 		<collection property="mberVOList" resultMap="mberMap"></collection>
-		<collection property="sprviseAtchmnflVOList" resultMap="sprviseAtchMap"></collection>
+		<collection property="sprviseAtchmnflDtoList" resultMap="sprviseAtchMap"></collection>
 	</resultMap>
 	
 	<resultMap type="proJoBbscttAnswerVO" id="proJoBbscttAnswerMap">
@@ -176,7 +176,7 @@
 		
 	</resultMap>
 	
-	<resultMap type="proVO" id="proMap">
+	<resultMap type="proDto" id="proMap">
 		<result property="proId" column="PRO_ID"/>
 		<result property="proMbtlnum" column="PRO_MBTLNUM"/>
 		<result property="sexdstnTy" column="SEXDSTN_TY"/>
@@ -185,7 +185,7 @@
 		<result property="spcltyRealmCode" column="SPCLTY_REALM_CODE"/>
 	</resultMap>
 	
-	<resultMap type="mberVO" id="mberMap">
+	<resultMap type="mberDto" id="mberMap">
 		<result property="mberId" column="MBER_ID"/>
 		<result property="mberMbtlnum" column="MBER_MBTLNUM"/>
 		<result property="sexdstnTy" column="SEXDSTN_TY"/>
@@ -195,7 +195,7 @@
 		<result property="mberNcnm" column="MBER_NCNM"/>
 	</resultMap>
 	
-	<resultMap type="sprviseAtchmnflVO" id="sprviseAtchMap">
+	<resultMap type="sprviseAtchmnflDto" id="sprviseAtchMap">
 		<result property="sprviseAtchmnflNo" column="SPRVISE_ATCHMNFL_NO"/>
 		<result property="atchmnflNo" column="ATCHMNFL_NO"/>
 		<result property="atchmnflCours" column="ATCHMNFL_COURS"/>

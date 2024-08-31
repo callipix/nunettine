@@ -3,7 +3,7 @@ package kr.or.ddit.todaymeeting;
 import java.util.Date;
 import java.util.List;
 
-import kr.or.ddit.vo.UsersVO;
+import kr.or.ddit.vo.UsersDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,6 +26,6 @@ public class VChatRoom {
 	private String inviteMSG;
 	private String proflPhoto;
 	
-	List<UsersVO> userInfo;
+	List<UsersDto> userInfo;
 
 }

@@ -4,16 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
+import kr.or.ddit.vo.AdresDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.member.mypage.service.MemberMypageService;
-import kr.or.ddit.vo.AdresVO;
-import kr.or.ddit.vo.VMberUsersVO;
+import kr.or.ddit.vo.VMberUsersDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -72,46 +69,46 @@ public class MemberMypageController {
 	
 	//회원 정보수정
 	@PostMapping("/memberMypage")
-	public String updating(VMberUsersVO vMberUsersVO, AdresVO adresVO, HttpSession session) {
+	public String updating(VMberUsersDto vMberUsersDto, AdresDto adresDto, HttpSession session) {
 		Map<String, Object> map = (Map<String, Object>)session.getAttribute("memSession");
 //		log.info("업뎃전 map : " + map);
 //		log.info("업뎃전 vMberUsersVO : " + vMberUsersVO);
 		
 		int result = 0;
 		
-		String mberMbtlnum = vMberUsersVO.getMberMbtlnum();
+		String mberMbtlnum = vMberUsersDto.getMberMbtlnum();
 		if(mberMbtlnum != null && !mberMbtlnum.isEmpty()) {
 			map.put("mberMbtlnum",mberMbtlnum);
 			result += this.memberMypageService.updMberMbtlnum(map);
 //			log.info("map1 : " + map);
 		}
-		String userPassword = vMberUsersVO.getUserPassword();
+		String userPassword = vMberUsersDto.getUserPassword();
 		if(userPassword != null && !userPassword.isEmpty()) {
 			map.put("userPassword",userPassword);
 			result += this.memberMypageService.updPw(map);
 //			log.info("map2 : " + map);
 		}
-		String userNcnm = vMberUsersVO.getUserNcnm();
+		String userNcnm = vMberUsersDto.getUserNcnm();
 		if(userNcnm != null && !userNcnm.isEmpty()) {
 			map.put("userNcnm",userNcnm);
 			result += this.memberMypageService.updNcnm(map);
 //			log.info("map3 : " + map);
 		}
-		String email = vMberUsersVO.getEmail();
+		String email = vMberUsersDto.getEmail();
 		if(email != null && !email.isEmpty()) {
 			map.put("email",email);
 			result += this.memberMypageService.updEmail(map);
 //			log.info("map3 : " + map);
 		}
-		String userNm = vMberUsersVO.getUserNm();
+		String userNm = vMberUsersDto.getUserNm();
 		if(userNm != null && !userNm.isEmpty()) {
 			map.put("userNm",userNm);
 			result += this.memberMypageService.updNm(map);
 //			log.info("map5 : " + map);
 		}
-		String zip = adresVO.getZip();
-		String adres = adresVO.getAdres();
-		String detailAdres = adresVO.getDetailAdres();
+		String zip = adresDto.getZip();
+		String adres = adresDto.getAdres();
+		String detailAdres = adresDto.getDetailAdres();
 		if(detailAdres != null && !detailAdres.isEmpty()) {
 			map.put("zip",zip);
 			map.put("adres",adres);
@@ -120,8 +117,8 @@ public class MemberMypageController {
 //			log.info("map6 : " + map);
 		}
 		
-		MultipartFile multipartFile = vMberUsersVO.getUploadFile();
-		if(vMberUsersVO.getMberProflPhoto() != null && !vMberUsersVO.getMberProflPhoto().isEmpty()) {
+		MultipartFile multipartFile = vMberUsersDto.getUploadFile();
+		if(vMberUsersDto.getMberProflPhoto() != null && !vMberUsersDto.getMberProflPhoto().isEmpty()) {
 //			String uploadFolder = "d/team2/upload";
 //			log.info("파일경로 : " + uploadFolder);
 			

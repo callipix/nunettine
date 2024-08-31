@@ -2,9 +2,8 @@ package kr.or.ddit.pro.proBkmk.mapper;
 
 import java.util.List;
 
+import kr.or.ddit.vo.ProBkmkDto;
 import org.apache.ibatis.annotations.Param;
-
-import kr.or.ddit.vo.ProBkmkVO;
 
 public interface ProBkmkMapper {
 	
@@ -14,5 +13,5 @@ public interface ProBkmkMapper {
 
 	public int proBkmkDelete(@Param("proId") String proId, @Param("mberId") String mberId);
 
-	public List<ProBkmkVO> getFavInfo(String memId);
+	public List<ProBkmkDto> getFavInfo(String memId);
 }

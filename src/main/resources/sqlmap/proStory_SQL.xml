@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.or.ddit.board.pro_story.mapper.ProStoryMapper">
+<mapper namespace="kr.or.ddit.board.prostory.mapper.ProStoryMapper">
 	<!-- 게시글 번호(자동증가 , sequence)		proStoryBbscttNo	 -->
 	<!-- 게시글 제목(직접입력)					proStoryBbscttSj -->
 	<!-- 게시글 내용(직접입력)					proStoryBbscttCn -->
@@ -19,7 +19,7 @@
 	<!-- 		</if> -->
 	<!-- 	</sql> -->
 	
-	<select id="storyList" resultType="proStoryBbscttVO">
+	<select id="storyList" resultType="proStoryBbscttDto">
 	/** package kr.or.ddit.board.pro_story.mapper.ProStoryMapper storyList 프로스토리 리스트 */
 		SELECT
 				  PRO_STORY_BBSCTT_NO
@@ -33,7 +33,7 @@
 		ORDER BY  PRO_STORY_BBSCTT_NO
 	</select>
 	
-	<select id="getStory" parameterType="int" resultType="kr.or.ddit.board.pro_story.vo.ProStoryBbscttVO">
+	<select id="getStory" parameterType="int" resultType="kr.or.ddit.board.prostory.dto.ProStoryBbscttDto">
 	/** package kr.or.ddit.board.pro_story.mapper.ProStoryMapper getStory 프로스토리 특정글 */
 			SELECT 
 				    	ROW_NUMBER() OVER (ORDER BY A.PRO_STORY_BBSCTT_WR_DT DESC) AS ROW_NUM
@@ -67,8 +67,8 @@
 			   AND  PRO_STORY_BBSCTT_NO = #{proStoryBbscttNo}
 	</select>
 	
-	<select id="getPage" parameterType="java.util.Map" resultType="kr.or.ddit.board.pro_story.vo.ProStoryBbscttVO">
-	/** package kr.or.ddit.board.pro_story.mapper.ProStoryMapper getPage 프로스토리 페이징 */
+	<select id="getPage" parameterType="java.util.Map" resultType="kr.or.ddit.board.prostory.dto.ProStoryBbscttDto">
+	/** package kr.or.ddit.board.prostory.mapper.ProStoryMapper getPage 프로스토리 페이징 */
 	SELECT T.* 
 			FROM (
 					SELECT 
@@ -103,7 +103,7 @@
 	</select>
 	
 	<sql id="where">
-	/** package kr.or.ddit.board.pro_story.mapper.ProStoryMapper 검색 조건문 */
+	/** package kr.or.ddit.board.prostory.mapper.ProStoryMapper 검색 조건문 */
 	<choose>
 	    <when test ="type!=null and type!='' and type.equals('제목')">
 	     AND A.PRO_STORY_BBSCTT_SJ LIKE '%' || #{keyword} || '%'
@@ -120,7 +120,7 @@
 	</choose>
 	</sql>
 	
-	<select id="getWeekRecommend" resultType="kr.or.ddit.board.pro_story.vo.ProStoryBbscttVO">
+	<select id="getWeekRecommend" resultType="kr.or.ddit.board.prostory.dto.ProStoryBbscttDto">
 	/** package kr.or.ddit.board.pro_story.mapper.ProStoryMapper getWeekRecommend 최근 일주일 내 추천수 상위 4개 가져오기 */
 	   <![CDATA[ 
 	    SELECT *
@@ -169,7 +169,7 @@
 		   AND USER_ID = #{userId}
 	</select>
 	
-	<insert id="insert" parameterType="proStoryBbscttVO">
+	<insert id="insert" parameterType="proStoryBbscttDto">
 	/** package kr.or.ddit.board.pro_story.mapper.ProStoryMapper insert 게시글 등록 */
 		INSERT INTO
 					PRO_STORY_BBSCTT(
@@ -190,7 +190,7 @@
 							 	  	)
 	</insert>
 	
-	<update id="updateStory" parameterType="kr.or.ddit.board.pro_story.vo.ProStoryBbscttVO">
+	<update id="updateStory" parameterType="kr.or.ddit.board.prostory.dto.ProStoryBbscttDto">
 	/** package kr.or.ddit.board.pro_story.mapper.ProStoryMapper updateStory 게시글 수정 */
 	 UPDATE   PRO_STORY_BBSCTT
 	
@@ -219,13 +219,13 @@
 	</update>
 	
 	<!-- 좋아요 추가 -->
-	<insert id="goodSave" parameterType="kr.or.ddit.board.pro_story.vo.GoodPointVO">
+	<insert id="goodSave" parameterType="kr.or.ddit.board.prostory.dto.GoodPointDto">
 	/** package kr.or.ddit.board.pro_story.mapper.ProStoryMapper goodSave 좋아요 추가시 */
 	    INSERT INTO GOODPOINT
 	    VALUES(GOOD_SEQ.NEXTVAL, #{proStoryBbscttNo}, #{userId})
 	</insert>
 	
-	<update id="goodUp" parameterType="kr.or.ddit.board.pro_story.vo.ProStoryBbscttVO">
+	<update id="goodUp" parameterType="kr.or.ddit.board.prostory.dto.ProStoryBbscttDto">
 	/** package kr.or.ddit.board.pro_story.mapper.ProStoryMapper updateGood 좋아요 추가시 게시글 반영 */
 	
 		UPDATE PRO_STORY_BBSCTT
@@ -234,14 +234,14 @@
 	</update>
 	
 	<!-- 좋아요 삭제 -->
-	<delete id="goodRemove" parameterType="kr.or.ddit.board.pro_story.vo.GoodPointVO">
+	<delete id="goodRemove" parameterType="kr.or.ddit.board.prostory.dto.GoodPointDto">
 	/** package kr.or.ddit.board.pro_story.mapper.ProStoryMapper removeGood 좋아요 삭제시 */
 	
 	    DELETE FROM GOODPOINT
 	     WHERE PRO_STORY_BBSCTT_NO = #{proStoryBbscttNo}
 	       AND USER_ID=#{userId}
 	</delete>
-	<update id="goodDown" parameterType="kr.or.ddit.board.pro_story.vo.ProStoryBbscttVO">
+	<update id="goodDown" parameterType="kr.or.ddit.board.prostory.dto.ProStoryBbscttDto">
 	/** package kr.or.ddit.board.pro_story.mapper.ProStoryMapper updateGoodCancle 좋아요 삭제시 게시글 반영 */
 	
 		UPDATE PRO_STORY_BBSCTT
@@ -249,7 +249,7 @@
 		 WHERE PRO_STORY_BBSCTT_NO = #{proStoryBbscttNo}
 	</update>
 	
-	<select id="goodCount" parameterType="kr.or.ddit.board.pro_story.vo.ProStoryBbscttVO" resultType="kr.or.ddit.board.pro_story.vo.ProStoryBbscttVO">
+	<select id="goodCount" parameterType="kr.or.ddit.board.prostory.dto.ProStoryBbscttDto" resultType="kr.or.ddit.board.prostory.dto.ProStoryBbscttDto">
 	/** package kr.or.ddit.board.pro_story.mapper.ProStoryMapper GoodCount 좋아요 추가/삭제시 반영된 좋아요 개수 가져오기 */
 	
 		SELECT PRO_STORY_BBSCTT_RECOMMEND

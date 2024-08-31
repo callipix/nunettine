@@ -2,23 +2,23 @@ package kr.or.ddit.chatting.mapper;
 
 import java.util.List;
 
-import kr.or.ddit.chatting.vo.MessageVO;
-import kr.or.ddit.vo.TdmtngChSpMshgVO;
-import kr.or.ddit.vo.TdmtngVO;
+import kr.or.ddit.chatting.dto.MessageDto;
+import kr.or.ddit.vo.TdmtngChSpMshgDto;
+import kr.or.ddit.vo.TdmtngDto;
 
 public interface MessageMapper {
 
-	public int insert(TdmtngChSpMshgVO message);
+	public int insert(TdmtngChSpMshgDto message);
 	
-	public List<MessageVO> messageList(int roomNo);	
+	public List<MessageDto> messageList(int roomNo);
 
-	public List<MessageVO> msgPaging(int roomNo);	
+	public List<MessageDto> msgPaging(int roomNo);
 	
 	String firstMsgDate(int msgNo);
 
-	public List<TdmtngChSpMshgVO> roomMsgList(int tdmtngNo);
+	public List<TdmtngChSpMshgDto> roomMsgList(int tdmtngNo);
 	
 	public int getMsgCount(int roomNo);
 	
-	public TdmtngVO firstMsg(TdmtngVO inviteMSG);
+	public TdmtngDto firstMsg(TdmtngDto inviteMSG);
 }

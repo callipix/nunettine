@@ -50,25 +50,25 @@ $(function(){
 				
 				$("#usersTbody").html("");
 			
-				$.each(result.content,function(idx, usersVO){
-					str += "<tr onclick=\"location.href='/usersSearch/detail?userId=" + usersVO.userId + "'\" style=\"cursor: pointer;\">";
+				$.each(result.content,function(idx, usersDto){
+					str += "<tr onclick=\"location.href='/usersSearch/detail?userId=" + usersDto.userId + "'\" style=\"cursor: pointer;\">";
 					/* str += "<tr>"; */
 					
 					
-					str += "<td>"+usersVO.rnum+"</td>";
-					str += "<td>"+usersVO.userId+"</td>";
-					str += "<td>"+usersVO.userNcnm+"</td>";
-					str += "<td>"+usersVO.userNm+"</td>";
- 					//str += "<td>"+usersVO.userPassword+"</td>";
+					str += "<td>"+usersDto.rnum+"</td>";
+					str += "<td>"+usersDto.userId+"</td>";
+					str += "<td>"+usersDto.userNcnm+"</td>";
+					str += "<td>"+usersDto.userNm+"</td>";
+ 					//str += "<td>"+usersDto.userPassword+"</td>";
 					str += "<td>";
-					if (usersVO.emplyrTy === "ET01") {
+					if (usersDto.emplyrTy === "ET01") {
 					    str += "<div class='col-sm-6 col-md-4 col-lg-3 text-info'><i class='mdi mdi-face'></i> 회원</div>";
-					} else if (usersVO.emplyrTy === "ET02") {
+					} else if (usersDto.emplyrTy === "ET02") {
 					    str += "<div class='col-sm-6 col-md-4 col-lg-3 text-primary'><i class='mdi mdi-emoticon-cool'></i> 프로</div>";
 					} else {
-					    str += convertUserType(usersVO.emplyrTy); // 기타 사용자 유형 처리
+					    str += convertUserType(usersDto.emplyrTy); // 기타 사용자 유형 처리
 					}
-					str += "<td>"+convertUserType2(usersVO.secsnAt)+"</td>";
+					str += "<td>"+convertUserType2(usersDto.secsnAt)+"</td>";
 					
 					str += "</tr>";
 				
@@ -110,26 +110,26 @@ $(function(){
 			
 			$("#usersTbody").html("");
 			
-			$.each(result.content,function(idx, usersVO){
+			$.each(result.content,function(idx, usersDto){
 
-				str += "<tr onclick=\"location.href='/usersSearch/detail?userId=" + usersVO.userId + "'\" style=\"cursor: pointer;\">";
+				str += "<tr onclick=\"location.href='/usersSearch/detail?userId=" + usersDto.userId + "'\" style=\"cursor: pointer;\">";
 				/* str += "<tr>"; */
 				
 				
-				str += "<td>"+usersVO.rnum+"</td>";
-				str += "<td>"+usersVO.userId+"</td>";
-				str += "<td>"+usersVO.userNcnm+"</td>";
-				str += "<td>"+usersVO.userNm+"</td>";
-				//str += "<td>"+usersVO.userPassword+"</td>";
+				str += "<td>"+usersDto.rnum+"</td>";
+				str += "<td>"+usersDto.userId+"</td>";
+				str += "<td>"+usersDto.userNcnm+"</td>";
+				str += "<td>"+usersDto.userNm+"</td>";
+				//str += "<td>"+usersDto.userPassword+"</td>";
 				str += "<td>";
-				if (usersVO.emplyrTy === "ET01") {
+				if (usersDto.emplyrTy === "ET01") {
 				    str += "<div class='col-sm-6 col-md-4 col-lg-3 text-info'><i class='mdi mdi-face'></i> 회원</div>";
-				} else if (usersVO.emplyrTy === "ET02") {
+				} else if (usersDto.emplyrTy === "ET02") {
 				    str += "<div class='col-sm-6 col-md-4 col-lg-3 text-primary'><i class='mdi mdi-emoticon-cool'></i> 프로</div>";
 				} else {
-				    str += convertUserType(usersVO.emplyrTy); // 기타 사용자 유형 처리
+				    str += convertUserType(usersDto.emplyrTy); // 기타 사용자 유형 처리
 				}
-				str += "<td>"+convertUserType2(usersVO.secsnAt)+"</td>";
+				str += "<td>"+convertUserType2(usersDto.secsnAt)+"</td>";
 				
 				str += "</tr>";
 				

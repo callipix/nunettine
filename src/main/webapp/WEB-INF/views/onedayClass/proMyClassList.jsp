@@ -172,35 +172,35 @@ function pagingList(data){
 				$("#userRate").html('<div class="starRev" style="margin-right:15px;"><span class="starRev starR on">👥</span></div><p style="font-size:1.7rem; line-height: 40px;">'+res.totalUser+' 명</p>');
 			}
 			
-			$.each(res.data.content,function(idx, vOndyclProUsersVO){
+			$.each(res.data.content,function(idx, vOndyclProUsersDto){
 				str += "<tr style=\"cursor: pointer;\">";   
 				/* str += "<tr>"; */
-				if(vOndyclProUsersVO.ondyclDelType == 0){
+				if(vOndyclProUsersDto.ondyclDelType == 0){
 		
 					
-					if(today < vOndyclProUsersVO.ondyclSchdulDe){
-						str += "<td onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + vOndyclProUsersVO.ondyclNo + "&startPoint=proMyClass'\">"+vOndyclProUsersVO.rnum+"</td>";
-						str += "<td onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + vOndyclProUsersVO.ondyclNo + "&startPoint=proMyClass'\">"+vOndyclProUsersVO.ondyclNm+"</td>";
-						str += "<td onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + vOndyclProUsersVO.ondyclNo + "&startPoint=proMyClass'\">"+vOndyclProUsersVO.ondyclSchdulDe+"</td>";
-						if(thirdDate < vOndyclProUsersVO.ondyclSchdulDe){
-							str += "<td><button type='button' class='btn btn-outline-secondary btn-rounded btn-icon' id='"+vOndyclProUsersVO.ondyclNo+"' onclick='proCancelClass(this)'><i class='mdi mdi-heart-broken'></i></button></td>";
+					if(today < vOndyclProUsersDto.ondyclSchdulDe){
+						str += "<td onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + vOndyclProUsersDto.ondyclNo + "&startPoint=proMyClass'\">"+vOndyclProUsersDto.rnum+"</td>";
+						str += "<td onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + vOndyclProUsersDto.ondyclNo + "&startPoint=proMyClass'\">"+vOndyclProUsersDto.ondyclNm+"</td>";
+						str += "<td onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + vOndyclProUsersDto.ondyclNo + "&startPoint=proMyClass'\">"+vOndyclProUsersDto.ondyclSchdulDe+"</td>";
+						if(thirdDate < vOndyclProUsersDto.ondyclSchdulDe){
+							str += "<td><button type='button' class='btn btn-outline-secondary btn-rounded btn-icon' id='"+vOndyclProUsersDto.ondyclNo+"' onclick='proCancelClass(this)'><i class='mdi mdi-heart-broken'></i></button></td>";
 						}else{
-							str += "<td><button type='button' disabled class='btn btn-outline-secondary btn-rounded btn-icon' id='"+vOndyclProUsersVO.ondyclNo+"' onclick='proCancelClass(this)'><i class='mdi mdi-heart-broken'></i></button></td>";
+							str += "<td><button type='button' disabled class='btn btn-outline-secondary btn-rounded btn-icon' id='"+vOndyclProUsersDto.ondyclNo+"' onclick='proCancelClass(this)'><i class='mdi mdi-heart-broken'></i></button></td>";
 						}
 					}else{
-						str += "<td style='color:lightgray;' onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + vOndyclProUsersVO.ondyclNo + "&startPoint=proMyClass'\">"+vOndyclProUsersVO.rnum+"</td>";
-						str += "<td style='color:lightgray;' onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + vOndyclProUsersVO.ondyclNo + "&startPoint=proMyClass'\">"+vOndyclProUsersVO.ondyclNm+"</td>";
-						str += "<td style='text-decoration:line-through; color:red;' onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + vOndyclProUsersVO.ondyclNo + "&startPoint=proMyClass'\">"+vOndyclProUsersVO.ondyclSchdulDe+"</td>";
-						str += "<td><button type='button' disabled class='btn btn-outline-secondary btn-rounded btn-icon' id='"+vOndyclProUsersVO.ondyclNo+"' onclick='proCancelClass(this)'><i class='mdi mdi-heart-broken'></i></button></td>";
+						str += "<td style='color:lightgray;' onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + vOndyclProUsersDto.ondyclNo + "&startPoint=proMyClass'\">"+vOndyclProUsersDto.rnum+"</td>";
+						str += "<td style='color:lightgray;' onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + vOndyclProUsersDto.ondyclNo + "&startPoint=proMyClass'\">"+vOndyclProUsersDto.ondyclNm+"</td>";
+						str += "<td style='text-decoration:line-through; color:red;' onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + vOndyclProUsersDto.ondyclNo + "&startPoint=proMyClass'\">"+vOndyclProUsersDto.ondyclSchdulDe+"</td>";
+						str += "<td><button type='button' disabled class='btn btn-outline-secondary btn-rounded btn-icon' id='"+vOndyclProUsersDto.ondyclNo+"' onclick='proCancelClass(this)'><i class='mdi mdi-heart-broken'></i></button></td>";
 					}
 					str += "</tr>";
 				}else{
-					str += "<td style='text-decoration:line-through; color:gray;'>"+vOndyclProUsersVO.rnum+"</td>";
-					str += "<td style='text-decoration:line-through; color:gray;'>"+vOndyclProUsersVO.ondyclNm+"</td>";
-					str += "<td style='text-decoration:line-through; color:gray;'>"+vOndyclProUsersVO.ondyclSchdulDe+"</td>";
+					str += "<td style='text-decoration:line-through; color:gray;'>"+vOndyclProUsersDto.rnum+"</td>";
+					str += "<td style='text-decoration:line-through; color:gray;'>"+vOndyclProUsersDto.ondyclNm+"</td>";
+					str += "<td style='text-decoration:line-through; color:gray;'>"+vOndyclProUsersDto.ondyclSchdulDe+"</td>";
 	// 				console.log(today);
-	// 				console.log(vOndyclProUsersVO.ondyclSchdulDe);
-					str += "<td><button type='button' disabled class='btn btn-outline-secondary btn-rounded btn-icon' id='"+vOndyclProUsersVO.ondyclNo+"' onclick='proCancelClass(this)'><i class='mdi mdi-heart-broken'></i></button></td>";
+	// 				console.log(vOndyclProUsersDto.ondyclSchdulDe);
+					str += "<td><button type='button' disabled class='btn btn-outline-secondary btn-rounded btn-icon' id='"+vOndyclProUsersDto.ondyclNo+"' onclick='proCancelClass(this)'><i class='mdi mdi-heart-broken'></i></button></td>";
 					str += "</tr>";
 					
 				}

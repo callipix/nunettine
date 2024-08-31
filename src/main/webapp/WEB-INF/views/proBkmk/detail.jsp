@@ -57,10 +57,10 @@ $(function(){
 <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; margin-top:50px;">
 		<h3 style="margin: 30px 0 0 10px; font-family: 'seolleimcool-SemiBold'; color:#a7a7a7">✨ 내가 즐겨찾은 프로를 쉽게 확인하세요!</h3>
 </div>
-<%-- <p>${proBkmkVO};</p> --%>
+<%-- <p>${proBkmkDto};</p> --%>
 <div style="margin:40px 200px 300px 200px; text-align:center;">
 	<ul>
-		<c:forEach items="${proBkmkVO}" var="proBkmk" varStatus="status">
+		<c:forEach items="${proBkmkDto}" var="proBkmk" varStatus="status">
 		    <c:set var="proId" value="${proBkmk.proId}" />
 		    <c:set var="spclty" value="${spcltyCL[status.index]}" /> <!-- 프로 전문분야 : 현재 인덱스에 해당하는 특성 코드 가져오기 -->
 		    <li style="list-style-type: none; display: inline-block; margin: 10px 10px 0 0;">

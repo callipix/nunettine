@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.or.ddit.board.review_board.mapper.ReviewBoardMapper">
+<mapper namespace="kr.or.ddit.board.reviewboard.mapper.ReviewBoardMapper">
 
 	<sql id="where">
 		<if test="keyword!=null and keyword!=''">
@@ -20,7 +20,7 @@
 		</if>
 	</sql>
 	
-	<select id="list" parameterType="hashMap" resultType="aftusBbscttVO">
+	<select id="list" parameterType="hashMap" resultType="aftusBbscttDto">
 		SELECT T.* FROM
 		(
 		SELECT 
@@ -98,7 +98,7 @@
 		WHERE  T.RNUM BETWEEN (#{currentPage}*10) - (10 - 1) AND (#{currentPage}*10)
 	</select>	
 	
-	<select id="detail" parameterType="int" resultType="aftusBbscttVO">
+	<select id="detail" parameterType="int" resultType="aftusBbscttDto">
 		SELECT
 			A.AFTUS_BBSCTT_NO
 			, A.AFTUS_BBSCTT_SJ
@@ -113,7 +113,7 @@
 			AND A.SRVC_REQUST_NO = C.SRVC_REQUST_NO
 	</select>
 	
-	<insert id="createAjax" parameterType="aftusBbscttVO">
+	<insert id="createAjax" parameterType="aftusBbscttDto">
     	<selectKey keyProperty="aftusBbscttNo" resultType="int" order="BEFORE">
         	SELECT AFTUS_BBSCTT_NO_seq.nextval FROM DUAL
     	</selectKey>
@@ -150,7 +150,7 @@
 		WHERE AFTUS_BBSCTT_NO = #{aftusBbscttNo}
 	</delete>
 	
-	<update id="update" parameterType="aftusBbscttVO">
+	<update id="update" parameterType="aftusBbscttDto">
 		UPDATE AFTUS_BBSCTT 
 		SET AFTUS_BBSCTT_SJ = #{aftusBbscttSj}
 		<if test="aftusBbscttCn != '' and aftusBbscttCn != null">
@@ -163,7 +163,7 @@
 	</update>
 	
 	<!-- 파일업로드 -->
-	<insert id="insertFile" parameterType="sprviseAtchmnflVO">
+	<insert id="insertFile" parameterType="sprviseAtchmnflDto">
 		INSERT INTO SPRVISE_ATCHMNFL
 			(
 			SPRVISE_ATCHMNFL_NO
@@ -187,7 +187,7 @@
 			)
 	</insert>
 	
-	<insert id="updateFile" parameterType="sprviseAtchmnflVO">
+	<insert id="updateFile" parameterType="sprviseAtchmnflDto">
 		<selectKey keyProperty="atchmnflNo" resultType="int" order="BEFORE"> 
     		SELECT 
     			NVL(MAX(ATCHMNFL_NO), 0) + 1 
@@ -218,7 +218,7 @@
 			)
 	</insert>
 	
-	<select id="fileList" parameterType="int" resultType="sprviseAtchmnflVO">
+	<select id="fileList" parameterType="int" resultType="sprviseAtchmnflDto">
 		SELECT 
 			SPRVISE_ATCHMNFL_NO
 			, ATCHMNFL_NO
@@ -228,14 +228,14 @@
 		WHERE SPRVISE_ATCHMNFL_NO = #{sprviseAtchmnflNo}
 	</select>
 	
-	<delete id="fileDel" parameterType="sprviseAtchmnflVO">
+	<delete id="fileDel" parameterType="sprviseAtchmnflDto">
 		DELETE FROM SPRVISE_ATCHMNFL
 		WHERE SPRVISE_ATCHMNFL_NO = #{sprviseAtchmnflNo} 
 			AND ATCHMNFL_NO = #{atchmnflNo}
 	</delete>
 	
 	<!-- 댓글 -->
-	<select id="aftusBbscttAnswerList" parameterType="int" resultType="aftusBbscttAnswerVO">
+	<select id="aftusBbscttAnswerList" parameterType="int" resultType="aftusBbscttAnswerDto">
     	SELECT 
     		A.AFTUS_BBSCTT_ANSWER_NO, A.AFTUS_BBSCTT_NO
     		, A.AFTUS_BBSCTT_ANSWER_CN
@@ -253,7 +253,7 @@
 		ORDER BY A.AFTUS_BBSCTT_ANSWER_NO DESC
     </select>
     
-    <insert id="aftusBbscttAnswerInsert" parameterType="aftusBbscttAnswerVO">
+    <insert id="aftusBbscttAnswerInsert" parameterType="aftusBbscttAnswerDto">
     	INSERT INTO AFTUS_BBSCTT_ANSWER
     		(
     		AFTUS_BBSCTT_ANSWER_NO
@@ -278,7 +278,7 @@
     		AND AFTUS_BBSCTT_ANSWER_NO = #{aftusBbscttAnswerNo}
     </delete>
     
-    <update id="aftusBbscttAnswerUpdate" parameterType="aftusBbscttAnswerVO">
+    <update id="aftusBbscttAnswerUpdate" parameterType="aftusBbscttAnswerDto">
     	UPDATE AFTUS_BBSCTT_ANSWER
 		SET
     		AFTUS_BBSCTT_ANSWER_CN = #{aftusBbscttAnswerCn},
@@ -287,7 +287,7 @@
     		AFTUS_BBSCTT_ANSWER_NO = #{aftusBbscttAnswerNo}
     </update>
     
-    <select id="ansAnsList" parameterType="int" resultType="aftusBbscttAnswerVO">
+    <select id="ansAnsList" parameterType="int" resultType="aftusBbscttAnswerDto">
 		SELECT 
 			A.AFTUS_BBSCTT_ANSWER_NO
 			, A.AFTUS_BBSCTT_NO
@@ -307,7 +307,7 @@
 		ORDER BY A.AFTUS_BBSCTT_ANSWER_NO ASC
     </select>
       
-    <insert id="ansAnsInt" parameterType="aftusBbscttAnswerVO">
+    <insert id="ansAnsInt" parameterType="aftusBbscttAnswerDto">
     	INSERT INTO AFTUS_BBSCTT_ANSWER 
     		(
 		    AFTUS_BBSCTT_ANSWER_NO

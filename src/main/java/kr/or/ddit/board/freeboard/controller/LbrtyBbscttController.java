@@ -13,10 +13,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import kr.or.ddit.vo.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,12 +29,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.board.freeboard.service.LbrtyBbscttService;
 import kr.or.ddit.util.ArticlePage;
-import kr.or.ddit.vo.CommonCdDetailVO;
-import kr.or.ddit.vo.LbrtyBbscttAnswerVO;
-import kr.or.ddit.vo.LbrtyBbscttAnswerVO2;
-import kr.or.ddit.vo.LbrtyBbscttVO;
-import kr.or.ddit.vo.LbrtyBbscttVO2;
-import kr.or.ddit.vo.SntncDeclVO;
 import kr.or.ddit.vo.SprviseAtchmnfl;
 import lombok.extern.slf4j.Slf4j;
 
@@ -79,7 +72,7 @@ public class LbrtyBbscttController {
 		log.info("detail -> userId : " + userId);
 		
 		log.info("detail->lbrtyBbscttNo : " + lbrtyBbscttNo);
-		LbrtyBbscttVO detail = this.lbrtyBbscttService.lbrtyBbscttDetail(lbrtyBbscttNo);
+		LbrtyBbscttDto detail = this.lbrtyBbscttService.lbrtyBbscttDetail(lbrtyBbscttNo);
 		// List<LbrtyBbscttVO2> list = this.lbrtyBbscttService.lbrtyBbscttList();
 		// log.info("list : " + list);
 		log.info("detail : " + detail);
@@ -89,7 +82,7 @@ public class LbrtyBbscttController {
 		log.info("detail-> sprviseAtchmnflNo: " + sprviseAtchmnflNo);
 		List<SprviseAtchmnfl> sprList = this.lbrtyBbscttService.sprviseAtchmnflDetail(sprviseAtchmnflNo);
 		
-		List<CommonCdDetailVO> comCdList = this.lbrtyBbscttService.declComCdDeSelect(); 
+		List<CommonCdDetailDto> comCdList = this.lbrtyBbscttService.declComCdDeSelect();
 		log.info("detail-> comCdList: " + comCdList);
 		model.addAttribute("comCdList", comCdList);
 		
@@ -106,12 +99,12 @@ public class LbrtyBbscttController {
 	}
 
 	@GetMapping("/delete")
-	public String delete(LbrtyBbscttVO lbrtyBbscttVO, Model model) {
-		log.info("lbNO : "+lbrtyBbscttVO.getLbrtyBbscttNo());
-		log.info("sqNO : " + lbrtyBbscttVO.getSprviseAtchmnflNo());
+	public String delete(LbrtyBbscttDto lbrtyBbscttDto, Model model) {
+		log.info("lbNO : "+ lbrtyBbscttDto.getLbrtyBbscttNo());
+		log.info("sqNO : " + lbrtyBbscttDto.getSprviseAtchmnflNo());
 		//log.info("detail->lbrtyBbscttNo : " + lbrtyBbscttNo);
 		
-		int result = this.lbrtyBbscttService.lbrtyBbscttDelete(lbrtyBbscttVO);
+		int result = this.lbrtyBbscttService.lbrtyBbscttDelete(lbrtyBbscttDto);
 		
 		//--------------------------
 		log.info("result : " + result);
@@ -140,11 +133,11 @@ public class LbrtyBbscttController {
 	
 	//자유 게시글 등록
 	@PostMapping("/create")
-	public String create(LbrtyBbscttVO lbrtyBbscttVO) {
+	public String create(LbrtyBbscttDto lbrtyBbscttDto) {
 		
 		
 		log.info("넘어 왔네");
-		log.info("create lbrtyBbscttVO : " + lbrtyBbscttVO);
+		log.info("create lbrtyBbscttVO : " + lbrtyBbscttDto);
 
 		
 		File uploadPath = new File(uploadFolder,getFolder());
@@ -154,7 +147,7 @@ public class LbrtyBbscttController {
 			uploadPath.mkdirs(); 
 		}
 		
-		int result = this.lbrtyBbscttService.lbrtyBbscttInsert(lbrtyBbscttVO); //스프링
+		int result = this.lbrtyBbscttService.lbrtyBbscttInsert(lbrtyBbscttDto); //스프링
 		log.info("lbrtyBbscttInsert->result : " + result);
 		//파일 객체 
 		//MultipartFile[] multipartFile = lbrtyBbscttVO.getUploadFile();
@@ -179,10 +172,10 @@ public class LbrtyBbscttController {
 	//게시글 삭제
 	@ResponseBody
 	@PostMapping("/bbsDelete")
-	public int bbsDelete(@RequestBody LbrtyBbscttVO lbrtyBbscttVO) {
-		log.info("bbsDelete -> LbrtyBbscttVO : " + lbrtyBbscttVO);
+	public int bbsDelete(@RequestBody LbrtyBbscttDto lbrtyBbscttDto) {
+		log.info("bbsDelete -> LbrtyBbscttVO : " + lbrtyBbscttDto);
 		int result = 0;
-		result = this.lbrtyBbscttService.lbrtyBbscttDelete(lbrtyBbscttVO);
+		result = this.lbrtyBbscttService.lbrtyBbscttDelete(lbrtyBbscttDto);
 		log.info("bbsDelete -> result : " + result);
 		return result;
 	}
@@ -190,10 +183,10 @@ public class LbrtyBbscttController {
 	//게시글 수정
 	@ResponseBody
 	@PostMapping("/bbsUpdate")
-	public int bbsUpdate(LbrtyBbscttVO lbrtyBbscttVO) {
-		log.info("bbsUpdate -> LbrtyBbscttVO : " + lbrtyBbscttVO);
+	public int bbsUpdate(LbrtyBbscttDto lbrtyBbscttDto) {
+		log.info("bbsUpdate -> LbrtyBbscttVO : " + lbrtyBbscttDto);
 		int result = 0;
-		result = this.lbrtyBbscttService.lbrtyBbscttUpdate(lbrtyBbscttVO);
+		result = this.lbrtyBbscttService.lbrtyBbscttUpdate(lbrtyBbscttDto);
 		log.info("bbsUpdate -> result : " + result);
 		return result;
 	}
@@ -201,10 +194,10 @@ public class LbrtyBbscttController {
 	//아작스 댓글 리스트 조회
 	@ResponseBody
 	@RequestMapping(value="/listAns",method=RequestMethod.POST)
-	public List<LbrtyBbscttAnswerVO> listAns(@RequestBody Map<String, Object> map){
+	public List<LbrtyBbscttAnswerDto> listAns(@RequestBody Map<String, Object> map){
 		String lbrtyBbscttNo = (String)map.get("lbrtyBbscttNo");
 		log.info("lbrtyBbscttNo : " + lbrtyBbscttNo);
-		List<LbrtyBbscttAnswerVO> listAnsVO = this.lbrtyBbscttService.lbrtyBbscttAnswerList(lbrtyBbscttNo);
+		List<LbrtyBbscttAnswerDto> listAnsVO = this.lbrtyBbscttService.lbrtyBbscttAnswerList(lbrtyBbscttNo);
 		log.info("listAnsVO : " + listAnsVO);
 		
 		return listAnsVO;
@@ -213,41 +206,41 @@ public class LbrtyBbscttController {
 	//아작스 댓글 입력
 	@ResponseBody
 	@PostMapping("/insertAns")
-	public int insertAns(@RequestBody LbrtyBbscttAnswerVO lbrtyBbscttAnswerVO) {
+	public int insertAns(@RequestBody LbrtyBbscttAnswerDto lbrtyBbscttAnswerDto) {
 		
-		log.info("lbrtyBbscttAnswerCn : " + lbrtyBbscttAnswerVO);
+		log.info("lbrtyBbscttAnswerCn : " + lbrtyBbscttAnswerDto);
 		int result = 0;
-		result = this.lbrtyBbscttService.lbrtyBbscttAnswerInsert(lbrtyBbscttAnswerVO);
+		result = this.lbrtyBbscttService.lbrtyBbscttAnswerInsert(lbrtyBbscttAnswerDto);
 		return result;
 	}
 	//아작스 댓글 삭제
 	@ResponseBody
 	@PostMapping("/deleteAns")
-	public int deleteAns(@RequestBody LbrtyBbscttAnswerVO lbrtyBbscttAnswerVO) {
+	public int deleteAns(@RequestBody LbrtyBbscttAnswerDto lbrtyBbscttAnswerDto) {
 		
-		log.info("deleteAns -> lbrtyBbscttAnswerVO : " + lbrtyBbscttAnswerVO);
+		log.info("deleteAns -> lbrtyBbscttAnswerVO : " + lbrtyBbscttAnswerDto);
 		int result = 0;
-		result = this.lbrtyBbscttService.lbrtyBbscttAnswerDelete(lbrtyBbscttAnswerVO);
+		result = this.lbrtyBbscttService.lbrtyBbscttAnswerDelete(lbrtyBbscttAnswerDto);
 		return result;
 	}
 	
 	//아작스 댓글 수정
 	@ResponseBody
 	@PostMapping("/updataAns")
-	public int updataAns(@RequestBody LbrtyBbscttAnswerVO lbrtyBbscttAnswerVO) {
-		log.info("updataAns -> lbrtyBbscttAnswerVO : " + lbrtyBbscttAnswerVO);
+	public int updataAns(@RequestBody LbrtyBbscttAnswerDto lbrtyBbscttAnswerDto) {
+		log.info("updataAns -> lbrtyBbscttAnswerVO : " + lbrtyBbscttAnswerDto);
 		int result = 0;
-		result = this.lbrtyBbscttService.lbrtyBbscttAnswerUpdate(lbrtyBbscttAnswerVO);
+		result = this.lbrtyBbscttService.lbrtyBbscttAnswerUpdate(lbrtyBbscttAnswerDto);
 		return result;
 	}
 	
 	//아작스 댓댓글 보기
 	@ResponseBody
 	@PostMapping("/ansAnsView")
-	public List<LbrtyBbscttAnswerVO2> ansAnsView(@RequestBody LbrtyBbscttAnswerVO lbrtyBbscttAnswerVO) {
-		log.info("ansAnsView -> lbrtyBbscttAnswerVO : " + lbrtyBbscttAnswerVO);
-		List<LbrtyBbscttAnswerVO2> ansAnsViewVO = null;
-		ansAnsViewVO = this.lbrtyBbscttService.ansAnsList(lbrtyBbscttAnswerVO);
+	public List<LbrtyBbscttAnswerDto2> ansAnsView(@RequestBody LbrtyBbscttAnswerDto lbrtyBbscttAnswerDto) {
+		log.info("ansAnsView -> lbrtyBbscttAnswerVO : " + lbrtyBbscttAnswerDto);
+		List<LbrtyBbscttAnswerDto2> ansAnsViewVO = null;
+		ansAnsViewVO = this.lbrtyBbscttService.ansAnsList(lbrtyBbscttAnswerDto);
 		log.info("ansAnsView -> ansAnsViewVO : " + ansAnsViewVO);
 		return ansAnsViewVO;
 	}
@@ -255,10 +248,10 @@ public class LbrtyBbscttController {
 	//아작스 댓댓글 달기
 	@ResponseBody
 	@PostMapping("/ansAnsInt")
-	public int ansAnsInt(@RequestBody LbrtyBbscttAnswerVO lbrtyBbscttAnswerVO) {
-		log.info("ansAnsInt -> lbrtyBbscttAnswerVO : " + lbrtyBbscttAnswerVO);
+	public int ansAnsInt(@RequestBody LbrtyBbscttAnswerDto lbrtyBbscttAnswerDto) {
+		log.info("ansAnsInt -> lbrtyBbscttAnswerVO : " + lbrtyBbscttAnswerDto);
 		int result = 0;
-		result = this.lbrtyBbscttService.ansAnsInt(lbrtyBbscttAnswerVO);
+		result = this.lbrtyBbscttService.ansAnsInt(lbrtyBbscttAnswerDto);
 		log.info("ansAnsInt -> result : " + result);
 		return result;
 	}
@@ -266,10 +259,10 @@ public class LbrtyBbscttController {
 	//아작스 댓댓글 갯수 구하기
 	@ResponseBody
 	@PostMapping("/ansAnsCnt")
-	public int ansAnsCnt(@RequestBody LbrtyBbscttAnswerVO lbrtyBbscttAnswerVO) {
-		log.info("ansAnsCnt -> lbrtyBbscttAnswerVO : " + lbrtyBbscttAnswerVO);
+	public int ansAnsCnt(@RequestBody LbrtyBbscttAnswerDto lbrtyBbscttAnswerDto) {
+		log.info("ansAnsCnt -> lbrtyBbscttAnswerVO : " + lbrtyBbscttAnswerDto);
 		int result = 0;
-		result = this.lbrtyBbscttService.ansAnsCnt(lbrtyBbscttAnswerVO);
+		result = this.lbrtyBbscttService.ansAnsCnt(lbrtyBbscttAnswerDto);
 		log.info("ansAnsCnt -> result : " + result);
 		return result;
 	}
@@ -355,10 +348,10 @@ public class LbrtyBbscttController {
 		map.put("total", total);
 		
 		map.put("currentPage", currentPage);
-		List<LbrtyBbscttVO2> lbrtyBbscttVO2list = this.lbrtyBbscttService.lbrtyBbscttListPage(map);
-		log.info("lbrtyBbscttVO2list : " + lbrtyBbscttVO2list);
+		List<LbrtyBbscttDto2> lbrtyBbscttDto2List = this.lbrtyBbscttService.lbrtyBbscttListPage(map);
+		log.info("lbrtyBbscttVO2list : " + lbrtyBbscttDto2List);
 
-		model.addAttribute("lbrtyBbscttVO2list", lbrtyBbscttVO2list);
+		model.addAttribute("lbrtyBbscttVO2list", lbrtyBbscttDto2List);
 		
 		return "lbrtybbsctt/read2";
 		
@@ -367,8 +360,8 @@ public class LbrtyBbscttController {
 	//검색 목록 출력
 	@ResponseBody
 	@PostMapping("/ajaxLbList")
-	public ArticlePage<LbrtyBbscttVO2> ajaxLbList(@RequestBody(required=false) Map<String,Object>map,
-			HttpServletRequest request, Model model) {
+	public ArticlePage<LbrtyBbscttDto2> ajaxLbList(@RequestBody(required=false) Map<String,Object>map,
+												   HttpServletRequest request, Model model) {
 		
 		int size = 10;
 		int total = this.lbrtyBbscttService.getTotal(map);
@@ -377,7 +370,7 @@ public class LbrtyBbscttController {
 		
 		log.info("ajaxLbList -> map : " + map);
 		
-		List<LbrtyBbscttVO2> ajaxLbList = this.lbrtyBbscttService.lbrtyBbscttListPage(map);
+		List<LbrtyBbscttDto2> ajaxLbList = this.lbrtyBbscttService.lbrtyBbscttListPage(map);
 		
 		log.info("ajaxLbList -> ajaxLbList : " + ajaxLbList);
 		
@@ -394,7 +387,7 @@ public class LbrtyBbscttController {
 		log.info("ajaxLbList -> currentPage : " + currentPage);
 		log.info("ajaxLbList -> keyword : " + keyword);
 		
-		ArticlePage<LbrtyBbscttVO2> data = new ArticlePage<LbrtyBbscttVO2>(total,
+		ArticlePage<LbrtyBbscttDto2> data = new ArticlePage<LbrtyBbscttDto2>(total,
 				Integer.parseInt(currentPage),size,ajaxLbList,keyword);	
 		
 		String url = "/lbrtybbsctt/read2";
@@ -408,12 +401,12 @@ public class LbrtyBbscttController {
 	//신고처리 
 	@ResponseBody
 	@PostMapping("/declInsert")
-	public int declInsert(@RequestBody SntncDeclVO sntncDeclVO) {
+	public int declInsert(@RequestBody SntncDeclDto sntncDeclDto) {
 		int result = 0;
 		
-		log.info("declInsert ->  sntncDeclVO : " + sntncDeclVO);
+		log.info("declInsert ->  sntncDeclVO : " + sntncDeclDto);
 
-		result = this.lbrtyBbscttService.declInsert(sntncDeclVO);
+		result = this.lbrtyBbscttService.declInsert(sntncDeclDto);
 		
 		return result;
 		

@@ -234,11 +234,11 @@ $(function(){
 			<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab" style="margin-top:40px;">
 				<div style="display: flex; flex-wrap: wrap; margin-left:100px;">
 					<div class="form-group">
-						<c:if test="${vProUsersVO.proProflPhoto == null}">
+						<c:if test="${vProUsersDto.proProflPhoto == null}">
 							<img src="/images/2024/profile.jpg" class="img-lg rounded-circle mb-3" alt="profile" style="width:200px; height:200px; border-radius: 70%;" />
 						</c:if>
-						<c:if test="${vProUsersVO.proProflPhoto != null}">
-							<img src="${vProUsersVO.proProflPhoto}" class="img-lg rounded-circle mb-3" alt="profile" style="width:200px; height:200px; border-radius: 70%;">
+						<c:if test="${vProUsersDto.proProflPhoto != null}">
+							<img src="${vProUsersDto.proProflPhoto}" class="img-lg rounded-circle mb-3" alt="profile" style="width:200px; height:200px; border-radius: 70%;">
 						</c:if>
 					</div>
 					<hr style="border: none; border-left: 1px solid #CED4DA; height: 200px; margin-left:100px;">
@@ -247,7 +247,7 @@ $(function(){
 						<input id="proId" name="proId" value="${proSession.userId}" style=" font-family: 'GmarketSansMedium'; border:none; font-size:20px;" readonly/>
 						<div class="form-group" style="margin-top:20px;">
 							<label style="font-family: 'GmarketSansMedium';">⭐닉네임</label>
-							<h4 style="margin-top:10px; font-family: 'GmarketSansMedium';"><b>${vProUsersVO.userNcnm}</b></h4>
+							<h4 style="margin-top:10px; font-family: 'GmarketSansMedium';"><b>${vProUsersDto.userNcnm}</b></h4>
 							<p style="border: 1px solid #CED4DA; border-radius: 20px; display: inline-block; margin-top:20px; font-family: 'GmarketSansMedium';">&nbsp;&nbsp;${proBun}&nbsp;&nbsp;</p>
 						</div>
 					</div>
@@ -267,7 +267,7 @@ $(function(){
 						<label for="bcityNm" style="font-family: 'GmarketSansMedium';">⭐지역(광역시)</label>
 							<select id="bcityNm" name="bcityNm" class="form-control" style="font-family: 'GmarketSansMedium';">
 								<option selected>지역(광역시)</option>
-								<c:forEach items="${bcityVOList}" var="bcityVO">
+								<c:forEach items="${bcityDtoList}" var="bcityVO">
 								<option><c:out value="${bcityVO.bcityNm}"/></option>
 								</c:forEach>
 							</select>

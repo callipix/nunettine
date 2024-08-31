@@ -3,43 +3,38 @@ package kr.or.ddit.board.freeboard.mapper;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.ddit.vo.CommonCdDetailVO;
-import kr.or.ddit.vo.LbrtyBbscttAnswerVO;
-import kr.or.ddit.vo.LbrtyBbscttAnswerVO2;
-import kr.or.ddit.vo.LbrtyBbscttVO;
-import kr.or.ddit.vo.LbrtyBbscttVO2;
-import kr.or.ddit.vo.SntncDeclVO;
-import kr.or.ddit.vo.SprviseAtchmnfl;
+import kr.or.ddit.vo.*;
+import kr.or.ddit.vo.LbrtyBbscttAnswerDto;
 
 public interface LbrtyBbscttMapper {
 
-	public List<LbrtyBbscttVO2> lbrtyBbscttList();
+	public List<LbrtyBbscttDto2> lbrtyBbscttList();
 
-	public LbrtyBbscttVO lbrtyBbscttDetail(int lbrtyBbscttNo);
+	public LbrtyBbscttDto lbrtyBbscttDetail(int lbrtyBbscttNo);
 
-	public int lbrtyBbscttDelete(LbrtyBbscttVO lbrtyBbscttVO);
+	public int lbrtyBbscttDelete(LbrtyBbscttDto lbrtyBbscttDto);
 	
-	public int sprviseAtchmnflDelete(LbrtyBbscttVO lbrtyBbscttVO);
+	public int sprviseAtchmnflDelete(LbrtyBbscttDto lbrtyBbscttDto);
 
-	public int lbrtyBbscttInsert(LbrtyBbscttVO lbrtyBbscttVO);
+	public int lbrtyBbscttInsert(LbrtyBbscttDto lbrtyBbscttDto);
 
 	public int SprviseAtchmnflInsert(SprviseAtchmnfl sprviseAtchmnfl);
 
-	public List<LbrtyBbscttAnswerVO> lbrtyBbscttAnswerList(String lbrtyBbscttNo);
+	public List<LbrtyBbscttAnswerDto> lbrtyBbscttAnswerList(String lbrtyBbscttNo);
 
-	public int lbrtyBbscttAnswerInsert(LbrtyBbscttAnswerVO lbrtyBbscttAnswerVO);
+	public int lbrtyBbscttAnswerInsert(LbrtyBbscttAnswerDto lbrtyBbscttAnswerDto);
 
-	public int lbrtyBbscttAnswerDelete(LbrtyBbscttAnswerVO lbrtyBbscttAnswerVO);
+	public int lbrtyBbscttAnswerDelete(LbrtyBbscttAnswerDto lbrtyBbscttAnswerDto);
 
-	public int lbrtyBbscttAnswerUpdate(LbrtyBbscttAnswerVO lbrtyBbscttAnswerVO);
+	public int lbrtyBbscttAnswerUpdate(LbrtyBbscttAnswerDto lbrtyBbscttAnswerDto);
 
-	public int lbrtyBbscttUpdate(LbrtyBbscttVO lbrtyBbscttVO);
+	public int lbrtyBbscttUpdate(LbrtyBbscttDto lbrtyBbscttDto);
 
-	public List<LbrtyBbscttAnswerVO2> ansAnsList(LbrtyBbscttAnswerVO lbrtyBbscttAnswerVO);
+	public List<LbrtyBbscttAnswerDto2> ansAnsList(LbrtyBbscttAnswerDto lbrtyBbscttAnswerDto);
 
-	public int ansAnsInt(LbrtyBbscttAnswerVO lbrtyBbscttAnswerVO);
+	public int ansAnsInt(LbrtyBbscttAnswerDto lbrtyBbscttAnswerDto);
 
-	public int ansAnsCnt(LbrtyBbscttAnswerVO lbrtyBbscttAnswerVO);
+	public int ansAnsCnt(LbrtyBbscttAnswerDto lbrtyBbscttAnswerDto);
 
 	public List<SprviseAtchmnfl> sprviseAtchmnflDetail(int sprviseAtchmnflNo);
 
@@ -49,17 +44,17 @@ public interface LbrtyBbscttMapper {
 
 	public int uptSprviseAtchmnflInsert(SprviseAtchmnfl sprviseAtchmnfl);
 
-	public void uptsprviseAtchmnflNo(LbrtyBbscttVO lbrtyBbscttVO);
+	public void uptsprviseAtchmnflNo(LbrtyBbscttDto lbrtyBbscttDto);
 
 	public List<SprviseAtchmnfl> detailfileList(String sprviseAtchmnflNo);
 
-	public List<LbrtyBbscttVO2> lbrtyBbscttListPage(Map<String, Object> map);
+	public List<LbrtyBbscttDto2> lbrtyBbscttListPage(Map<String, Object> map);
 
 	public int getTotal(Map<String, Object> map);
 
-	public int declInsert(SntncDeclVO sntncDeclVO);
+	public int declInsert(SntncDeclDto sntncDeclDto);
 
-	public List<CommonCdDetailVO> declComCdDeSelect();
+	public List<CommonCdDetailDto> declComCdDeSelect();
 
 	public int cntUp(int lbrtyBbscttNo);
 

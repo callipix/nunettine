@@ -156,17 +156,17 @@ function pagingList(data){
 			let thirdDate = date.getFullYear().toString() +"."+ String(date.getMonth() + 1).padStart(2,"0") +"."+ String(date.getDate()).padStart(2,"0");
 			let str = "";
 			
-			$.each(res.content,function(idx, vOndyclProUsersVO){
-// 				console.log(vOndyclProUsersVO.ondyclDelType);
-				if(vOndyclProUsersVO.dayCheck){
+			$.each(res.content,function(idx, vOndyclProUsersDto){
+// 				console.log(vOndyclProUsersDto.ondyclDelType);
+				if(vOndyclProUsersDto.dayCheck){
 					$("#myClassTbody").html("");
 					str += "<tr style=\"cursor: pointer;\">";   
-					if(vOndyclProUsersVO.canclAt != 1){
-						str += "<td onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + vOndyclProUsersVO.ondyclNo + "&startPoint=myClass'\">"+vOndyclProUsersVO.rnum+"</td>";
-						str += "<td onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + vOndyclProUsersVO.ondyclNo + "&startPoint=myClass'\">"+vOndyclProUsersVO.ondyclNm+"</td>";
-						str += "<td onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + vOndyclProUsersVO.ondyclNo + "&startPoint=myClass'\">"+vOndyclProUsersVO.ondyclSchdulDe+"</td>";
-						if(vOndyclProUsersVO.ondyclReNo == null || vOndyclProUsersVO.ondyclReNo == ""){
-							str += "<td><button type='button' id='"+vOndyclProUsersVO.ondyclNo+"' onclick='createReview(this)' class='btn btn-success btn-rounded btn-fw btn-sm'>리뷰쓰기</button></td>";
+					if(vOndyclProUsersDto.canclAt != 1){
+						str += "<td onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + vOndyclProUsersDto.ondyclNo + "&startPoint=myClass'\">"+vOndyclProUsersDto.rnum+"</td>";
+						str += "<td onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + vOndyclProUsersDto.ondyclNo + "&startPoint=myClass'\">"+vOndyclProUsersDto.ondyclNm+"</td>";
+						str += "<td onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + vOndyclProUsersDto.ondyclNo + "&startPoint=myClass'\">"+vOndyclProUsersDto.ondyclSchdulDe+"</td>";
+						if(vOndyclProUsersDto.ondyclReNo == null || vOndyclProUsersDto.ondyclReNo == ""){
+							str += "<td><button type='button' id='"+vOndyclProUsersDto.ondyclNo+"' onclick='createReview(this)' class='btn btn-success btn-rounded btn-fw btn-sm'>리뷰쓰기</button></td>";
 						}else{
 							str += "<td><button type='button' class='btn btn-success btn-rounded btn-fw btn-sm' disabled>리뷰작성완료</button></td>";
 						}
@@ -176,30 +176,30 @@ function pagingList(data){
 					$("#divPagingArea").html(res.pagingArea);
 				}else{
 					$("#myClassTbody").html("");
-					if(vOndyclProUsersVO.canclAt != 1){
+					if(vOndyclProUsersDto.canclAt != 1){
 						str += "<tr style=\"cursor: pointer;\">";   
-						str += "<td onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + vOndyclProUsersVO.ondyclNo + "&startPoint=myClass'\">"+vOndyclProUsersVO.rnum+"</td>";
-						str += "<td onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + vOndyclProUsersVO.ondyclNo + "&startPoint=myClass'\">"+vOndyclProUsersVO.ondyclNm+"</td>";
-						str += "<td onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + vOndyclProUsersVO.ondyclNo + "&startPoint=myClass'\">"+vOndyclProUsersVO.ondyclSchdulDe+"</td>";
-						if(vOndyclProUsersVO.dayCheck){ //시간 지남.
-							if(vOndyclProUsersVO.ondyclReNo == null || vOndyclProUsersVO.ondyclReNo == ""){
-								str += "<td><button type='button' id='"+vOndyclProUsersVO.ondyclNo+"' onclick='createReview(this)' class='btn btn-success btn-rounded btn-fw btn-sm'>리뷰쓰기</button></td>";
+						str += "<td onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + vOndyclProUsersDto.ondyclNo + "&startPoint=myClass'\">"+vOndyclProUsersDto.rnum+"</td>";
+						str += "<td onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + vOndyclProUsersDto.ondyclNo + "&startPoint=myClass'\">"+vOndyclProUsersDto.ondyclNm+"</td>";
+						str += "<td onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + vOndyclProUsersDto.ondyclNo + "&startPoint=myClass'\">"+vOndyclProUsersDto.ondyclSchdulDe+"</td>";
+						if(vOndyclProUsersDto.dayCheck){ //시간 지남.
+							if(vOndyclProUsersDto.ondyclReNo == null || vOndyclProUsersDto.ondyclReNo == ""){
+								str += "<td><button type='button' id='"+vOndyclProUsersDto.ondyclNo+"' onclick='createReview(this)' class='btn btn-success btn-rounded btn-fw btn-sm'>리뷰쓰기</button></td>";
 							}else{
 								str += "<td><button type='button' class='btn btn-success btn-rounded btn-fw btn-sm' disabled>리뷰작성완료</button></td>";
 							}
 						}else{ //시간 지나기 전
-							if(thirdDate >= vOndyclProUsersVO.ondyclSchdulDe){
-								str += "<td><button type='button' id='"+vOndyclProUsersVO.ondyclNo+"' disabled onclick='cancelClass(this)' class='btn btn-outline-danger btn-fw'>취소</button></td>";
+							if(thirdDate >= vOndyclProUsersDto.ondyclSchdulDe){
+								str += "<td><button type='button' id='"+vOndyclProUsersDto.ondyclNo+"' disabled onclick='cancelClass(this)' class='btn btn-outline-danger btn-fw'>취소</button></td>";
 							}else{
-								str += "<td><button type='button' id='"+vOndyclProUsersVO.ondyclNo+"' onclick='cancelClass(this)' class='btn btn-outline-danger btn-fw'>취소</button></td>";
+								str += "<td><button type='button' id='"+vOndyclProUsersDto.ondyclNo+"' onclick='cancelClass(this)' class='btn btn-outline-danger btn-fw'>취소</button></td>";
 							}
 						}
 						str += "</tr>";
 					}else{
 						str += "<tr style=\"cursor: pointer;\">";   
-						str += "<td style='text-decoration:line-through; color:lightgray'>"+vOndyclProUsersVO.rnum+"</td>";
-						str += "<td style='text-decoration:line-through; color:lightgray'>"+vOndyclProUsersVO.ondyclNm+"</td>";
-						str += "<td style='text-decoration:line-through; color:lightgray'>"+vOndyclProUsersVO.ondyclSchdulDe+"</td>";
+						str += "<td style='text-decoration:line-through; color:lightgray'>"+vOndyclProUsersDto.rnum+"</td>";
+						str += "<td style='text-decoration:line-through; color:lightgray'>"+vOndyclProUsersDto.ondyclNm+"</td>";
+						str += "<td style='text-decoration:line-through; color:lightgray'>"+vOndyclProUsersDto.ondyclSchdulDe+"</td>";
 						str += "<td style='text-decoration:line-through; color:lightgray'>취소한 클래스입니다.</td>";
 						str += "</tr>";
 					}

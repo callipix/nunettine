@@ -493,7 +493,7 @@ function proList(data){
                   <label for="bcityNm" style="font-family: 'GmarketSansMedium';">지역(광역시)</label>
                      <select id="bcityNm" name="spcltyB" class="form-control" style="width:400px; font-family: 'GmarketSansMedium';">
                         <option selected>지역(광역시)를 선택해주세요</option>
-                        <c:forEach items="${bcityVOList}" var="bcityVO">
+                        <c:forEach items="${bcityDtoList}" var="bcityVO">
                         <option><c:out value="${bcityVO.bcityNm}"/></option>
                         </c:forEach>
                      </select>

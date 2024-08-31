@@ -10,7 +10,7 @@
 		</if>
 	</sql>
 
-	<select id="decllbrSelect" resultType="sntncDeclVO">
+	<select id="decllbrSelect" resultType="sntncDeclDto">
 		select DENSE_RANK()
 		OVER(ORDER BY DECL_BBSCTT_NO) AS rnum,
 		DECL_BBSCTT_NO, DECL_PROCESS_AT,
@@ -23,15 +23,15 @@
 		order by count desc
 	</select>
 
-	<select id="lbrtyBbscttVo" parameterType="sntncDeclVO"
+	<select id="lbrtyBbscttVo" parameterType="sntncDeclDto"
 		resultType="lbrtyBbscttVO2">
 		select * from V_${declTarget}
 		where LBRTY_BBSCTT_NO =
 		${declBbscttNo}
 	</select>
 
-	<select id="declResnList" parameterType="sntncDeclVO"
-		resultType="sntncDeclVO">
+	<select id="declResnList" parameterType="sntncDeclDto"
+		resultType="sntncDeclDto">
 		select DECL_RESN, DECL_PROCESS_AT, COUNT(*) count from
 		SNTNC_DECL
 		where DECL_BBSCTT_NO = ${declBbscttNo}
@@ -64,7 +64,7 @@
 		LBRTY_BBSCTT_NO = #{lbrtyBbscttNo}
 	</update>
 
-	<select id="userList" resultType="usersVO">
+	<select id="userList" resultType="usersDto">
 		<!-- select USER_ID, USER_NM, USER_PASSWORD, EMPLYR_TY, SECSN_AT, USER_NCNM,
     		(select count(*) from user_decl where user_id2 = #{userId}) as count
 		from users
@@ -85,7 +85,7 @@
 	</select>
 
 	<select id="userDeclList" parameterType="string"
-		resultType="userDeclVO">
+		resultType="userDeclDto">
 		select user_id2, decl_resn, DECL_PROCESS_AT,count(*) count
 		from user_decl
 		where user_id2 = #{userId}

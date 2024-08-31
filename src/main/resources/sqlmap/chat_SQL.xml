@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ddit.chatting.mapper.ChatMapper">
 	<!-- 1. 방생성 -> 끝 -->
-	<insert id="createRoom"	parameterType="kr.or.ddit.chatting.vo.ChatRoomVO">
+	<insert id="createRoom"	parameterType="kr.or.ddit.chatting.dto.ChatRoomDto">
 		<selectKey resultType="int" order="BEFORE" keyProperty="roomNo">
 			SELECT CHAT_ROOM_SEQ.NEXTVAL FROM DUAL
 		</selectKey>
@@ -17,59 +17,59 @@
 	</insert>
 
 	<!-- 2.채팅방 목록 불러오기 -> 끝 -->
-	<select id="roomList" resultType="kr.or.ddit.chatting.vo.ChatRoomVO">
+	<select id="roomList" resultType="kr.or.ddit.chatting.dto.ChatRoomDto">
 		SELECT ROOM_NO, ROOM_NAME, CREATE_DATE, USER_ID
 		 FROM CHAT_ROOM ORDER BY ROOM_NO
 	</select>
 	<!-- 방번호로 채팅방 조회 -->
-	<select id="roomByRoomNo" parameterType="int" resultType="kr.or.ddit.chatting.vo.AllChatRoomViewVO">
+	<select id="roomByRoomNo" parameterType="int" resultType="kr.or.ddit.chatting.dto.AllChatRoomViewDto">
 		SELECT ROOM_NO, ROOM_NAME, CREATE_DATE, USER_ID
 		 FROM V_CHAT_JOIN WHERE ROOM_NO = #{roomNo}
 	</select>
 
-	<select id="roomByRoomNo2" parameterType="int" resultType="kr.or.ddit.chatting.vo.AllChatRoomViewVO">
+	<select id="roomByRoomNo2" parameterType="int" resultType="kr.or.ddit.chatting.dto.AllChatRoomViewDto">
 		SELECT DISTINCT(ROOM_NO), ROOM_NAME, CREATE_DATE
 		  FROM V_CHAT_JOIN WHERE ROOM_NO = #{roomNo}
 	</select>
 
-	<select id="myRoomList" parameterType="string" resultType="kr.or.ddit.chatting.vo.AllChatRoomViewVO">
+	<select id="myRoomList" parameterType="string" resultType="kr.or.ddit.chatting.dto.AllChatRoomViewDto">
 		SELECT ROOM_NO, ROOM_NAME, CREATE_DATE, USER_ID
 		  FROM V_CHAT_JOIN
 		 WHERE USER_ID = #{userId}
 		 ORDER BY ROOM_NO
 	</select>
 	
-	<select id="myRoomListTest" parameterType="string" resultType="kr.or.ddit.chatting.vo.AllChatRoomViewVO">
+	<select id="myRoomListTest" parameterType="string" resultType="kr.or.ddit.chatting.dto.AllChatRoomViewDto">
 		SELECT ROOM_NO, ROOM_NAME, CREATE_DATE, USER_ID
 		  FROM V_CHAT_JOIN
 		 WHERE USER_ID = #{userId} and ROOM_NO = #{roomNo}
 	</select>
 	
 	<!-- 방참가 -->
-	<insert id="joinRoom" parameterType="kr.or.ddit.chatting.vo.ChatRelayVO">
+	<insert id="joinRoom" parameterType="kr.or.ddit.chatting.dto.ChatRelayDto">
 		INSERT INTO CHAT_RELAY (ROOM_NO, USER_ID)
 		VALUES (#{roomNo} , #{userId})	
 	</insert>
 	
-	<select id="joinCheck" parameterType="kr.or.ddit.chatting.vo.ChatRelayVO" resultType="int">
+	<select id="joinCheck" parameterType="kr.or.ddit.chatting.dto.ChatRelayDto" resultType="int">
 		SELECT COUNT(*)
 		  FROM CHAT_RELAY
 		 WHERE ROOM_NO = #{roomNo} AND USER_ID = #{userId}
 	</select>
 	
-	<select id="myRoomId" parameterType="int" resultType="kr.or.ddit.chatting.vo.ChatRelayVO">
+	<select id="myRoomId" parameterType="int" resultType="kr.or.ddit.chatting.dto.ChatRelayDto">
 		SELECT USER_ID, ROOM_NO
 		  FROM CHAT_RELAY
 		 WHERE ROOM_NO = #{roomNo}
 	</select>
 	
-	<select id="joinUserInfo" parameterType="String" resultType="kr.or.ddit.vo.UsersVO">
+	<select id="joinUserInfo" parameterType="String" resultType="kr.or.ddit.vo.UsersDto">
 		SELECT USER_ID, USER_NM, USER_PASSWORD, EMPLYR_TY, SECSN_AT, USER_NCNM
 		  FROM  USERS
 		 WHERE USER_ID = #{userId}
 	</select>
 	
-	<select id="userInfo" parameterType="String" resultType="kr.or.ddit.vo.UsersVO">
+	<select id="userInfo" parameterType="String" resultType="kr.or.ddit.vo.UsersDto">
 		SELECT USER_ID, USER_NM, USER_PASSWORD, EMPLYR_TY, SECSN_AT, USER_NCNM
 		  FROM USERS
 		 WHERE USER_ID = #{userId}

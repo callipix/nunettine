@@ -34,7 +34,7 @@
 		</if>
 	</sql>
 	
-	<select id="list" parameterType="hashMap" resultType="kr.or.ddit.admin.usersSearch.vo.UsersVO">
+	<select id="list" parameterType="hashMap" resultType="kr.or.ddit.admin.usersSearch.dto.UsersDto">
 		with t as(
 			select row_number() over(order by f.user_id DESC)RNUM
 				,f.*
@@ -60,7 +60,7 @@
 		<include refid="where"></include>
 	</select>
 	
-	<select id="detail" parameterType="String" resultType="kr.or.ddit.admin.usersSearch.vo.UsersVO">
+	<select id="detail" parameterType="String" resultType="kr.or.ddit.admin.usersSearch.dto.UsersDto">
     select USER_ID, USER_NM, USER_PASSWORD, EMPLYR_TY, SECSN_AT, USER_NCNM
 	from users
 	where USER_ID = #{userId}

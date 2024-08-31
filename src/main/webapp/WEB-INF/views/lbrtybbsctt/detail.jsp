@@ -974,7 +974,7 @@ $(function(){
 				</div>
 				<div class="card-body">
 					<div class="container-fluid">
-						<h3 class="text-center my-5">${proJoBbscttVOList[0].proJoBbscttSj}</h3>
+						<h3 class="text-center my-5">${proJoBbscttDtoList[0].proJoBbscttSj}</h3>
 						<div class="text-right">
 						<form name="frm" id="frm" action="/lbrtybbsctt/bbsUpdate" method="post"
 							enctype="multipart/form-data">

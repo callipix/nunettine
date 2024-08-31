@@ -3,44 +3,36 @@ package kr.or.ddit.pro.proProfl.mapper;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.ddit.vo.*;
 import org.apache.ibatis.annotations.Param;
 
-import kr.or.ddit.vo.AdresVO;
-import kr.or.ddit.vo.BcityVO;
-import kr.or.ddit.vo.CommonCdDetailVO;
-import kr.or.ddit.vo.ProProflVO;
-import kr.or.ddit.vo.ReviewVO;
-import kr.or.ddit.vo.SprviseAtchmnflVO;
-import kr.or.ddit.vo.UserDeclVO;
-import kr.or.ddit.vo.VCityVO;
-import kr.or.ddit.vo.VProUsersVO;
-import kr.or.ddit.vo.VPrtfolioVO;
+import kr.or.ddit.vo.BcityDto;
 
 
 public interface ProProflMapper {
 
 	
-	public List<BcityVO> list(Map<String, Object> map);
+	public List<BcityDto> list(Map<String, Object> map);
 	
-	public List<VCityVO> getBrtcList(String bcityNm);
+	public List<VCityDto> getBrtcList(String bcityNm);
 
-	public int createPost(ProProflVO proProflVO);
+	public int createPost(ProProflDto proProflDto);
 
 	public String bcCode(String bcityNm);
 
 	public String btCode(@Param("bcityNm")String bcityNm,@Param("brtcNm")String brtcNm);
 
-	public ProProflVO detail(String proId);
+	public ProProflDto detail(String proId);
 
-	public VProUsersVO getProInfo(String proId);
+	public VProUsersDto getProInfo(String proId);
 
-	public ProProflVO getProId(String sessionId);
+	public ProProflDto getProId(String sessionId);
 
-	public List<VPrtfolioVO> prtTumb(String proId);
+	public List<VPrtfolioDto> prtTumb(String proId);
 
-	public List<SprviseAtchmnflVO> portfolioPicture(String sprviseAtchmnflNo);
+	public List<SprviseAtchmnflDto> portfolioPicture(String sprviseAtchmnflNo);
 
-	public int modify(ProProflVO proProflVO);
+	public int modify(ProProflDto proProflDto);
 
 	public String getBcityNm(String bcityCode);
 
@@ -54,16 +46,16 @@ public interface ProProflMapper {
 	
 	public int getBkmkCount(String proId);
 	
-	public List<ReviewVO> getReview(Map<String, Object> map);
+	public List<ReviewDto> getReview(Map<String, Object> map);
 	public int getRevCnt2(Map<String, Object> map);
 	
 	
 	//동균 신고로 인해 추가
-	public List<CommonCdDetailVO> declComCdDeSelect();
+	public List<CommonCdDetailDto> declComCdDeSelect();
 
-	public int declInsert(UserDeclVO userDeclVO);
+	public int declInsert(UserDeclDto userDeclDto);
 
-	public int declUpdate(UserDeclVO userDeclVO);
+	public int declUpdate(UserDeclDto userDeclDto);
 	////동균 신고로 인해 추가 끝
 
 

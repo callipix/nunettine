@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.or.ddit.pro_service.service_request.mapper.SrvcRequstMapper">
+<mapper namespace="kr.or.ddit.proservice.serviceRequest.mapper.SrvcRequstMapper">
 
 	 <select id="getTotal" parameterType="map" resultType="int">
    		SELECT count(*)
@@ -243,10 +243,10 @@
 		<result property="userId" column="USER_ID"/>
 		<result property="userNcnm" column="USER_NCNM"/>
 		<result property="emplyrTy" column="EMPLYR_TY"/>	
-		<collection property="sprviseAtchmnflVOList" resultMap="sprviseAtchMap"></collection>
+		<collection property="sprviseAtchmnflDtoList" resultMap="sprviseAtchMap"></collection>
 	</resultMap>
 	
-	<resultMap type="sprviseAtchmnflVO" id="sprviseAtchMap">
+	<resultMap type="sprviseAtchmnflDto" id="sprviseAtchMap">
 		<result property="sprviseAtchmnflNo" column="SPRVISE_ATCHMNFL_NO"/>
 		<result property="atchmnflNo" column="ATCHMNFL_NO"/>
 		<result property="atchmnflCours" column="ATCHMNFL_COURS"/>
@@ -288,7 +288,7 @@
 		VALUES(SRVC_REQUST_NO_SEQ.NEXTVAL, #{srvcRequstSj}, #{srvcRequstCn}, SYSDATE, SPRVISE_ATCHMNFL_NO_SEQ.NEXTVAL, #{mberId}, #{proId})
 	</insert>
 	
-	<update id="srvcRqUpdatePost" parameterType="srvcRequstVO">
+	<update id="srvcRqUpdatePost" parameterType="srvcRequstDto">
 		UPDATE SRVC_REQUST SET SRVC_REQUST_SJ = #{srvcRequstSj}, SRVC_REQUST_CN = #{srvcRequstCn} WHERE SRVC_REQUST_NO = #{srvcRequstNo}
 	</update>
 	

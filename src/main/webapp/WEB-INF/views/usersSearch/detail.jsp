@@ -27,7 +27,7 @@ $(document).ready(function() {
     }
     
     // 페이지 로드 후 회원 유형을 변경하여 출력
-    var emplyrTy = "${usersVO.emplyrTy}";
+    var emplyrTy = "${usersDto.emplyrTy}";
     var formattedEmplyrTy = formatEmplyrTy(emplyrTy);
     $("#userType").text(formattedEmplyrTy);
 });
@@ -35,7 +35,7 @@ $(document).ready(function() {
 
 <body>
 
-<%-- ${usersVO} --%>
+<%-- ${usersDto} --%>
 <!-- UsersVO(rnum=0, userId=테프로, userNcnm=테프로, userNm=홍길동, userPassword=123456, emplyrTy=ET02, secsnAt=1) -->
 <div class="content-wrapper"
 	style="border-top-left-radius: 45px; border-top-right-radius: 45px;">
@@ -44,16 +44,16 @@ $(document).ready(function() {
 			<div class="card px-2">
 				<div class="card-body">
 					<div class="container-fluid">
-						<h2 class="text-center my-5" style="font-family: GMarketSansMedium;">유저 아이디 : ${usersVO.userId}</h2>
+						<h2 class="text-center my-5" style="font-family: GMarketSansMedium;">유저 아이디 : ${usersDto.userId}</h2>
 						<div style="margin-left: 76%;">	
 						</div>
 						
 						<hr>
 					</div>
 					<div class="container-fluid mt-5 w-100">
-						<h3 class="mb-5" style="font-family: 'seolleimcool-SemiBold'; padding-left: 20px;">유저 닉네임 : ${usersVO.userNcnm}</h3>
-						<h3 class="mb-5" style="font-family: 'seolleimcool-SemiBold'; padding-left: 20px;">유저 이름 : ${usersVO.userNm}</h3>
-						<h3 class="mb-5" style="font-family: 'seolleimcool-SemiBold'; padding-left: 20px;">유저 비밀번호 : ${usersVO.userPassword}</h3>
+						<h3 class="mb-5" style="font-family: 'seolleimcool-SemiBold'; padding-left: 20px;">유저 닉네임 : ${usersDto.userNcnm}</h3>
+						<h3 class="mb-5" style="font-family: 'seolleimcool-SemiBold'; padding-left: 20px;">유저 이름 : ${usersDto.userNm}</h3>
+						<h3 class="mb-5" style="font-family: 'seolleimcool-SemiBold'; padding-left: 20px;">유저 비밀번호 : ${usersDto.userPassword}</h3>
 						<h3 class="mb-5" style="font-family: 'seolleimcool-SemiBold'; padding-left: 20px;">유저 타입: <span id="userType"></span></h3>
 						<hr>
 					</div>

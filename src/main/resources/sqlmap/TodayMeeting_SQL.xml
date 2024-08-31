@@ -22,7 +22,7 @@
 		</if>
 	</sql>
 	
-	<select id="findAll" parameterType="String" resultType="tdmtngVO">
+	<select id="findAll" parameterType="String" resultType="tdmtngDto">
 		SELECT
 			TDMTNG_NO
 			,TDMTNG_NM
@@ -33,7 +33,7 @@
 			WHERE USER_ID=#{userId})
 	</select>
 	
-	<select id="list" parameterType="hashMap" resultType="tdmtngVO">
+	<select id="list" parameterType="hashMap" resultType="tdmtngDto">
 		SELECT T.* FROM
 		(
 		SELECT 
@@ -64,7 +64,7 @@
 	</select>
 	
 
-	<select id="detail" parameterType="int" resultType="tdmtngVO">
+	<select id="detail" parameterType="int" resultType="tdmtngDto">
 		SELECT 
 			A.TDMTNG_NO
 			, A.TDMTNG_NM
@@ -78,7 +78,7 @@
 		WHERE B.USER_ID=A.USER_ID AND A.TDMTNG_NO = #{tdmtngNo}
 	</select>
 	
-	<insert id="create" parameterType="tdmtngVO">
+	<insert id="create" parameterType="tdmtngDto">
 	 	/** kr.or.ddit.todaymeeting.mapper.TodayMeetingMapper CREATE */
     	<selectKey keyProperty="tdmtngNo" resultType="int" order="BEFORE">
         	SELECT TDMTNG_NO_SEQ.NEXTVAL FROM DUAL
@@ -108,7 +108,7 @@
     	SELECT * FROM DUAL
 	</insert>
 	
- 	<update id="update" parameterType="tdmtngVO">
+ 	<update id="update" parameterType="tdmtngDto">
 		UPDATE TDMTNG
 		SET TDMTNG_NM=#{tdmtngNm}
 		, TDMTNG_DT=TO_DATE(REPLACE(#{tdmtngDt}, 'T', ' '), 'YYYY-MM-DD HH24:MI:SS')
@@ -126,12 +126,12 @@
 	</delete>
 	
 	
-	<select id="selectMyChat" parameterType="tdmtngPrtcpntVO" resultType="tdmtngPrtcpntVO">
+	<select id="selectMyChat" parameterType="tdmtngPrtcpntDto" resultType="tdmtngPrtcpntDto">
 		SELECT TDMTNG_NO FROM TDMTNG_PRTCPNT 
 		WHERE USER_ID=#{userId} AND TDMTNG_NO=#{tdmtngNo}
 	</select>
 	
-	<insert id="joinChat" parameterType="tdmtngPrtcpntVO">
+	<insert id="joinChat" parameterType="tdmtngPrtcpntDto">
 		INSERT INTO TDMTNG_PRTCPNT(TDMTNG_NO, USER_ID)
 		VALUES(#{tdmtngNo} ,#{userId})
 	</insert>
@@ -151,14 +151,14 @@
 		WHERE TDMTNG_NO=#{tdmtngNo}
 	</select>
 	
-	<resultMap type="tdmtngPrtcpntVO" id="tdmtngPrtcpntMap">
+	<resultMap type="tdmtngPrtcpntDto" id="tdmtngPrtcpntMap">
 		<result property="userId" column="USER_ID"/>
 		<result property="tdmtngNo" column="TDMTNG_NO"/>
 		<result property="proProflPhoto" column="PRO_PROFL_PHOTO"/>
 		<result property="mberProflPhoto" column="MBER_PROFL_PHOTO"/>
-		<collection property="usersVOList" resultMap="usersMap"></collection>
+		<collection property="usersDtoList" resultMap="usersMap"></collection>
 	</resultMap>
-	<resultMap type="usersVO" id="usersMap">
+	<resultMap type="usersDto" id="usersMap">
 		<result property="emplyrTy" column="EMPLYR_TY" />
 		<result property="userNcnm" column="USER_NCNM" />
 		<result property="userId" column="USER_ID" />
@@ -204,7 +204,7 @@
 		 ORDER BY TDMTNG_NO DESC
 	</select>
 	
-	<select id="getUserInfo" parameterType="String" resultType="kr.or.ddit.vo.UsersVO">
+	<select id="getUserInfo" parameterType="String" resultType="kr.or.ddit.vo.UsersDto">
 		SELECT
 				USER_ID
 			  , USER_NM
@@ -219,7 +219,7 @@
 	
 	</select>
 	
-	<update id="updateFirstMSG" parameterType="tdmtngVO">
+	<update id="updateFirstMSG" parameterType="tdmtngDto">
 	
 	/** kr.or.ddit.todaymeeting.mapper.TodayMeetingMapper updateFirstMSG */
 		UPDATE TDMTNG

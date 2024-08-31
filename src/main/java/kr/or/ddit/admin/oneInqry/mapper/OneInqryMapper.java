@@ -3,15 +3,15 @@ package kr.or.ddit.admin.oneInqry.mapper;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.ddit.vo.OneInqryVO;
+import kr.or.ddit.vo.OneInqryDto;
 
 public interface OneInqryMapper {
 
-	public List<OneInqryVO> searchList(Map<String, Object> map);
+	public List<OneInqryDto> searchList(Map<String, Object> map);
 	
-	public List<OneInqryVO> oneInqryNoAnswerList(Map<String, Object> map);
+	public List<OneInqryDto> oneInqryNoAnswerList(Map<String, Object> map);
 	
-	public List<OneInqryVO> oneInqrySuccessList(Map<String, Object> map);
+	public List<OneInqryDto> oneInqrySuccessList(Map<String, Object> map);
 	
 	public int getTotal(Map<String, Object> map);
 	
@@ -21,9 +21,9 @@ public interface OneInqryMapper {
 
 	public int oneInqryCreatePost(Map<String, Object> oneInqryInfoMap);
 
-	public OneInqryVO oneInqryDetail(OneInqryVO oneInqryVO);
+	public OneInqryDto oneInqryDetail(OneInqryDto oneInqryDto);
 
-	public int oneInqryUpdatePost(OneInqryVO oneInqryVO);
+	public int oneInqryUpdatePost(OneInqryDto oneInqryDto);
 	
 	public String userType(String userId);
 
@@ -33,7 +33,7 @@ public interface OneInqryMapper {
 
 	public int getTotalResignPro(Map<String, Object> map);
 
-	public List<OneInqryVO> resignProList(Map<String, Object> map);
+	public List<OneInqryDto> resignProList(Map<String, Object> map);
 
 	public int proSecssion(String proId);
 	

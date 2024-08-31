@@ -361,8 +361,8 @@ function loadSrvcRqList() {
 
 // 요청서 목록에서 리뷰 미작성 요청서 표시
 function NotyreviewNoWr() {
-    var reviewVOList = ${reviewVOList}; // JSON 데이터 받아오기
-    $.each(reviewVOList, function(i, v) {
+    var reviewDtoList = ${reviewDtoList}; // JSON 데이터 받아오기
+    $.each(reviewDtoList, function(i, v) {
         console.log(v);
         var reRequstNo = v.srvcRequstNo;
         var srvcRequstNo = $("#srvcRqRow" + reRequstNo).data("value");

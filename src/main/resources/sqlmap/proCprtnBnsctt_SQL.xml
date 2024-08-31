@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.or.ddit.board.pro_collabo.mapper.ProCprtnBbscttMapper">
+<mapper namespace="kr.or.ddit.board.procollabo.mapper.ProCprtnBbscttMapper">
 	
 	<!-- 댓글 조회 -->
-	<select id="list2" parameterType="int" resultType="kr.or.ddit.board.pro_collabo.vo.ProCprtnBbscttVO">
+	<select id="list2" parameterType="int" resultType="kr.or.ddit.board.procollabo.dto.ProCprtnBbscttDto">
 		select 
     	PRO_CPRTN_ANSWER_NO, PRO_CPRTN_BBSCTT_NO, PRO_CPRTN_ANSWER_CN, PRO_CPRTN_ANSWER_WR_DT, PRO_ID
 		from PRO_CPRTN_ANSWER
@@ -11,13 +11,13 @@
 	</select>
 	
 	<!-- 댓글 작성 -->
-	<insert id="writer" parameterType="kr.or.ddit.board.pro_collabo.vo.ProCprtnBbscttVO">
+	<insert id="writer" parameterType="kr.or.ddit.board.procollabo.dto.ProCprtnBbscttDto">
 		INSERT INTO PRO_CPRTN_ANSWER(PRO_CPRTN_ANSWER_NO, PRO_CPRTN_BBSCTT_NO, PRO_CPRTN_ANSWER_CN, PRO_CPRTN_ANSWER_WR_DT, PRO_ID)
 		VALUES(#{proCprtnAnswerNo},#{proCprtnBbscttNo},#{proCprtnAnswerCn},#{proCprtnAnswerWrDt},#{proId})
 	</insert>
 	
 	<!-- 댓글 수정 -->
-	<update id="modify" parameterType="kr.or.ddit.board.pro_collabo.vo.ProCprtnBbscttVO">
+	<update id="modify" parameterType="kr.or.ddit.board.procollabo.dto.ProCprtnBbscttDto">
 		update PRO_CPRTN_ANSWER set
     	PRO_CPRTN_ANSWER_CN = #{proCprtnAnswerCn}
 		where PRO_CPRTN_ANSWER_NO = #{proCprtnAnswerNo}
@@ -26,7 +26,7 @@
 	</update>
 	
 	<!-- 댓글 삭제 -->
-	<delete id="delete" parameterType="kr.or.ddit.board.pro_collabo.vo.ProCprtnBbscttVO">
+	<delete id="delete" parameterType="kr.or.ddit.board.procollabo.dto.ProCprtnBbscttDto">
 		delete from PRO_CPRTN_ANSWER
 		where PRO_CPRTN_ANSWER_NO = #{proCprtnAnswerNo}
 		and	PRO_CPRTN_BBSCTT_NO = #{proCprtnBbscttNo}
@@ -50,7 +50,7 @@
 		<include refid="where"></include>
 	</select>
 	
-<!-- 	<select id="list" parameterType="hashMap" resultType="proCprtnBbscttVO"> -->
+<!-- 	<select id="list" parameterType="hashMap" resultType="proCprtnBbscttDto"> -->
 <!-- 	    with t as ( -->
 <!-- 	        select ROW_NUMBER() OVER(order by f.PRO_CPRTN_BBSCTT_NO DESC)RNUM, -->
 <!-- 	            f.PRO_CPRTN_BBSCTT_NO, -->
@@ -74,7 +74,7 @@
 <!-- 	    where t.rnum between (#{currentPage}*10)-(10-1) and (#{currentPage}*10) -->
 <!-- 	</select> -->
 
-	<select id="list" parameterType="hashMap" resultType="proCprtnBbscttVO">
+	<select id="list" parameterType="hashMap" resultType="proCprtnBbscttDto">
 	/* kr.or.ddit.board.pro_collabo.mapper.ProCprtnBbscttMapper list 페이징 수정 */
 	    WITH TOTAL_COUNT AS
 			 (
@@ -117,7 +117,7 @@
     where PRO_CPRTN_BBSCTT_NO = #{proCprtnBbscttNo}
 	</update>
 	
-	<resultMap type="proCprtnBbscttVO" id="proCprtnBbscttMap">
+	<resultMap type="proCprtnBbscttDto" id="proCprtnBbscttMap">
 		<result property="proCprtnBbscttNo" column="PRO_CPRTN_BBSCTT_NO"/>
 		<result property="proCprtnBbscttSj" column="PRO_CPRTN_BBSCTT_SJ"/>
 		<result property="proCprtnBbscttCn" column="PRO_CPRTN_BBSCTT_CN"/>
@@ -129,7 +129,7 @@
 		<collection property="proProflList" resultMap="proProflMap"></collection>
 	</resultMap>
 	
-	<resultMap type="kr.or.ddit.vo.ProVO" id="proMap">
+	<resultMap type="kr.or.ddit.vo.ProDto" id="proMap">
 		<result property="proId" column="PRO_ID"/>
 		<result property="proMbtlnum" column="PRO_MBTLNUM"/>
 		<result property="sexdstnTy" column="SEXDSTN_TY"/>
@@ -138,7 +138,7 @@
 		<result property="spcltyRealmCode" column="SPCLTY_REALM_CODE"/>
 	</resultMap>
 	
-	<resultMap type="kr.or.ddit.vo.ProProflVO" id="proProflMap">	
+	<resultMap type="kr.or.ddit.vo.ProProflDto" id="proProflMap">
 		<result property="proId" column="PRO_ID"/>
 		<result property="proProflOnLiIntrcn" column="PRO_PROFL_ON_LI_INTRCN"/>
 		<result property="proProflContactPosblTime" column="PRO_PROFL_CONTACT_POSBL_TIME"/>
@@ -179,7 +179,7 @@
 	</select> 
 
 
- 		<select id="detail" parameterType="int" resultType="proCprtnBbscttVO">
+ 		<select id="detail" parameterType="int" resultType="proCprtnBbscttDto">
 	    SELECT
 	    A.PRO_CPRTN_BBSCTT_NO, A.PRO_CPRTN_BBSCTT_SJ, A.PRO_CPRTN_BBSCTT_CN, A.PRO_CPRTN_BBSCTT_WR_DT, A.PRO_CPRTN_BBSCTT_RDCNT
 	    , A.SPRVISE_ATCHMNFL_NO, A.PRO_ID

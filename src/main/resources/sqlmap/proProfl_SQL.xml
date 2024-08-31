@@ -23,13 +23,13 @@
 	</select>
 	
 	
-	<insert id="createPost" parameterType="proProflVO">
+	<insert id="createPost" parameterType="proProflDto">
 		INSERT INTO PRO_PROFL(PRO_ID, PRO_PROFL_ON_LI_INTRCN, PRO_PROFL_CONTACT_POSBL_TIME, PRO_PROFL_REQ_FORM, PRO_PROFL_HIST, BCITY_CODE, BRTC_CODE)
 		VALUES(#{proId},#{proProflOnLiIntrcn},#{proProflContactPosblTime},#{proProflReqForm},#{proProflHist},#{bcityCode},#{brtcCode})
 	</insert>
 	
 	
-	<resultMap type="proProflVO" id="proProflMap">
+	<resultMap type="proProflDto" id="proProflMap">
 		<result property="proId" column="PRO_ID"/>
 		<result property="proProflOnLiIntrcn" column="PRO_PROFL_ON_LI_INTRCN"/>
 		<result property="proProflContactPosblTime" column="PRO_PROFL_CONTACT_POSBL_TIME"/>
@@ -50,15 +50,15 @@
 		WHERE A.PRO_ID = #{proId}
 	</select>
 	
-	<select id="getProInfo" parameterType="String" resultType="vProUsersVO">
+	<select id="getProInfo" parameterType="String" resultType="vProUsersDto">
 		SELECT * FROM V_PRO_USERS WHERE PRO_ID = #{proId}
 	</select>
 	
-	<select id="getProId" parameterType="String" resultType="proProflVO">
+	<select id="getProId" parameterType="String" resultType="proProflDto">
 		SELECT PRO_ID FROM PRO_PROFL WHERE PRO_ID=#{sessionId}
 	</select>
 	
-	<resultMap type="prtfolioVO" id="vPrtfolioMap">
+	<resultMap type="prtfolioDto" id="vPrtfolioMap">
 		<result property="prtfolioNo" column="PRTFOLIO_NO"/>
 		<result property="prtfolioSj" column="PRTFOLIO_SJ"/>
 		<result property="prtfolioWrDt" column="PRTFOLIO_WR_DT"/>
@@ -67,7 +67,7 @@
 		<collection property="SpAtVOList" resultMap="SpAtMap"></collection>
 	</resultMap>
 	
-	<resultMap type="sprviseAtchmnflVO" id="SpAtMap">
+	<resultMap type="sprviseAtchmnflDto" id="SpAtMap">
 		<result property="sprviseAtchmnflNo" column="SPRVISE_ATCHMNFL_NO"/>
 		<result property="atchmnflNo" column="ATCHMNFL_NO"/>
 		<result property="atchmnflCours" column="ATCHMNFL_COURS"/>
@@ -95,7 +95,7 @@
 	    WHERE SPRVISE_ATCHMNFL_NO = #{sprviseAtchmnflNo}
 	</select> 	
 	
-	<update id="modify" parameterType="proProflVO">
+	<update id="modify" parameterType="proProflDto">
 	UPDATE PRO_PROFL
 	SET PRO_ID=#{proId}, 
 		PRO_PROFL_ON_LI_INTRCN=#{proProflOnLiIntrcn}, 
@@ -149,7 +149,7 @@
 	</select>
 	
 	
-	<resultMap type="reviewVO" id="reviewVOMap">
+	<resultMap type="reviewDto" id="reviewVOMap">
 		<result property="reNo" column="RE_NO"/>
 		<result property="reTy" column="RE_TY"/>
 		<result property="reCn" column="RE_CN"/>
@@ -162,17 +162,17 @@
 		<collection property="comReviewVOList" resultMap="comReviewVOMap"></collection>
 	</resultMap>
 	
-	<resultMap type="srvcRequstVO" id="srvcReviewVOMap">
+	<resultMap type="srvcRequstDto" id="srvcReviewVOMap">
 		<result property="mberId" column="MBER_ID"/>
 		<result property="proId" column="PRO_ID"/>
 	</resultMap>
 	
-	<resultMap type="mberVO" id="mberReviewVOMap">
+	<resultMap type="mberDto" id="mberReviewVOMap">
 		<result property="mberProflPhoto" column="MBER_PROFL_PHOTO"/>
 		<result property="mberId" column="MBER_ID"/>
 	</resultMap>
 	
-	<resultMap type="usersVO" id="userReviewVOMap">
+	<resultMap type="usersDto" id="userReviewVOMap">
 		<result property="userNcnm" column="USER_NCNM"/>
 	</resultMap>
 	
@@ -228,7 +228,7 @@
 		where common_cd = 'DECL_RESN_USER'
 	</select>
 	
-	<insert id="declInsert" parameterType="userDeclVO">
+	<insert id="declInsert" parameterType="userDeclDto">
 		INSERT INTO user_decl (
     		decl_no, decl_resn, user_id, user_id2
 		) VALUES (
@@ -236,7 +236,7 @@
 		)
 	</insert>
 	
-	<update id="declUpdate" parameterType="userDeclVO">
+	<update id="declUpdate" parameterType="userDeclDto">
 		update users 
 			set decl_count = 
 			(select nvl(decl_count,0)+1 

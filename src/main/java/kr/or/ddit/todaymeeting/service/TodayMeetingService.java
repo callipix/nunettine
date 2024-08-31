@@ -4,47 +4,40 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.todaymeeting.VChatRoom;
-import kr.or.ddit.vo.TdmtngChSpMshgVO;
-import kr.or.ddit.vo.TdmtngPrtcpntVO;
-import kr.or.ddit.vo.TdmtngVO;
+import kr.or.ddit.vo.TdmtngDto;
+import kr.or.ddit.vo.TdmtngPrtcpntDto;
 
 
 public interface TodayMeetingService {
 	
 	//모임 캘린더 조회
-	public List<TdmtngVO> findAll(String userId);
+	public List<TdmtngDto> findAll(String userId);
 	
 	//모임 캘린더 리스트 조회
-	public List<TdmtngVO> list(Map<String, Object> map);
+	public List<TdmtngDto> list(Map<String, Object> map);
 	
 	//모임 상세 조회
-	public TdmtngVO detail(int tdmtngNo);
+	public TdmtngDto detail(int tdmtngNo);
 
 	//모임 생성
-	public int create(TdmtngVO tdmtngVO);
+	public int create(TdmtngDto tdmtngDto);
 	
 	//모임 수정
-	public int update(TdmtngVO tdmtngVO);
+	public int update(TdmtngDto tdmtngDto);
 	
 	//모임 삭제
 	public int delete(int tdmtngNo);
 
-	public TdmtngPrtcpntVO selectMyChat(TdmtngPrtcpntVO tdmtngPrtcpntVO);
+	public TdmtngPrtcpntDto selectMyChat(TdmtngPrtcpntDto tdmtngPrtcpntDto);
 	
 	public int getTotal(Map<String,Object> map);
 
-	public int joinChat(TdmtngPrtcpntVO tdmtngPrtcpntVO);
+	public int joinChat(TdmtngPrtcpntDto tdmtngPrtcpntDto);
 
 	public int chatMemCount(int tdmtngNo);
 
-	public List<TdmtngPrtcpntVO> chatMemList(int tdmtngNo);
+	public List<TdmtngPrtcpntDto> chatMemList(int tdmtngNo);
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**
-	* 새로 추가
-	* @param userId
-	* @return
-	*/
 	public List<VChatRoom> myList(String userId);
 	
 	public VChatRoom join(int tdmtngNo , String userId);

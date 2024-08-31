@@ -1,14 +1,12 @@
 package kr.or.ddit.pro.prtFolio.mapper;
 
-import kr.or.ddit.vo.PrtfolioVO;
-import kr.or.ddit.vo.SprviseAtchmnflVO;
+import kr.or.ddit.vo.PrtfolioDto;
+import kr.or.ddit.vo.SprviseAtchmnflDto;
 
 public interface PrtfolioMapper {
+	public int createPost(PrtfolioDto prtfolioDto);
 
-	public int createPost(PrtfolioVO prtfolioVO);
-
-	public int insertSprvise(SprviseAtchmnflVO sprviseAtchmnflVO);
+	public int insertSprvise(SprviseAtchmnflDto sprviseAtchmnflDto);
 
 	public int deletePrt(int sprviseAtchmnflNo);
-
 }

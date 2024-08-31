@@ -8,8 +8,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import kr.or.ddit.vo.OneInqryDto;
+import kr.or.ddit.vo.SprviseAtchmnflDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,17 +21,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.gson.Gson;
-
 import kr.or.ddit.admin.oneInqry.service.OneInqryService;
-import kr.or.ddit.pro_service.service_inquiry.vo.V_SrvcBtfInqryVO;
 import kr.or.ddit.util.ArticlePage;
 import kr.or.ddit.util.fileupload.service.FileuploadService;
-import kr.or.ddit.vo.OneInqryAnswerVO;
-import kr.or.ddit.vo.OneInqryVO;
-import kr.or.ddit.vo.SprviseAtchmnflVO;
-import kr.or.ddit.vo.SrvcBtfInqryVO;
-import kr.or.ddit.vo.UsersVO;
+import kr.or.ddit.vo.OneInqryAnswerDto;
+import kr.or.ddit.vo.UsersDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -44,8 +39,8 @@ public class oneInqryController {
 
 	// 세션에서 가져올 아이디
 	String userId = "";
-	OneInqryVO oneInqryVO = new OneInqryVO();
-	OneInqryAnswerVO oneInqryAnwerVO = new OneInqryAnswerVO();
+	OneInqryDto oneInqryDto = new OneInqryDto();
+	OneInqryAnswerDto oneInqryAnwerVO = new OneInqryAnswerDto();
 	
 	public String userIdChk(HttpServletRequest request) {
 		userId ="";
@@ -56,11 +51,11 @@ public class oneInqryController {
 		}else if(((HashMap)session.getAttribute("memSession"))!=null){
 			userId = ((HashMap)session.getAttribute("memSession")).get("userId").toString();
 		}else if(session.getAttribute("admSession")!=null){
-			UsersVO usersVO = (UsersVO) session.getAttribute("admSession"); 
-			userId = usersVO.getUserId(); 
+			UsersDto usersDto = (UsersDto) session.getAttribute("admSession");
+			userId = usersDto.getUserId();
 		}
 		
-		log.info(" [관리자] userId : " + userId);
+		log.info(" [관리자] userId : {}" , userId);
 		return userId;
 	}	
 	
@@ -78,14 +73,14 @@ public class oneInqryController {
 		
 		log.info("관리자문의 컨트롤/ 관리자 문의 파람맵" + oneInqryInfoMap );
 		
-		OneInqryVO oneInqryVO = new OneInqryVO();
-		oneInqryVO.setOneInqrySj((String)oneInqryInfoMap.get("oneInqrySj"));
-		oneInqryVO.setOneInqryCn((String)oneInqryInfoMap.get("oneInqryCn"));
-		oneInqryVO.setUserId(userId);
+		OneInqryDto oneInqryDto = new OneInqryDto();
+		oneInqryDto.setOneInqrySj((String)oneInqryInfoMap.get("oneInqrySj"));
+		oneInqryDto.setOneInqryCn((String)oneInqryInfoMap.get("oneInqryCn"));
+		oneInqryDto.setUserId(userId);
 		
 		int res = 0;
 		
-		res = this.oneInqryService.oneInqryCreatePost(oneInqryVO, uploadFiles);
+		res = this.oneInqryService.oneInqryCreatePost(oneInqryDto, uploadFiles);
 		
 		return "redirect:/oneInqry/oneInqryList";
 	}
@@ -131,9 +126,9 @@ public class oneInqryController {
 			userId = userIdChk(request);
 			map.put("userId", userId);
 			
-			List<OneInqryVO> oneInqryVOList =
+			List<OneInqryDto> oneInqryDtoList =
 					this.oneInqryService.searchList(map);
-			log.info("1:1문의 전체 목록 : " + oneInqryVOList);
+			log.info("1:1문의 전체 목록 : " + oneInqryDtoList);
 
 			int total = this.oneInqryService.getTotal(map);
 			
@@ -142,8 +137,8 @@ public class oneInqryController {
 			String currentPage = map.get("currentPage").toString();
 			String keyword = map.get("keyword").toString();
 			
-			ArticlePage<OneInqryVO> data 
-			= new ArticlePage<OneInqryVO>(total, Integer.parseInt(currentPage), size,oneInqryVOList, keyword);
+			ArticlePage<OneInqryDto> data
+			= new ArticlePage<OneInqryDto>(total, Integer.parseInt(currentPage), size, oneInqryDtoList, keyword);
 			
 			String url = "/oneInqry/oneInqryList";
 			data.setUrl(url);
@@ -156,13 +151,13 @@ public class oneInqryController {
 		// 답변 안된 목록 출력
 		@PostMapping("/oneInqryNoAnswerList")
 		@ResponseBody
-		public ArticlePage<OneInqryVO> oneInqryNoAnswerList(@RequestBody(required = false) Map<String,Object> map,
-				HttpServletRequest request){
+		public ArticlePage<OneInqryDto> oneInqryNoAnswerList(@RequestBody(required = false) Map<String,Object> map,
+															 HttpServletRequest request){
 			
 			userId = userIdChk(request);
 			map.put("userId", userId);
 			
-			List<OneInqryVO> oneInqryVOList =
+			List<OneInqryDto> oneInqryDtoList =
 					this.oneInqryService.oneInqryNoAnswerList(map);
 
 			int total = this.oneInqryService.getNoAnswerTotal(map);
@@ -172,8 +167,8 @@ public class oneInqryController {
 			String currentPage = map.get("currentPage").toString();
 			String keyword = map.get("keyword").toString();
 			
-			ArticlePage<OneInqryVO> data 
-			= new ArticlePage<OneInqryVO>(total, Integer.parseInt(currentPage), size,oneInqryVOList,keyword);
+			ArticlePage<OneInqryDto> data
+			= new ArticlePage<OneInqryDto>(total, Integer.parseInt(currentPage), size, oneInqryDtoList,keyword);
 			
 			String url = "/oneInqry/oneIqnryNoAnswerList";
 			data.setUrl(url);
@@ -185,13 +180,13 @@ public class oneInqryController {
 		// 답변 완료 목록 출력
 		@PostMapping("/oneInqrySuccessList")
 		@ResponseBody
-		public ArticlePage<OneInqryVO> oneInqrySuccessList(@RequestBody(required = false) Map<String,Object> map,
-				HttpServletRequest request){
+		public ArticlePage<OneInqryDto> oneInqrySuccessList(@RequestBody(required = false) Map<String,Object> map,
+															HttpServletRequest request){
 			
 			userId = userIdChk(request);
 			map.put("userId", userId);
 			
-			List<OneInqryVO> oneInqryVOList =
+			List<OneInqryDto> oneInqryDtoList =
 					this.oneInqryService.oneInqrySuccessList(map);
 
 			int total = this.oneInqryService.getSuccessTotal(map);
@@ -201,8 +196,8 @@ public class oneInqryController {
 			String currentPage = map.get("currentPage").toString();
 			String keyword = map.get("keyword").toString();
 			
-			ArticlePage<OneInqryVO> data 
-			= new ArticlePage<OneInqryVO>(total, Integer.parseInt(currentPage), size,oneInqryVOList,keyword);
+			ArticlePage<OneInqryDto> data
+			= new ArticlePage<OneInqryDto>(total, Integer.parseInt(currentPage), size, oneInqryDtoList,keyword);
 			
 			String url = "/oneInqry/oneIqnrySuccessList";
 			data.setUrl(url);
@@ -219,9 +214,9 @@ public class oneInqryController {
 			userId = userIdChk(request);
 			map.put("userId", userId);
 			
-			List<OneInqryVO> oneInqryVOList =
+			List<OneInqryDto> oneInqryDtoList =
 					this.oneInqryService.searchList(map);
-			log.info("1:1문의 전체 목록 : " + oneInqryVOList);
+			log.info("1:1문의 전체 목록 : " + oneInqryDtoList);
 
 			int total = this.oneInqryService.getTotal(map);
 			
@@ -230,8 +225,8 @@ public class oneInqryController {
 			String currentPage = map.get("currentPage").toString();
 			String keyword = map.get("keyword").toString();
 			
-			ArticlePage<OneInqryVO> data 
-			= new ArticlePage<OneInqryVO>(total, Integer.parseInt(currentPage), size,oneInqryVOList, keyword);
+			ArticlePage<OneInqryDto> data
+			= new ArticlePage<OneInqryDto>(total, Integer.parseInt(currentPage), size, oneInqryDtoList, keyword);
 			
 			String url = "/oneInqry/myOneInqryList";
 			data.setUrl(url);
@@ -244,13 +239,13 @@ public class oneInqryController {
 		// 답변 안된 목록 출력
 		@PostMapping("/myOneInqryNoAnswerList")
 		@ResponseBody
-		public ArticlePage<OneInqryVO> myOneInqryNoAnswerList(@RequestBody(required = false) Map<String,Object> map,
-				HttpServletRequest request){
+		public ArticlePage<OneInqryDto> myOneInqryNoAnswerList(@RequestBody(required = false) Map<String,Object> map,
+															   HttpServletRequest request){
 			
 			userId = userIdChk(request);
 			map.put("userId", userId);
 			
-			List<OneInqryVO> oneInqryVOList =
+			List<OneInqryDto> oneInqryDtoList =
 					this.oneInqryService.oneInqryNoAnswerList(map);
 
 			int total = this.oneInqryService.getNoAnswerTotal(map);
@@ -260,8 +255,8 @@ public class oneInqryController {
 			String currentPage = map.get("currentPage").toString();
 			String keyword = map.get("keyword").toString();
 			
-			ArticlePage<OneInqryVO> data 
-			= new ArticlePage<OneInqryVO>(total, Integer.parseInt(currentPage), size,oneInqryVOList,keyword);
+			ArticlePage<OneInqryDto> data
+			= new ArticlePage<OneInqryDto>(total, Integer.parseInt(currentPage), size, oneInqryDtoList,keyword);
 			
 			String url = "/oneInqry/myOneIqnryNoAnswerList";
 			data.setUrl(url);
@@ -273,13 +268,13 @@ public class oneInqryController {
 		// 답변 완료 목록 출력
 		@PostMapping("/myOneInqrySuccessList")
 		@ResponseBody
-		public ArticlePage<OneInqryVO> myOneInqrySuccessList(@RequestBody(required = false) Map<String,Object> map,
-				HttpServletRequest request){
+		public ArticlePage<OneInqryDto> myOneInqrySuccessList(@RequestBody(required = false) Map<String,Object> map,
+															  HttpServletRequest request){
 			
 			userId = userIdChk(request);
 			map.put("userId", userId);
 			
-			List<OneInqryVO> oneInqryVOList =
+			List<OneInqryDto> oneInqryDtoList =
 					this.oneInqryService.oneInqrySuccessList(map);
 
 			int total = this.oneInqryService.getSuccessTotal(map);
@@ -289,8 +284,8 @@ public class oneInqryController {
 			String currentPage = map.get("currentPage").toString();
 			String keyword = map.get("keyword").toString();
 			
-			ArticlePage<OneInqryVO> data 
-			= new ArticlePage<OneInqryVO>(total, Integer.parseInt(currentPage), size,oneInqryVOList,keyword);
+			ArticlePage<OneInqryDto> data
+			= new ArticlePage<OneInqryDto>(total, Integer.parseInt(currentPage), size, oneInqryDtoList,keyword);
 			
 			String url = "/oneInqry/myOneIqnrySuccessList";
 			data.setUrl(url);
@@ -300,23 +295,23 @@ public class oneInqryController {
 	
 		@GetMapping("/oneInqryDetail")
 		public String oneInqryDetail(@RequestParam("oneInqryNo") int oneInqryNo, String userId,Model model){
-			OneInqryVO oneInqryVO = new OneInqryVO();
-			oneInqryVO.setOneInqryNo(oneInqryNo);
-			oneInqryVO = this.oneInqryService.oneInqryDetail(oneInqryVO, userId);
+			OneInqryDto oneInqryDto = new OneInqryDto();
+			oneInqryDto.setOneInqryNo(oneInqryNo);
+			oneInqryDto = this.oneInqryService.oneInqryDetail(oneInqryDto, userId);
 			
 			log.info("1:1 detail -> userId  : " + userId);
 			
-			int sprviseAtchmnflNo = oneInqryVO.getSprviseAtchmnflNo();
-			List<SprviseAtchmnflVO> sprviseAtchmnflVOList = this.fileuploadService.getsprviseAtchmnfl(sprviseAtchmnflNo);
-			log.info("[oneinqryController] detail -> sprviseAtchmnflVOList : " + sprviseAtchmnflVOList );
+			int sprviseAtchmnflNo = oneInqryDto.getSprviseAtchmnflNo();
+			List<SprviseAtchmnflDto> sprviseAtchmnflDtoList = this.fileuploadService.getsprviseAtchmnfl(sprviseAtchmnflNo);
+			log.info("[oneinqryController] detail -> sprviseAtchmnflVOList : " + sprviseAtchmnflDtoList);
 			
-			log.info("[oneinqryController] detail -> oneInqryVO.getSprviseAtchmnflVOList : " + oneInqryVO.getSprviseAtchmnflVOList());
+			log.info("[oneinqryController] detail -> oneInqryVO.getSprviseAtchmnflVOList : " + oneInqryDto.getSprviseAtchmnflDtoList());
 			
 			
-			 oneInqryVO = this.oneInqryService.oneInqryDetail(oneInqryVO, userId);
-			 oneInqryVO.setSprviseAtchmnflVOList(sprviseAtchmnflVOList);
+			 oneInqryDto = this.oneInqryService.oneInqryDetail(oneInqryDto, userId);
+			 oneInqryDto.setSprviseAtchmnflDtoList(sprviseAtchmnflDtoList);
 			
-			model.addAttribute("oneInqryVO", oneInqryVO);
+			model.addAttribute("oneInqryVO", oneInqryDto);
 			if("testAdmin".equals(userId)) {
 				model.addAttribute("loginId", "admin");
 			}

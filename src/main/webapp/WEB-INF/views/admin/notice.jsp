@@ -100,19 +100,19 @@ $(function(){
             
             $("#noticeTbody").html("");
          
-            $.each(result.content,function(idx, noticeVO){
+            $.each(result.content,function(idx, noticeDto){
             	// 공지사항 제목 자르기
-                let trimmedNoticeSj = noticeVO.noticeSj;
+                let trimmedNoticeSj = noticeDto.noticeSj;
                 if (trimmedNoticeSj.length > maxLength) {
                     trimmedNoticeSj = trimmedNoticeSj.substring(0, maxLength) + "..."; // 최대 길이 초과 시 생략 부호 추가
                 }
             	
-               str += "<tr onclick=\"location.href='/admin/detail?noticeNo=" + noticeVO.noticeNo + "'\" style=\"cursor: pointer;\">";              
-               str += "<td>"+noticeVO.rnum+"</td>";
+               str += "<tr onclick=\"location.href='/admin/detail?noticeNo=" + noticeDto.noticeNo + "'\" style=\"cursor: pointer;\">";
+               str += "<td>"+noticeDto.rnum+"</td>";
                str += "<td>"+trimmedNoticeSj+"</td>";
-               str += "<td>"+formatDate(noticeVO.noticeWritngDt)+"</td>";
-               str += "<td>"+noticeVO.noticeRdcnt+"</td>";              
-               str += "<td>"+convertMngrId(noticeVO.mngrId)+"</td>";
+               str += "<td>"+formatDate(noticeDto.noticeWritngDt)+"</td>";
+               str += "<td>"+noticeDto.noticeRdcnt+"</td>";
+               str += "<td>"+convertMngrId(noticeDto.mngrId)+"</td>";
                str += "</tr>";
             
             });   
@@ -160,19 +160,19 @@ function leftList(currentPage, keyword, searchKey){
 	         
 	         $("#noticeTbody").html("");
 	         
-	         $.each(result.content,function(idx, noticeVO){
+	         $.each(result.content,function(idx, noticeDto){
 	        	// 공지사항 제목 자르기
-	             let trimmedNoticeSj = noticeVO.noticeSj;
+	             let trimmedNoticeSj = noticeDto.noticeSj;
 	             if (trimmedNoticeSj.length > maxLength) {
 	                 trimmedNoticeSj = trimmedNoticeSj.substring(0, maxLength) + "..."; // 최대 길이 초과 시 생략 부호 추가
 	             }
 	        	 
-	            str += "<tr onclick=\"location.href='/admin/detail?noticeNo=" + noticeVO.noticeNo + "'\" style=\"cursor: pointer;\">";   
-	            str += "<td>"+noticeVO.rnum+"</td>";
+	            str += "<tr onclick=\"location.href='/admin/detail?noticeNo=" + noticeDto.noticeNo + "'\" style=\"cursor: pointer;\">";
+	            str += "<td>"+noticeDto.rnum+"</td>";
 	            str += "<td>"+trimmedNoticeSj+"</td>";
-	            str += "<td>"+formatDate(noticeVO.noticeWritngDt)+"</td>";
-	            str += "<td>"+noticeVO.noticeRdcnt+"</td>";
-	            str += "<td>"+convertMngrId(noticeVO.mngrId)+"</td>";
+	            str += "<td>"+formatDate(noticeDto.noticeWritngDt)+"</td>";
+	            str += "<td>"+noticeDto.noticeRdcnt+"</td>";
+	            str += "<td>"+convertMngrId(noticeDto.mngrId)+"</td>";
 	            str += "</tr>";
 	            
 	            

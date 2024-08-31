@@ -23,7 +23,7 @@
 		</if>
 	</sql>
 	
-<!-- 	 <select id="list" parameterType="hashMap" resultType="noticeVO"> -->
+<!-- 	 <select id="list" parameterType="hashMap" resultType="noticeDto"> -->
 <!-- 		with t as( -->
 <!-- 			select ROW_NUMBER() OVER(order by f.notice_no DESC)RNUM -->
 <!-- 				,f.* -->
@@ -39,7 +39,7 @@
 <!-- 		where t.rnum between(#{currentPage}*10)-(10-1) and (#{currentPage}*10) -->
 <!-- 	</select>   -->
 
-	<select id="list" parameterType="hashMap" resultType="noticeVO">
+	<select id="list" parameterType="hashMap" resultType="noticeDto">
 	   
 		WITH TOTAL_COUNT AS (
 			    SELECT COUNT(*) AS TOTAL_COUNT FROM NOTICE
@@ -76,12 +76,12 @@
 
 	</select>
 	
-	<select id="getAllNoticeList" parameterType="noticeVO" resultType="noticeVO" >
+	<select id="getAllNoticeList" parameterType="noticeDto" resultType="noticeDto" >
 		select * from notice
 	</select>
 
 	<!-- NOTICE 하나의 공지사항 글에 -->
-	<resultMap type="noticeVO" id="noticeMap">
+	<resultMap type="noticeDto" id="noticeMap">
 		<result property="noticeNo" column="NOTICE_NO"/>
 		<result property="noticeSj" column="NOTICE_SJ"/>
 		<result property="noticeCn" column="NOTICE_CN"/>
@@ -93,7 +93,7 @@
 	</resultMap>
 	
 	<!-- SPRVISE_ATCHMNFL 여러개의 첨부파일이 있음 -->
-	<resultMap type="sprviseAtchmnflVO" id="spAtMap">
+	<resultMap type="sprviseAtchmnflDto" id="spAtMap">
 		<result property="sprviseAtchmnflNo" column="SPRVISE_ATCHMNFL_NO"/>
 		<result property="atchmnflNo" column="ATCHMNFL_NO"/>
 		<result property="atchmnflCours" column="ATCHMNFL_COURS"/>
@@ -105,7 +105,7 @@
 		<result property="updtDt" column="UPDT_DT"/>
 	</resultMap>
 
-	 <select id="sprviseAtchmnflVO" parameterType="int" resultMap="noticeMap" >
+	 <select id="sprviseAtchmnflDto" parameterType="int" resultMap="noticeMap" >
 		SELECT A.NOTICE_NO, A.NOTICE_SJ, A.NOTICE_CN, A.NOTICE_WRITNG_DT, A.NOTICE_RDCNT
 		     , A.SPRVISE_ATCHMNFL_NO, A.MNGR_ID
 		     , B.ATCHMNFL_NO, B.ATCHMNFL_COURS, B.ATCHMNFL_NM, B.STORE_ATCHMNFL_NM
@@ -115,7 +115,7 @@
 	</select>
 	
 	
-	<select id="detail" parameterType="int" resultType="noticeVO">
+	<select id="detail" parameterType="int" resultType="noticeDto">
     select NOTICE_NO, NOTICE_SJ, NOTICE_CN, notice_writng_dt, NOTICE_RDCNT, SPRVISE_ATCHMNFL_NO, MNGR_ID
     from notice
     where NOTICE_NO = #{noticeNo}
@@ -129,7 +129,7 @@
 	</update>
 	
 	
-	<update id="update" parameterType="noticeVO">
+	<update id="update" parameterType="noticeDto">
 	update notice 
 	set NOTICE_CN = #{noticeCn},
 		NOTICE_SJ = #{noticeSj}	 
@@ -137,13 +137,13 @@
 	</update>
 	
 	
-	<delete id = "delete" parameterType="noticeVO">
+	<delete id = "delete" parameterType="noticeDto">
 		delete from notice
 		where notice_no = #{noticeNo}
 	</delete>
 		
 		
-	<insert id="createPost" parameterType="noticeVO">
+	<insert id="createPost" parameterType="noticeDto">
 	
 		<selectKey resultType="int" order="BEFORE" keyProperty="sprviseAtchmnflNo">
 			SELECT SPRVISE_ATCHMNFL_NO_SEQ.NEXTVAL FROM DUAL
@@ -153,7 +153,7 @@
 			values(NOTICE_NO_SEQ.nextval,#{noticeSj},#{noticeCn},SYSDATE,#{mngrId},#{sprviseAtchmnflNo})
 		</insert>
 		
-	<insert id="insertSprvise" parameterType="sprviseAtchmnflVO">
+	<insert id="insertSprvise" parameterType="sprviseAtchmnflDto">
 		INSERT INTO SPRVISE_ATCHMNFL(SPRVISE_ATCHMNFL_NO, ATCHMNFL_NO, ATCHMNFL_COURS, ATCHMNFL_NM, STORE_ATCHMNFL_NM, ATCHMNFL_TY, REGIST_DT, USER_ID, UPDT_DT) 
 		VALUES(#{sprviseAtchmnflNo},#{atchmnflNo},#{atchmnflCours},#{atchmnflNm},#{storeAtchmnflNm},#{atchmnflTy},SYSDATE,#{userId},NULL)
 	</insert>

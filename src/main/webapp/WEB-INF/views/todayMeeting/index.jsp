@@ -253,16 +253,16 @@ function meetingList (result) {
 
     $("#tmtBody").html("");
 
-    $.each(result.content, function (idx, tdmtngVO) {
-    	let mberPhoto = tdmtngVO.mberProflPhoto;
-    	let proPhoto = tdmtngVO.proProflPhoto;
+    $.each(result.content, function (idx, tdmtngDto) {
+    	let mberPhoto = tdmtngDto.mberProflPhoto;
+    	let proPhoto = tdmtngDto.proProflPhoto;
     	
 		console.log("회원프사", mberPhoto);
 		console.log("프로프사", proPhoto);
     	
-		str += `<tr onclick="location.href='/todayMeeting/detail?tdmtngNo=\${tdmtngVO.tdmtngNo}'">`;
-		str += `<td>\${tdmtngVO.rnum}</td>`;
-		str += `<td>\${tdmtngVO.tdmtngNm}</td>`;
+		str += `<tr onclick="location.href='/todayMeeting/detail?tdmtngNo=\${tdmtngDto.tdmtngNo}'">`;
+		str += `<td>\${tdmtngDto.rnum}</td>`;
+		str += `<td>\${tdmtngDto.tdmtngNm}</td>`;
 		str += `<td class='py-1' style='text-align:right; padding-right:10px;'>`;
 		if(mberPhoto == null && proPhoto != null) {
 			
@@ -277,8 +277,8 @@ function meetingList (result) {
 			console.log("없음 : "+ mberPhoto)
 			str += `<img src='/images/2024/profile.jpg'></td>`;
 		}
-		str += `<td style='text-align:left; padding-left:0;'>\${tdmtngVO.userNcnm}</td>`;
-		str += `<td>\${tdmtngVO.tdmtngDt}</td>`;
+		str += `<td style='text-align:left; padding-left:0;'>\${tdmtngDto.userNcnm}</td>`;
+		str += `<td>\${tdmtngDto.tdmtngDt}</td>`;
 		str += `</tr>`; 
     });
 

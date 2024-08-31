@@ -4,9 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import kr.or.ddit.vo.TdmtngDto;
+import kr.or.ddit.vo.TdmtngPrtcpntDto;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -24,10 +25,8 @@ import kr.or.ddit.chatting.service.MessageService;
 import kr.or.ddit.todaymeeting.VChatRoom;
 import kr.or.ddit.todaymeeting.service.TodayMeetingService;
 import kr.or.ddit.util.ArticlePage3;
-import kr.or.ddit.vo.TdmtngChSpMshgVO;
-import kr.or.ddit.vo.TdmtngPrtcpntVO;
-import kr.or.ddit.vo.TdmtngVO;
-import kr.or.ddit.vo.UsersVO;
+import kr.or.ddit.vo.TdmtngChSpMshgDto;
+import kr.or.ddit.vo.UsersDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -40,13 +39,11 @@ public class TodayMeetingController {
 	private final TodayMeetingService todayMeetingSerive;
 	private final MessageService messageService;
 
-
+	//세션값으로 아이디 가져오기
 	private String userId(HttpServletRequest request) {
-		//세션값으로 아이디 가져오기
 
 		Object proSession = request.getSession().getAttribute("proSession");
 		Object memSession = request.getSession().getAttribute("memSession");
-
 
 		if(proSession !=null && proSession instanceof HashMap) {
 			Object userId = ((HashMap<String, Object>)proSession).get("userId");
@@ -89,7 +86,7 @@ public class TodayMeetingController {
 
 	@ResponseBody
 	@PostMapping("/listAjax")
-	public ArticlePage3<TdmtngVO> listAjax(@RequestBody(required=false) Map<String,Object> map) {
+	public ArticlePage3<TdmtngDto> listAjax(@RequestBody(required=false) Map<String,Object> map) {
 
 		log.info("map : " + map);
 
@@ -102,9 +99,9 @@ public class TodayMeetingController {
 
 		log.info("map : " + map);
 
-		List<TdmtngVO> tdmtngVOList = this.todayMeetingSerive.list(map);
+		List<TdmtngDto> tdmtngDtoList = this.todayMeetingSerive.list(map);
 
-		log.info("listAjax->tdmtngVOList : " + tdmtngVOList);
+		log.info("listAjax->tdmtngVOList : " + tdmtngDtoList);
 
 		String currentPage = map.get("currentPage").toString();
 
@@ -116,8 +113,8 @@ public class TodayMeetingController {
 		String selectColumn = map.get("selectColumn").toString();
 		log.info("listAjax->selectColumn : " + selectColumn);
 
-		ArticlePage3<TdmtngVO> data = new ArticlePage3<TdmtngVO>(total,
-				Integer.parseInt(currentPage), size, tdmtngVOList, keyword, selectColumn);
+		ArticlePage3<TdmtngDto> data = new ArticlePage3<TdmtngDto>(total,
+				Integer.parseInt(currentPage), size, tdmtngDtoList, keyword, selectColumn);
 
 		log.info("listAjax->data : " + data);
 
@@ -136,11 +133,11 @@ public class TodayMeetingController {
 		JSONArray jsonArr = new JSONArray();
 
 		HashMap<String, Object> hash = new HashMap<>();
-		List<TdmtngVO> list = todayMeetingSerive.findAll(userId);
+		List<TdmtngDto> list = todayMeetingSerive.findAll(userId);
 
 		log.info("calList : " + list);
 
-		for(TdmtngVO tdmtngcal : list) {
+		for(TdmtngDto tdmtngcal : list) {
 			hash.put("id", tdmtngcal.getTdmtngNo());
 			hash.put("title", tdmtngcal.getTdmtngNm());
 			hash.put("start", tdmtngcal.getTdmtngDt());
@@ -159,16 +156,16 @@ public class TodayMeetingController {
 
 		String sessionId = userId(request);
 
-		TdmtngVO tdmtngVO = todayMeetingSerive.detail(tdmtngNo);
+		TdmtngDto tdmtngDto = todayMeetingSerive.detail(tdmtngNo);
 
-		log.info("detail -> tdmtngVO : " + tdmtngVO);
+		log.info("detail -> tdmtngVO : " + tdmtngDto);
 
 		int count = this.todayMeetingSerive.chatMemCount(tdmtngNo);
 
 		log.info("chatMemCount -> count : " + count);
 
 		model.addAttribute("sessionId", sessionId);
-		model.addAttribute("tdmtngVO", tdmtngVO);
+		model.addAttribute("tdmtngVO", tdmtngDto);
 		model.addAttribute("chatMemCount", count);
 
 		return "todayMeeting/detail";
@@ -176,33 +173,33 @@ public class TodayMeetingController {
 
 	@ResponseBody
 	@PostMapping("/create")
-	public int create(HttpServletRequest request, TdmtngVO tdmtngVO) {
+	public int create(HttpServletRequest request, TdmtngDto tdmtngDto) {
 
 		String userId = userId(request);
 
-		tdmtngVO.setUserId(userId);
+		tdmtngDto.setUserId(userId);
 
-		log.info("create -> tdmtngVO : " + tdmtngVO);
+		log.info("create -> tdmtngVO : " + tdmtngDto);
 
-		int result = this.todayMeetingSerive.create(tdmtngVO);
+		int result = this.todayMeetingSerive.create(tdmtngDto);
 
 		log.info("tdmtngVO -> result : " + result);
-		log.info("tdmtngVO -> result : " + tdmtngVO.getTdmtngNo());
+		log.info("tdmtngVO -> result : " + tdmtngDto.getTdmtngNo());
 
-		return tdmtngVO.getTdmtngNo();
+		return tdmtngDto.getTdmtngNo();
 	}
 
 
 	@PostMapping("/update")
-	public String update(TdmtngVO tdmtngVO) {
-		log.info("update -> tdmtngVO : " + tdmtngVO);
+	public String update(TdmtngDto tdmtngDto) {
+		log.info("update -> tdmtngVO : " + tdmtngDto);
 
-		int result = this.todayMeetingSerive.update(tdmtngVO);
+		int result = this.todayMeetingSerive.update(tdmtngDto);
 
 		log.info("tdmtngVO -> result : " + result);
 
 		//redirect : 새로운 URL요청
-		return "redirect:/todayMeeting/detail?tdmtngNo="+tdmtngVO.getTdmtngNo();
+		return "redirect:/todayMeeting/detail?tdmtngNo="+ tdmtngDto.getTdmtngNo();
 	}
 
 	@GetMapping("/delete")
@@ -219,34 +216,34 @@ public class TodayMeetingController {
 	//내 채팅 불러오기
 	@ResponseBody
 	@PostMapping("/selectMyChat")
-	public TdmtngPrtcpntVO selectMyChat (@RequestBody TdmtngPrtcpntVO tdmtngPrtcpntVO) {
+	public TdmtngPrtcpntDto selectMyChat (@RequestBody TdmtngPrtcpntDto tdmtngPrtcpntDto) {
 
 
-		log.info("selectMyChat -> tdmtngPrtcpntVO : " + tdmtngPrtcpntVO);
+		log.info("selectMyChat -> tdmtngPrtcpntVO : " + tdmtngPrtcpntDto);
 
-		tdmtngPrtcpntVO = this.todayMeetingSerive.selectMyChat(tdmtngPrtcpntVO);
+		tdmtngPrtcpntDto = this.todayMeetingSerive.selectMyChat(tdmtngPrtcpntDto);
 
-		log.info("selectMyChat -> tdmtngPrtcpntVO : " + tdmtngPrtcpntVO);
+		log.info("selectMyChat -> tdmtngPrtcpntVO : " + tdmtngPrtcpntDto);
 
-		return tdmtngPrtcpntVO;
+		return tdmtngPrtcpntDto;
 	}
 
 	//채팅 참여(INSERT)
 	@ResponseBody
 	@PostMapping("/joinChat")
-	public int joinChat(HttpServletRequest request, int tdmtngNo, TdmtngPrtcpntVO tdmtngPrtcpntVO) {
+	public int joinChat(HttpServletRequest request, int tdmtngNo, TdmtngPrtcpntDto tdmtngPrtcpntDto) {
 		//Unknown return value type: java.lang.Integer 에러 : @ResponseBody를 안 해줘서..
 
 		log.info("joinChat -> tdmtngNo : " + tdmtngNo);
 
 		String userId = userId(request);
 
-		tdmtngPrtcpntVO.setUserId(userId);
-		tdmtngPrtcpntVO.setTdmtngNo(tdmtngNo);
+		tdmtngPrtcpntDto.setUserId(userId);
+		tdmtngPrtcpntDto.setTdmtngNo(tdmtngNo);
 
-		log.info("joinChat -> tdmtngPrtcpntVO : " + tdmtngPrtcpntVO);
+		log.info("joinChat -> tdmtngPrtcpntVO : " + tdmtngPrtcpntDto);
 
-		int result = this.todayMeetingSerive.joinChat(tdmtngPrtcpntVO);
+		int result = this.todayMeetingSerive.joinChat(tdmtngPrtcpntDto);
 
 		log.info("joinChat -> result : " + result);
 
@@ -256,11 +253,11 @@ public class TodayMeetingController {
 	//채팅방 멤버 리스트
 	@ResponseBody
 	@PostMapping("/chatMemList")
-	public List<TdmtngPrtcpntVO> chatMemList(int tdmtngNo) {
+	public List<TdmtngPrtcpntDto> chatMemList(int tdmtngNo) {
 
 		log.info("chatMemList -> tdmtngNo : " + tdmtngNo);
 
-		List<TdmtngPrtcpntVO> chatMemList = this.todayMeetingSerive.chatMemList(tdmtngNo);
+		List<TdmtngPrtcpntDto> chatMemList = this.todayMeetingSerive.chatMemList(tdmtngNo);
 
 		log.info("chatMemList -> chatMemList : " + chatMemList);
 
@@ -275,9 +272,9 @@ public class TodayMeetingController {
 
 		VChatRoom joinRoom = this.todayMeetingSerive.join(tdmtngNo , userId(request));
 
-		List<TdmtngPrtcpntVO> chatMemList = this.todayMeetingSerive.chatMemList(tdmtngNo);
+		List<TdmtngPrtcpntDto> chatMemList = this.todayMeetingSerive.chatMemList(tdmtngNo);
 
-		for(TdmtngPrtcpntVO test : chatMemList) {
+		for(TdmtngPrtcpntDto test : chatMemList) {
 
 			if(joinRoom.getUserId().equals(test.getUserId())){
 
@@ -294,9 +291,9 @@ public class TodayMeetingController {
 
 		}
 
-		for(UsersVO userImg : joinRoom.getUserInfo()) {
+		for(UsersDto userImg : joinRoom.getUserInfo()) {
 
-			for(TdmtngPrtcpntVO bb : chatMemList) {
+			for(TdmtngPrtcpntDto bb : chatMemList) {
 
 				if(userImg.getUserId().equals(bb.getUserId())){
 
@@ -338,13 +335,13 @@ public class TodayMeetingController {
 
 		VChatRoom joinRoom = this.todayMeetingSerive.join(tdmtngNo , userId(request));
 
-		List<TdmtngChSpMshgVO> msgList = this.messageService.roomMsgList(tdmtngNo);
+		List<TdmtngChSpMshgDto> msgList = this.messageService.roomMsgList(tdmtngNo);
 
-		List<TdmtngPrtcpntVO> chatMemList = this.todayMeetingSerive.chatMemList(tdmtngNo);
+		List<TdmtngPrtcpntDto> chatMemList = this.todayMeetingSerive.chatMemList(tdmtngNo);
 
-		for(TdmtngChSpMshgVO aa : msgList) {
+		for(TdmtngChSpMshgDto aa : msgList) {
 
-			for(TdmtngPrtcpntVO bb : chatMemList) {
+			for(TdmtngPrtcpntDto bb : chatMemList) {
 
 				if(aa.getUserId().equals(bb.getUserId())){
 

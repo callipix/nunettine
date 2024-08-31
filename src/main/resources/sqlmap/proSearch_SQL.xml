@@ -2,17 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ddit.pro.proSearch.mapper.SearchProMapper">
 
-   <resultMap type="proVO" id="proMap">
+   <resultMap type="proDto" id="proMap">
       <result property="proId" column="PRO_ID"/>
       <result property="proProflPhoto" column="PRO_PROFL_PHOTO"/>
       <result property="spcltyRealmCode" column="SPCLTY_REALM_CODE"/>
-      <collection property="proflVOList" ofType="proVO" resultMap="proflVOMap"></collection>
+      <collection property="proflVOList" ofType="proDto" resultMap="proflVOMap"></collection>
       <collection property="userSeVOList" resultMap="userSeVOMap"></collection>
       <collection property="vCityVOList" resultMap="vCityVOMap"></collection>
       <collection property="spcltyRealmVOList" resultMap="spcltyRealmVOMap"></collection>
    </resultMap>
    
-   <resultMap type="proProflVO" id="proflVOMap">
+   <resultMap type="proProflDto" id="proflVOMap">
       <result property="proProflOnLiIntrcn" column="PRO_PROFL_ON_LI_INTRCN"/>
       <result property="proProflContactPosblTime" column="PRO_PROFL_CONTACT_POSBL_TIME"/>
       <result property="bcityCode" column="BCITY_CODE"/>
@@ -203,7 +203,7 @@
 	</select>
    
    
-      <resultMap type="proVO" id="ProMap">
+      <resultMap type="proDto" id="ProMap">
       <result property="proId" column="PRO_ID"/>
       <result property="proProflPhoto" column="PRO_PROFL_PHOTO"/>
       <result property="spcltyRealmCode" column="SPCLTY_REALM_CODE"/>
@@ -211,11 +211,11 @@
       <collection property="userSeVOList" resultMap="UserNmMap"></collection>
    </resultMap>
    
-   <resultMap type="adresVO" id="AdresMap">
+   <resultMap type="adresDto" id="AdresMap">
       <result property="adres" column="ADRES"/>
    </resultMap>
    
-   <resultMap type="usersVO" id="UserNmMap">
+   <resultMap type="usersDto" id="UserNmMap">
       <result property="userNm" column="USER_NM"/>
    </resultMap>
    
@@ -232,7 +232,7 @@
        AND A.PRO_ID = D.PRO_ID
    </select>
    
-<resultMap type="proVO" id="MonthProMap">
+<resultMap type="proDto" id="MonthProMap">
     <result property="proId" column="PRO_ID"/>
     <result property="proProflPhoto" column="PRO_PROFL_PHOTO"/>
     <result property="spcltyRealmCode" column="SPCLTY_REALM_CODE"/>
@@ -240,11 +240,11 @@
     <collection property="proflVOList" resultMap="proflMap"></collection>
 </resultMap>
 
-<resultMap type="proProflVO" id="proflMap">
+<resultMap type="proProflDto" id="proflMap">
     <result property="proProflOnLiIntrcn" column="PRO_PROFL_ON_LI_INTRCN"/>
 </resultMap>
 
-<resultMap type="usersVO" id="UserNmMap2">
+<resultMap type="usersDto" id="UserNmMap2">
     <result property="userNm" column="USER_NCNM"/>
 </resultMap>
 

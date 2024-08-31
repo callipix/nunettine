@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.ddit.admin.usersSearch.dto.UsersDto;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.admin.usersSearch.service.UsersSearchService;
-import kr.or.ddit.admin.usersSearch.vo.UsersVO;
 //import kr.or.ddit.util.ArticlePage;
 import kr.or.ddit.util.ArticlePage2;
 import lombok.extern.slf4j.Slf4j;
@@ -54,26 +54,19 @@ public class UsersSearchController {
 		log.info("list->total:"+total);//44
 		int size = 10;
 		
-		List<UsersVO> usersVOList = this.usersSearchService.list(map);
-		/*
-		UsersVO(rnum=1, userId=테프로, userNm=홍길동, userPassword=123456, emplyrTy=ET02, secsnAt=1), 
-		UsersVO(rnum=2, userId=테스트아이디2, userNm=홍길동2, userPassword=123456, emplyrTy=ET01, secsnAt=1), 
-		UsersVO(rnum=3, userId=테스트아이디1, userNm=홍길동1, userPassword=123456, emplyrTy=ET01, secsnAt=1), 
-		UsersVO(rnum=4, userId=테스트아이디, userNm=홍길동, userPassword=123456, emplyrTy=ET01, secsnAt=1), 
-		UsersVO(rnum=5, userId=zzzzzz22, userNm=테스트용, userPassword=asdasd, emplyrTy=ET01, secsnAt=1)...]
-		 */
-		log.info("list->usersVOList:"+usersVOList);
-		log.info("list->map:"+map);
+		List<UsersDto> usersDtoList = this.usersSearchService.list(map);
+		log.info("list -> usersVOList : {}" , usersDtoList);
+		log.info("list -> map : {}" , map);
 		
-		model.addAttribute("data",new ArticlePage2<UsersVO>(total
-				,currentPage, size, usersVOList, keyword, "rightList", searchKey));
+		model.addAttribute("data",new ArticlePage2<UsersDto>(total
+				,currentPage, size, usersDtoList, keyword, "rightList", searchKey));
 		
 		return "usersSearch/list";
 	}
 	
 	@ResponseBody
 	@PostMapping("/listAjax")
-	public ArticlePage2<UsersVO>listAjax(@RequestBody(required=false)Map<String,Object> map) throws ParseException {
+	public ArticlePage2<UsersDto>listAjax(@RequestBody(required=false)Map<String,Object> map) throws ParseException {
 		
 		log.info("listAjax->map:"+map);
 		
@@ -86,10 +79,10 @@ public class UsersSearchController {
 		
 		int size = 10;
 		
-		List<UsersVO> usersVOList = this.usersSearchService.list(map);
+		List<UsersDto> usersDtoList = this.usersSearchService.list(map);
 		
-		ArticlePage2<UsersVO> data = new ArticlePage2<UsersVO>(total
-				,currentPage, size, usersVOList, keyword, "rightList", searchKey);
+		ArticlePage2<UsersDto> data = new ArticlePage2<UsersDto>(total
+				,currentPage, size, usersDtoList, keyword, "rightList", searchKey);
 		
 		String url = "/usersSearch/list";
 		
@@ -102,10 +95,10 @@ public class UsersSearchController {
 	public String usersDetail(@RequestParam String userId, Model model) {
 		log.info("detail->usersDetail:"+userId);
 		
-		UsersVO usersVO = this.usersSearchService.detail(userId);
-		log.info("detail->usersVO:"+usersVO);
+		UsersDto usersDto = this.usersSearchService.detail(userId);
+		log.info("detail->usersVO:"+ usersDto);
 		
-		model.addAttribute("usersVO", usersVO);
+		model.addAttribute("usersVO", usersDto);
 		
 		return "usersSearch/detail";
 	}

@@ -1,16 +1,16 @@
 package kr.or.ddit.manage.mapper;
 
-import kr.or.ddit.vo.DongChartVO;
-import kr.or.ddit.vo.DongChartVO2;
-import kr.or.ddit.vo.DongChartVO3;
+import kr.or.ddit.vo.DongChartDto;
+import kr.or.ddit.vo.DongChartDto2;
+import kr.or.ddit.vo.DongChartDto3;
 
 public interface ManageMapper {
 
-	public DongChartVO test();
+	public DongChartDto test();
 
-	public DongChartVO2 test2();
+	public DongChartDto2 test2();
 
-	public DongChartVO3 test3();
+	public DongChartDto3 test3();
 
 
 }

@@ -33,7 +33,7 @@
 		<result property="ondyclDetailAdres" column="ONDYCL_DETAIL_ADRES"/>
 	</resultMap>
 	
-	<resultMap type="bundleOndyclVO" id="bundleOndyclVOMap">
+	<resultMap type="bundleOndyclDto" id="bundleOndyclVOMap">
 		<result property="ondyclNo" column="ONDYCL_NO"/>
 		<result property="ondyclNm" column="ONDYCL_NM"/>
 		<result property="ondyclCn" column="ONDYCL_CN" jdbcType="CLOB" javaType="java.lang.String"></result>
@@ -58,7 +58,7 @@
 		<result property="prdPc" column="PRD_PC"/>
 	</resultMap>
 	
-	<resultMap type="vOndyclProUsersVO" id="vOndyclProUsersMap">
+	<resultMap type="vOndyclProUsersDto" id="vOndyclProUsersMap">
 		<result property="proId" column="PRO_ID"/>
 		<result property="proMbtlnum" column="PRO_MBTLNUM"/>
 		<result property="sexdstnTy" column="SEXDSTN_TY"/>
@@ -231,7 +231,7 @@
 	</select>
 	
 	<!-- 원데이클래스 가격 확인 -->
-	<select id="priceCk" parameterType="int" resultType="vOndyclSchdulVO">
+	<select id="priceCk" parameterType="int" resultType="vOndyclSchdulDto">
 		SELECT ONDYCL_PC, ONDYCL_SCHDUL_DE, ONDYCL_SCHDUL_NO FROM V_ONDYCL_SCHDUL WHERE ONDYCL_NO = #{ondyclNO}
 	</select>
 	
@@ -260,7 +260,7 @@
 	</select>
 	
 	<!-- 회원 리뷰 작성 -->
-	<insert id="createReview" parameterType="ondyclReviewVO">
+	<insert id="createReview" parameterType="ondyclReviewDto">
 		<selectKey resultType="String" keyProperty="mberNcnm" order="BEFORE">
 			SELECT USER_NCNM FROM USERS WHERE USER_ID = #{mberId}
 		</selectKey>
@@ -308,7 +308,7 @@
 	</select>
 	
 	<!-- 회원 원데이클래스 장바구니 담기 -->
-	<insert id="putShoppingCart" parameterType="shopngBundleVO">
+	<insert id="putShoppingCart" parameterType="shopngBundleDto">
 		INSERT INTO SHOPNG_BUNDLE(SHOPNG_BUNDLE_NO, MBER_ID, ONDYCL_SCHDUL_NO, ONDYCL_NO, PRD_TOTQY, PRD_PC)
 		VALUES(SHOPNG_BUNDLE_NO_SEQ.NEXTVAL, #{mberId}, #{ondyclSchdulNo}, #{ondyclNo}, 1, #{prdPc})
 	</insert>
@@ -363,7 +363,7 @@
 	</select>
 	
 	<!-- 원데이클래스 리스트 출력 -->
-	<select id="vOndyclProUsersVOList" resultMap="vOndyclProUsersMap">
+	<select id="vOndyclProUsersDtoList" resultMap="vOndyclProUsersMap">
 		SELECT O.ONDYCL_NO, O.ONDYCL_NM, O.ONDYCL_CN, TO_DATE(O.ONDYCL_REGIST_DT,'YYYY.MM.DD HH24:MI')
 		    , O.ONDYCL_PC, O.ONDYCL_PSNCPA, O.ONDYCL_DEL_TYPE, O.ONDYCL_DEL_DT, O.ONDYCL_RESVPA
 		    , O.ONDYCL_THUMB_PHOTO, O.PRO_ID, O.SPRVISE_ATCHMNFL_NO
@@ -440,7 +440,7 @@
 	</select>
 	
 	<!-- 첨부파일 저장 -->
-	<insert id="addSprviseAtchmnfl" parameterType="sprviseAtchmnflVO">
+	<insert id="addSprviseAtchmnfl" parameterType="sprviseAtchmnflDto">
 		INSERT INTO SPRVISE_ATCHMNFL(SPRVISE_ATCHMNFL_NO, ATCHMNFL_NO, ATCHMNFL_COURS, ATCHMNFL_NM, STORE_ATCHMNFL_NM, ATCHMNFL_TY, REGIST_DT, USER_ID)
 		VALUES(#{sprviseAtchmnflNo}, #{atchmnflNo}, #{atchmnflCours}, #{atchmnflNm}, #{storeAtchmnflNm}, #{atchmnflTy}, SYSDATE, #{userId})
 	</insert>
@@ -483,7 +483,7 @@
 		ONDYCL_SCHDUL_END_TIME = #{ondyclSchdulEndTime}
 		WHERE ONDYCL_NO = #{ondyclNo}
 	</update>
-	<update id="updateSprviseAtchmnfl" parameterType="sprviseAtchmnflVO">
+	<update id="updateSprviseAtchmnfl" parameterType="sprviseAtchmnflDto">
 		UPDATE SPRVISE_ATCHMNFL
 		SET
 		ATCHMNFL_NO = #{atchmnflNo}
@@ -513,7 +513,7 @@
 	</select>
 	
 	<!-- 원데이클래스 첨부파일 저장 -->
-	<resultMap type="sprviseAtchmnflVO" id="fileMap">
+	<resultMap type="sprviseAtchmnflDto" id="fileMap">
 		<result property="sprviseAtchmnflNo" column="SPRVISE_ATCHMNFL_NO"/>
 		<result property="atchmnflNo" column="ATCHMNFL_NO"/>
 		<result property="atchmnflCours" column="ATCHMNFL_COURS"/>
@@ -602,7 +602,7 @@
 	</update>
 	
 	<!-- 원데이클래스 상세페이지 조회 -->
-	<select id="detail" parameterType="String" resultType="vOndyclProUsersVO">
+	<select id="detail" parameterType="String" resultType="vOndyclProUsersDto">
 		SELECT PRO_ID, PRO_MBTLNUM, SEXDSTN_TY, EMAIL, PRO_PROFL_PHOTO, SPCLTY_REALM_CODE
 			, ONDYCL_NO, ONDYCL_NM, ONDYCL_CN, ONDYCL_REGIST_DT, ONDYCL_PC, ONDYCL_PSNCPA, ONDYCL_RESVPA
 			, ONDYCL_ADRES, ONDYCL_DETAIL_ADRES, ONDYCL_ZIP, ONDYCL_SCHDUL_NO

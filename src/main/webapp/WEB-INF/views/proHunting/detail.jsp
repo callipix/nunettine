@@ -29,18 +29,18 @@
 			<div class="card px-2">
 				<div class="card-body">
 					<div class="container-fluid">
-						<h2 class="text-center my-5" style="font-family: GMarketSansMedium;">${proJoBbscttVOList[0].proJoBbscttSj}</h2>
+						<h2 class="text-center my-5" style="font-family: GMarketSansMedium;">${proJoBbscttDtoList[0].proJoBbscttSj}</h2>
 						<div style="margin-left: 76%;">
 							<p style="font-family: GMarketSansLight; display: inline; margin-right: 15px;">작성자</p>
-							<p style="display: inline;">${proJoBbscttVOList[0].mberVOList[0].mberNcnm}</p>
+							<p style="display: inline;">${proJoBbscttDtoList[0].mberVOList[0].mberNcnm}</p>
 							<br />
 							<p style="font-family: GMarketSansLight; display: inline;">작성일시</p>
-							<p style="display: inline;"><fmt:formatDate value="${proJoBbscttVOList[0].proJoBbscttWrDt}" pattern="yyyy.MM.dd HH:mm:ss"/></p>
+							<p style="display: inline;"><fmt:formatDate value="${proJoBbscttDtoList[0].proJoBbscttWrDt}" pattern="yyyy.MM.dd HH:mm:ss"/></p>
 						</div>
 						<hr>
 					</div>
 					<div class="container-fluid mt-5 w-100">
-						<h5 class="mb-5" style="padding-left: 20px;">${proJoBbscttVOList[0].proJoBbscttCn}</h5>
+						<h5 class="mb-5" style="padding-left: 20px;">${proJoBbscttDtoList[0].proJoBbscttCn}</h5>
 						<hr>
 					</div>
 					<div class="container-fluid w-100"
@@ -80,9 +80,9 @@
 					<!-- 프로 댓글 목록  -->
 					<ul class="icon-data-list">
 						<c:if
-							test="${proJoBbscttVOList[0].proJoBbscttAnswerVOList[0].proJoAnswerNo > 0 }">
+							test="${proJoBbscttDtoList[0].proJoBbscttAnswerVOList[0].proJoAnswerNo > 0 }">
 							<c:forEach var="proJoAnswerVO"
-								items="${proJoBbscttVOList[0].proJoBbscttAnswerVOList}">
+								items="${proJoBbscttDtoList[0].proJoBbscttAnswerVOList}">
 								<li>
 									<div class="d-flex">
 										<img src="${proJoAnswerVO.proProflPhoto}">
@@ -122,7 +122,7 @@
 	var proId = "${proSession.userId}";
 	console.log("memId : ", memId);
 	console.log("proId : ", proId);
-	var writer = "${proJoBbscttVOList[0].mberId}";
+	var writer = "${proJoBbscttDtoList[0].mberId}";
 	console.log("기본 정보 : ", writer);
 
 	// 수정 

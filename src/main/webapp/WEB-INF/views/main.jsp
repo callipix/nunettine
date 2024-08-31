@@ -590,23 +590,23 @@ while(sen.hasMoreElements()){
            <div>
              <div class="card">
                <div class="card-body text-center" style="border-radius:20px; background-color:#f5f7ff;">
-               	<c:forEach var="proVO" items="${monthProList}">
+               	<c:forEach var="proDto" items="${monthProList}">
 					<div>
 					<img src='/resources/images/축하2.png' style='width:50px; height:50px; margin-bottom:10px'>
 						<h2 style="font-family: 'seolleimcool-SemiBold';">이달의 프로</h2>
-						<c:if test="${proVO.proProflPhoto == null}">
+						<c:if test="${proDto.proProflPhoto == null}">
 						<img src="/images/2024/profile.jpg" style="width: 120px; height: 120px; border-radius: 70%; margin:20px 0 ;" alt="profile image">
 						</c:if>
-						<c:if test="${proVO.proProflPhoto != null}">
-						<img src="${proVO.proProflPhoto}" style="width: 120px; height: 120px; border-radius: 70%; margin:20px 0 ;" alt="profile image">
+						<c:if test="${proDto.proProflPhoto != null}">
+						<img src="${proDto.proProflPhoto}" style="width: 120px; height: 120px; border-radius: 70%; margin:20px 0 ;" alt="profile image">
 						</c:if>
-						<h4 style="font-family: 'GmarketSansMedium';">${proVO.userSeVOList[0].userNm}</h4>
-						<p style="font-family: 'GmarketSansMedium';" class="text-muted mb-0">${proVO.proId}</p>
+						<h4 style="font-family: 'GmarketSansMedium';">${proDto.userSeVOList[0].userNm}</h4>
+						<p style="font-family: 'GmarketSansMedium';" class="text-muted mb-0">${proDto.proId}</p>
 					</div>
 					<p class="mt-2 card-text" style="font-family: 'GmarketSansMedium';">
-					  	${proVO.proflVOList[0].proProflOnLiIntrcn}
+					  	${proDto.proflVOList[0].proProflOnLiIntrcn}
 					</p>
-                  <button class="btn btn-info btn-sm mt-3 mb-4" style="font-family: 'GmarketSansMedium';" onclick="location.href='/proProfl/detail?proId=${proVO.proId}'">프로필 보러가기</button>
+                  <button class="btn btn-info btn-sm mt-3 mb-4" style="font-family: 'GmarketSansMedium';" onclick="location.href='/proProfl/detail?proId=${proDto.proId}'">프로필 보러가기</button>
                  </c:forEach>
                   <div class="border-top pt-3">
                     <div class="row">
@@ -721,37 +721,37 @@ while(sen.hasMoreElements()){
 <br />
 		<div class="row portfolio-grid" style="width: 60%; height: auto;">
 			<div class="col-4 outterDiv">
-				<a href='/onedayClass/onedayClassDetail?ondyclNo=${ondyclVOList[0].ondyclNo}&mberId=${memSession.userId}&mainck=main'>
+				<a href='/onedayClass/onedayClassDetail?ondyclNo=${ondyclDtoList[0].ondyclNo}&mberId=${memSession.userId}&mainck=main'>
 					<img class='medalImg' src='/images/2024/gold_medal.png' style='width:50px; height:50px;'>
 					<figure class="effect-text-in" style="background:#98b3e8">
-						<img src="${ondyclVOList[0].ondyclThumbPhoto}" loading="lazy" alt="image">
+						<img src="${ondyclDtoList[0].ondyclThumbPhoto}" loading="lazy" alt="image">
 						<figcaption>
-							<h4 class='ondyclTitle' style="font-family: 'GmarketSansMedium';">${ondyclVOList[0].ondyclNm}</h4>
-							<p style="font-family: 'GmarketSansMedium';">${ondyclVOList[0].ondyclResvpa} 명</p>
+							<h4 class='ondyclTitle' style="font-family: 'GmarketSansMedium';">${ondyclDtoList[0].ondyclNm}</h4>
+							<p style="font-family: 'GmarketSansMedium';">${ondyclDtoList[0].ondyclResvpa} 명</p>
 						</figcaption>
 					</figure>
 				</a>
 			</div>
 			<div class="col-4 outterDiv">
-				<a href='/onedayClass/onedayClassDetail?ondyclNo=${ondyclVOList[1].ondyclNo}&mberId=${memSession.userId}&mainck=main'>
+				<a href='/onedayClass/onedayClassDetail?ondyclNo=${ondyclDtoList[1].ondyclNo}&mberId=${memSession.userId}&mainck=main'>
 					<img class='medalImg' src='/images/2024/silver_medal.png' style='width:50px; height:50px;'>
 					<figure class="effect-text-in" style="background:#98b3e8">
-						<img src="${ondyclVOList[1].ondyclThumbPhoto}" loading="lazy" alt="image">
+						<img src="${ondyclDtoList[1].ondyclThumbPhoto}" loading="lazy" alt="image">
 						<figcaption>
-							<h4 class='ondyclTitle' style="font-family: 'GmarketSansMedium';">${ondyclVOList[1].ondyclNm}</h4>
-							<p style="font-family: 'GmarketSansMedium';">${ondyclVOList[1].ondyclResvpa} 명</p>
+							<h4 class='ondyclTitle' style="font-family: 'GmarketSansMedium';">${ondyclDtoList[1].ondyclNm}</h4>
+							<p style="font-family: 'GmarketSansMedium';">${ondyclDtoList[1].ondyclResvpa} 명</p>
 						</figcaption>
 					</figure>
 				</a>
 			</div>
 			<div class="col-4 outterDiv">
-				<a href='/onedayClass/onedayClassDetail?ondyclNo=${ondyclVOList[2].ondyclNo}&mberId=${memSession.userId}&mainck=main'>
+				<a href='/onedayClass/onedayClassDetail?ondyclNo=${ondyclDtoList[2].ondyclNo}&mberId=${memSession.userId}&mainck=main'>
 					<img class='medalImg' src='/images/2024/copper_medal.png' style='width:50px; height:50px;'>
 					<figure class="effect-text-in" style="background:#98b3e8">
-						<img src="${ondyclVOList[2].ondyclThumbPhoto}" loading="lazy" alt="image">
+						<img src="${ondyclDtoList[2].ondyclThumbPhoto}" loading="lazy" alt="image">
 						<figcaption>
-							<h4 class='ondyclTitle' style="font-family: 'GmarketSansMedium';">${ondyclVOList[2].ondyclNm}</h4>
-							<p style="font-family: 'GmarketSansMedium';">${ondyclVOList[2].ondyclResvpa} 명</p>
+							<h4 class='ondyclTitle' style="font-family: 'GmarketSansMedium';">${ondyclDtoList[2].ondyclNm}</h4>
+							<p style="font-family: 'GmarketSansMedium';">${ondyclDtoList[2].ondyclResvpa} 명</p>
 						</figcaption>
 					</figure>
 				</a>

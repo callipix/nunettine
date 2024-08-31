@@ -5,11 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,20 +15,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.or.ddit.chatting.service.ChatService;
 import kr.or.ddit.chatting.service.MessageService;
-import kr.or.ddit.chatting.vo.AllChatRoomViewVO;
-import kr.or.ddit.chatting.vo.ChatRelayVO;
-import kr.or.ddit.chatting.vo.ChatRoomVO;
-import kr.or.ddit.chatting.vo.MessageVO;
-import kr.or.ddit.vo.UsersVO;
+import kr.or.ddit.chatting.dto.AllChatRoomViewDto;
+import kr.or.ddit.chatting.dto.ChatRelayDto;
+import kr.or.ddit.chatting.dto.ChatRoomDto;
+import kr.or.ddit.chatting.dto.MessageDto;
+import kr.or.ddit.vo.UsersDto;
 import lombok.extern.slf4j.Slf4j;
-import retrofit2.http.GET;
 
 @Slf4j
 @Controller
@@ -42,10 +37,7 @@ public class ChatController {
 
 	private final ChatService chatService;
 	private final MessageService messageService;
-
-	private List<ChatRoomVO> allRoomList;
-	
-	private List<AllChatRoomViewVO> myRoomList;
+	private List<ChatRoomDto> allRoomList;
 
 	private String userId(HttpServletRequest request) {
 	//세션값으로 아이디 가져오기
@@ -79,18 +71,19 @@ public class ChatController {
 		return "not";
 	}
 	
-	public List<ChatRoomVO> allRoomList(){
+	public List<ChatRoomDto> allRoomList(){
 		// 전체방 리스트 가져오기
 		return this.allRoomList = this.chatService.roomList();
 	}
 	
 	@Nullable
-	public List<AllChatRoomViewVO> myRoomList(String userId){
+	public List<AllChatRoomViewDto> myRoomList(String userId){
 		// 아이디로 리스트 가져오기
-		return this.myRoomList = this.chatService.myRoomList(userId);
+		List<AllChatRoomViewDto> myRoomList = this.chatService.myRoomList(userId);
+		return myRoomList;
 	}
 	
-	private List<MessageVO> messageList (int roomNo){
+	private List<MessageDto> messageList (int roomNo){
 		// 메세지 리스트 가져오기
 		return this.messageService.messageList(roomNo);
 		
@@ -101,17 +94,17 @@ public class ChatController {
 		
 		userId(request);
 		
-		List<ChatRoomVO> allRoomList = this.allRoomList;
-		this.myRoomList = myRoomList(userId(request));
+		List<ChatRoomDto> allRoomList = this.allRoomList;
+		List<AllChatRoomViewDto> myRoomList = myRoomList(userId(request));
 		
-		List<ChatRelayVO> myRoomUserId = new ArrayList<ChatRelayVO>();
+		List<ChatRelayDto> myRoomUserId = new ArrayList<ChatRelayDto>();
 		
-		for (AllChatRoomViewVO room : myRoomList) {
+		for (AllChatRoomViewDto room : myRoomList) {
 		    myRoomUserId = chatService.myRoomId(room.getRoomNo()); // 방 번호로 참가중인 아이디 조회
-		    List<UsersVO> joinUserIdList = new ArrayList<>();
+		    List<UsersDto> joinUserIdList = new ArrayList<>();
 		    
-		    for (ChatRelayVO relay : myRoomUserId) {
-		        UsersVO userInfo = chatService.joinUserInfo(relay.getUserId()); // 아이디로 유저 정보 조회
+		    for (ChatRelayDto relay : myRoomUserId) {
+		        UsersDto userInfo = chatService.joinUserInfo(relay.getUserId()); // 아이디로 유저 정보 조회
 		        joinUserIdList.add(userInfo);
 		    }
 		    room.setUserVO(joinUserIdList); // 방의 유저 리스트에 추가
@@ -128,12 +121,12 @@ public class ChatController {
 	@GetMapping("/join")
 	public String join(Model model ,@RequestParam int roomNo , HttpServletRequest request) throws JsonProcessingException {
 		// 방참가
-		AllChatRoomViewVO myList = this.chatService.roomByRoomNo2(roomNo);
+		AllChatRoomViewDto myList = this.chatService.roomByRoomNo2(roomNo);
 		
-		List<ChatRelayVO> chatRelayVO = this.chatService.myRoomId(roomNo);
+		List<ChatRelayDto> chatRelayDto = this.chatService.myRoomId(roomNo);
 		
-		for (ChatRelayVO chatRoom : chatRelayVO) {
-		    List<UsersVO> userInfo = this.chatService.userInfo(chatRoom.getUserId()); // 해당 방에 속한 사용자 정보를 가져옴
+		for (ChatRelayDto chatRoom : chatRelayDto) {
+		    List<UsersDto> userInfo = this.chatService.userInfo(chatRoom.getUserId()); // 해당 방에 속한 사용자 정보를 가져옴
 
 		    if (myList.getUserVO() == null) { myList.setUserVO(new ArrayList<>()); }
 		    	// userVO 리스트가 null인 경우 새로운 리스트로 초기화
@@ -183,9 +176,9 @@ public class ChatController {
 	@ResponseBody @PostMapping("/check")
 	public int check(@RequestParam int roomNo , HttpServletRequest request) {
 
-		ChatRelayVO chatRelayVO = new ChatRelayVO(roomNo, userId(request));
+		ChatRelayDto chatRelayDto = new ChatRelayDto(roomNo, userId(request));
 		
-		return this.chatService.joinCheck(chatRelayVO);
+		return this.chatService.joinCheck(chatRelayDto);
 	}
 	
 }

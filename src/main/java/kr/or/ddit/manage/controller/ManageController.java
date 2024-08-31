@@ -7,8 +7,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import kr.or.ddit.admin.faq.dto.FaqDto;
+import kr.or.ddit.admin.notice.dto.NoticeDto;
+import kr.or.ddit.admin.usersSearch.dto.UsersDto;
+import kr.or.ddit.vo.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,23 +24,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.admin.decl.service.DeclService;
 import kr.or.ddit.admin.faq.service.FaqService;
-import kr.or.ddit.admin.faq.vo.FaqVO;
 import kr.or.ddit.admin.notice.service.NoticeService;
-import kr.or.ddit.admin.notice.vo.NoticeVO;
 import kr.or.ddit.admin.oneInqry.service.OneInqryService;
 import kr.or.ddit.admin.usersSearch.service.UsersSearchService;
-import kr.or.ddit.admin.usersSearch.vo.UsersVO;
 import kr.or.ddit.manage.service.ManageService;
-import kr.or.ddit.pro_service.service_inquiry.vo.V_SrvcBtfInqryVO;
 import kr.or.ddit.util.ArticlePage;
 import kr.or.ddit.util.fileupload.service.FileuploadService;
-import kr.or.ddit.vo.DongChartVO;
-import kr.or.ddit.vo.DongChartVO2;
-import kr.or.ddit.vo.DongChartVO3;
-import kr.or.ddit.vo.OneInqryAnswerVO;
-import kr.or.ddit.vo.OneInqryVO;
-import kr.or.ddit.vo.SntncDeclVO;
-import kr.or.ddit.vo.SprviseAtchmnflVO;
+import kr.or.ddit.vo.OneInqryDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -54,7 +47,7 @@ public class ManageController {
 	private final UsersSearchService usersSearchService;
 	private final FileuploadService fileuploadService;
 
-	OneInqryVO oneInqryVO = new OneInqryVO();
+	public OneInqryDto oneInqryDto = new OneInqryDto();
 
 	public String userIdChk(HttpServletRequest request) {
 		String userId ="";
@@ -65,27 +58,26 @@ public class ManageController {
 		}else if(((HashMap)session.getAttribute("memSession"))!=null){
 			userId = ((HashMap)session.getAttribute("memSession")).get("userId").toString();
 		}else if(session.getAttribute("admSession")!=null){
-			UsersVO usersVO = (UsersVO) session.getAttribute("admSession");
-			userId = usersVO.getUserId();
+			UsersDto usersDto = (UsersDto) session.getAttribute("admSession");
+			userId = usersDto.getUserId();
 		}
 
-		log.info(" [관리자] userId : " + userId);
+		log.info(" [관리자] userId : {}", userId);
 		return userId;
 	}
-
 
 	//유저설치 디테일
 	@GetMapping("/userDetail")
 	public String usersDetail(@RequestParam String userId, Model model) {
-		log.info("detail->usersDetail:"+userId);
+		log.info("detail->usersDetail: {}", userId);
 
-		UsersVO usersVO = this.usersSearchService.detail(userId);
-		log.info("detail->usersVO:"+usersVO);
+		UsersDto usersDto = this.usersSearchService.detail(userId);
+		log.info("detail->usersVO: {}", usersDto);
 
 		String profile = this.usersSearchService.getUserProfile(userId);
 
-		log.info("profle"+ profile);
-		model.addAttribute("usersVO", usersVO);
+		log.info("profle {}", profile);
+		model.addAttribute("usersVO", usersDto);
 		model.addAttribute("profile", profile);
 
 		return "manage/userDetail";
@@ -95,10 +87,10 @@ public class ManageController {
 	//공지사항 리스트
 	@GetMapping("/notice")
 	public String noticeList(Model model){
-		List<NoticeVO> list = noticeService.getAllNoticeList();
+		List<NoticeDto> list = noticeService.getAllNoticeList();
 		model.addAttribute("noticeList",list);
 
-		DongChartVO dongVO = this.manageService.test();
+		DongChartDto dongVO = this.manageService.test();
 		log.info("dongVO : " + dongVO);
 
 		model.addAttribute("dongVO",dongVO);
@@ -108,8 +100,8 @@ public class ManageController {
 
 	//공지사항 등록
 	@GetMapping(value="/create")
-	public String create(NoticeVO noticeVO,HttpSession session) {
-		log.info("create->noticeVO:" + noticeVO);
+	public String create(NoticeDto noticeDto, HttpSession session) {
+		log.info("create->noticeVO:" + noticeDto);
 
 		return "manage/create2";
 	}
@@ -121,11 +113,11 @@ public class ManageController {
 		// 조회수 증가
 		this.noticeService.increaseViewCount(noticeNo);
 		// 공지사항 정보 조회
-		NoticeVO noticeVO = this.noticeService.detail(noticeNo);
-		model.addAttribute("noticeVO", noticeVO);
+		NoticeDto noticeDto = this.noticeService.detail(noticeNo);
+		model.addAttribute("noticeVO", noticeDto);
 
-		NoticeVO noticeVOAtchVOList = this.noticeService.sprviseAtchmnflVO(noticeNo);
-		model.addAttribute("sprviseAtchmnflVOList",noticeVOAtchVOList);
+		NoticeDto noticeVOAtchDtoList = this.noticeService.sprviseAtchmnflVO(noticeNo);
+		model.addAttribute("sprviseAtchmnflVOList", noticeVOAtchDtoList);
 
 		return "manage/detail";
 	}
@@ -133,15 +125,15 @@ public class ManageController {
 	//FAQ 리스트
 	@GetMapping("/faq")
 	public String faqList(Model model) {
-		List<FaqVO> faqList = faqService.faqList();
+		List<FaqDto> faqList = faqService.faqList();
 		model.addAttribute("faqList",faqList);
 		return "manage/faq";
 	}
 
 	//FAQ 등록
 	@GetMapping(value="/create", params="register")
-	public String createRegister(FaqVO faqVO) {
-		log.info("createRegister->faqVO:" + faqVO);
+	public String createRegister(FaqDto faqDto) {
+		log.info("createRegister->faqVO:" + faqDto);
 		return "manage/create";
 	}
 
@@ -159,13 +151,13 @@ public class ManageController {
 
 	@PostMapping("/oneInqryNoAnswerList")
 	@ResponseBody
-	public ArticlePage<OneInqryVO> oneInqryNoAnswerList(@RequestBody(required = false) Map<String,Object> map,
-														HttpServletRequest request){
+	public ArticlePage<OneInqryDto> oneInqryNoAnswerList(@RequestBody(required = false) Map<String,Object> map,
+														 HttpServletRequest request){
 		String userId ="";
 		userId = userIdChk(request);
 		map.put("userId", userId);
 
-		List<OneInqryVO> oneInqryVOList =
+		List<OneInqryDto> oneInqryDtoList =
 				this.oneInqryService.oneInqryNoAnswerList(map);
 
 		int total = this.oneInqryService.getNoAnswerTotal(map);
@@ -175,8 +167,8 @@ public class ManageController {
 		String currentPage = map.get("currentPage").toString();
 		String keyword = map.get("keyword").toString();
 
-		ArticlePage<OneInqryVO> data
-				= new ArticlePage<OneInqryVO>(total, Integer.parseInt(currentPage), size,oneInqryVOList,keyword);
+		ArticlePage<OneInqryDto> data
+				= new ArticlePage<OneInqryDto>(total, Integer.parseInt(currentPage), size, oneInqryDtoList,keyword);
 
 		String url = "/manage/oneIqnryNoAnswerList";
 		data.setUrl(url);
@@ -195,13 +187,13 @@ public class ManageController {
 	// 답변 완료 목록 출력
 	@PostMapping("/oneInqrySuccessList")
 	@ResponseBody
-	public ArticlePage<OneInqryVO> oneInqrySuccessList(@RequestBody(required = false) Map<String,Object> map,
-													   HttpServletRequest request){
+	public ArticlePage<OneInqryDto> oneInqrySuccessList(@RequestBody(required = false) Map<String,Object> map,
+														HttpServletRequest request){
 		String userId ="";
 		userId = userIdChk(request);
 		map.put("userId", userId);
 
-		List<OneInqryVO> oneInqryVOList =
+		List<OneInqryDto> oneInqryDtoList =
 				this.oneInqryService.oneInqrySuccessList(map);
 
 		int total = this.oneInqryService.getSuccessTotal(map);
@@ -211,8 +203,8 @@ public class ManageController {
 		String currentPage = map.get("currentPage").toString();
 		String keyword = map.get("keyword").toString();
 
-		ArticlePage<OneInqryVO> data
-				= new ArticlePage<OneInqryVO>(total, Integer.parseInt(currentPage), size,oneInqryVOList,keyword);
+		ArticlePage<OneInqryDto> data
+				= new ArticlePage<OneInqryDto>(total, Integer.parseInt(currentPage), size, oneInqryDtoList,keyword);
 
 		String url = "/manage/oneIqnrySuccessList";
 		data.setUrl(url);
@@ -222,22 +214,22 @@ public class ManageController {
 	@GetMapping("/oneInqryDetail")
 	public String oneInqryDetail(@RequestParam("oneInqryNo") int oneInqryNo,Model model){
 		String userId ="";
-		oneInqryVO.setOneInqryNo(oneInqryNo);
-		oneInqryVO = this.oneInqryService.oneInqryDetail(oneInqryVO, userId);
+		oneInqryDto.setOneInqryNo(oneInqryNo);
+		oneInqryDto = this.oneInqryService.oneInqryDetail(oneInqryDto, userId);
 
 		log.info("1:1 detail -> userId  : " + userId);
 
-		int sprviseAtchmnflNo = oneInqryVO.getSprviseAtchmnflNo();
-		List<SprviseAtchmnflVO> sprviseAtchmnflVOList = this.fileuploadService.getsprviseAtchmnfl(sprviseAtchmnflNo);
-		log.info("[oneinqryController] detail -> sprviseAtchmnflVOList : " + sprviseAtchmnflVOList );
+		int sprviseAtchmnflNo = oneInqryDto.getSprviseAtchmnflNo();
+		List<SprviseAtchmnflDto> sprviseAtchmnflDtoList = this.fileuploadService.getsprviseAtchmnfl(sprviseAtchmnflNo);
+		log.info("[oneinqryController] detail -> sprviseAtchmnflVOList : " + sprviseAtchmnflDtoList);
 
-		log.info("[oneinqryController] detail -> oneInqryVO.getSprviseAtchmnflVOList : " + oneInqryVO.getSprviseAtchmnflVOList());
+		log.info("[oneinqryController] detail -> oneInqryVO.getSprviseAtchmnflVOList : " + oneInqryDto.getSprviseAtchmnflDtoList());
 
 
-		oneInqryVO = this.oneInqryService.oneInqryDetail(oneInqryVO, userId);
-		oneInqryVO.setSprviseAtchmnflVOList(sprviseAtchmnflVOList);
+		oneInqryDto = this.oneInqryService.oneInqryDetail(oneInqryDto, userId);
+		oneInqryDto.setSprviseAtchmnflDtoList(sprviseAtchmnflDtoList);
 
-		model.addAttribute("oneInqryVO", oneInqryVO);
+		model.addAttribute("oneInqryVO", oneInqryDto);
 		if("testAdmin".equals(userId)) {
 			model.addAttribute("loginId", "admin");
 		}
@@ -268,7 +260,7 @@ public class ManageController {
 						 @RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage) {
 
 		map.put("currentPage", currentPage);
-		List<SntncDeclVO> lbrbbsList = this.declService.decllbrSelect(map);
+		List<SntncDeclDto> lbrbbsList = this.declService.decllbrSelect(map);
 		log.info("lbrbbs-> lbrbbsList : " + lbrbbsList);
 		model.addAttribute("lbrbbsList",lbrbbsList);
 
@@ -280,7 +272,7 @@ public class ManageController {
 						   @RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage) {
 
 		map.put("currentPage", currentPage);
-		List<SntncDeclVO> lbrbbsList = this.declService.decllbrSelect(map);
+		List<SntncDeclDto> lbrbbsList = this.declService.decllbrSelect(map);
 		log.info("lbrbbs-> lbrbbsList : " + lbrbbsList);
 		model.addAttribute("lbrbbsList",lbrbbsList);
 
@@ -294,9 +286,9 @@ public class ManageController {
 		map.put("currentPage", currentPage);
 
 		// 전체 리스트 출력
-		List<OneInqryVO> oneInqryVOList = this.oneInqryService.resignProList(map);
+		List<OneInqryDto> oneInqryDtoList = this.oneInqryService.resignProList(map);
 
-		model.addAttribute("oneInqryVOList", oneInqryVOList);
+		model.addAttribute("oneInqryVOList", oneInqryDtoList);
 
 		return "manage/resignProList";
 	}
@@ -313,10 +305,10 @@ public class ManageController {
 	// 검색 목록 출력
 	@PostMapping("/resignProList")
 	@ResponseBody
-	public ArticlePage<OneInqryVO> resignProList(@RequestBody(required = false) Map<String, Object> map,
-												 HttpServletRequest request) {
+	public ArticlePage<OneInqryDto> resignProList(@RequestBody(required = false) Map<String, Object> map,
+												  HttpServletRequest request) {
 
-		List<OneInqryVO> oneInqryVOList = this.oneInqryService.resignProList(map);
+		List<OneInqryDto> oneInqryDtoList = this.oneInqryService.resignProList(map);
 
 		int total = this.oneInqryService.getTotalResignPro(map);
 
@@ -325,8 +317,8 @@ public class ManageController {
 		String currentPage = map.get("currentPage").toString();
 		String keyword = map.get("keyword").toString();
 
-		ArticlePage<OneInqryVO> data = new ArticlePage<OneInqryVO>(total, Integer.parseInt(currentPage),
-				size, oneInqryVOList, keyword);
+		ArticlePage<OneInqryDto> data = new ArticlePage<OneInqryDto>(total, Integer.parseInt(currentPage),
+				size, oneInqryDtoList, keyword);
 
 		String url = "/manage/resignProList";
 		data.setUrl(url);
@@ -345,13 +337,13 @@ public class ManageController {
 	//메인 페이지 가기
 	@GetMapping("/main")
 	public String main(Model model) {
-		DongChartVO dongVO = this.manageService.test();
+		DongChartDto dongVO = this.manageService.test();
 		log.info("dongVO : " + dongVO);
 
-		DongChartVO2 dongVO2 = this.manageService.test2();
+		DongChartDto2 dongVO2 = this.manageService.test2();
 		log.info("dongVO2 : " + dongVO2);
 
-		DongChartVO3 dongVO3 = this.manageService.test3();
+		DongChartDto3 dongVO3 = this.manageService.test3();
 		log.info("dongVO3 : " + dongVO3);
 
 

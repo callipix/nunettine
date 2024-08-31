@@ -3,13 +3,13 @@
 <mapper namespace="kr.or.ddit.util.fileupload.mapper.FileuploadMapper">
 	
 	<update id="fileupload" parameterType="java.util.HashMap">
-	        <foreach collection="sprviseAtchmnflVOList" item="sprviseAtchmnflVO" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+	        <foreach collection="sprviseAtchmnflDtoList" item="sprviseAtchmnflDto" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
 	            INTO SPRVISE_ATCHMNFL(SPRVISE_ATCHMNFL_NO, ATCHMNFL_NO, ATCHMNFL_COURS, ATCHMNFL_NM, STORE_ATCHMNFL_NM, ATCHMNFL_TY, REGIST_DT, USER_ID, UPDT_DT)
-	            VALUES(SPRVISE_ATCHMNFL_NO_SEQ.CURRVAL, #{sprviseAtchmnflVO.atchmnflNo}, #{sprviseAtchmnflVO.atchmnflCours}, #{sprviseAtchmnflVO.atchmnflNm}, #{sprviseAtchmnflVO.storeAtchmnflNm}, #{sprviseAtchmnflVO.atchmnflTy}, SYSDATE, #{sprviseAtchmnflVO.userId}, NULL)
+	            VALUES(SPRVISE_ATCHMNFL_NO_SEQ.CURRVAL, #{sprviseAtchmnflDto.atchmnflNo}, #{sprviseAtchmnflDto.atchmnflCours}, #{sprviseAtchmnflDto.atchmnflNm}, #{sprviseAtchmnflDto.storeAtchmnflNm}, #{sprviseAtchmnflDto.atchmnflTy}, SYSDATE, #{sprviseAtchmnflDto.userId}, NULL)
 	        </foreach>
 	</update>
 	
-	<update id="newFileupload" parameterType="sprviseAtchmnflVO">
+	<update id="newFileupload" parameterType="sprviseAtchmnflDto">
 	        INSERT INTO SPRVISE_ATCHMNFL(SPRVISE_ATCHMNFL_NO, ATCHMNFL_NO, ATCHMNFL_COURS, ATCHMNFL_NM, STORE_ATCHMNFL_NM, ATCHMNFL_TY, REGIST_DT, USER_ID, UPDT_DT)
 	        VALUES(#{sprviseAtchmnflNo}, 
 	         (SELECT COALESCE(MAX(ATCHMNFL_NO), 0) + 1  FROM SPRVISE_ATCHMNFL WHERE SPRVISE_ATCHMNFL_NO = #{sprviseAtchmnflNo}), 
@@ -17,7 +17,7 @@
 	</update>
 	
 	
-	<select id="getsprviseAtchmnfl" parameterType="int" resultType="sprviseAtchmnflVO">
+	<select id="getsprviseAtchmnfl" parameterType="int" resultType="sprviseAtchmnflDto">
 		SELECT * FROM SPRVISE_ATCHMNFL WHERE SPRVISE_ATCHMNFL_NO = #{sprviseAtchmnflNo}
 	</select>
 	

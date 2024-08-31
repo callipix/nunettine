@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import kr.or.ddit.vo.ProBkmkVO;
+import kr.or.ddit.vo.ProBkmkDto;
 
 @Service
 public interface ProBkmkService {
@@ -16,7 +16,7 @@ public interface ProBkmkService {
 	//즐겨찾기 삭제
 	public int proBkmkDelete(String proId, String mberId);
 	//즐겨찾기 목록
-	public List<ProBkmkVO> getFavInfo(String memId);
+	public List<ProBkmkDto> getFavInfo(String memId);
 
 
 }

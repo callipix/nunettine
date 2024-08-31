@@ -20,7 +20,7 @@
         display: block;
     }
 </style>
-<%-- ${oneInqryVO} --%>
+<%-- ${oneInqryDto} --%>
 <%-- ${loginId} --%>
 		<!-- 제목 -->
 		<div >
@@ -32,8 +32,8 @@
 <div class="col-12">
 	<div class="card">
 		<div class="card-body" >
-			<h3 class="card-title" id="oneInqrySj">${oneInqryVO.oneInqrySj}</h3>
-			<p class="card-description"><fmt:formatDate pattern="yyyy.MM.dd HH:mm" value="${oneInqryVO.oneInqryWritngDt}"/></p>
+			<h3 class="card-title" id="oneInqrySj">${oneInqryDto.oneInqrySj}</h3>
+			<p class="card-description"><fmt:formatDate pattern="yyyy.MM.dd HH:mm" value="${oneInqryDto.oneInqryWritngDt}"/></p>
 			<hr />
 			<div class="row">
 				<div class="col-md-10 mx-auto">
@@ -41,28 +41,28 @@
 						<form id="oneInqryUpdateFrm" action="/oneInqry/oneInqryUpdatePost" method="post" enctype="multipart/form-data">
 						<!-- form 시작 -->
 							<!-- form으로 보내는 정보 -->
-							<input type="hidden" id="oneInqryNo" name="oneInqryNo" value="${oneInqryVO.oneInqryNo}" />
+							<input type="hidden" id="oneInqryNo" name="oneInqryNo" value="${oneInqryDto.oneInqryNo}" />
 							<input type="hidden" id="hiddenOneInqrySj" name="hiddenOneInqrySj" value="" />
 							<input type="hidden" id="atchmnflNo" name="atchmnflNo[]" value=""/>
-							<input type="hidden" id="sprviseAtchmnflNo" name="sprviseAtchmnflNo" value="${oneInqryVO.sprviseAtchmnflNo}" />
+							<input type="hidden" id="sprviseAtchmnflNo" name="sprviseAtchmnflNo" value="${oneInqryDto.sprviseAtchmnflNo}" />
 							<!-- 요청서 본문 -->
 							<div>
 								<!-- 요청서 이미지 -->
 								<div class="d-flex mb-4" id="oneInqryImages" style="white-space: nowrap;">
 									<div id="imageList" class="d-flex flex-wrap">
-									<c:forEach var="sprviseAtchmnflVO" items="${oneInqryVO.sprviseAtchmnflVOList}" varStatus="status">
+									<c:forEach var="sprviseAtchmnflDto" items="${oneInqryDto.sprviseAtchmnflDtoList}" varStatus="status">
 										<c:choose>
-											<c:when test="${sprviseAtchmnflVO.atchmnflNo == 0 }">
+											<c:when test="${sprviseAtchmnflDto.atchmnflNo == 0 }">
 											</c:when>
 											<c:otherwise>
 												<li style="list-style-type: none; display: inline-block; margin-right: 10px;">
 													<div class="thumbnail-container">
 														<a href="#modalPicture"
-															data-picture-url="${sprviseAtchmnflVO.atchmnflCours}"
+															data-picture-url="${sprviseAtchmnflDto.atchmnflCours}"
 															data-toggle="modal"> <img class="prServiceThumb"
-															src="${sprviseAtchmnflVO.atchmnflCours}"
+															src="${sprviseAtchmnflDto.atchmnflCours}"
 															style="width: 150px; height: 130px; border-radius: 20%; margin-right: 10px; margin-top: 10px;" />
-															<span class="delete-icon" data-index="${sprviseAtchmnflVO.atchmnflNo}" style="display: none;"><i class='mdi mdi-close'></i></span>
+															<span class="delete-icon" data-index="${sprviseAtchmnflDto.atchmnflNo}" style="display: none;"><i class='mdi mdi-close'></i></span>
 														</a>
 													</div>
 												</li>
@@ -79,29 +79,29 @@
 				                	    </div>
 				                	</div>
 								</div>
-								<pre style="background: transparent;" id="oneInqryCn"><c:out value="${oneInqryVO.oneInqryCn}"/></pre>
+								<pre style="background: transparent;" id="oneInqryCn"><c:out value="${oneInqryDto.oneInqryCn}"/></pre>
 							</div>
 						</form>
 						<!-- form 끝 -->
 						<!-- 답글 -->
 						<c:choose>
-							<c:when test="${oneInqryVO.oneInqryAnswerVOList[0].oneInqryAnswerCn != null}">
+							<c:when test="${oneInqryDto.oneInqryAnswerVOList[0].oneInqryAnswerCn != null}">
 								<hr /> 
 								<div class="mb-3 oneInqryAnswerCn form-group">
 					            	<label for="oneInqryAnswerCn" class="col-form-label">문의 답글</label>
-					            	<p class="card-description"><fmt:formatDate pattern="yyyy.MM.dd HH:mm" value="${oneInqryVO.oneInqryAnswerVOList[0].oneInqryAnswerWrDt}"/></p>
+					            	<p class="card-description"><fmt:formatDate pattern="yyyy.MM.dd HH:mm" value="${oneInqryDto.oneInqryAnswerVOList[0].oneInqryAnswerWrDt}"/></p>
 				    	        	<div id="oneInqryAnswerCn">
-				    	        		<pre style="background: transparent; height: 100%;" class="form-control"><c:out value="${oneInqryVO.oneInqryAnswerVOList[0].oneInqryAnswerCn}"/></pre>
+				    	        		<pre style="background: transparent; height: 100%;" class="form-control"><c:out value="${oneInqryDto.oneInqryAnswerVOList[0].oneInqryAnswerCn}"/></pre>
 				    	        	</div>         	
 								</div>
 							</c:when>
-							<c:when test="${oneInqryVO.oneInqryAnswerVOList[0].oneInqryAnswerCn == null && loginId == 'admin'}">
+							<c:when test="${oneInqryDto.oneInqryAnswerVOList[0].oneInqryAnswerCn == null && loginId == 'admin'}">
 							    <div class="mb-3 oneInqryAnswerCn">
 							        <label for="oneInqryAnswerCn" class="col-form-label">문의 답글</label>
 							        <textarea class="form-control" id="oneInqryAnswerCn" name="oneInqryCn" placeholder=" 답글을 등록해주세요" rows="2" cols="100" wrap="hard" style="resize: none;"></textarea>
 							    </div>
 							</c:when>
-<%-- 							<c:when test="${oneInqryVO.oneInqryAnswerVOList[0].oneInqryAnswerCn == null}"> --%>
+<%-- 							<c:when test="${oneInqryDto.oneInqryAnswerVOList[0].oneInqryAnswerCn == null}"> --%>
 							<c:otherwise>
 								<div class="mb-3 oneInqryAnswerCn">
 					            	<label for="oneInqryAnswerCn" class="col-form-label">문의 답글</label>
@@ -118,12 +118,12 @@
 				<button type="button" class="btn btn-inverse-secondary clsBtn" id="clsBtn">닫기</button>
 <!-- 				프로 답글 등록 버튼 -->
 				<button type="button" class="btn btn-inverse-primary" id="answerChkBtn" 
-					onclick="chkBtn('${oneInqryVO.oneInqryNo}','insert')" style="display: none; margin-right: 5px;">등록</button>
+					onclick="chkBtn('${oneInqryDto.oneInqryNo}','insert')" style="display: none; margin-right: 5px;">등록</button>
 <!-- 				이용자 문의 수정 버튼 -->
 				<button type="button" class="btn btn-inverse-primary" id="modifyChkBtn"
-					 onclick="javascript:modifyChkBtn('${oneInqryVO.oneInqryNo}')" style="display: none; margin-right: 5px;">수정</button>
+					 onclick="javascript:modifyChkBtn('${oneInqryDto.oneInqryNo}')" style="display: none; margin-right: 5px;">수정</button>
 				<button type="button" class="btn btn-inverse-primary" id="modifySuccessBtn"
-					 onclick="chkBtn('${oneInqryVO.oneInqryNo}','modify')" style="display: none; margin-right: 5px;">완료</button>
+					 onclick="chkBtn('${oneInqryDto.oneInqryNo}','modify')" style="display: none; margin-right: 5px;">완료</button>
 				<button type="button" class="btn btn-inverse-secondary" id="cancelBtn" style="display: none;">취소</button>	
 			</div>
 		</div>
@@ -155,7 +155,7 @@ $(document).ready(function(){
 	console.log("loginId", loginId);
 	 
 	//프로의 문의 답글 등록 버튼
-	if(loginId == "admin" && ${oneInqryVO.oneInqryAnswerVOList[0].oneInqryAnswerCn == null} ){
+	if(loginId == "admin" && ${oneInqryDto.oneInqryAnswerVOList[0].oneInqryAnswerCn == null} ){
 		console.log("관리자다!");
 		$("#answerChkBtn").css("display","block");
 		$('#oneInqryAnswerCn').html("");
@@ -163,7 +163,7 @@ $(document).ready(function(){
 		str += "wrap='hard' style='resize: none;'></textarea>"
 	}
 	// 답글 등록 전 회원 문의 수정
-	if(${oneInqryVO.oneInqryAnswerVOList[0].oneInqryAnswerCn == null} && loginId != "admin" ){
+	if(${oneInqryDto.oneInqryAnswerVOList[0].oneInqryAnswerCn == null} && loginId != "admin" ){
 		console.log("회원이다!");
 		$("#modifyChkBtn").css("display","block");
 	}else{

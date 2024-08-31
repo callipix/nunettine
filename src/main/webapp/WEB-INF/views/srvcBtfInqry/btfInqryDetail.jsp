@@ -55,19 +55,19 @@ pre{
 											<!-- 요청서 이미지 -->
 											<div class="d-flex mb-4" id="btfIqnryImages" style="white-space: nowrap;">
 												<div id="imageList" class="d-flex flex-wrap">
-												<c:forEach var="sprviseAtchmnflVO" items="${vSrvcBtfInqryVO.sprviseAtchmnflVOList}" varStatus="status">
+												<c:forEach var="sprviseAtchmnflDto" items="${vSrvcBtfInqryVO.sprviseAtchmnflDtoList}" varStatus="status">
 													<c:choose>
-														<c:when test="${sprviseAtchmnflVO.atchmnflNo == 0 }">
+														<c:when test="${sprviseAtchmnflDto.atchmnflNo == 0 }">
 														</c:when>
 														<c:otherwise>
 															<li style="list-style-type: none; display: inline-block; margin-right: 10px;">
 																<div class="thumbnail-container">
 																	<a href="#modalPicture"
-																		data-picture-url="${sprviseAtchmnflVO.atchmnflCours}"
+																		data-picture-url="${sprviseAtchmnflDto.atchmnflCours}"
 																		data-toggle="modal"> <img class="prServiceThumb"
-																		src="${sprviseAtchmnflVO.atchmnflCours}"
+																		src="${sprviseAtchmnflDto.atchmnflCours}"
 																		style="width: 150px; height: 130px; border-radius: 20%; margin-right: 10px; margin-top: 10px;" />
-																		<span class="delete-icon" data-index="${sprviseAtchmnflVO.atchmnflNo}" style="display: none;"><i class='mdi mdi-close'></i></span>
+																		<span class="delete-icon" data-index="${sprviseAtchmnflDto.atchmnflNo}" style="display: none;"><i class='mdi mdi-close'></i></span>
 																	</a>
 																</div>
 															</li>

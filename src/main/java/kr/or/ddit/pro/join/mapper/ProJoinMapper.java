@@ -1,16 +1,11 @@
 package kr.or.ddit.pro.join.mapper;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.ddit.vo.AdresVO;
-import kr.or.ddit.vo.SpcltyRealmVO;
-import kr.or.ddit.vo.UsersVO;
-import kr.or.ddit.vo.VMberUsersVO;
-import kr.or.ddit.vo.VOndyclProUsersVO;
-import kr.or.ddit.vo.VProUsersVO;
+import kr.or.ddit.vo.*;
+import kr.or.ddit.vo.VMberUsersDto;
 
 public interface ProJoinMapper {
 	
@@ -20,38 +15,38 @@ public interface ProJoinMapper {
 
 	public int ncnmCk(String userNcnm);
 
-	public UsersVO proLogin(Map<String, Object> userMap);
+	public UsersDto proLogin(Map<String, Object> userMap);
 	
 	public int proInsert(Map<String, Object> map);
 
-	public VProUsersVO getProfile(Map<String, Object> userMap);
+	public VProUsersDto getProfile(Map<String, Object> userMap);
 
-	public UsersVO idSearch(VProUsersVO vProUsersVO);
+	public UsersDto idSearch(VProUsersDto vProUsersDto);
 
-	public UsersVO pwSearch(VProUsersVO vProUsersVO);
+	public UsersDto pwSearch(VProUsersDto vProUsersDto);
 
 	public int updatePw(Map<String, Object> map);
 
-	public VMberUsersVO idSearch2(VProUsersVO vProUsersVO);
+	public VMberUsersDto idSearch2(VProUsersDto vProUsersDto);
 
-	public String pwSearch2(VProUsersVO vProUsersVO);
+	public String pwSearch2(VProUsersDto vProUsersDto);
 
-	public AdresVO getAdres(Map<String, Object> userMap);
+	public AdresDto getAdres(Map<String, Object> userMap);
 
 	public String proSRCode(String spcltyRealmCode);
 
-	public List<SpcltyRealmVO> selectCode();
+	public List<SpcltyRealmDto> selectCode();
 
-	public List<SpcltyRealmVO> codeSelect(String code);
+	public List<SpcltyRealmDto> codeSelect(String code);
 
 
 	//관리자
-	public UsersVO admLogin(Map<String, Object> userMap);
+	public UsersDto admLogin(Map<String, Object> userMap);
 
-	public UsersVO adminVO(String userId);
+	public UsersDto adminVO(String userId);
 
 
-	public List<VOndyclProUsersVO> proMyClassList(String proId);
+	public List<VOndyclProUsersDto> proMyClassList(String proId);
 
 	public int countProMyClass(String proId);
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.or.ddit.pro_service.service_request.mapper.ReviewMapper">
+<mapper namespace="kr.or.ddit.proservice.serviceRequest.mapper.ReviewMapper">
 
 	<select id="reInfo" resultType="hashmap">
 		SELECT COMMON_CD_DETAIL, COMMON_CD, COMMON_CD_DETAIL_NM, COMMON_CD_DETAIL_EXPLAN
@@ -8,7 +8,7 @@
 		WHERE COMMON_CD = 'REVIEW'
 	</select>
 	
-	<insert id="reCreate" parameterType="reviewVO">
+	<insert id="reCreate" parameterType="reviewDto">
 		INSERT INTO REVIEW(RE_NO, RE_SCORE, SRVC_REQUST_NO, RE_WR_DT, RE_CN, RE_TY)
 		VALUES(RE_NO_SEQ.NEXTVAL, #{reScore}, #{srvcRequstNo}, SYSDATE, #{reCn}, #{reTy})
 	</insert>
@@ -30,7 +30,7 @@
 		WHERE B.PRO_ID = #{userId}
 	</select>
 	
-	<resultMap type="reviewVO" id="reviewMap">
+	<resultMap type="reviewDto" id="reviewMap">
 		<result property="reNo" column="RE_NO"/>
 		<result property="reTy" column="RE_TY"/>
 		<result property="reCn" column="RE_CN"/>
@@ -135,7 +135,7 @@
 		AND SRVC_REQUST_PROCESS_PRO = 1 
 	</select>
 	
-	<select id="showReview" parameterType="int" resultType="reviewVO">
+	<select id="showReview" parameterType="int" resultType="reviewDto">
 		SELECT * FROM REVIEW
 		WHERE RE_NO = #{reNo}
 	</select>

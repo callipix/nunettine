@@ -288,15 +288,15 @@ $(document).ready(function(){
 			         if(result.total == 0){
 							str += "<tr><td colspan='4'>작성한 글이 없습니다</td></tr>";
 						}
-			         $.each(result.content,function(idx, proCprtnBbscttVO){
+			         $.each(result.content,function(idx, proCprtnBbscttDto){
 
-		 	        	   str += "<tr onclick=\"location.href='/proCprtnBbsctt/detail?proCprtnBbscttNo=" + proCprtnBbscttVO.proCprtnBbscttNo + "'\" style=\"cursor: pointer;\">";
+		 	        	   str += "<tr onclick=\"location.href='/proCprtnBbsctt/detail?proCprtnBbscttNo=" + proCprtnBbscttDto.proCprtnBbscttNo + "'\" style=\"cursor: pointer;\">";
 						   //str += "<tr>";
-			               str += "<td>"+proCprtnBbscttVO.rnum+"</td>";		   
-			               str += "<td>"+proCprtnBbscttVO.proCprtnBbscttSj+"</td>";
-// 			               str += "<td>"+proCprtnBbscttVO.proId+"</td>";
-			               str += "<td>"+formatDate(new Date(proCprtnBbscttVO.proCprtnBbscttWrDt))+"</td>";
-			               str += "<td>"+proCprtnBbscttVO.proCprtnBbscttRdcnt+"</td>";
+			               str += "<td>"+proCprtnBbscttDto.rnum+"</td>";
+			               str += "<td>"+proCprtnBbscttDto.proCprtnBbscttSj+"</td>";
+// 			               str += "<td>"+proCprtnBbscttDto.proId+"</td>";
+			               str += "<td>"+formatDate(new Date(proCprtnBbscttDto.proCprtnBbscttWrDt))+"</td>";
+			               str += "<td>"+proCprtnBbscttDto.proCprtnBbscttRdcnt+"</td>";
 			               str += "</tr>";
 			            
 			            

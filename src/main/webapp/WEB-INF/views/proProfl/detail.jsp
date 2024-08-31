@@ -64,7 +64,7 @@ label, span, p, h5, h6, h3, h4, pre, a, button, input {
 function notify(){
 	console.log("신고 아이콘을 클릭했습니다^^");
 	//신고 클릭시 누구를 신고할지 해당 프로의 아이디를 일단 받아와야 된다
-	console.log('${proProflVO.proId}');  //신고 대상자 아이디
+	console.log('${proProflDto.proId}');  //신고 대상자 아이디
 	//신고 이미지 클릭시 모달창 뜨게 하기		
 	$("#declBtn").off("click").on("click",function(){
 		console.log($('input:radio[name=declResn]:checked').val());
@@ -162,7 +162,7 @@ $(function(){
 		notify();
 		/* console.log("신고 아이콘을 클릭했습니다^^");
 		//신고 클릭시 누구를 신고할지 해당 프로의 아이디를 일단 받아와야 된다
-		console.log('${proProflVO.proId}');  //신고 대상자 아이디
+		console.log('${proProflDto.proId}');  //신고 대상자 아이디
 		//신고 이미지 클릭시 모달창 뜨게 하기		
 		$("#declBtn").off("click").on("click",function(){
 			console.log($('input:radio[name=declResn]:checked').val());
@@ -482,9 +482,9 @@ $(function(){
         		str += "<i class='mdi mdi-arrow-left-drop-circle-outline' style='font-size: 40px;'></i></button></li>";
         		
         		//result : List<SprviseAtchmnflVO>
-        		$.each(result,function(idx,sprviseAtchmnflVO){
+        		$.each(result,function(idx,sprviseAtchmnflDto){
         			str += "<li style='list-style-type: none; display: inline-block;'>";
-        			str += "<img src='"+sprviseAtchmnflVO.atchmnflCours+"' style='width:390px; height:390px; margin-left:20px;'>";
+        			str += "<img src='"+sprviseAtchmnflDto.atchmnflCours+"' style='width:390px; height:390px; margin-left:20px;'>";
         			str += "</li>";
         		});
         		
@@ -540,8 +540,8 @@ $(function(){
  -->
 <!--비회원이보는 프로필  -->
 <c:if test="${memSession == null && proSession == null}">
-	<%-- <p>${proProflVO}</p> --%>
-	<c:if test="${proProflVO.proId==null}">
+	<%-- <p>${proProflDto}</p> --%>
+	<c:if test="${proProflDto.proId==null}">
 		<script>
         function nullProfl() {
             Swal.fire({
@@ -575,37 +575,37 @@ $(function(){
 									proProflHist=이력이란.. 이력은 이력이다!, bcityCode=11, brtcCode=11090, 
 									adres=대전 동구 판교2길 9) -->
 									<div class="border-bottom text-center pb-4">
-										<c:if test="${vProUsersVO.proProflPhoto == null}">
+										<c:if test="${vProUsersDto.proProflPhoto == null}">
 											<img src="/images/2024/profile.jpg" alt="profile"
 												style="width: 150px; height: 150px; border-radius: 70%;">
 										</c:if>
-										<c:if test="${vProUsersVO.proProflPhoto != null}">
-											<img src="${vProUsersVO.proProflPhoto}" alt="profile"
+										<c:if test="${vProUsersDto.proProflPhoto != null}">
+											<img src="${vProUsersDto.proProflPhoto}" alt="profile"
 												style="width: 150px; height: 150px; border-radius: 70%;">
 										</c:if>
 										<div class="border-bottom py-4">
-											<h3 style="font-family: 'seolleimcool-SemiBold';">${vProUsersVO.userNcnm}</h3>
+											<h3 style="font-family: 'seolleimcool-SemiBold';">${vProUsersDto.userNcnm}</h3>
 											<hr
 												style="border: 0; border-top: 30px solid #fff7d5; margin-top: -35px;">
 											<div class="d-flex align-items-center justify-content-center">
 												<h5 class="mb-0 me-2 text-muted" id="proIdcheck"
-													style="margin-top: -5px;">${proProflVO.proId}</h5>
+													style="margin-top: -5px;">${proProflDto.proId}</h5>
 											</div>
 											<div>
 												<label class="badge badge-outline-dark my-1"> <span
-													id="bcityCode">${proProflVO.bcityCode}</span>&nbsp; <span
-													id="brtcCode">${proProflVO.brtcCode}</span>
+													id="bcityCode">${proProflDto.bcityCode}</span>&nbsp; <span
+													id="brtcCode">${proProflDto.brtcCode}</span>
 												</label>
 											</div>
 											<p style="margin-top: 10px;" class="w-75 mx-auto mb-3">
-												<c:out value='${proProflVO.proProflOnLiIntrcn}' />
+												<c:out value='${proProflDto.proProflOnLiIntrcn}' />
 											</p>
 										</div>
 										<div class="py-1">
 											<h6 style="margin: 20px 0 0 0;">🕐 연락 가능 시간</h6>
 											<div>
 												<label class="badge badge-outline-dark my-1"> <c:out
-														value='${proProflVO.proProflContactPosblTime}' /></label>
+														value='${proProflDto.proProflContactPosblTime}' /></label>
 											</div>
 											<h6 style="margin: 10px 0 0 0;">🎨 분야</h6>
 											<div>
@@ -613,7 +613,7 @@ $(function(){
 											</div>
 											<h6 style="margin: 10px 0 0 0;">🚩 상세 주소</h6>
 											<div>
-												<span class="badge badge-outline-dark my-1" id="proAdres">${proProflVO.adres}</span>
+												<span class="badge badge-outline-dark my-1" id="proAdres">${proProflDto.adres}</span>
 											</div>
 										</div>
 										<!--지도  -->
@@ -625,7 +625,7 @@ $(function(){
 								</div>
 								<div class="col-lg-8">
 									<input type="hidden" id="mberId" value="${memSession.userId}" />
-									<input type="hidden" id="proId" value="${vProUsersVO.proId}" />
+									<input type="hidden" id="proId" value="${vProUsersDto.proId}" />
 									<div
 										class="d-block d-md-flex justify-content-between mt-4 mt-md-0"
 										style="text-align: center;">
@@ -683,7 +683,7 @@ $(function(){
 													</h5>
 													<pre
 														style="white-space: pre-wrap; background-color: #fff; height: 450px; margin: 20px 15px 15px 15px; overflow: auto;">
-															<c:out value="${proProflVO.proProflReqForm}" />
+															<c:out value="${proProflDto.proProflReqForm}" />
 														</pre>
 												</div>
 											</div>
@@ -703,7 +703,7 @@ $(function(){
 													</h5>
 													<pre
 														style="white-space: pre-wrap; background-color: #fff; margin: 20px 15px 15px 15px; height: 450px; overflow: auto;">
-															<c:out value="${proProflVO.proProflHist}" />
+															<c:out value="${proProflDto.proProflHist}" />
 														</pre>
 												</div>
 											</div>
@@ -803,7 +803,7 @@ $(function(){
 					</button>
 				</div>
 				<!-- 
-			sprviseAtchmnflVOList : 
+			sprviseAtchmnflDtoList :
 			[VPrtfolioVO(prtfolioNo=32, prtfolioSj=1번, prtfolioWrDt=Mon Mar 18 17:07:08 KST 2024, 
 				sprviseAtchmnflNo=323, proId=protest200, atchmnflNo=1, 
 				atchmnflCours=/images/2024/03/18/932722b2-a0ac-4039-a8a5-4081e2beee5d_거징징이.jpg, 
@@ -832,8 +832,8 @@ $(function(){
 
 <!--회원이보는 프로필  -->
 <c:if test="${memSession != null && proSession == null}">
-	<%-- <p>${proProflVO}</p> --%>
-	<c:if test="${proProflVO.proId==null}">
+	<%-- <p>${proProflDto}</p> --%>
+	<c:if test="${proProflDto.proId==null}">
 		<script>
         function nullProfl() {
             Swal.fire({
@@ -867,37 +867,37 @@ $(function(){
 									proProflHist=이력이란.. 이력은 이력이다!, bcityCode=11, brtcCode=11090, 
 									adres=대전 동구 판교2길 9) -->
 									<div class="border-bottom text-center pb-4">
-										<c:if test="${vProUsersVO.proProflPhoto == null}">
+										<c:if test="${vProUsersDto.proProflPhoto == null}">
 											<img src="/images/2024/profile.jpg" alt="profile"
 												style="width: 150px; height: 150px; border-radius: 70%;">
 										</c:if>
-										<c:if test="${vProUsersVO.proProflPhoto != null}">
-											<img src="${vProUsersVO.proProflPhoto}" alt="profile"
+										<c:if test="${vProUsersDto.proProflPhoto != null}">
+											<img src="${vProUsersDto.proProflPhoto}" alt="profile"
 												style="width: 150px; height: 150px; border-radius: 70%;">
 										</c:if>
 										<div class="border-bottom py-4">
-											<h3 style="font-family: 'seolleimcool-SemiBold';">${vProUsersVO.userNcnm}</h3>
+											<h3 style="font-family: 'seolleimcool-SemiBold';">${vProUsersDto.userNcnm}</h3>
 											<hr
 												style="border: 0; border-top: 30px solid #fff7d5; margin-top: -35px;">
 											<div class="d-flex align-items-center justify-content-center">
 												<h5 class="mb-0 me-2 text-muted" id="proIdcheck"
-													style="margin-top: -5px;">${proProflVO.proId}</h5>
+													style="margin-top: -5px;">${proProflDto.proId}</h5>
 											</div>
 											<div>
 												<label class="badge badge-outline-dark my-1"> <span
-													id="bcityCode">${proProflVO.bcityCode}</span>&nbsp; <span
-													id="brtcCode">${proProflVO.brtcCode}</span>
+													id="bcityCode">${proProflDto.bcityCode}</span>&nbsp; <span
+													id="brtcCode">${proProflDto.brtcCode}</span>
 												</label>
 											</div>
 											<p style="margin-top: 10px;" class="w-75 mx-auto mb-3">
-												<c:out value='${proProflVO.proProflOnLiIntrcn}' />
+												<c:out value='${proProflDto.proProflOnLiIntrcn}' />
 											</p>
 										</div>
 										<div class="py-1">
 											<h6 style="margin: 20px 0 0 0;">🕐 연락 가능 시간</h6>
 											<div>
 												<label class="badge badge-outline-dark my-1"> <c:out
-														value='${proProflVO.proProflContactPosblTime}' /></label>
+														value='${proProflDto.proProflContactPosblTime}' /></label>
 											</div>
 											<h6 style="margin: 10px 0 0 0;">🎨 분야</h6>
 											<div>
@@ -905,7 +905,7 @@ $(function(){
 											</div>
 											<h6 style="margin: 10px 0 0 0;">🚩 상세 주소</h6>
 											<div>
-												<span class="badge badge-outline-dark my-1" id="proAdres">${proProflVO.adres}</span>
+												<span class="badge badge-outline-dark my-1" id="proAdres">${proProflDto.adres}</span>
 											</div>
 										</div>
 										<!--지도  -->
@@ -917,14 +917,14 @@ $(function(){
 								</div>
 								<div class="col-lg-8">
 									<input type="hidden" id="mberId" value="${memSession.userId}" />
-									<input type="hidden" id="proId" value="${vProUsersVO.proId}" />
+									<input type="hidden" id="proId" value="${vProUsersDto.proId}" />
 									<div
 										class="d-block d-md-flex justify-content-between mt-4 mt-md-0">
 										<div class="text-center mt-4 mt-md-0">
 											<button class="btn btn-outline-primary btn-fw"
-												onclick="location.href='/srvcBtfInqry/btfInqryCreate?proId=${proProflVO.proId}'">문의하기</button>
+												onclick="location.href='/srvcBtfInqry/btfInqryCreate?proId=${proProflDto.proId}'">문의하기</button>
 											<button class="btn btn-outline-primary btn-fw"
-												onclick="location.href='/srvcRequst/srvcRqCreate?proId=${proProflVO.proId}'">요청하기</button>
+												onclick="location.href='/srvcRequst/srvcRqCreate?proId=${proProflDto.proId}'">요청하기</button>
 											<img id="UnProBkmkbtn" src="../resources/images/하트1.png"
 												style="width: 40px; margin: 5px 0px 5px 360px; display: inline;" />
 											<img id="ProBkmkbtn" src="../resources/images/하트2.png"
@@ -983,7 +983,7 @@ $(function(){
 													</h5>
 													<pre
 														style="white-space: pre-wrap; background-color: #fff; height: 450px; margin: 20px 15px 15px 15px; overflow: auto;">
-															<c:out value="${proProflVO.proProflReqForm}" />
+															<c:out value="${proProflDto.proProflReqForm}" />
 														</pre>
 												</div>
 											</div>
@@ -1003,7 +1003,7 @@ $(function(){
 													</h5>
 													<pre
 														style="white-space: pre-wrap; background-color: #fff; margin: 20px 15px 15px 15px; height: 450px; overflow: auto;">
-															<c:out value="${proProflVO.proProflHist}" />
+															<c:out value="${proProflDto.proProflHist}" />
 														</pre>
 												</div>
 											</div>
@@ -1101,7 +1101,7 @@ $(function(){
 					</button>
 				</div>
 				<!-- 
-			sprviseAtchmnflVOList : 
+			sprviseAtchmnflDtoList :
 			[VPrtfolioVO(prtfolioNo=32, prtfolioSj=1번, prtfolioWrDt=Mon Mar 18 17:07:08 KST 2024, 
 				sprviseAtchmnflNo=323, proId=protest200, atchmnflNo=1, 
 				atchmnflCours=/images/2024/03/18/932722b2-a0ac-4039-a8a5-4081e2beee5d_거징징이.jpg, 
@@ -1130,7 +1130,7 @@ $(function(){
 
 <!--프로일때  -->
 <c:if test="${memSession == null && proSession != null}">
-	<c:if test="${proProflVO==null}">
+	<c:if test="${proProflDto==null}">
 		<script>
         function nullProfl() {
             Swal.fire({
@@ -1159,34 +1159,34 @@ $(function(){
 							<div class="row">
 								<div class="col-lg-4">
 									<div class="border-bottom text-center pb-4">
-										<c:if test="${vProUsersVO.proProflPhoto == null}">
+										<c:if test="${vProUsersDto.proProflPhoto == null}">
 											<img src="/images/2024/profile.jpg" alt="profile"
 												style="width: 150px; height: 150px; border-radius: 70%;">
 										</c:if>
-										<c:if test="${vProUsersVO.proProflPhoto != null}">
-											<img src="${vProUsersVO.proProflPhoto}" alt="profile"
+										<c:if test="${vProUsersDto.proProflPhoto != null}">
+											<img src="${vProUsersDto.proProflPhoto}" alt="profile"
 												style="width: 150px; height: 150px; border-radius: 70%;">
 										</c:if>
 										<div class="border-bottom py-4">
-											<h3 style="font-family: 'seolleimcool-SemiBold';">${vProUsersVO.userNcnm}</h3>
+											<h3 style="font-family: 'seolleimcool-SemiBold';">${vProUsersDto.userNcnm}</h3>
 											<div class="d-flex align-items-center justify-content-center">
-												<h5 class="mb-0 me-2 text-muted" id="proIdcheck">${proProflVO.proId}</h5>
+												<h5 class="mb-0 me-2 text-muted" id="proIdcheck">${proProflDto.proId}</h5>
 											</div>
 											<div>
 												<label class="badge badge-outline-dark my-1"> <span
-													id="bcityCode">${proProflVO.bcityCode}</span>&nbsp; <span
-													id="brtcCode">${proProflVO.brtcCode}</span>
+													id="bcityCode">${proProflDto.bcityCode}</span>&nbsp; <span
+													id="brtcCode">${proProflDto.brtcCode}</span>
 												</label>
 											</div>
 											<p style="margin-top: 10px;" class="w-75 mx-auto mb-3">
-												<c:out value='${proProflVO.proProflOnLiIntrcn}' />
+												<c:out value='${proProflDto.proProflOnLiIntrcn}' />
 											</p>
 										</div>
 										<div class="py-1">
 											<h6 style="margin: 20px 0 0 0;">🕐 연락 가능 시간</h6>
 											<div>
 												<label class="badge badge-outline-dark my-1"> <c:out
-														value='${proProflVO.proProflContactPosblTime}' /></label>
+														value='${proProflDto.proProflContactPosblTime}' /></label>
 											</div>
 											<h6 style="margin: 10px 0 0 0;">🎨 분야</h6>
 											<div>
@@ -1194,7 +1194,7 @@ $(function(){
 											</div>
 											<h6 style="margin: 10px 0 0 0;">🚩 상세 주소</h6>
 											<div>
-												<span class="badge badge-outline-dark my-1" id="proAdres">${proProflVO.adres}</span>
+												<span class="badge badge-outline-dark my-1" id="proAdres">${proProflDto.adres}</span>
 											</div>
 										</div>
 										<!--지도  -->
@@ -1206,16 +1206,16 @@ $(function(){
 								</div>
 								<div class="col-lg-8">
 									<input type="hidden" id="mberId" value="${memSession.userId}" />
-									<input type="hidden" id="proId" value="${vProUsersVO.proId}" />
+									<input type="hidden" id="proId" value="${vProUsersDto.proId}" />
 									<div
 										class="d-block d-md-flex justify-content-between mt-4 mt-md-0">
 										<div class="text-center mt-4 mt-md-0">
-											<c:if test="${proSession.userId==proProflVO.proId}">
+											<c:if test="${proSession.userId==proProflDto.proId}">
 												<button class="btn btn-outline-primary btn-fw" type="button"
 													style="margin-left: 290px;"
-													onclick="location.href='/proProfl/modify?proId=${proProflVO.proId}'">수정하기</button>
+													onclick="location.href='/proProfl/modify?proId=${proProflDto.proId}'">수정하기</button>
 											</c:if>
-											<c:if test="${proSession.userId!=proProflVO.proId}">
+											<c:if test="${proSession.userId!=proProflDto.proId}">
 												<img id="notifybtn2" src="../resources/images/사이렌2.png"
 													style="width: 25px; margin: 5px 0px 5px 620px; display: inline;"
 													data-toggle="modal" data-target="#modal-sm" />
@@ -1271,7 +1271,7 @@ $(function(){
 													</h5>
 													<pre
 														style="white-space: pre-wrap; background-color: #fff; height: 450px; margin: 20px 15px 15px 15px; overflow: auto;">
-															<c:out value="${proProflVO.proProflReqForm}" />
+															<c:out value="${proProflDto.proProflReqForm}" />
 														</pre>
 												</div>
 											</div>
@@ -1291,7 +1291,7 @@ $(function(){
 													</h5>
 													<pre
 														style="white-space: pre-wrap; background-color: #fff; margin: 20px 15px 15px 15px;">
-															<c:out value="${proProflVO.proProflHist}" />
+															<c:out value="${proProflDto.proProflHist}" />
 														</pre>
 												</div>
 											</div>
@@ -1309,7 +1309,7 @@ $(function(){
 													포트 폴리오</b> <br>
 												<br>
 											</h5>
-											<c:if test="${proSession.userId==proProflVO.proId}">
+											<c:if test="${proSession.userId==proProflDto.proId}">
 												<button class="btn btn-outline-primary btn-fw"
 													style="margin: 10px 0 20px 500px;" type="button"
 													onclick="location.href='/prtFolio/create'">포트폴리오
@@ -1322,7 +1322,7 @@ $(function(){
 													<h3 style="padding: 20px 0 40px 0; color: #c6c9cc;">
 														아직 등록된 포트폴리오가 없어요! <br>
 														<br>
-														<c:if test="${proSession.userId==proProflVO.proId}">
+														<c:if test="${proSession.userId==proProflDto.proId}">
 															<button type="button" id="pop" class="btn btn-primary">포트 폴리오란?</button>
 														</c:if>
 													</h3>
@@ -1399,7 +1399,7 @@ $(function(){
 					</button>
 				</div>
 				<!-- 
-			sprviseAtchmnflVOList : 
+			sprviseAtchmnflDtoList :
 			[VPrtfolioVO(prtfolioNo=32, prtfolioSj=1번, prtfolioWrDt=Mon Mar 18 17:07:08 KST 2024, 
 				sprviseAtchmnflNo=323, proId=protest200, atchmnflNo=1, 
 				atchmnflCours=/images/2024/03/18/932722b2-a0ac-4039-a8a5-4081e2beee5d_거징징이.jpg, 
@@ -1418,7 +1418,7 @@ $(function(){
 				</div>
 
 				<div class="modal-footer">
-					<c:if test="${proSession.userId==proProflVO.proId}">
+					<c:if test="${proSession.userId==proProflDto.proId}">
 						<button type="button" class="btn btn-success">삭제하기</button>
 					</c:if>
 					<button type="button" class="btn btn-light" data-dismiss="modal">닫기</button>
@@ -1434,7 +1434,7 @@ $(function(){
 			<div class="modal-header">
 				<h4 class="modal-title general" id="modalTitle">🚨 신고하기</h4>
 				<input type="hidden" id="userId2"
-					class="form-control is-warning edit" value="${proProflVO.proId}"
+					class="form-control is-warning edit" value="${proProflDto.proId}"
 					style="display: block;" /> <input type="hidden" id="userId"
 					class="form-control is-warning edit"
 					value="${memSession.userId}${proSession.userId}"

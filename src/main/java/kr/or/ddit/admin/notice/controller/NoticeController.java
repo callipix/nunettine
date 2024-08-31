@@ -11,9 +11,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import kr.or.ddit.admin.notice.dto.NoticeDto;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,10 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.admin.notice.service.NoticeService;
-import kr.or.ddit.admin.notice.vo.NoticeVO;
-import kr.or.ddit.util.ArticlePage;
 import kr.or.ddit.util.ArticlePage2;
-import kr.or.ddit.vo.SprviseAtchmnflVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -41,7 +38,7 @@ public class NoticeController {
 
 	@GetMapping(value="/notice")
 	public String noticeList(Model model){
-		List<NoticeVO> list = noticeService.getAllNoticeList();
+		List<NoticeDto> list = noticeService.getAllNoticeList();
 		model.addAttribute("noticeList",list);
 				
 		return "admin/notice";	
@@ -53,49 +50,49 @@ public class NoticeController {
 	    // 조회수 증가
 	    this.noticeService.increaseViewCount(noticeNo);
 	    // 공지사항 정보 조회
-	    NoticeVO noticeVO = this.noticeService.detail(noticeNo);
-	    model.addAttribute("noticeVO", noticeVO);
+	    NoticeDto noticeDto = this.noticeService.detail(noticeNo);
+	    model.addAttribute("noticeVO", noticeDto);
 	    
-	    NoticeVO noticeVOAtchVOList = this.noticeService.sprviseAtchmnflVO(noticeNo);
-	    model.addAttribute("sprviseAtchmnflVOList",noticeVOAtchVOList);
+	    NoticeDto noticeVOAtchDtoList = this.noticeService.sprviseAtchmnflVO(noticeNo);
+	    model.addAttribute("sprviseAtchmnflVOList", noticeVOAtchDtoList);
 	    
 	    return "admin/detail";
 	}
 
 	@ResponseBody
 	@PostMapping("/update")
-	public int noticeUpdate(@RequestBody NoticeVO noticeVO ) {
+	public int noticeUpdate(@RequestBody NoticeDto noticeDto) {
 
 		//Updates: 1
-		log.info("update :  {} ", noticeVO);
-		int result = this.noticeService.update(noticeVO);
+		log.info("update :  {} ", noticeDto);
+		int result = this.noticeService.update(noticeDto);
 		//insert : 1
 		log.info("update->result :  {} ",result);
 		return result ;
 	}
 	@ResponseBody
 	@PostMapping("/delete")
-	public int noticeDelete(@RequestBody NoticeVO noticeVO) {
-		log.info("delete: {} ",noticeVO);
+	public int noticeDelete(@RequestBody NoticeDto noticeDto) {
+		log.info("delete: {} ", noticeDto);
 		
-		int result = this.noticeService.delete(noticeVO);
+		int result = this.noticeService.delete(noticeDto);
 		log.info("delete->result: {} ",result);
 		return result;
 	}
 
 	  @GetMapping(value="/create")
-	  public String create(NoticeVO noticeVO,HttpSession session) {
-		  log.info("create->noticeVO: {} ",noticeVO);
+	  public String create(NoticeDto noticeDto, HttpSession session) {
+		  log.info("create->noticeVO: {} ", noticeDto);
 		  
 		  return "admin/create"; 
 	  }
 
 	@ResponseBody
 	@PostMapping(value="/createPost")
-	public int createPost(NoticeVO noticeVO) {
-		log.info("createPost->noticeVO: {} ", noticeVO);
+	public int createPost(NoticeDto noticeDto) {
+		log.info("createPost->noticeVO: {} ", noticeDto);
 		
-		noticeVO.setMngrId("testAdmin");
+		noticeDto.setMngrId("testAdmin");
 		//System.out.println("notico:: " + noticeVO.getMngrId());
 		File uploadPath = new File(uploadFolder,getFolder());
 		
@@ -103,7 +100,7 @@ public class NoticeController {
 			uploadPath.mkdirs();
 		}
 //		NoticeVO noticeVO = new NoticeVO()
-		int result = this.noticeService.createPost(noticeVO);
+		int result = this.noticeService.createPost(noticeDto);
 		log.info("createPost->result: {} ", result);
 		return result;
 		//return "redirect:/admin/notice="+noticeVO.getNoticeNo();
@@ -161,11 +158,11 @@ public class NoticeController {
 		log.info("list->total: {} ",total);
 		int size = 10;
 		
-		List<NoticeVO> noticeVOList = this.noticeService.list(map);
-		log.info("list->noticeVOList: {} ", noticeVOList);
+		List<NoticeDto> noticeDtoList = this.noticeService.list(map);
+		log.info("list->noticeVOList: {} ", noticeDtoList);
 		
-		model.addAttribute("data", new ArticlePage2<NoticeVO>(total
-				,currentPage, size, noticeVOList, keyword, "leftList",searchKey));
+		model.addAttribute("data", new ArticlePage2<NoticeDto>(total
+				,currentPage, size, noticeDtoList, keyword, "leftList",searchKey));
 		
 		return "admin/notice";
 		
@@ -174,7 +171,7 @@ public class NoticeController {
 		//요청파라미터 : {keyword:ㅁㅁ,currentPage:1}
 		@ResponseBody
 		@PostMapping(value="/listAjax")
-		public ArticlePage2<NoticeVO> listAjax(@RequestBody(required=false) Map<String,Object> map) throws ParseException {
+		public ArticlePage2<NoticeDto> listAjax(@RequestBody(required=false) Map<String,Object> map) throws ParseException {
 			
 			log.info("listAjax->ArticlePage2->map :  {} ", map);
 			
@@ -187,10 +184,10 @@ public class NoticeController {
 			
 			int size = 10;
 			
-			List<NoticeVO> noticeVOList = this.noticeService.list(map);
-			log.info("list -> noticeVOList : {} ", noticeVOList);
+			List<NoticeDto> noticeDtoList = this.noticeService.list(map);
+			log.info("list -> noticeVOList : {} ", noticeDtoList);
 			
-			ArticlePage2<NoticeVO> data = new ArticlePage2(total, currentPage, size, noticeVOList, keyword, "leftList", searchKey);
+			ArticlePage2<NoticeDto> data = new ArticlePage2(total, currentPage, size, noticeDtoList, keyword, "leftList", searchKey);
 			
 			String url  = "/admin/notice";
 			

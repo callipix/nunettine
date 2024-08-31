@@ -223,7 +223,7 @@ $(function(){
 
 </script>
 <body>
-<%-- <a>${sprviseAtchmnflVOList}</a> --%>
+<%-- <a>${sprviseAtchmnflDtoList}</a> --%>
 
 
 <div class="col-md-12 stretch-card grid-margin grid-margin-md-0">
@@ -257,10 +257,10 @@ $(function(){
                 <div class="card-body" >
                   <div class="row align-items-center"> 
                 <div class="col-md-6">
-                    <h1 class="card-title" id="noticeSj" contenteditable="false"> ${noticeVO.noticeSj}</h1>
+                    <h1 class="card-title" id="noticeSj" contenteditable="false"> ${noticeDto.noticeSj}</h1>
                 </div>
                 <div class="col-md-6 text-right" style="margin-top: -20px;"> 
-                     <h5><fmt:formatDate value="${noticeVO.noticeWritngDt}" pattern="yyyy.MM.dd" /> </h5>
+                     <h5><fmt:formatDate value="${noticeDto.noticeWritngDt}" pattern="yyyy.MM.dd" /> </h5>
 
                 </div>
               </div>
@@ -273,21 +273,21 @@ $(function(){
                      <p><b>공지내용</b></p>
                      <blockquote class="blockquote">
                      
-                    <p class="mb-0" id="noticeCn" contenteditable="false">${noticeVO.noticeCn}</p>
+                    <p class="mb-0" id="noticeCn" contenteditable="false">${noticeDto.noticeCn}</p>
                   	 
                   </blockquote>             
                     </div>              
                                     
-                   <p><b>조회수 : ${noticeVO.noticeRdcnt}</b></p>
-                   <!-- sprviseAtchmnflVOList : noticeVO -->
-<%--               <p><b>첨부파일 : ${sprviseAtchmnflVOList.spAtVOList}</b></p> --%>
+                   <p><b>조회수 : ${noticeDto.noticeRdcnt}</b></p>
+                   <!-- sprviseAtchmnflDtoList : noticeDto -->
+<%--               <p><b>첨부파일 : ${sprviseAtchmnflDtoList.spAtVOList}</b></p> --%>
                    <div class="form-group">
-                    <c:forEach var="sprviseAtchmnflVO" items="${sprviseAtchmnflVOList.spAtVOList}" varStatus="stat">						
-<%-- 						<label for="Images" id="Images">${sprviseAtchmnflVO.atchmnflNm}</label> --%>
-<%-- 						<p><b>첨부파일 : ${sprviseAtchmnflVO.atchmnflNm}</b></p> --%>
-						<p><a href="${sprviseAtchmnflVO.atchmnflCours}" download="${sprviseAtchmnflVO.atchmnflNm}">첨부파일 :${sprviseAtchmnflVO.atchmnflNm}</a></p>
-<%-- 						<img src='${sprviseAtchmnflVO.atchmnflCours}' width="720" height="405" /> --%>
-<%--  						<img src='${sprviseAtchmnflVO.atchmnflCours}' />			 --%>
+                    <c:forEach var="sprviseAtchmnflDto" items="${sprviseAtchmnflDtoList.spAtVOList}" varStatus="stat">
+<%-- 						<label for="Images" id="Images">${sprviseAtchmnflDto.atchmnflNm}</label> --%>
+<%-- 						<p><b>첨부파일 : ${sprviseAtchmnflDto.atchmnflNm}</b></p> --%>
+						<p><a href="${sprviseAtchmnflDto.atchmnflCours}" download="${sprviseAtchmnflDto.atchmnflNm}">첨부파일 :${sprviseAtchmnflDto.atchmnflNm}</a></p>
+<%-- 						<img src='${sprviseAtchmnflDto.atchmnflCours}' width="720" height="405" /> --%>
+<%--  						<img src='${sprviseAtchmnflDto.atchmnflCours}' />			 --%>
 					</c:forEach>
 					
 					
@@ -295,7 +295,7 @@ $(function(){
                  
                   
                     <div class="col-md-12 text-right" style="margin-top: -20px;"> <!-- 오른쪽으로 정렬하기 위한 클래스 추가 -->
-                    <i class="mdi mdi-account-circle">${noticeVO.mngrId == 'testAdmin' ? '관리자' : noticeVO.mngrId}</i>
+                    <i class="mdi mdi-account-circle">${noticeDto.mngrId == 'testAdmin' ? '관리자' : noticeDto.mngrId}</i>
                 </div>
                     
                     

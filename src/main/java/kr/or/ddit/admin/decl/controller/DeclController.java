@@ -5,8 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import kr.or.ddit.vo.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,11 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.admin.decl.service.DeclService;
-import kr.or.ddit.vo.LbrtyBbscttVO2;
-import kr.or.ddit.vo.PunshVO;
-import kr.or.ddit.vo.SntncDeclVO;
-import kr.or.ddit.vo.UserDeclVO;
-import kr.or.ddit.vo.UsersVO;
+import kr.or.ddit.vo.SntncDeclDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -38,7 +34,7 @@ public class DeclController {
 			@RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage) {
 		
 		map.put("currentPage", currentPage);
-		List<SntncDeclVO> lbrbbsList = this.declService.decllbrSelect(map);
+		List<SntncDeclDto> lbrbbsList = this.declService.decllbrSelect(map);
         log.info("lbrbbs-> lbrbbsList in userdecl : {}", lbrbbsList);
 		model.addAttribute("lbrbbsList",lbrbbsList);
 		
@@ -50,7 +46,7 @@ public class DeclController {
 			@RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage) {
 		
 		map.put("currentPage", currentPage);
-		List<SntncDeclVO> lbrbbsList = this.declService.decllbrSelect(map);
+		List<SntncDeclDto> lbrbbsList = this.declService.decllbrSelect(map);
 		log.info("lbrbbs-> lbrbbsList in lbrbbs : {} ", lbrbbsList);
 		model.addAttribute("lbrbbsList",lbrbbsList);
 		
@@ -59,9 +55,9 @@ public class DeclController {
 	
 	@ResponseBody
 	@PostMapping("/ajaxList")
-	public List<SntncDeclVO> ajaxList(Map<String,Object> map) {
+	public List<SntncDeclDto> ajaxList(Map<String,Object> map) {
 		
-		List<SntncDeclVO> lbrbbsList = this.declService.decllbrSelect(map);
+		List<SntncDeclDto> lbrbbsList = this.declService.decllbrSelect(map);
 		log.info("lbrbbs-> lbrbbsList : {} " , lbrbbsList);
 		
 		return lbrbbsList;
@@ -69,10 +65,10 @@ public class DeclController {
 	
 	@ResponseBody
 	@PostMapping("/selectList")
-	public LbrtyBbscttVO2 selectList(@RequestBody SntncDeclVO sntncDeclVO) {
-		log.info("selectList-> sntncDeclVO : {}" , sntncDeclVO);
+	public LbrtyBbscttDto2 selectList(@RequestBody SntncDeclDto sntncDeclDto) {
+		log.info("selectList-> sntncDeclVO : {}" , sntncDeclDto);
 		
-		LbrtyBbscttVO2 selectVo = this.declService.lbrtyBbscttVo(sntncDeclVO);
+		LbrtyBbscttDto2 selectVo = this.declService.lbrtyBbscttVo(sntncDeclDto);
 		log.info("selectList-> selectList : {}" , selectVo);
 		
 		return selectVo;
@@ -80,10 +76,10 @@ public class DeclController {
 	
 	@ResponseBody
 	@PostMapping("/declResnList")
-	public List<SntncDeclVO> declResnList(@RequestBody SntncDeclVO sntncDeclVO) {
-		log.info("declResnList-> sntncDeclVO : {}" , sntncDeclVO);
+	public List<SntncDeclDto> declResnList(@RequestBody SntncDeclDto sntncDeclDto) {
+		log.info("declResnList-> sntncDeclVO : {}" , sntncDeclDto);
 		
-		List<SntncDeclVO> declResnList = this.declService.declResnList(sntncDeclVO);
+		List<SntncDeclDto> declResnList = this.declService.declResnList(sntncDeclDto);
 		log.info("declResnList-> declResnList : {}" , declResnList);
 		
 		return declResnList;
@@ -103,9 +99,9 @@ public class DeclController {
 
 	@ResponseBody
 	@GetMapping("/userList")
-	public List<UsersVO> userList() {
+	public List<UsersDto> userList() {
 		
-		List<UsersVO> userList = this.declService.userList();
+		List<UsersDto> userList = this.declService.userList();
 		log.info("userIist-> userList : {}" , userList);
 		
 		return userList;
@@ -126,9 +122,9 @@ public class DeclController {
 	
 	@ResponseBody
 	@PostMapping("/userDeclList")
-	public List<UserDeclVO> userDeclList(String userId) {
+	public List<UserDeclDto> userDeclList(String userId) {
 		log.info("userId : {}" , userId);
-		List<UserDeclVO> userDeclList = this.declService.userDeclList(userId);
+		List<UserDeclDto> userDeclList = this.declService.userDeclList(userId);
 		log.info("userDeclList-> userDeclList : {}" , userDeclList);
 
 		return userDeclList;
@@ -146,9 +142,9 @@ public class DeclController {
 	}
 	@ResponseBody
 	@PostMapping("/declHistoryList")
-	public List<PunshVO> declHistoryList(String userId) {
+	public List<PunshDto> declHistoryList(String userId) {
 		log.info("declHistoryList -> userId : {}" , userId);
-		List<PunshVO> hisoryList = null;
+		List<PunshDto> hisoryList = null;
 		hisoryList = this.declService.declHistoryList(userId);
 		log.info("declHistoryList-> hisoryList : {}" , hisoryList);
 		

@@ -139,20 +139,20 @@ $(function(){
 		            
 		            $("#proCprtnBbscttTbody").html("");
 		         
-		            $.each(result.content,function(idx, proCprtnBbscttVO){
- 		               str += "<tr onclick=\"location.href='/proCprtnBbsctt/detail?proCprtnBbscttNo=" + proCprtnBbscttVO.proCprtnBbscttNo + "'\" style=\"cursor: pointer;\">";
+		            $.each(result.content,function(idx, proCprtnBbscttDto){
+ 		               str += "<tr onclick=\"location.href='/proCprtnBbsctt/detail?proCprtnBbscttNo=" + proCprtnBbscttDto.proCprtnBbscttNo + "'\" style=\"cursor: pointer;\">";
 		               //str += "<tr>";
-		               str += "<td>"+proCprtnBbscttVO.rnum+"</td>";		   
-		               str += "<td>"+proCprtnBbscttVO.proCprtnBbscttSj+"</td>";
-		               str += "<td>"+proCprtnBbscttVO.userNcnm+"</td>";		            
+		               str += "<td>"+proCprtnBbscttDto.rnum+"</td>";
+		               str += "<td>"+proCprtnBbscttDto.proCprtnBbscttSj+"</td>";
+		               str += "<td>"+proCprtnBbscttDto.userNcnm+"</td>";
 // 		               str += "<td class='user-info'>";
-// 		               if (proCprtnBbscttVO.proProflPhoto == null || proCprtnBbscttVO.proProflPhoto == "") {
-// 		                   str += "<img src='/images/2024/profile.jpg'>" + proCprtnBbscttVO.userNcnm + "</td>";
+// 		               if (proCprtnBbscttDto.proProflPhoto == null || proCprtnBbscttDto.proProflPhoto == "") {
+// 		                   str += "<img src='/images/2024/profile.jpg'>" + proCprtnBbscttDto.userNcnm + "</td>";
 // 		               } else {
-// 		                   str += "<img src='" + proCprtnBbscttVO.proProflPhoto + "'>" + proCprtnBbscttVO.userNcnm + "</td>";
+// 		                   str += "<img src='" + proCprtnBbscttDto.proProflPhoto + "'>" + proCprtnBbscttDto.userNcnm + "</td>";
 // 		               }
-		               str += "<td>"+formatDate(new Date(proCprtnBbscttVO.proCprtnBbscttWrDt))+"</td>";
-		               str += "<td>"+proCprtnBbscttVO.proCprtnBbscttRdcnt+"</td>";
+		               str += "<td>"+formatDate(new Date(proCprtnBbscttDto.proCprtnBbscttWrDt))+"</td>";
+		               str += "<td>"+proCprtnBbscttDto.proCprtnBbscttRdcnt+"</td>";
 		               str += "</tr>";
 		            
 		            });   
@@ -195,21 +195,21 @@ $(function(){
 	         
 	         $("#proCprtnBbscttTbody").html("");
 	         
-	         $.each(result.content,function(idx, proCprtnBbscttVO){
+	         $.each(result.content,function(idx, proCprtnBbscttDto){
 
- 	        	   str += "<tr onclick=\"location.href='/proCprtnBbsctt/detail?proCprtnBbscttNo=" + proCprtnBbscttVO.proCprtnBbscttNo + "'\" style=\"cursor: pointer;\">";
+ 	        	   str += "<tr onclick=\"location.href='/proCprtnBbsctt/detail?proCprtnBbscttNo=" + proCprtnBbscttDto.proCprtnBbscttNo + "'\" style=\"cursor: pointer;\">";
 				   //str += "<tr>";
-	               str += "<td>"+proCprtnBbscttVO.rnum+"</td>";		   
-	               str += "<td>"+proCprtnBbscttVO.proCprtnBbscttSj+"</td>";
-	               str += "<td>"+proCprtnBbscttVO.userNcnm+"</td>";
+	               str += "<td>"+proCprtnBbscttDto.rnum+"</td>";
+	               str += "<td>"+proCprtnBbscttDto.proCprtnBbscttSj+"</td>";
+	               str += "<td>"+proCprtnBbscttDto.userNcnm+"</td>";
 // 	               str += "<td class='user-info'>";
-// 	               if (proCprtnBbscttVO.proProflPhoto == null || proCprtnBbscttVO.proProflPhoto == "") {
-// 	                   str += "<img src='/images/2024/profile.jpg'>" + proCprtnBbscttVO.userNcnm + "</td>";
+// 	               if (proCprtnBbscttDto.proProflPhoto == null || proCprtnBbscttDto.proProflPhoto == "") {
+// 	                   str += "<img src='/images/2024/profile.jpg'>" + proCprtnBbscttDto.userNcnm + "</td>";
 // 	               } else {
-// 	                   str += "<img src='" + proCprtnBbscttVO.proProflPhoto + "'>" + proCprtnBbscttVO.userNcnm + "</td>";
+// 	                   str += "<img src='" + proCprtnBbscttDto.proProflPhoto + "'>" + proCprtnBbscttDto.userNcnm + "</td>";
 // 	               }
-	               str += "<td>"+formatDate(new Date(proCprtnBbscttVO.proCprtnBbscttWrDt))+"</td>";
-	               str += "<td>"+proCprtnBbscttVO.proCprtnBbscttRdcnt+"</td>";
+	               str += "<td>"+formatDate(new Date(proCprtnBbscttDto.proCprtnBbscttWrDt))+"</td>";
+	               str += "<td>"+proCprtnBbscttDto.proCprtnBbscttRdcnt+"</td>";
 	               str += "</tr>";
 	            
 	            

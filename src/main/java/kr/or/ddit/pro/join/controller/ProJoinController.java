@@ -2,10 +2,7 @@ package kr.or.ddit.pro.join.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,34 +15,21 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import kr.or.ddit.vo.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import kr.or.ddit.pro.join.service.ProJoinService;
-import kr.or.ddit.util.ArticlePage;
-import kr.or.ddit.util.OndyclPage;
-import kr.or.ddit.vo.AdresVO;
-import kr.or.ddit.vo.ProVO;
-import kr.or.ddit.vo.SpcltyRealmVO;
-import kr.or.ddit.vo.UsersVO;
-import kr.or.ddit.vo.VMberUsersVO;
-import kr.or.ddit.vo.VOndyclProUsersVO;
-import kr.or.ddit.vo.VProUsersVO;
+import kr.or.ddit.vo.VProUsersDto;
 import lombok.extern.slf4j.Slf4j;
-import oracle.sql.DATE;
 
 @Controller
 @Slf4j
@@ -66,7 +50,7 @@ public class ProJoinController {
 	public String proJoin(Model model) {
 		
 		//전문분야 코드 출력
-		List<SpcltyRealmVO> codeList = this.proJoinService.selectCode();
+		List<SpcltyRealmDto> codeList = this.proJoinService.selectCode();
 //		log.info("전문분야 코드 : " + codeList);
 //		log.info("전문분야 코드 : " + codeList.get(0));
 		model.addAttribute("codeList", codeList);
@@ -77,8 +61,8 @@ public class ProJoinController {
 	//하위 전문분애 출력
 	@ResponseBody
 	@GetMapping("/codeSelect")
-	public List<SpcltyRealmVO> codeSelect(String code) {
-		List<SpcltyRealmVO> codeList = this.proJoinService.codeSelect(code);
+	public List<SpcltyRealmDto> codeSelect(String code) {
+		List<SpcltyRealmDto> codeList = this.proJoinService.codeSelect(code);
 //		log.info("codeList : " + codeList);
 		return codeList;
 	}
@@ -126,15 +110,15 @@ public class ProJoinController {
     }	
 	//프로 회원가입
 	@PostMapping("/proInsert")
-	public String proInsert(UsersVO usersVO, ProVO proVO, AdresVO adresVO) {
+	public String proInsert(UsersDto usersDto, ProDto proDto, AdresDto adresDto) {
 //		log.info("userVO : " + usersVO);
 //		log.info("proVO : " + proVO);
 //		log.info("adresVO : " + adresVO);
 		Map<String, Object> map = new HashMap<>();
 		
 		//프로필사진 업로드 처리
-		if(proVO.getProProflPhoto() != null && !proVO.getProProflPhoto().isEmpty()) {
-			MultipartFile multipartFile = proVO.getUploadFile();
+		if(proDto.getProProflPhoto() != null && !proDto.getProProflPhoto().isEmpty()) {
+			MultipartFile multipartFile = proDto.getUploadFile();
 //		log.info("multipartFile 처음 : " + multipartFile);
 //			String uploadFolder = "d/team2/upload";
 //			log.info("파일경로 : " + uploadFolder);
@@ -162,17 +146,17 @@ public class ProJoinController {
 		}else {
 			map.put("proProflPhoto", null);
 		}
-		map.put("userId", usersVO.getUserId());
-		map.put("userNcnm", usersVO.getUserNcnm());
-		map.put("proMbtlnum", proVO.getProMbtlnum());
-		map.put("sexdstnTy", proVO.getSexdstnTy());
-		map.put("email", proVO.getEmail());
-		map.put("spcltyRealmCode", proVO.getSpcltyRealmCode());
-		map.put("userNm", usersVO.getUserNm());
-		map.put("userPassword", usersVO.getUserPassword());
-		map.put("adres", adresVO.getAdres());
-		map.put("detailAdres", adresVO.getDetailAdres());
-		map.put("zip", adresVO.getZip());
+		map.put("userId", usersDto.getUserId());
+		map.put("userNcnm", usersDto.getUserNcnm());
+		map.put("proMbtlnum", proDto.getProMbtlnum());
+		map.put("sexdstnTy", proDto.getSexdstnTy());
+		map.put("email", proDto.getEmail());
+		map.put("spcltyRealmCode", proDto.getSpcltyRealmCode());
+		map.put("userNm", usersDto.getUserNm());
+		map.put("userPassword", usersDto.getUserPassword());
+		map.put("adres", adresDto.getAdres());
+		map.put("detailAdres", adresDto.getDetailAdres());
+		map.put("zip", adresDto.getZip());
 		
 		int result = this.proJoinService.proInsert(map);
 //		log.info("회원가입 여부 : " + result);
@@ -201,11 +185,11 @@ public class ProJoinController {
 		//로그인 전 map : {userPassword=asdasd, userId=testPro}
 		log.info("로그인 전 map : " + userMap);
 		
-		UsersVO adminVO = this.proJoinService.adminVO(userId);
-		UsersVO usersVO = this.proJoinService.proLogin(userMap);
+		UsersDto adminVO = this.proJoinService.adminVO(userId);
+		UsersDto usersDto = this.proJoinService.proLogin(userMap);
 		//동균
 		if(adminVO == null) { return userMap; }
-		if(usersVO == null) { return userMap; }
+		if(usersDto == null) { return userMap; }
 		//동균끝
 		
 		/*
@@ -213,10 +197,10 @@ public class ProJoinController {
 		, secsnAt=1, userNcnm=테스트관리자, cnt=0)
 		 */
 		log.info("adminVO : " + adminVO);
-		log.info("usersVO : " + usersVO);
+		log.info("usersVO : " + usersDto);
 		//ET03 또는 ET02
 		
-		if("ET03".equals(usersVO.getEmplyrTy())) {//관리자
+		if("ET03".equals(usersDto.getEmplyrTy())) {//관리자
 			
 			log.info("asdp : " + adminVO);
 			
@@ -237,10 +221,10 @@ public class ProJoinController {
 			
 			return userMap;
 
-		}else if("ET02".equals(usersVO.getEmplyrTy())){
+		}else if("ET02".equals(usersDto.getEmplyrTy())){
 //			UsersVO usersVO = this.proJoinService.proLogin(userMap);
 			
-			if(usersVO == null) {
+			if(usersDto == null) {
 				return userMap;
 			}
 			
@@ -272,22 +256,22 @@ public class ProJoinController {
 			
 			if(userEndDt.after(now)) {
 				userMap.put("userEndDt", userEndDt);
-				usersVO.setCnt(2);
-				log.info("현재 날짜와 제재 종료일일 다른 경우 로근이 cnt : " + usersVO.getCnt());
-				userMap.put("cnt", usersVO.getCnt()); 
+				usersDto.setCnt(2);
+				log.info("현재 날짜와 제재 종료일일 다른 경우 로근이 cnt : " + usersDto.getCnt());
+				userMap.put("cnt", usersDto.getCnt());
 				return userMap;
 			}
 			//동균 신고 처리 부분 추가 끝
 			
 			//		log.info("로그인 usersVO : " + usersVO);
-			VProUsersVO vProUsersVO  = this.proJoinService.getProfile(userMap);
-			log.info("로그인 vProUsersVO : " + vProUsersVO);
+			VProUsersDto vProUsersDto = this.proJoinService.getProfile(userMap);
+			log.info("로그인 vProUsersVO : " + vProUsersDto);
 			
 			try {
-				AdresVO adresVO = this.proJoinService.getAdres(userMap);
-				userMap.put("zip",adresVO.getZip()); //우편번호
-				userMap.put("adres",adresVO.getAdres()); //주소
-				userMap.put("detailAdres",adresVO.getDetailAdres()); //상세주소
+				AdresDto adresDto = this.proJoinService.getAdres(userMap);
+				userMap.put("zip", adresDto.getZip()); //우편번호
+				userMap.put("adres", adresDto.getAdres()); //주소
+				userMap.put("detailAdres", adresDto.getDetailAdres()); //상세주소
 				//			log.info("로그인 후 adresVO : " + adresVO);
 			} catch (NullPointerException e) {
 				userMap.put("zip","-"); //우편번호
@@ -297,26 +281,26 @@ public class ProJoinController {
 			
 			//		log.info("로그인 후 usersVO : " + usersVO);
 			//		log.info("로그인 후 vProUsersVO : " + vProUsersVO);
-			userMap.put("cnt",usersVO.getCnt());
-			userMap.put("type",usersVO.getEmplyrTy()); //유저타입(프로/회원)
-			userMap.put("userNcnm",usersVO.getUserNcnm()); //닉네임
+			userMap.put("cnt", usersDto.getCnt());
+			userMap.put("type", usersDto.getEmplyrTy()); //유저타입(프로/회원)
+			userMap.put("userNcnm", usersDto.getUserNcnm()); //닉네임
 			
-			if(vProUsersVO != null && usersVO.getCnt() == 1) {
-				String profile = vProUsersVO.getProProflPhoto();
+			if(vProUsersDto != null && usersDto.getCnt() == 1) {
+				String profile = vProUsersDto.getProProflPhoto();
 				//			log.info("이미지 : " + profile);
 				if(profile != null) {
-					profile = vProUsersVO.getProProflPhoto();
+					profile = vProUsersDto.getProProflPhoto();
 				}
 				
-				userMap.put("email",vProUsersVO.getEmail()); //이메일
-				userMap.put("userNm",vProUsersVO.getUserNm()); //이름
-				userMap.put("proMbtlnum",vProUsersVO.getProMbtlnum()); //전화번호
-				userMap.put("sexdstnTy",vProUsersVO.getSexdstnTy()); //성별
+				userMap.put("email", vProUsersDto.getEmail()); //이메일
+				userMap.put("userNm", vProUsersDto.getUserNm()); //이름
+				userMap.put("proMbtlnum", vProUsersDto.getProMbtlnum()); //전화번호
+				userMap.put("sexdstnTy", vProUsersDto.getSexdstnTy()); //성별
 				userMap.put("profile",profile); //프로필사진
-				userMap.put("changePwCk",usersVO.getChangePwCk()); //임시비번여부
+				userMap.put("changePwCk", usersDto.getChangePwCk()); //임시비번여부
 				
 				//전문가 코드 나열
-				String spcltyRealmCode = vProUsersVO.getSpcltyRealmCode(); //전문 분야 코드
+				String spcltyRealmCode = vProUsersDto.getSpcltyRealmCode(); //전문 분야 코드
 				//			log.info("전문가코드 길이 : " + spcltyRealmCode.length());
 				String thirdsrCode = this.proJoinService.proSRCode(spcltyRealmCode); //depth 3단계 이름
 				String secondSRCode = ""; //depth 2단계 이름
@@ -347,21 +331,21 @@ public class ProJoinController {
 					session.setAttribute("proSession", null);
 				}
 				
-			} else if (vProUsersVO == null && usersVO.getCnt() == 1){
+			} else if (vProUsersDto == null && usersDto.getCnt() == 1){
 				userMap.put("cnt",1);
-			} else if (vProUsersVO == null && usersVO.getCnt() == 0) {
+			} else if (vProUsersDto == null && usersDto.getCnt() == 0) {
 				userMap.put("cnt",0);
 			}
 			System.out.println("세션체크 : " + userMap);
 			userMap.get("");
 			
 		}else {
-			log.info("1" + usersVO.getCnt());
-			if(usersVO.getCnt() == 1) {
-				log.info("2" + usersVO.getCnt());
+			log.info("1" + usersDto.getCnt());
+			if(usersDto.getCnt() == 1) {
+				log.info("2" + usersDto.getCnt());
 				userMap.put("type","ET01");
 			}else {
-				log.info("3" + usersVO.getCnt());
+				log.info("3" + usersDto.getCnt());
 				userMap.put("cnt",0);
 			}
 		}
@@ -388,14 +372,14 @@ public class ProJoinController {
 	//아이디 찾기
 	@ResponseBody
 	@PostMapping("/idSearch")
-	public UsersVO idSearch(VProUsersVO vProUsersVO) {
+	public UsersDto idSearch(VProUsersDto vProUsersDto) {
 //		log.info("아이디찾기 vo : " + vProUsersVO);
 		
-		UsersVO usersVO = this.proJoinService.idSearch(vProUsersVO);
+		UsersDto usersDto = this.proJoinService.idSearch(vProUsersDto);
 //		log.info("userVO : " + usersVO);
-		if(usersVO == null) {
-			VMberUsersVO mberVO = this.proJoinService.idSearch2(vProUsersVO);
-			UsersVO userVO = new UsersVO();
+		if(usersDto == null) {
+			VMberUsersDto mberVO = this.proJoinService.idSearch2(vProUsersDto);
+			UsersDto userVO = new UsersDto();
 			if(mberVO != null) {
 				userVO.setEmplyrTy(mberVO.getEmplyrTy());
 				userVO.setUserId(mberVO.getUserId());
@@ -406,21 +390,21 @@ public class ProJoinController {
 			}
 		}
 //		log.info("찾은 아이디 : " + usersVO);
-		return usersVO;
+		return usersDto;
 	}
 	
 	//비밀번호찾기
 	@ResponseBody
 	@PostMapping("/pwSearch")
-	public Map<String, Object> pwSearch(VProUsersVO vProUsersVO) {
+	public Map<String, Object> pwSearch(VProUsersDto vProUsersDto) {
 //		log.info("비밀번호찾기 vo : " + vProUsersVO);
 		String userPassword;
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		UsersVO usersVO = this.proJoinService.pwSearch(vProUsersVO);
+		UsersDto usersDto = this.proJoinService.pwSearch(vProUsersDto);
 //		log.info("userVO : " + usersVO);
-		if(usersVO == null) {
-			String emplyrTy = this.proJoinService.pwSearch2(vProUsersVO);
+		if(usersDto == null) {
+			String emplyrTy = this.proJoinService.pwSearch2(vProUsersDto);
 			if(emplyrTy==null) {//프로조회
 				map.put("emplyrTy","warn");
 //				log.info("map6 : " + map);
@@ -431,12 +415,12 @@ public class ProJoinController {
 				return map;
 			}
 		}else {
-			String emplyrTy = usersVO.getEmplyrTy();
+			String emplyrTy = usersDto.getEmplyrTy();
 			map.put("emplyrTy", emplyrTy);
-			userPassword = usersVO.getUserPassword();
+			userPassword = usersDto.getUserPassword();
 //			log.info("비번2 : " + userPassword);
 		}
-		map.put("proId", vProUsersVO.getProId());
+		map.put("proId", vProUsersDto.getProId());
 //		log.info("찾은 비밀번호 : " + usersVO);
 		
 		
@@ -457,7 +441,7 @@ public class ProJoinController {
 			}
 			log.info("메일 보낼 임시비번 " + str);
 			String setForm = "ddit230901@gmail.com"; //보낼 이메일 주소
-			String toMail = vProUsersVO.getEmail(); //받을 이메일 주소
+			String toMail = vProUsersDto.getEmail(); //받을 이메일 주소
 			String title = "누네띠네 프로님의 임시비밀번호 발송 이메일 입니다."; //이메일 제목
 			String content = "누네띠네를 이용해 주셔서 감사합니다." + "<br><br>" + "변경된 임시비밀번호는 <div style='backgroud-color:yellow;'><b>"
 					+ str + "</b> 입니다.</div><br><br>해당 임시비밀번호로 로그인 후 꼭 비밀번호를 변경해주세요.<br><br>"

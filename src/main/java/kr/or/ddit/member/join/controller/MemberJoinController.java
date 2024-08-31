@@ -15,8 +15,8 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import kr.or.ddit.vo.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
@@ -27,11 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.member.join.service.MemberJoinService;
-import kr.or.ddit.vo.AdresVO;
-import kr.or.ddit.vo.MberVO;
-import kr.or.ddit.vo.UsersVO;
-import kr.or.ddit.vo.VMberUsersVO;
-import kr.or.ddit.vo.VProUsersVO;
+import kr.or.ddit.vo.AdresDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -101,7 +97,7 @@ public class MemberJoinController {
               .mapToObj(Integer::toString)  	  // 3.
         	  .collect(Collectors.joining()));    // 4.
 
-        log.info("인증번호 : " + numStr);
+        log.info("인증번호 : {}", numStr);
         this.memberJoinService.certifiedPhoneNumber(mberMbtlnum,numStr.toString());	// 5. 
         return numStr.toString();
     }
@@ -114,15 +110,15 @@ public class MemberJoinController {
 	
 	//회원가입
 	@PostMapping("/memberInsert")
-	public String memberInsert(UsersVO usersVO, MberVO mberVO, AdresVO adresVO) {
+	public String memberInsert(UsersDto usersDto, MberDto mberDto, AdresDto adresDto) {
 //		log.info("userVO : " + usersVO);
-		log.info("mberVO : " + mberVO);
+		log.info("mberVO : " + mberDto);
 //		log.info("adresVO : " + adresVO);
 		Map<String, Object> map = new HashMap<>();
 		
 		//프로필사진 업로드 처리
-		if(mberVO.getMberProflPhoto() != null && !mberVO.getMberProflPhoto().isEmpty()) {
-			MultipartFile multipartFile = mberVO.getUploadFile();
+		if(mberDto.getMberProflPhoto() != null && !mberDto.getMberProflPhoto().isEmpty()) {
+			MultipartFile multipartFile = mberDto.getUploadFile();
 //			log.info("파일경로 : " + uploadFolder);
 //		log.info("multipartFile 처음 : " + multipartFile);
 //			String uploadFolder = "d/team2/upload";
@@ -149,16 +145,16 @@ public class MemberJoinController {
 		}else {
 			map.put("mberProflPhoto", null);
 		}
-		map.put("userId", usersVO.getUserId());
-		map.put("userNcnm", usersVO.getUserNcnm());
-		map.put("mberMbtlnum", mberVO.getMberMbtlnum());
-		map.put("sexdstnTy", mberVO.getSexdstnTy());
-		map.put("email", mberVO.getEmail());
-		map.put("userNm", usersVO.getUserNm());
-		map.put("userPassword", usersVO.getUserPassword());
-		map.put("adres", adresVO.getAdres());
-		map.put("detailAdres", adresVO.getDetailAdres());
-		map.put("zip", adresVO.getZip());
+		map.put("userId", usersDto.getUserId());
+		map.put("userNcnm", usersDto.getUserNcnm());
+		map.put("mberMbtlnum", mberDto.getMberMbtlnum());
+		map.put("sexdstnTy", mberDto.getSexdstnTy());
+		map.put("email", mberDto.getEmail());
+		map.put("userNm", usersDto.getUserNm());
+		map.put("userPassword", usersDto.getUserPassword());
+		map.put("adres", adresDto.getAdres());
+		map.put("detailAdres", adresDto.getDetailAdres());
+		map.put("zip", adresDto.getZip());
 //		log.info("회원가입 맵 : " + map);
 		int result = this.memberJoinService.memberInsert(map);
 //		log.info("회원가입 여부 : " + result);
@@ -175,20 +171,20 @@ public class MemberJoinController {
 		userMap.put("userPassword", userPassword); //비번
 //		log.info("로그인 전 map : " + userMap);
 		
-		UsersVO usersVO = this.memberJoinService.memberLogin(userMap);
-		if(usersVO == null) {
+		UsersDto usersDto = this.memberJoinService.memberLogin(userMap);
+		if(usersDto == null) {
 //			log.info(" 왜요");
 			return userMap;
 		}
 		
-		VMberUsersVO vMberUsersVO = this.memberJoinService.getProfile(userMap);
+		VMberUsersDto vMberUsersDto = this.memberJoinService.getProfile(userMap);
 //		log.info("로그인 userId : " + userId);
 		
 		try {
-			AdresVO adresVO = this.memberJoinService.getAdres(userMap);
-			userMap.put("zip",adresVO.getZip()); //우편번호
-			userMap.put("adres",adresVO.getAdres()); //주소
-			userMap.put("detailAdres",adresVO.getDetailAdres()); //상세주소
+			AdresDto adresDto = this.memberJoinService.getAdres(userMap);
+			userMap.put("zip", adresDto.getZip()); //우편번호
+			userMap.put("adres", adresDto.getAdres()); //주소
+			userMap.put("detailAdres", adresDto.getDetailAdres()); //상세주소
 //			log.info("로그인 후 adresVO : " + adresVO);
 		} catch (NullPointerException e) {
 			userMap.put("zip","-"); //우편번호
@@ -198,22 +194,22 @@ public class MemberJoinController {
 		
 //		log.info("로그인 후 usersVO : " + usersVO);
 //		log.info("로그인 후 vMberUsersVO : " + vMberUsersVO);
-		userMap.put("cnt",usersVO.getCnt());
-		userMap.put("type",usersVO.getEmplyrTy()); //유저타입(프로/회원)
-		if(vMberUsersVO != null && usersVO.getCnt() == 1) {
-			String profile = vMberUsersVO.getMberProflPhoto();
+		userMap.put("cnt", usersDto.getCnt());
+		userMap.put("type", usersDto.getEmplyrTy()); //유저타입(프로/회원)
+		if(vMberUsersDto != null && usersDto.getCnt() == 1) {
+			String profile = vMberUsersDto.getMberProflPhoto();
 //			log.info("이미지 : " + profile);
 			if(profile != null) {
-				profile = vMberUsersVO.getMberProflPhoto();
+				profile = vMberUsersDto.getMberProflPhoto();
 			}
 			
-			userMap.put("userNcnm",usersVO.getUserNcnm()); //닉네임
-			userMap.put("email",vMberUsersVO.getEmail()); //이메일
-			userMap.put("userNm",vMberUsersVO.getUserNm()); //이름
-			userMap.put("mberMbtlnum",vMberUsersVO.getMberMbtlnum()); //전화번호
-			userMap.put("sexdstnTy",vMberUsersVO.getSexdstnTy()); //성별
+			userMap.put("userNcnm", usersDto.getUserNcnm()); //닉네임
+			userMap.put("email", vMberUsersDto.getEmail()); //이메일
+			userMap.put("userNm", vMberUsersDto.getUserNm()); //이름
+			userMap.put("mberMbtlnum", vMberUsersDto.getMberMbtlnum()); //전화번호
+			userMap.put("sexdstnTy", vMberUsersDto.getSexdstnTy()); //성별
 			userMap.put("profile",profile); //프로필사진
-			userMap.put("changePwCk",usersVO.getChangePwCk()); //임시비번여부
+			userMap.put("changePwCk", usersDto.getChangePwCk()); //임시비번여부
 			
 //			log.info("session에 들어갈 map : " + userMap);
 			HttpSession session = request.getSession();
@@ -223,9 +219,9 @@ public class MemberJoinController {
 			}else {
 				session.setAttribute("memSession", null);
 			}
-		}else if(vMberUsersVO == null && usersVO.getCnt() == 1){
+		}else if(vMberUsersDto == null && usersDto.getCnt() == 1){
 			userMap.put("cnt",1);
-		}else if(vMberUsersVO == null && usersVO.getCnt() == 0) {
+		}else if(vMberUsersDto == null && usersDto.getCnt() == 0) {
 			userMap.put("cnt",0);
 		}
 		
@@ -250,16 +246,16 @@ public class MemberJoinController {
 	//아이디 찾기
 	@ResponseBody
 	@PostMapping("/idSearch")
-	public UsersVO idSearch(VMberUsersVO vMberUsersVO) {
+	public UsersDto idSearch(VMberUsersDto vMberUsersDto) {
 //		log.info("아이디찾기 vo : " + vMberUsersVO);
 		
-		UsersVO usersVO = this.memberJoinService.idSearch(vMberUsersVO);
+		UsersDto usersDto = this.memberJoinService.idSearch(vMberUsersDto);
 //		log.info("usersVO : " + usersVO);
 //		log.info("userVO null : " + usersVO.equals(null));
-		if(usersVO == null) {
-			VProUsersVO proVO = this.memberJoinService.idSearch2(vMberUsersVO);
+		if(usersDto == null) {
+			VProUsersDto proVO = this.memberJoinService.idSearch2(vMberUsersDto);
 //			log.info("proVO : " + proVO);
-			UsersVO userVO = new UsersVO();
+			UsersDto userVO = new UsersDto();
 			if(proVO != null) {
 				userVO.setEmplyrTy(proVO.getEmplyrTy());
 				userVO.setUserId(proVO.getUserId());
@@ -270,21 +266,21 @@ public class MemberJoinController {
 			}
 		}
 //		log.info("찾은 아이디 : " + usersVO);
-		return usersVO;
+		return usersDto;
 	}
 	
 	//비밀번호찾기
 	@ResponseBody
 	@PostMapping("/pwSearch")
-	public Map<String, Object> pwSearch(VMberUsersVO vMberUsersVO) {
+	public Map<String, Object> pwSearch(VMberUsersDto vMberUsersDto) {
 //		log.info("비밀번호찾기 vo : " + vMberUsersVO);
 		String userPassword;
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		UsersVO usersVO = this.memberJoinService.pwSearch(vMberUsersVO);
+		UsersDto usersDto = this.memberJoinService.pwSearch(vMberUsersDto);
 //		log.info("usersVO : " + usersVO);
-		if(usersVO == null) {
-			String emplyrTy = this.memberJoinService.pwSearch2(vMberUsersVO);
+		if(usersDto == null) {
+			String emplyrTy = this.memberJoinService.pwSearch2(vMberUsersDto);
 			if(emplyrTy==null) {//프로조회
 				map.put("emplyrTy","warn");
 //				log.info("map6 : " + map);
@@ -295,14 +291,14 @@ public class MemberJoinController {
 				return map;
 			}
 		}else {
-			String emplyrTy = usersVO.getEmplyrTy();
+			String emplyrTy = usersDto.getEmplyrTy();
 			map.put("emplyrTy", emplyrTy);
-			userPassword = usersVO.getUserPassword();
+			userPassword = usersDto.getUserPassword();
 //			log.info("비번2 : " + userPassword);
 		}
 		
 		
-		map.put("mberId", vMberUsersVO.getMberId());
+		map.put("mberId", vMberUsersDto.getMberId());
 //		log.info("찾은 비밀번호 : " + map);
 //		log.info("비번3 : " + userPassword);
 		
@@ -325,7 +321,7 @@ public class MemberJoinController {
 			}
 			log.info("메일 보낼 임시비번 " + str);
 			String setForm = "ddit230901@gmail.com"; //보낼 이메일 주소
-			String toMail = vMberUsersVO.getEmail(); //받을 이메일 주소
+			String toMail = vMberUsersDto.getEmail(); //받을 이메일 주소
 			String title = "누네띠네 회원님의 임시비밀번호 발송 이메일 입니다."; //이메일 제목
 			String content = "누네띠네를 이용해 주셔서 감사합니다." + "<br><br>" + "변경된 임시비밀번호는 <div style='backgroud-color:yellow;'><b>"
 					+ str + "</b> 입니다.</div><br><br>해당 임시비밀번호로 로그인 후 꼭 비밀번호를 변경해주세요.<br><br>"

@@ -106,7 +106,7 @@ table{
 <script>
 $(function () {
 
-	paging(${vOndyclProUsersVOList.size()});
+	paging(${vOndyclProUsersDtoList.size()});
 
 	var countOndycl = $("#countOndycl").val();
 	var forDate = {};
@@ -650,7 +650,7 @@ $(function(){
 
 function paging(totalItems){
 	// 전체 아이템 수
-//     var totalItems = ${vOndyclProUsersVOList.size()};
+//     var totalItems = ${vOndyclProUsersDtoList.size()};
     // 페이지당 아이템 수
     var itemsPerPage = 9;
     // 전체 페이지 수
@@ -982,39 +982,39 @@ function paging(totalItems){
 <div class="row portfolio-grid">
 	<div id="result" style="margin-top:50px; display: flex; flex-wrap: wrap; justify-content: center;">
 		
-		<c:forEach var="vOndyclProUsersVO" items="${vOndyclProUsersVOList}"
+		<c:forEach var="vOndyclProUsersDto" items="${vOndyclProUsersDtoList}"
 			varStatus="stat">
 			<div class="colGrid" style="margin:20px; width:250px; height:auto; ">
 				<div class="card shadow-sm">
-					<a href="/onedayClass/onedayClassDetail?ondyclNo=${vOndyclProUsersVO.ondyclNo}&mberId=${memSession.userId}" class="eachAlbum">
+					<a href="/onedayClass/onedayClassDetail?ondyclNo=${vOndyclProUsersDto.ondyclNo}&mberId=${memSession.userId}" class="eachAlbum">
 						<c:choose>
-							<c:when test="${empty vOndyclProUsersVO.ondyclThumbPhoto}">
+							<c:when test="${empty vOndyclProUsersDto.ondyclThumbPhoto}">
 								<img src="/images/2024/no_image.gif" id="imgTest" class='lazy' loading='lazy' width="100%" height="225">
 							</c:when>
 							<c:otherwise>
-								<img src="${vOndyclProUsersVO.ondyclThumbPhoto}" class='lazy' loading='lazy' width="100%" height="225">
+								<img src="${vOndyclProUsersDto.ondyclThumbPhoto}" class='lazy' loading='lazy' width="100%" height="225">
 							</c:otherwise>
 						</c:choose>
 					</a>
 					<div class="card-body">
 						<p class="card-text" style="font-family: 'GmarketSansMedium';">
-							<a href="/onedayClass/onedayClassDetail?ondyclNo=${vOndyclProUsersVO.ondyclNo}&mberId=${memSession.userId}" class="eachAlbum">
-								<div style="font-size:1.2rem;" class="ondyclName" style="font-family: 'GmarketSansMedium';"><b><c:out value="${vOndyclProUsersVO.ondyclNm}"></c:out></b></div>
+							<a href="/onedayClass/onedayClassDetail?ondyclNo=${vOndyclProUsersDto.ondyclNo}&mberId=${memSession.userId}" class="eachAlbum">
+								<div style="font-size:1.2rem;" class="ondyclName" style="font-family: 'GmarketSansMedium';"><b><c:out value="${vOndyclProUsersDto.ondyclNm}"></c:out></b></div>
 							</a>
 							<div id="dateSpan${stat.index}"></div>
-							<input type="hidden" id="startDate${stat.index}" value="${vOndyclProUsersVO.ondyclSchdulDe}">
+							<input type="hidden" id="startDate${stat.index}" value="${vOndyclProUsersDto.ondyclSchdulDe}">
 						</p>
 						<div class="d-flex justify-content-between align-items-center">
-						<small class="text-body-secondary" style="font-family: 'GmarketSansMedium';"><c:out value="${vOndyclProUsersVO.spcltyRealmCode}"></c:out></small>
+						<small class="text-body-secondary" style="font-family: 'GmarketSansMedium';"><c:out value="${vOndyclProUsersDto.spcltyRealmCode}"></c:out></small>
 							<div class="btn-group">
-								<a href="/proProfl/detail?proId=${vOndyclProUsersVO.proId}"  class="eachAlbum">
-									<c:if test="${empty vOndyclProUsersVO.proProflPhoto}">
+								<a href="/proProfl/detail?proId=${vOndyclProUsersDto.proId}"  class="eachAlbum">
+									<c:if test="${empty vOndyclProUsersDto.proProflPhoto}">
 										<img class="profile lazy" loading='lazy' src="/images/2024/profile.jpg">
 									</c:if>
-									<c:if test="${not empty vOndyclProUsersVO.proProflPhoto}">
-										<img class="profile lazy" loading='lazy' src="${vOndyclProUsersVO.proProflPhoto}">
+									<c:if test="${not empty vOndyclProUsersDto.proProflPhoto}">
+										<img class="profile lazy" loading='lazy' src="${vOndyclProUsersDto.proProflPhoto}">
 									</c:if>
-									<span style="font-family: 'GmarketSansMedium';"><c:out value="${vOndyclProUsersVO.userNcnm}"></c:out></span>
+									<span style="font-family: 'GmarketSansMedium';"><c:out value="${vOndyclProUsersDto.userNcnm}"></c:out></span>
 								</a>
 							</div>
 						</div>
@@ -1126,7 +1126,7 @@ function paging(totalItems){
 					<div id="bcityCodeDiv">
 						<select class="form-control form-control-sm" id="bcityCode">
 							<option value="none">광역시를 선택하세요</option>
-	                    	<c:forEach var="bcity" items="${bcityVOList}">
+	                    	<c:forEach var="bcity" items="${bcityDtoList}">
 					       		<option value="${bcity.bcityCode}" value2="${bcity.bcityNm}">${bcity.bcityNm}</option>
 					      	</c:forEach>
 	                    </select>

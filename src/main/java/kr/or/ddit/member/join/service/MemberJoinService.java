@@ -2,10 +2,10 @@ package kr.or.ddit.member.join.service;
 
 import java.util.Map;
 
-import kr.or.ddit.vo.AdresVO;
-import kr.or.ddit.vo.UsersVO;
-import kr.or.ddit.vo.VMberUsersVO;
-import kr.or.ddit.vo.VProUsersVO;
+import kr.or.ddit.vo.AdresDto;
+import kr.or.ddit.vo.UsersDto;
+import kr.or.ddit.vo.VMberUsersDto;
+import kr.or.ddit.vo.VProUsersDto;
 
 public interface MemberJoinService {
 
@@ -17,23 +17,23 @@ public interface MemberJoinService {
 
 	public void certifiedPhoneNumber(String mberMbtlnum, String numStr);
 
-	public UsersVO memberLogin(Map<String, Object> userMap);
+	public UsersDto memberLogin(Map<String, Object> userMap);
 
 	public int memberInsert(Map<String, Object> map);
 
-	public VMberUsersVO getProfile(Map<String, Object> userMap);
+	public VMberUsersDto getProfile(Map<String, Object> userMap);
 
-	public UsersVO pwSearch(VMberUsersVO vMberUsersVO);
+	public UsersDto pwSearch(VMberUsersDto vMberUsersDto);
 
-	public UsersVO idSearch(VMberUsersVO vMberUsersVO);
+	public UsersDto idSearch(VMberUsersDto vMberUsersDto);
 
 	public int updatePw(Map<String, Object> map);
 
-	public VProUsersVO idSearch2(VMberUsersVO vMberUsersVO);
+	public VProUsersDto idSearch2(VMberUsersDto vMberUsersDto);
 
-	public String pwSearch2(VMberUsersVO vMberUsersVO);
+	public String pwSearch2(VMberUsersDto vMberUsersDto);
 
-	public AdresVO getAdres(Map<String, Object> map);
+	public AdresDto getAdres(Map<String, Object> map);
 
 	
 }

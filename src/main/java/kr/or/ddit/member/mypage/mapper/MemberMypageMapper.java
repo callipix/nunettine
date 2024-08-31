@@ -2,8 +2,6 @@ package kr.or.ddit.member.mypage.mapper;
 
 import java.util.Map;
 
-import kr.or.ddit.vo.VMberUsersVO;
-
 public interface MemberMypageMapper {
 
 	public int memberDelete(String userId);

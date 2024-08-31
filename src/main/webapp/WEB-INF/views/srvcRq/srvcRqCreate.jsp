@@ -150,7 +150,7 @@ function updateFileUploadInfo(no) {
 				<div class="form-group">
 					<label for="btfInqryCn">요청사항</label> 
 					<textarea class="form-control" id="srvcRequstCn" name="srvcRequstCn" wrap="hard"
-					 style="overflow: auto; height: 300px; " required="required">${proProflVO.proProflReqForm}</textarea>
+					 style="overflow: auto; height: 300px; " required="required">${proProflDto.proProflReqForm}</textarea>
 				</div>
 				<button class="btn btn-light" style="float: right;" onclick="history.back()">취소</button>
 				<button type="submit" class="btn btn-primary me-2" id="checkBtn" style="float: right; margin-right: 5px;">등록</button>

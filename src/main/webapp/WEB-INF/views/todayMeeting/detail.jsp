@@ -66,7 +66,7 @@ ul.chatMemList li img {
 <script type="text/javascript">
 
 $(function() {
-	let userId = `${tdmtngVO.userId}`;
+	let userId = `${tdmtngDto.userId}`;
 	console.log(userId);
 	
 	let sessionId = `${sessionId}`;
@@ -84,7 +84,7 @@ $(function() {
 		$("#btnDecl").show();
 	}
 	
-	let tdmtngMax = `${tdmtngVO.tdmtngMax}`;
+	let tdmtngMax = `${tdmtngDto.tdmtngMax}`;
 	let chatMemCount = `${chatMemCount}`;
 	console.log(tdmtngMax);
 	console.log(chatMemCount);
@@ -96,7 +96,7 @@ $(function() {
 	}
 	
 	//모임 참여 여부
-	let tdmtngNo = `${tdmtngVO.tdmtngNo}`;
+	let tdmtngNo = `${tdmtngDto.tdmtngNo}`;
 	
 	let myChatCk = {
 			"userId" : sessionId,
@@ -109,10 +109,10 @@ $(function() {
         type: "post",
         data: JSON.stringify(myChatCk),
         dataType: "json",
-        success: function (tdmtngPrtcpntVO) {
-        	console.log(tdmtngPrtcpntVO.tdmtngNo);
+        success: function (tdmtngPrtcpntDto) {
+        	console.log(tdmtngPrtcpntDto.tdmtngNo);
         	console.log(tdmtngNo);
-        	if(tdmtngPrtcpntVO.tdmtngNo == tdmtngNo) {
+        	if(tdmtngPrtcpntDto.tdmtngNo == tdmtngNo) {
         		console.log("참가중");
         		$("#btnPrctChat").css("display", "none");
         		$("#btnPrctedChat").css("display", "block");
@@ -126,7 +126,7 @@ $(function() {
 		
 		$("#chatMemList").html("");
 		
-		let tdmtngNo = `${tdmtngVO.tdmtngNo}`;
+		let tdmtngNo = `${tdmtngDto.tdmtngNo}`;
 
 		console.log(tdmtngNo);
 		
@@ -141,15 +141,15 @@ $(function() {
 				let str ="";
 				
 				
-				$.each(result, function(idx, tdmtngPrtcpntVO) {
+				$.each(result, function(idx, tdmtngPrtcpntDto) {
 					
-					let mberPhoto = tdmtngPrtcpntVO.mberProflPhoto;
-					let proPhoto = tdmtngPrtcpntVO.proProflPhoto;
+					let mberPhoto = tdmtngPrtcpntDto.mberProflPhoto;
+					let proPhoto = tdmtngPrtcpntDto.proProflPhoto;
 					
 					console.log("회원 프로필 사진", mberPhoto);
 					console.log("프로 프로필 사진", proPhoto);		
 	                 
-	               	let emplyrTy = tdmtngPrtcpntVO.usersVOList[0].emplyrTy;
+	               	let emplyrTy = tdmtngPrtcpntDto.usersDtoList[0].emplyrTy;
 	                 
 					if(emplyrTy == "ET01") emplyrTy = "회원";
 	               	else if(emplyrTy == "ET02") emplyrTy = "프로";
@@ -172,7 +172,7 @@ $(function() {
 	        		}
 					
 					str += `<div class="media-body">`;
-					str += `<h6 class="mb-1">\${tdmtngPrtcpntVO.usersVOList[0].userNcnm}(\${tdmtngPrtcpntVO.usersVOList[0].userId})</h6>`;
+					str += `<h6 class="mb-1">\${tdmtngPrtcpntDto.usersDtoList[0].userNcnm}(\${tdmtngPrtcpntDto.usersDtoList[0].userId})</h6>`;
                     str += `<p class="mb-0 text-muted">\${emplyrTy}</p>`;
                     str += `</div></div></div></div>`;  
 				})
@@ -196,7 +196,7 @@ $(function() {
 		}).then((result) => {
 			if (result.isConfirmed) {
 
-				let tdmtngMax = `${tdmtngVO.tdmtngMax}`;
+				let tdmtngMax = `${tdmtngDto.tdmtngMax}`;
 				console.log(chatMemCount);
 				console.log(tdmtngMax);
 				
@@ -307,7 +307,7 @@ $(function() {
 	
 	//삭제
 	$("#btnTmtDel").on("click", function() {
-		location.href = "/todayMeeting/delete?tdmtngNo="+${tdmtngVO.tdmtngNo};
+		location.href = "/todayMeeting/delete?tdmtngNo="+${tdmtngDto.tdmtngNo};
 	})
 	
 	//목록
@@ -317,7 +317,7 @@ $(function() {
 	
 	//수정 화면에서 취소 버튼 클릭시
     $("#btnTmtCancel").on("click", function() {
-    	location.href = "/todayMeeting/detail?tdmtngNo="+${tdmtngVO.tdmtngNo};
+    	location.href = "/todayMeeting/detail?tdmtngNo="+${tdmtngDto.tdmtngNo};
     })
 	
 
@@ -336,17 +336,17 @@ $(function() {
 				<div class="card-body">
 					<form action="/todayMeeting/update" class="forms-sample" name="tmtUpdate" method="post" enctype="multipart/form-data">
 						<div class="container-fluid notUdt">
-							<input type="hidden" id="tdmtngNo" name="tdmtngNo" value="${tdmtngVO.tdmtngNo}">
-							<h2 class="text-center my-5" style="font-family: GMarketSansMedium">${tdmtngVO.tdmtngNm}</h2>
+							<input type="hidden" id="tdmtngNo" name="tdmtngNo" value="${tdmtngDto.tdmtngNo}">
+							<h2 class="text-center my-5" style="font-family: GMarketSansMedium">${tdmtngDto.tdmtngNm}</h2>
 							<div style="margin-left: 76%;">
 								<p style="font-family: GMarketSansLight; display: inline; margin-right: 40px; font-size:20px;">모임장</p>
-								<p style="display: inline; font-size:15px;">${tdmtngVO.userNcnm}</p>
+								<p style="display: inline; font-size:15px;">${tdmtngDto.userNcnm}</p>
 								<br />
 								<p style="font-family: GMarketSansLight; display: inline; margin-right: 20px; font-size:20px;">작성일시</p>
-								<p style="display: inline; font-size:15px;">${tdmtngVO.tdmtngCreatDt}</p>
+								<p style="display: inline; font-size:15px;">${tdmtngDto.tdmtngCreatDt}</p>
 								<br />
 								<p style="font-family: GMarketSansLight; display: inline; margin-right: 20px; font-size:20px;">모임일시</p>
-								<p style="display: inline; font-size:15px;">${tdmtngVO.tdmtngDt}</p>
+								<p style="display: inline; font-size:15px;">${tdmtngDto.tdmtngDt}</p>
 							</div>
 							<hr>
 						</div>
@@ -357,7 +357,7 @@ $(function() {
 				            		data-toggle="dropdown" id="iconChatMem" style="margin-right:5px; padding: 8px;">
 				            		<img src="/resources/images/모임인원아이콘.png" style="height:50px; float:left;">
 				            		<p id="chatMemCount" style="margin-left: 30px; margin-top: 5px; margin-bottom: 5px;">현재 인원
-				            		(${chatMemCount}/${tdmtngVO.tdmtngMax})</p>
+				            		(${chatMemCount}/${tdmtngDto.tdmtngMax})</p>
 				            		</button>
 				            		<div class="dropdown-menu" aria-labelledby="dropdownMenuIconButton6" 
 				            			style="min-width: 20rem; background: none; border: none;">	
@@ -371,9 +371,9 @@ $(function() {
 				                	</div>
 				            	</div>
 				            </div>
-				    		<pre class="mb-5" style="font-family: GmarketSansLight; padding-left: 20px; font-size: 1.1rem; background: none;">${tdmtngVO.tdmtngCn}</pre>	
+				    		<pre class="mb-5" style="font-family: GmarketSansLight; padding-left: 20px; font-size: 1.1rem; background: none;">${tdmtngDto.tdmtngCn}</pre>
 				            <div id="imgDiv" class="form-group" style="max-width: 700px">
-				                <img src="${tdmtngVO.tdmtngThumbPhoto}" class="img-fluid mb-2" onerror="this.style.display='none'">
+				                <img src="${tdmtngDto.tdmtngThumbPhoto}" class="img-fluid mb-2" onerror="this.style.display='none'">
 				            </div>	       		
 				            <hr>
 				            <h6 id="fullMeeting" style="display: none">※ 정원 초과로 마감된 모임 입니다.</h6>
@@ -384,24 +384,24 @@ $(function() {
 							<div style="display: flex;">
 								<div class="form-group col-6" style="padding-left: 0px;">
 									<label for="tdmtngNm">모임명</label>
-									<input type="text" class="form-control" id="tdmtngNm" name="tdmtngNm" value="${tdmtngVO.tdmtngNm}">
+									<input type="text" class="form-control" id="tdmtngNm" name="tdmtngNm" value="${tdmtngDto.tdmtngNm}">
 								</div>
 						        <div class="form-group col-4">
 						            <label for="tdmtngDt">모임일시</label>
-						            <input type="text" class="form-control" id="tdmtngDt" name="tdmtngDt" value="${tdmtngVO.tdmtngDt}">
+						            <input type="text" class="form-control" id="tdmtngDt" name="tdmtngDt" value="${tdmtngDto.tdmtngDt}">
 						        </div>
 						        <div class="form-group col-2" style="padding-right: 0px;">
 						        	<label for="tdmtngMax">정원</label>
-						            <input type="number" class="form-control" id="tdmtngMax" name="tdmtngMax" value="${tdmtngVO.tdmtngMax}">
+						            <input type="number" class="form-control" id="tdmtngMax" name="tdmtngMax" value="${tdmtngDto.tdmtngMax}">
 						        </div>
 					        </div>
 					        <div class="form-group" style="padding-left: 0px;">
 								<label for="tdmtngCn">내용</label>
 								<textarea class="form-control" rows="10" id="tdmtngCn" name="tdmtngCn"
-									style="display: none;">${tdmtngVO.tdmtngCn}</textarea>	
+									style="display: none;">${tdmtngDto.tdmtngCn}</textarea>
 							</div>
 							<div id="existingImg" class="form-group" style="max-width: 700px">
-				                <img src="${tdmtngVO.tdmtngThumbPhoto}" class="img-fluid mb-2" onerror="this.style.display='none'">
+				                <img src="${tdmtngDto.tdmtngThumbPhoto}" class="img-fluid mb-2" onerror="this.style.display='none'">
 				            </div>
 				            <div id="imgPreDiv" class="clsCiImgUrl  col-xs-12">
 							</div>    

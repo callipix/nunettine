@@ -56,58 +56,58 @@ function pagingList(data){
 			let str = "";
 			$("#cartTbody").html("");
 			
-			$.each(res.content,function(idx, shopngBundleVO){
+			$.each(res.content,function(idx, shopngBundleDto){
 				/* str += "<tr>"; */
-				if(shopngBundleVO.ondyclDelType == 0){
-					if(today < shopngBundleVO.ondyclSchdulDe){
-						if(shopngBundleVO.peopleCheck){
+				if(shopngBundleDto.ondyclDelType == 0){
+					if(today < shopngBundleDto.ondyclSchdulDe){
+						if(shopngBundleDto.peopleCheck){
 							str += "<tr style=\"height:100px; cursor: pointer;\">";
 							str += "<td><p style='color:lightgray;'>정원초과</p></td>";
-							str += "<td style='text-align:center; color:lightgray;' onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + shopngBundleVO.ondyclNo + "&startPoint=myBundle'\">";
+							str += "<td style='text-align:center; color:lightgray;' onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + shopngBundleDto.ondyclNo + "&startPoint=myBundle'\">";
 							
-							if(shopngBundleVO.ondyclThumbPhoto == null || shopngBundleVO.ondyclThumbPhoto == ""){
+							if(shopngBundleDto.ondyclThumbPhoto == null || shopngBundleDto.ondyclThumbPhoto == ""){
 								str += "<img class='classThumb' src='/images/2024/no_image.gif'></td>";
 							}else{
-								str += "<img class='classThumb' src='"+shopngBundleVO.ondyclThumbPhoto+"'></td>";
+								str += "<img class='classThumb' src='"+shopngBundleDto.ondyclThumbPhoto+"'></td>";
 							}
 							
-							str += "<td style='color:lightgray;' onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + shopngBundleVO.ondyclNo + "&startPoint=myBundle'\">"+shopngBundleVO.ondyclNm+"</td>";
-							str += "<td style='color:lightgray;' onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + shopngBundleVO.ondyclNo + "&startPoint=myBundle'\">"+shopngBundleVO.userNcnm+"</td>";
-							str += "<td style='color:lightgray;' onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + shopngBundleVO.ondyclNo + "&startPoint=myBundle'\">"+shopngBundleVO.ondyclSchdulDe+"</td>";
+							str += "<td style='color:lightgray;' onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + shopngBundleDto.ondyclNo + "&startPoint=myBundle'\">"+shopngBundleDto.ondyclNm+"</td>";
+							str += "<td style='color:lightgray;' onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + shopngBundleDto.ondyclNo + "&startPoint=myBundle'\">"+shopngBundleDto.userNcnm+"</td>";
+							str += "<td style='color:lightgray;' onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + shopngBundleDto.ondyclNo + "&startPoint=myBundle'\">"+shopngBundleDto.ondyclSchdulDe+"</td>";
 							str += "</tr>";
 						}else{
 							str += "<tr style=\"height:100px; cursor: pointer;\">";
-							str += "<td><div class='form-check bunCkBox'><label class='form-check-label'><input onclick='bunCk(this)' type='checkbox' value='"+shopngBundleVO.ondyclNo+"' class='form-check-input ckBtn'><i class='input-helper'></i></label></div></td>"
-							str += "<td style='text-align:center;' onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + shopngBundleVO.ondyclNo + "&startPoint=myBundle'\">";
+							str += "<td><div class='form-check bunCkBox'><label class='form-check-label'><input onclick='bunCk(this)' type='checkbox' value='"+shopngBundleDto.ondyclNo+"' class='form-check-input ckBtn'><i class='input-helper'></i></label></div></td>"
+							str += "<td style='text-align:center;' onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + shopngBundleDto.ondyclNo + "&startPoint=myBundle'\">";
 							
-							if(shopngBundleVO.ondyclThumbPhoto == null || shopngBundleVO.ondyclThumbPhoto == ""){
+							if(shopngBundleDto.ondyclThumbPhoto == null || shopngBundleDto.ondyclThumbPhoto == ""){
 								str += "<img class='classThumb' src='/images/2024/no_image.gif'></td>";
 							}else{
-								str += "<img class='classThumb' src='"+shopngBundleVO.ondyclThumbPhoto+"'></td>";
+								str += "<img class='classThumb' src='"+shopngBundleDto.ondyclThumbPhoto+"'></td>";
 							}
 							
-							str += "<td onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + shopngBundleVO.ondyclNo + "&startPoint=myBundle'\">"+shopngBundleVO.ondyclNm+"</td>";
-							str += "<td onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + shopngBundleVO.ondyclNo + "&startPoint=myBundle'\">"+shopngBundleVO.userNcnm+"</td>";
-							str += "<td onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + shopngBundleVO.ondyclNo + "&startPoint=myBundle'\">"+shopngBundleVO.ondyclSchdulDe+"</td>";
+							str += "<td onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + shopngBundleDto.ondyclNo + "&startPoint=myBundle'\">"+shopngBundleDto.ondyclNm+"</td>";
+							str += "<td onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + shopngBundleDto.ondyclNo + "&startPoint=myBundle'\">"+shopngBundleDto.userNcnm+"</td>";
+							str += "<td onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + shopngBundleDto.ondyclNo + "&startPoint=myBundle'\">"+shopngBundleDto.ondyclSchdulDe+"</td>";
 							str += "</tr>";
 						}
 					}else{
-						let classNum = (shopngBundleVO.ondyclNo).toString();
+						let classNum = (shopngBundleDto.ondyclNo).toString();
 						checkPastList.push(classNum);
 // 						console.log("classNum 타입 : " + typeof(classNum));
 						str += "<tr style=\"height:100px; cursor: pointer;\">";
-						str += "<td><div class='form-check bunCkBox'><label class='form-check-label'><input type='checkbox' onclick='bunCk(this)' value='"+shopngBundleVO.ondyclNo+"' class='form-check-input ckBtn'><i class='input-helper'></i></label></div></td>"
-						str += "<td style='text-align:center; color:lightgray;' onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + shopngBundleVO.ondyclNo + "&startPoint=myBundle'\">";
+						str += "<td><div class='form-check bunCkBox'><label class='form-check-label'><input type='checkbox' onclick='bunCk(this)' value='"+shopngBundleDto.ondyclNo+"' class='form-check-input ckBtn'><i class='input-helper'></i></label></div></td>"
+						str += "<td style='text-align:center; color:lightgray;' onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + shopngBundleDto.ondyclNo + "&startPoint=myBundle'\">";
 						
-						if(shopngBundleVO.ondyclThumbPhoto == null || shopngBundleVO.ondyclThumbPhoto == ""){
+						if(shopngBundleDto.ondyclThumbPhoto == null || shopngBundleDto.ondyclThumbPhoto == ""){
 							str += "<img class='classThumb' src='/images/2024/no_image.gif'></td>";
 						}else{
-							str += "<img class='classThumb' src='"+shopngBundleVO.ondyclThumbPhoto+"'></td>";
+							str += "<img class='classThumb' src='"+shopngBundleDto.ondyclThumbPhoto+"'></td>";
 						}
 						
-						str += "<td style='color:lightgray;' onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + shopngBundleVO.ondyclNo + "&startPoint=myBundle'\">"+shopngBundleVO.ondyclNm+"</td>";
-						str += "<td style='color:lightgray;' onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + shopngBundleVO.ondyclNo + "&startPoint=myBundle'\">"+shopngBundleVO.userNcnm+"</td>";
-						str += "<td style='color:red;' onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + shopngBundleVO.ondyclNo + "&startPoint=myBundle'\">"+shopngBundleVO.ondyclSchdulDe+"</td>";
+						str += "<td style='color:lightgray;' onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + shopngBundleDto.ondyclNo + "&startPoint=myBundle'\">"+shopngBundleDto.ondyclNm+"</td>";
+						str += "<td style='color:lightgray;' onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + shopngBundleDto.ondyclNo + "&startPoint=myBundle'\">"+shopngBundleDto.userNcnm+"</td>";
+						str += "<td style='color:red;' onclick=\"location.href='/onedayClass/onedayClassDetail?ondyclNo=" + shopngBundleDto.ondyclNo + "&startPoint=myBundle'\">"+shopngBundleDto.ondyclSchdulDe+"</td>";
 						str += "</tr>";
 					}
 				}

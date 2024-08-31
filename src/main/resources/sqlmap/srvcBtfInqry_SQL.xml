@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.or.ddit.pro_service.service_inquiry.mapper.SrvcBtfInqryMapper">
+<mapper namespace="kr.or.ddit.proservice.serviceInquiry.mapper.SrvcBtfInqryMapper">
 
-	<select id="userChk" parameterType="String" resultType="usersVO">
+	<select id="userChk" parameterType="String" resultType="usersDto">
 		SELECT USER_ID, USER_NCNM, EMPLYR_TY
 		FROM USERS
 		WHERE USER_ID = #{userId}
@@ -210,10 +210,10 @@
 		<result property="userId" column="USER_ID"/>
 		<result property="userNcnm" column="USER_NCNM"/>
 		<result property="emplyrTy" column="EMPLYR_TY"/>
-		<collection property="sprviseAtchmnflVOList" resultMap="sprviseAtchMap"></collection>
+		<collection property="sprviseAtchmnflDtoList" resultMap="sprviseAtchMap"></collection>
 	</resultMap>
 	
-	<resultMap type="sprviseAtchmnflVO" id="sprviseAtchMap">
+	<resultMap type="sprviseAtchmnflDto" id="sprviseAtchMap">
 		<result property="sprviseAtchmnflNo" column="SPRVISE_ATCHMNFL_NO"/>
 		<result property="atchmnflNo" column="ATCHMNFL_NO"/>
 		<result property="atchmnflCours" column="ATCHMNFL_COURS"/>
@@ -236,7 +236,7 @@
     	VALUES(BTF_INQRY_NO_SEQ.NEXTVAL,#{mberId}, #{btfInqrySj}, #{btfInqryCn},SYSDATE, SPRVISE_ATCHMNFL_NO_SEQ.NEXTVAL, #{proId})
 	</insert>
 	
-	<update id="btfInqryUpdatePost" parameterType="srvcBtfInqryVO">
+	<update id="btfInqryUpdatePost" parameterType="srvcBtfInqryDto">
 		UPDATE SRVC_BTF_INQRY SET BTF_INQRY_SJ = #{btfInqrySj}, BTF_INQRY_CN = #{btfInqryCn} WHERE BTF_INQRY_NO = #{btfInqryNo}
 	</update>
 </mapper>

@@ -17,13 +17,13 @@
 	</select>
 	
 	<!-- 아이디 찾기 -->
-	<select id="idSearch" resultType="usersVO" parameterType="vProUsersVO">
+	<select id="idSearch" resultType="usersDto" parameterType="vProUsersDto">
 		SELECT USER_ID AS userId, EMPLYR_TY AS emplyrTy
 		FROM V_PRO_USERS
 		WHERE USER_NM=#{userNm}
 		AND EMAIL=#{email}
 	</select>
-	<select id="idSearch2" resultType="vMberUsersVO" parameterType="vProUsersVO">
+	<select id="idSearch2" resultType="vMberUsersDto" parameterType="vProUsersDto">
 		SELECT USER_ID AS userId, EMPLYR_TY AS emplyrTy
 		FROM V_MBER_USERS
 		WHERE USER_NM=#{userNm}
@@ -31,14 +31,14 @@
 	</select>
 	
 	<!-- 비밀번호 찾기 -->
-	<select id="pwSearch" resultType="usersVO" parameterType="vProUsersVO">
+	<select id="pwSearch" resultType="usersDto" parameterType="vProUsersDto">
 		SELECT USER_PASSWORD AS userPassword, EMPLYR_TY AS emplyrTy
 		FROM V_PRO_USERS
 		WHERE PRO_ID=#{proId}
 		AND EMAIL=#{email}
 		AND PRO_MBTLNUM=#{proMbtlnum}
 	</select>
-	<select id="pwSearch2" resultType="String" parameterType="vProUsersVO">
+	<select id="pwSearch2" resultType="String" parameterType="vProUsersDto">
 			SELECT EMPLYR_TY AS emplyrTy
 			FROM V_MBER_USERS
 			WHERE MBER_ID=#{proId}
@@ -53,7 +53,7 @@
 		WHERE USER_ID=#{proId}
 	</update>
 	<!-- 관리자 로그인 -->
-<!-- 	<resultMap type="usersVO" id="usersAdminMap">
+<!-- 	<resultMap type="usersDto" id="usersAdminMap">
 		<result property="cnt" column="cnt"/>
 		<result property="emplyrTy" column="emplyrTy"/>
 		<result property="userNcnm" column="userNcnm"/>
@@ -66,7 +66,7 @@
 	</select> -->
 	
 	<!-- 관리자 ET03으로 불러오기 -->
-	<select id  ="adminVO" parameterType="String" resultType="usersVO">
+	<select id  ="adminVO" parameterType="String" resultType="usersDto">
 	SELECT USER_ID, USER_NM, USER_PASSWORD, EMPLYR_TY, SECSN_AT, USER_NCNM
 	  FROM users 
 	  WHERE USER_ID = #{userId}
@@ -74,7 +74,7 @@
 	
 	
 	<!-- 프로 로그인 -->
-	<resultMap type="usersVO" id="usersMap">
+	<resultMap type="usersDto" id="usersMap">
 		<result property="cnt" column="cnt"/>
 		<result property="emplyrTy" column="emplyrTy"/>
 		<result property="userNcnm" column="userNcnm"/>
@@ -88,13 +88,13 @@
 		GROUP BY EMPLYR_TY, USER_NCNM, USER_ID, CHANGE_PW_CK
 	</select>
 	
-	<select id="getAdres" parameterType="hashMap" resultType="adresVO">
+	<select id="getAdres" parameterType="hashMap" resultType="adresDto">
 			SELECT ADRES, DETAIL_ADRES, ZIP
 			FROM ADRES WHERE USER_ID = #{userId}
 		</select>
 	
 	<!-- 프로필 사진 출력 -->
-	<select id="getProfile" parameterType="hashMap" resultType="vProUsersVO">
+	<select id="getProfile" parameterType="hashMap" resultType="vProUsersDto">
 		SELECT PRO_ID, PRO_MBTLNUM, SEXDSTN_TY, EMAIL, USER_NM, SPCLTY_REALM_CODE, USER_PASSWORD, EMPLYR_TY, SECSN_AT, USER_NCNM, USER_ID, PRO_PROFL_PHOTO
 		FROM V_PRO_USERS
 		WHERE PRO_ID = #{userId}

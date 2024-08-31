@@ -2,17 +2,17 @@ package kr.or.ddit.admin.faq.service;
 
 import java.util.List;
 
-import kr.or.ddit.admin.faq.vo.FaqVO;
+import kr.or.ddit.admin.faq.dto.FaqDto;
 
 public interface FaqService {
 
-	public List<FaqVO> faqList();
+	public List<FaqDto> faqList();
 
-	public int faqUpdate(FaqVO faqVO);
+	public int faqUpdate(FaqDto faqDto);
 
-	public int delete(FaqVO faqVO);
+	public int delete(FaqDto faqDto);
 
-	public int createRegister(FaqVO faqVO);
+	public int createRegister(FaqDto faqDto);
 
 
 }

@@ -69,7 +69,7 @@
 <script type="text/javascript">
 	$(function () {
 		
-		let userId = `${aftusBbscttVO.userId}`;
+		let userId = `${aftusBbscttDto.userId}`;
 		console.log(userId);
 
 		let sessionId = `${sessionId}`;
@@ -82,7 +82,7 @@
 			$("#btnDecl").show();
 		}
 		
-		let sprviseAtchmnflNo = `${aftusBbscttVO.sprviseAtchmnflNo}`;
+		let sprviseAtchmnflNo = `${aftusBbscttDto.sprviseAtchmnflNo}`;
 		console.log("sprviseAtchmnflNo : ", sprviseAtchmnflNo);
 		if(sprviseAtchmnflNo != 0){
  			$("#btnFileView").show();
@@ -291,7 +291,7 @@ function deleteFile(deleteFile) {
 }
 
 //댓글 시작
-var aftusBbscttNo = `${aftusBbscttVO.aftusBbscttNo}`;
+var aftusBbscttNo = `${aftusBbscttDto.aftusBbscttNo}`;
 var userId = `${sessionId}`;
 console.log("userIdawdasd : " + userId);
 
@@ -314,14 +314,14 @@ function listAns() {
 			let str = "";
 			$("#ansRes").html("");
 
-			// res: aftusBbscttAnswerVO
-			$.each(res, function (idx, aftusBbscttAnswerVO) {
-				console.log("detailId : ", `\${aftusBbscttAnswerVO.userId}`);
-				let detailId = `\${aftusBbscttAnswerVO.userId}`;
+			// res: aftusBbscttAnswerDto
+			$.each(res, function (idx, aftusBbscttAnswerDto) {
+				console.log("detailId : ", `\${aftusBbscttAnswerDto.userId}`);
+				let detailId = `\${aftusBbscttAnswerDto.userId}`;
 				console.log("userId : ", userId);
 
-				let mberPhoto = aftusBbscttAnswerVO.mberProflPhoto;
-				let proPhoto = aftusBbscttAnswerVO.proProflPhoto;
+				let mberPhoto = aftusBbscttAnswerDto.mberProflPhoto;
+				let proPhoto = aftusBbscttAnswerDto.proProflPhoto;
 				console.log("회원 사진? ", mberPhoto);
 				console.log("프로 사진? ", proPhoto);
 				
@@ -350,34 +350,34 @@ function listAns() {
 						<div class="ms-4" style="margin-left: 20px; width: 100%;">
 							<div>
 								<h6>
-									\${aftusBbscttAnswerVO.userNcnm} (\${aftusBbscttAnswerVO.userId})
+									\${aftusBbscttAnswerDto.userNcnm} (\${aftusBbscttAnswerDto.userId})
 								</h6>
 							</div>
 							<textarea class="aftusBbscttAnswerCn" name="aftusBbscttAnswerCn"
-								id="aftusBbscttAnswerCn\${aftusBbscttAnswerVO.aftusBbscttAnswerNo}" readonly
-								style="display: block;">\${aftusBbscttAnswerVO.aftusBbscttAnswerCn}</textarea>
+								id="aftusBbscttAnswerCn\${aftusBbscttAnswerDto.aftusBbscttAnswerNo}" readonly
+								style="display: block;">\${aftusBbscttAnswerDto.aftusBbscttAnswerCn}</textarea>
 	
 	            			<!-- 댓글 수정 클릭시 나타나야 되는 부분 -->
-							<textarea class="form-control aftusBbscttAnswerCnUdt" id="aftusBbscttAnswerCnUdt\${aftusBbscttAnswerVO.aftusBbscttAnswerNo}"
-								name="aftusBbscttAnswerCnUdt\${aftusBbscttAnswerVO.aftusBbscttAnswerNo}" rows="4"
+							<textarea class="form-control aftusBbscttAnswerCnUdt" id="aftusBbscttAnswerCnUdt\${aftusBbscttAnswerDto.aftusBbscttAnswerNo}"
+								name="aftusBbscttAnswerCnUdt\${aftusBbscttAnswerDto.aftusBbscttAnswerNo}" rows="4"
 								style="display: none"></textarea>
 	
-							<button type="button" id="btnUdtAns\${aftusBbscttAnswerVO.aftusBbscttAnswerNo}" class="btnUdtAns"
+							<button type="button" id="btnUdtAns\${aftusBbscttAnswerDto.aftusBbscttAnswerNo}" class="btnUdtAns"
 								style="display: none">수정</button>
-							<button type="button" id="btnCnsAns\${aftusBbscttAnswerVO.aftusBbscttAnswerNo}" class="btnCnsAns"
+							<button type="button" id="btnCnsAns\${aftusBbscttAnswerDto.aftusBbscttAnswerNo}" class="btnCnsAns"
 								style="display: none">취소</button>
 
 							<!-- 대댓글 보기 닫기 버튼 -->
 							<p class="small text-muted mt-2 mb-0">
-								<span>\${aftusBbscttAnswerVO.aftusBbscttAnswerWrDt}&nbsp;&nbsp;&nbsp;</span>
-								<span id="ansAnsView\${aftusBbscttAnswerVO.aftusBbscttAnswerNo}">
-									<button type="button" class="btn ansAnsViewBtn" id="ansAnsViewBtn\${aftusBbscttAnswerVO.aftusBbscttAnswerNo}"
-										name="ansAnsViewBtn\${aftusBbscttAnswerVO.aftusBbscttAnswerNo}"
-										onclick="ansAnsViewBtn(\${aftusBbscttAnswerVO.aftusBbscttAnswerNo})">
+								<span>\${aftusBbscttAnswerDto.aftusBbscttAnswerWrDt}&nbsp;&nbsp;&nbsp;</span>
+								<span id="ansAnsView\${aftusBbscttAnswerDto.aftusBbscttAnswerNo}">
+									<button type="button" class="btn ansAnsViewBtn" id="ansAnsViewBtn\${aftusBbscttAnswerDto.aftusBbscttAnswerNo}"
+										name="ansAnsViewBtn\${aftusBbscttAnswerDto.aftusBbscttAnswerNo}"
+										onclick="ansAnsViewBtn(\${aftusBbscttAnswerDto.aftusBbscttAnswerNo})">
 									</button>
 									<button type="button" class="btn ansAnsViewBtn" style="display:none;"
-										id="ansAnsViewBtn2\${aftusBbscttAnswerVO.aftusBbscttAnswerNo}"
-										name="ansAnsViewBtn2\${aftusBbscttAnswerVO.aftusBbscttAnswerNo}">
+										id="ansAnsViewBtn2\${aftusBbscttAnswerDto.aftusBbscttAnswerNo}"
+										name="ansAnsViewBtn2\${aftusBbscttAnswerDto.aftusBbscttAnswerNo}">
 									</button>
 								</span>
 							</p>
@@ -393,14 +393,14 @@ function listAns() {
 					if (userId == detailId) {
 						str += `
 	               				<li><a class="dropdown-item" href="javacsript:void(0);"
-	               						onclick="udtAns(\${aftusBbscttAnswerVO.aftusBbscttAnswerNo});">수정</a></li>
+	               						onclick="udtAns(\${aftusBbscttAnswerDto.aftusBbscttAnswerNo});">수정</a></li>
 	               				<li><a class="dropdown-item" href="javacsript:void(0);"
-	               						onclick="delAns(\${aftusBbscttAnswerVO.aftusBbscttAnswerNo});">삭제</a></li>
+	               						onclick="delAns(\${aftusBbscttAnswerDto.aftusBbscttAnswerNo});">삭제</a></li>
 	               				`
 					} else {
 						str += `
 	               				<li><a class="dropdown-item" href=""
-	               						onclick="ansDecl('AFTUS_BBSCTT_ANSWER',\${aftusBbscttAnswerVO.aftusBbscttAnswerNo},\${aftusBbscttAnswerVO.aftusBbscttAnswerNo});"
+	               						onclick="ansDecl('AFTUS_BBSCTT_ANSWER',\${aftusBbscttAnswerDto.aftusBbscttAnswerNo},\${aftusBbscttAnswerDto.aftusBbscttAnswerNo});"
 	               						data-toggle="modal" data-target="#modal-sm">신고</a></li>
 	               				`
 					}
@@ -409,23 +409,23 @@ function listAns() {
 							</div>
 						</div>
 					</div >
-					<div id="panelsStayOpen-collapseOne\${aftusBbscttAnswerVO.aftusBbscttAnswerNo}" class="accordion-collapse collapse"
+					<div id="panelsStayOpen-collapseOne\${aftusBbscttAnswerDto.aftusBbscttAnswerNo}" class="accordion-collapse collapse"
 						style="margin-left:30px;" aria-labelledby="panelsStayOpen-headingOne">
 						<div id="ansAnsInsDiv" style="margin-top:5px;">
-							<div id="ansAns\${aftusBbscttAnswerVO.aftusBbscttAnswerNo}">
-								<textarea class="form-control" id="aftusBbscttAnswerCn2\${aftusBbscttAnswerVO.aftusBbscttAnswerNo}"
-									name="aftusBbscttAnswerCn2\${aftusBbscttAnswerVO.aftusBbscttAnswerNo}" rows="4"
+							<div id="ansAns\${aftusBbscttAnswerDto.aftusBbscttAnswerNo}">
+								<textarea class="form-control" id="aftusBbscttAnswerCn2\${aftusBbscttAnswerDto.aftusBbscttAnswerNo}"
+									name="aftusBbscttAnswerCn2\${aftusBbscttAnswerDto.aftusBbscttAnswerNo}" rows="4"
 									placeholder="답글 추가.."></textarea>
 								<div class="btnRegisterDiv">
-									<button type="button" class="btnRegisterAns" id="ansInt3\${aftusBbscttAnswerVO.aftusBbscttAnswerNo}"
-										name="ansInt3\${aftusBbscttAnswerVO.aftusBbscttAnswerNo}"
-										onclick="ansAnsInt(\${aftusBbscttAnswerVO.aftusBbscttAnswerNo});">등록</button>
+									<button type="button" class="btnRegisterAns" id="ansInt3\${aftusBbscttAnswerDto.aftusBbscttAnswerNo}"
+										name="ansInt3\${aftusBbscttAnswerDto.aftusBbscttAnswerNo}"
+										onclick="ansAnsInt(\${aftusBbscttAnswerDto.aftusBbscttAnswerNo});">등록</button>
 								</div>
 							</div>
 						</div>
 					</div>
 					`
-				ansAnsCnt(`\${aftusBbscttAnswerVO.aftusBbscttAnswerNo}`);
+				ansAnsCnt(`\${aftusBbscttAnswerDto.aftusBbscttAnswerNo}`);
 			})
 			$("#ansRes").append(str);
 		}
@@ -513,18 +513,18 @@ function ansAnsViewBtn(no) {
 				console.log("res : ", res);
 				let str = "";
 				$("#panelsStayOpen-collapseOne" + no).children().not("#ansAnsInsDiv").empty();
-				$.each(res, function (idx, aftusBbscttAnswerVO) {
+				$.each(res, function (idx, aftusBbscttAnswerDto) {
 
-					let ansuserId = aftusBbscttAnswerVO.userId;
+					let ansuserId = aftusBbscttAnswerDto.userId;
 
 					console.log("ansuserId : ", ansuserId);
 					console.log("userId : ", userId);
 					
-					let mberPhoto = aftusBbscttAnswerVO.mberProflPhoto;
-					let proPhoto = aftusBbscttAnswerVO.proProflPhoto;
+					let mberPhoto = aftusBbscttAnswerDto.mberProflPhoto;
+					let proPhoto = aftusBbscttAnswerDto.proProflPhoto;
 	
 					str += `
-							<div id = "ansAnsView3\${aftusBbscttAnswerVO.aftusBbscttAnswerNo}">
+							<div id = "ansAnsView3\${aftusBbscttAnswerDto.aftusBbscttAnswerNo}">
 								<div class="d-flex align-items-start profile-feed-item" style = "justify-content: space-between;">
 									<div class="d-flex align-items-start" style="width: 100%;">
 							`
@@ -549,22 +549,22 @@ function ansAnsViewBtn(no) {
 					str += `
 							<div class="ms-4" style="margin-left: 20px; width: 100%;">
 								<div>
-									<h6>\${aftusBbscttAnswerVO.userNcnm} (\${aftusBbscttAnswerVO.userId})</h6>
+									<h6>\${aftusBbscttAnswerDto.userNcnm} (\${aftusBbscttAnswerDto.userId})</h6>
 								</div>
 								<textarea class="aftusBbscttAnswerCn" name="aftusBbscttAnswerCn" 
-	                				id="aftusBbscttAnswerCn\${aftusBbscttAnswerVO.aftusBbscttAnswerNo}" readonly 
-	                				style="display: block;">\${aftusBbscttAnswerVO.aftusBbscttAnswerCn}</textarea>
+	                				id="aftusBbscttAnswerCn\${aftusBbscttAnswerDto.aftusBbscttAnswerNo}" readonly
+	                				style="display: block;">\${aftusBbscttAnswerDto.aftusBbscttAnswerCn}</textarea>
 							
 								<!-- 댓글 수정 클릭시 나타나야 되는 부분 -->
-								<textarea class="form-control aftusBbscttAnswerCnUdt" id="aftusBbscttAnswerCnUdt\${aftusBbscttAnswerVO.aftusBbscttAnswerNo}" 
-									name="aftusBbscttAnswerCnUdt\${aftusBbscttAnswerVO.aftusBbscttAnswerNo}" rows="4"
+								<textarea class="form-control aftusBbscttAnswerCnUdt" id="aftusBbscttAnswerCnUdt\${aftusBbscttAnswerDto.aftusBbscttAnswerNo}"
+									name="aftusBbscttAnswerCnUdt\${aftusBbscttAnswerDto.aftusBbscttAnswerNo}" rows="4"
 									style="display: none"></textarea>
-								<button type="button" id="btnUdtAns\${aftusBbscttAnswerVO.aftusBbscttAnswerNo}" 
+								<button type="button" id="btnUdtAns\${aftusBbscttAnswerDto.aftusBbscttAnswerNo}"
 									class="btnUdtAns" style="display: none">수정</button>
-								<button type="button" id="btnCnsAns\${aftusBbscttAnswerVO.aftusBbscttAnswerNo}" 
+								<button type="button" id="btnCnsAns\${aftusBbscttAnswerDto.aftusBbscttAnswerNo}"
 									class="btnCnsAns" style="display: none">취소</button>
 								<p class="small text-muted mt-2 mb-0">
-								<span>\${aftusBbscttAnswerVO.aftusBbscttAnswerWrDt}&nbsp;&nbsp;&nbsp;</span>
+								<span>\${aftusBbscttAnswerDto.aftusBbscttAnswerWrDt}&nbsp;&nbsp;&nbsp;</span>
 								</p>
 							</div>
 						</div>
@@ -576,13 +576,13 @@ function ansAnsViewBtn(no) {
 					`
 					if (userId == ansuserId) {
 						str += `
- 					    <li><a class="dropdown-item" href="javacsript:void(0);" onclick="udtAnsans(\${aftusBbscttAnswerVO.aftusBbscttAnswerNo});">수정</a></li>
- 					    <li><a class="dropdown-item" href="javacsript:void(0);" onclick="delAnsans(\${aftusBbscttAnswerVO.aftusBbscttAnswerNo},\${no});">삭제</a></li>
+ 					    <li><a class="dropdown-item" href="javacsript:void(0);" onclick="udtAnsans(\${aftusBbscttAnswerDto.aftusBbscttAnswerNo});">수정</a></li>
+ 					    <li><a class="dropdown-item" href="javacsript:void(0);" onclick="delAnsans(\${aftusBbscttAnswerDto.aftusBbscttAnswerNo},\${no});">삭제</a></li>
  					`
 					} else {
 						str += `
  						<li><a class="dropdown-item" href="" 
- 						onclick="ansDecl(\${aftusBbscttAnswerVO.aftusBbscttNo},\${aftusBbscttAnswerVO.aftusBbscttAnswerNo});" 
+ 						onclick="ansDecl(\${aftusBbscttAnswerDto.aftusBbscttNo},\${aftusBbscttAnswerDto.aftusBbscttAnswerNo});"
  							data-toggle="modal" data-target="#modal-sm">신고</a></li>
  					`
 					}
@@ -796,18 +796,18 @@ function delAnsans(aftusBbscttAnswerNo, ptAftusBbscttAnswerNo) {
 					<form action="/reviewBoard/update" class="forms-sample" name="rvUpdate" method="post" enctype="multipart/form-data">
 						<div class="container-fluid notUdt">
 							<!-- 파일번호가 0으로 넘어가면 update가 아닌 insert를 해주기 위한 처리 -->
-	 						<input type="hidden" name="sprviseAtchmnflNo" value="${aftusBbscttVO.sprviseAtchmnflNo}">
-	 						<input type="hidden" id="aftusBbscttNo" name="aftusBbscttNo" value="${aftusBbscttVO.aftusBbscttNo}">
-							<h2 class="text-center my-5" style="font-family: GMarketSansMedium">${aftusBbscttVO.aftusBbscttSj}</h2>
+	 						<input type="hidden" name="sprviseAtchmnflNo" value="${aftusBbscttDto.sprviseAtchmnflNo}">
+	 						<input type="hidden" id="aftusBbscttNo" name="aftusBbscttNo" value="${aftusBbscttDto.aftusBbscttNo}">
+							<h2 class="text-center my-5" style="font-family: GMarketSansMedium">${aftusBbscttDto.aftusBbscttSj}</h2>
 							<div style="margin-left: 76%;">
 								<p style="font-family: GMarketSansLight; display: inline; font-size:15px; margin-right: 15px;">작성자</p>
-								<p style="display: inline; font-size:15px;">${aftusBbscttVO.userNcnm}</p>
+								<p style="display: inline; font-size:15px;">${aftusBbscttDto.userNcnm}</p>
 								<br />
 								<p style="font-family: GMarketSansLight; display: inline; font-size:15px; margin-right: 30px;">프로</p>
-								<p style="display: inline; font-size:15px;">${aftusBbscttVO.proId}</p>
+								<p style="display: inline; font-size:15px;">${aftusBbscttDto.proId}</p>
 								<br />
 								<p style="font-family: GMarketSansLight; display: inline; font-size:15px; margin-right: 15px;">작성일</p>
-								<p style="display: inline; font-size:15px;">${aftusBbscttVO.aftusBbscttWrDt}</p>
+								<p style="display: inline; font-size:15px;">${aftusBbscttDto.aftusBbscttWrDt}</p>
 							</div>
 							<hr>
 							<div class="container-fluid w-100" style="margin-top: 10px;">							
@@ -830,7 +830,7 @@ function delAnsans(aftusBbscttAnswerNo, ptAftusBbscttAnswerNo) {
 								</div>
 								<!-- 내용 -->
 								<div>
-									<h5 class="mb-5" style="font-family: GmarketSansLight; padding-left: 20px;">${aftusBbscttVO.aftusBbscttCn}</h5>
+									<h5 class="mb-5" style="font-family: GmarketSansLight; padding-left: 20px;">${aftusBbscttDto.aftusBbscttCn}</h5>
 								</div>
 							</div>
 							<hr>
@@ -839,11 +839,11 @@ function delAnsans(aftusBbscttAnswerNo, ptAftusBbscttAnswerNo) {
 							<div class="form-group">
 								<label for="aftusBbscttSj">제목</label>
 								<input type="text" class="form-control" id="aftusBbscttSj"
-								name="aftusBbscttSj" value="${aftusBbscttVO.aftusBbscttSj}">	
+								name="aftusBbscttSj" value="${aftusBbscttDto.aftusBbscttSj}">
 							</div>
 							<div class="form-group">		
 							<label for="aftusBbscttCn">내용</label>
-								<div id="ckEditor">${aftusBbscttVO.aftusBbscttCn}</div>
+								<div id="ckEditor">${aftusBbscttDto.aftusBbscttCn}</div>
 								<textarea class="form-control" rows="10" id="aftusBbscttCn" name="aftusBbscttCn"
 									style="display: none;"></textarea>
 							</div>
