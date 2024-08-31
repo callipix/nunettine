@@ -116,7 +116,7 @@ public class ManageController {
 		NoticeDto noticeDto = this.noticeService.detail(noticeNo);
 		model.addAttribute("noticeVO", noticeDto);
 
-		NoticeDto noticeVOAtchDtoList = this.noticeService.sprviseAtchmnflVO(noticeNo);
+		NoticeDto noticeVOAtchDtoList = this.noticeService.sprviseAtchmnflDto(noticeNo);
 		model.addAttribute("sprviseAtchmnflVOList", noticeVOAtchDtoList);
 
 		return "manage/detail";

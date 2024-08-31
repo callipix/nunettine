@@ -277,7 +277,7 @@ $(function(){
                    <!-- sprviseAtchmnflDtoList : noticeDto -->
 <%--               <p><b>첨부파일 : ${sprviseAtchmnflDtoList.spAtVOList}</b></p> --%>
                    <div class="form-group">
-                    <c:forEach var="sprviseAtchmnflDto" items="${sprviseAtchmnflDtoList.spAtVOList}" varStatus="stat">
+                    <c:forEach var="sprviseAtchmnflDto" items="${sprviseAtchmnflDtoList.spAtDtoList}" varStatus="stat">
 <%-- 						<label for="Images" id="Images">${sprviseAtchmnflDto.atchmnflNm}</label> --%>
 <%-- 						<p><b>첨부파일 : ${sprviseAtchmnflDto.atchmnflNm}</b></p> --%>
 						<p><a href="${sprviseAtchmnflDto.atchmnflCours}" download="${sprviseAtchmnflDto.atchmnflNm}">첨부파일 :${sprviseAtchmnflDto.atchmnflNm}</a></p>

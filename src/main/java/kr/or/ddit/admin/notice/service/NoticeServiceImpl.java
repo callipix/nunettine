@@ -152,9 +152,9 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public NoticeDto sprviseAtchmnflVO(int noticeNo) {
+	public NoticeDto sprviseAtchmnflDto(int noticeNo) {
 		// TODO Auto-generated method stub
-		return this.noticeMapper.sprviseAtchmnflVO(noticeNo);
+		return this.noticeMapper.sprviseAtchmnflDto(noticeNo);
 	}
 	
 	

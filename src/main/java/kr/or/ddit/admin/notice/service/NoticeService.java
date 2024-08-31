@@ -23,7 +23,7 @@ public interface NoticeService {
 
 	public int increaseViewCount(int noticeNo);
 
-	public NoticeDto sprviseAtchmnflVO(int noticeNo);
+	public NoticeDto sprviseAtchmnflDto(int noticeNo);
 
 
 }
