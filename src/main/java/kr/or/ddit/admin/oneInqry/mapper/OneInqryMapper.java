@@ -3,7 +3,7 @@ package kr.or.ddit.admin.oneInqry.mapper;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.ddit.vo.OneInqryDto;
+import kr.or.ddit.dto.OneInqryDto;
 
 public interface OneInqryMapper {
 

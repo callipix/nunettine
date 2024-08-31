@@ -7,7 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import kr.or.ddit.vo.ReviewDto;
+import kr.or.ddit.dto.ReviewDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,8 +23,8 @@ import com.google.gson.Gson;
 import kr.or.ddit.proservice.serviceRequest.service.ReviewService;
 import kr.or.ddit.proservice.serviceRequest.service.SrvcRequstService;
 import kr.or.ddit.util.ArticlePage;
-import kr.or.ddit.vo.CommonCdDetailDto;
-import kr.or.ddit.vo.UsersDto;
+import kr.or.ddit.dto.CommonCdDetailDto;
+import kr.or.ddit.dto.UsersDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

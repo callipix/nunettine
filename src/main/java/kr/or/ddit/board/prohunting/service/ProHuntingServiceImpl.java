@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.ddit.vo.ProJoBbscttDto;
+import kr.or.ddit.dto.ProJoBbscttDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.board.prohunting.mapper.ProHuntingMapper;
 import kr.or.ddit.util.fileupload.service.FileuploadService;
-import kr.or.ddit.vo.SprviseAtchmnflDto;
+import kr.or.ddit.dto.SprviseAtchmnflDto;
 
 
 @Service

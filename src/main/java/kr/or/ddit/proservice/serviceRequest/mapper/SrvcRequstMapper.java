@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.proservice.serviceRequest.dto.V_SrvcRequstDto;
-import kr.or.ddit.vo.SrvcRequstDto;
+import kr.or.ddit.dto.SrvcRequstDto;
 
 public interface SrvcRequstMapper {
 

@@ -5,7 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import kr.or.ddit.vo.*;
+import kr.or.ddit.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.admin.decl.service.DeclService;
-import kr.or.ddit.vo.SntncDeclDto;
+import kr.or.ddit.dto.SntncDeclDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.admin.notice.dto.NoticeDto;
-import kr.or.ddit.vo.SprviseAtchmnflDto;
+import kr.or.ddit.dto.SprviseAtchmnflDto;
 
 public interface NoticeMapper {
 

@@ -17,7 +17,7 @@
 		</if>
 	</sql>
 	
-	<resultMap type="ondyclVO" id="ondyclVOMap">
+	<resultMap type="ondyclDto" id="ondyclDtoMap">
 		<result property="ondyclNo" column="ONDYCL_NO"/>
 		<result property="ondyclNm" column="ONDYCL_NM"/>
 		<result property="ondyclCn" column="ONDYCL_CN"/>
@@ -33,7 +33,7 @@
 		<result property="ondyclDetailAdres" column="ONDYCL_DETAIL_ADRES"/>
 	</resultMap>
 	
-	<resultMap type="bundleOndyclDto" id="bundleOndyclVOMap">
+	<resultMap type="bundleOndyclDto" id="bundleOndyclDtoMap">
 		<result property="ondyclNo" column="ONDYCL_NO"/>
 		<result property="ondyclNm" column="ONDYCL_NM"/>
 		<result property="ondyclCn" column="ONDYCL_CN" jdbcType="CLOB" javaType="java.lang.String"></result>
@@ -91,7 +91,7 @@
 		<result property="ondyclZip" column="ONDYCL_ZIP"/>
 	</resultMap>
 	
-	<resultMap type="reviewMberVO" id="reviewMberVOMap">
+	<resultMap type="reviewMberDto" id="reviewMberDtoMap">
 		<result property="ondyclReNo" column="ONDYCL_RE_NO"/>
 		<result property="ondyclReCn" column="ONDYCL_RE_CN"/>
 		<result property="ondyclReWrDt" column="ONDYCL_RE_WR_DT"/>
@@ -106,7 +106,7 @@
 	</resultMap>
 	
 	<!-- 메인화면 원데이클래스 랭킹  -->
-	<select id="getOndyclRank" resultMap="ondyclVOMap">
+	<select id="getOndyclRank" resultMap="ondyclDtoMap">
 		SELECT * FROM (
 		    SELECT ONDYCL_NO, ONDYCL_NM, ONDYCL_THUMB_PHOTO, ONDYCL_RESVPA FROM ONDYCL
 		    WHERE ONDYCL_DEL_TYPE != 1
@@ -209,7 +209,7 @@
 	</select>
 	
 	<!-- 원데이클래스 리뷰 목록 출력 -->
-	<select id="reviewList" parameterType="int" resultMap="reviewMberVOMap">
+	<select id="reviewList" parameterType="int" resultMap="reviewMberDtoMap">
 		SELECT A.ONDYCL_RE_NO, A.ONDYCL_RE_CN, TO_CHAR(TO_DATE(A.ONDYCL_RE_WR_DT,'YYYY-MM-DD'),'YYYY.MM.DD') AS ONDYCL_RE_WR_DT
 			, A.MBER_NCNM, A.MBER_ID
 		    , A.ONDYCL_NO, A.ONDYCL_RE_SCORE
@@ -269,7 +269,7 @@
 	</insert>
 	
 	<!-- 장바구니 리스트 출력 -->
-	<select id="mberShoppingCart" parameterType="hashMap" resultMap="bundleOndyclVOMap">
+	<select id="mberShoppingCart" parameterType="hashMap" resultMap="bundleOndyclDtoMap">
 		WITH T AS(
 			SELECT ROW_NUMBER() OVER(ORDER BY A.SHOPNG_BUNDLE_NO ASC) AS RNUM
 				, A.SHOPNG_BUNDLE_NO, A.MBER_ID, A.ONDYCL_SCHDUL_NO, A.ONDYCL_NO
@@ -531,7 +531,7 @@
 	</select>
 	
 	<!-- 시군구 리스트  -->
-	<resultMap type="brtcVO" id="brtcMap">
+	<resultMap type="brtcDto" id="brtcMap">
 		<result property="brtcCode" column="BRTC_CODE"/>
 		<result property="bcityCode" column="BCITY_CODE"/>
 		<result property="brtcNm" column="BRTC_NM"/>
@@ -543,7 +543,7 @@
 	</select>
 	
 	<!-- 광역시 리스트 -->
-	<resultMap type="bcityVO" id="bcityMap">
+	<resultMap type="bcityDto" id="bcityMap">
 		<result property="bcityCode" column="BCITY_CODE"/>
 		<result property="bcityNm" column="BCITY_NM"/>
 	</resultMap>
@@ -552,7 +552,7 @@
 	</select>
 	
 	<!-- 전문분야 리스트 -->
-	<resultMap type="spcltyRealmVO" id="codeMap">
+	<resultMap type="spcltyRealmDto" id="codeMap">
 		<result property="lev" column="lev"/>
 		<result property="spcltyRealmCode" column="SPCLTY_REALM_CODE"/>
 		<result property="spcltyRealmNm" column="SPCLTY_REALM_NM"/>
@@ -613,7 +613,7 @@
 		WHERE ONDYCL_NO = #{ondyclNo}
 	</select>
 	<!-- 등록자들 목록 출력 -->
-	<select id="getBuyer" parameterType="String" resultType="userNcnmMberPhotoVO">
+	<select id="getBuyer" parameterType="String" resultType="userNcnmMberPhotoDto">
 		SELECT U.USER_NCNM, M.MBER_PROFL_PHOTO FROM MBER M
 		JOIN RESVE R ON M.MBER_ID = R.MBER_ID
 		JOIN USERS U ON U.USER_ID = R.MBER_ID

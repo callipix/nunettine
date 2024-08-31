@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import kr.or.ddit.vo.SprviseAtchmnflDto;
+import kr.or.ddit.dto.SprviseAtchmnflDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

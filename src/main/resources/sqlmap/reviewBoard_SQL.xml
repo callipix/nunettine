@@ -64,7 +64,7 @@
 		WHERE AFTUS_BBSCTT_NO = #{aftusBbscttNo}
 	</update>
 	
-	<select id="listModal" parameterType="String" resultType="SrvcRequstVO">
+	<select id="listModal" parameterType="String" resultType="SrvcRequstDto">
 		SELECT DISTINCT 
 			A.SRVC_REQUST_NO
 			, A.SRVC_REQUST_SJ
@@ -82,7 +82,7 @@
 		ORDER BY A.SRVC_REQUST_WR_DT DESC
 	</select>
 	
-	<select id="listMyReview" parameterType="String" resultType="AftusBbscttVO">
+	<select id="listMyReview" parameterType="String" resultType="AftusBbscttDto">
 		SELECT T.* FROM
 		(
 		SELECT ROW_NUMBER() OVER(ORDER BY AFTUS_BBSCTT_NO DESC) RNUM

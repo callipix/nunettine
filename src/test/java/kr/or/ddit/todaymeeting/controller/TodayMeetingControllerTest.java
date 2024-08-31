@@ -3,7 +3,7 @@ package kr.or.ddit.todaymeeting.controller;
 import kr.or.ddit.chatting.service.MessageService;
 import kr.or.ddit.todaymeeting.VChatRoom;
 import kr.or.ddit.todaymeeting.service.TodayMeetingService;
-import kr.or.ddit.vo.TdmtngChSpMshgDto;
+import kr.or.ddit.dto.TdmtngChSpMshgDto;
 import lombok.NoArgsConstructor;
 import org.junit.Test;
 import org.junit.runner.RunWith;

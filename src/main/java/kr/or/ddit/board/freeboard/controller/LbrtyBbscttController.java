@@ -14,7 +14,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.or.ddit.vo.*;
+import kr.or.ddit.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.board.freeboard.service.LbrtyBbscttService;
 import kr.or.ddit.util.ArticlePage;
-import kr.or.ddit.vo.SprviseAtchmnfl;
+import kr.or.ddit.dto.SprviseAtchmnfl;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

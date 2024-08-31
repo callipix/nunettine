@@ -3,11 +3,11 @@ package kr.or.ddit.proservice.serviceInquiry.service;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.ddit.vo.SrvcBtfInqryDto;
+import kr.or.ddit.dto.SrvcBtfInqryDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.proservice.serviceInquiry.dto.V_SrvcBtfInqryDto;
-import kr.or.ddit.vo.UsersDto;
+import kr.or.ddit.dto.UsersDto;
 
 public interface SrvcBtfInqryService {
 

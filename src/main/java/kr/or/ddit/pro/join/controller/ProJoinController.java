@@ -15,7 +15,7 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import kr.or.ddit.vo.*;
+import kr.or.ddit.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.pro.join.service.ProJoinService;
-import kr.or.ddit.vo.VProUsersDto;
+import kr.or.ddit.dto.VProUsersDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller

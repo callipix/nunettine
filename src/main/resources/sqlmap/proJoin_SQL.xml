@@ -66,7 +66,7 @@
 	</select> -->
 	
 	<!-- 관리자 ET03으로 불러오기 -->
-	<select id  ="adminVO" parameterType="String" resultType="usersDto">
+	<select id  ="adminDto" parameterType="String" resultType="usersDto">
 	SELECT USER_ID, USER_NM, USER_PASSWORD, EMPLYR_TY, SECSN_AT, USER_NCNM
 	  FROM users 
 	  WHERE USER_ID = #{userId}
@@ -122,7 +122,7 @@
 		SELECT * FROM DUAL
 	</insert>
 	<!-- 하위 전문분야 출력 -->
-	<resultMap type="spcltyRealmVO" id="downCodeMap">
+	<resultMap type="spcltyRealmDto" id="downCodeMap">
 		<result property="spcltyRealmCode" column="SPCLTY_REALM_CODE"/>
 		<result property="spcltyRealmNm" column="SPCLTY_REALM_NM"/>
 		<result property="ptprtSpcltyRealmCode" column="PTPRT_SPCLTY_REALM_CODE"/>
@@ -134,7 +134,7 @@
 	</select>
 	
 	<!-- 회원가입시 전문분야 출력 -->
-	<resultMap type="spcltyRealmVO" id="codeMap">
+	<resultMap type="spcltyRealmDto" id="codeMap">
 		<result property="lev" column="lev"/>
 		<result property="spcltyRealmCode" column="spcltyRealmCode"/>
 		<result property="spcltyRealmNm" column="spcltyRealmNm"/>

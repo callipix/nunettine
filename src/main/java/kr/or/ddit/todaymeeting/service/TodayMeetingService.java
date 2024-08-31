@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.todaymeeting.VChatRoom;
-import kr.or.ddit.vo.TdmtngDto;
-import kr.or.ddit.vo.TdmtngPrtcpntDto;
+import kr.or.ddit.dto.TdmtngDto;
+import kr.or.ddit.dto.TdmtngPrtcpntDto;
 
 
 public interface TodayMeetingService {

@@ -126,7 +126,7 @@ $(function(){
 					str += "<tr onclick=\"location.href='/proHunting/detail?proJoBbscttNo=" + v.proJoBbscttNo + "'\" data-no='"+v.proJoBbscttNo+"'>";
 					str += "<td>" + v.num + "</td>";
 					str += "<td>" + v.proJoBbscttSj + "</td>";
-					str += "<td>" + v.mberVOList[0].userNcnm + "</td>";
+					str += "<td>" + v.mberDtoList[0].userNcnm + "</td>";
 					str += "<td>" + (v.proJoBbscttWrDt).substr(0, 10) + "</td>";
 					str += "<td>" + v.proJoBbscttRdcnt + "</td>";
 					str += "</tr>";
@@ -190,7 +190,7 @@ $(function(){
 					$.each(res.content, function(i, v){
 						str += "<tr onclick='location.href='/proHunting/detail?"+v.proJoBbscttNo+"'>";
 						str += "<td>"+v.proJoBbscttSj+"</td>";
-						str += "<td>"+v.mberVOList[0].userNcnm+"</td>";
+						str += "<td>"+v.mberDtoList[0].userNcnm+"</td>";
 						str += "<td>"+(v.proJoBbscttWrDt).substr(0,10)+"</td>";
 						str += "<td>"+v.proJoBbscttRdcnt+"</td>";
 						str += "</tr>";
@@ -412,36 +412,36 @@ function proList(data){
                str += "<h3 style='padding:20px 0 40px 0; color:#c6c9cc; font-family: seolleimcool-SemiBold;'><b>검색 결과가 없어요!</b></h3>";
                str += "</div>";
             }else{
-            $.each(res.content, function(idx, ProVO){
-                console.log("ProVO[" + idx + "] : ", ProVO);
+            $.each(res.content, function(idx, ProDto){
+                console.log("ProDto[" + idx + "] : ", ProDto);
                 console.log("res : " , res.content);
                 str += "<div style='border: 1px solid #CED4DA; border-radius: 20px; width: 800px; margin-left: 280px; padding: 10px 0;'>";
                 str += "<div class='proflClick' style='display: flex; align-items: center; margin-left: 100px;' >";
                 str += "<div style='width: 500px;'>";
                 str += "<div style='display: flex; align-items: center;'>";
                 str += "<div style='width: 200px;'>";
-                str += "<h3 style='font-family: GmarketSansMedium;'>"+ProVO.userSeVOList[0].userNcnm+"</h3>";
-                str += "<p class='proIds' style='font-family: GmarketSansMedium;'>" + ProVO.proId + "</p>"; 
+                str += "<h3 style='font-family: GmarketSansMedium;'>"+ProDto.userSeDtoList[0].userNcnm+"</h3>";
+                str += "<p class='proIds' style='font-family: GmarketSansMedium;'>" + ProDto.proId + "</p>"; 
                 str += "</div>";
                 str += "<div style='width: 300px;'>";
-                str += "<span class='badge badge-outline-dark my-1' id='spcltyRealm' style='margin-right:10px; font-family: GmarketSansMedium;'>&nbsp&nbsp"+ProVO.spcltyRealmVOList[0].spcltyRealmNm+"&nbsp&nbsp</span>";
-                str += "<span class='badge badge-outline-dark my-1' style='margin-right:10px; font-family: GmarketSansMedium;'>"+ProVO.proflVOList[0].proProflContactPosblTime+"</span>";
+                str += "<span class='badge badge-outline-dark my-1' id='spcltyRealm' style='margin-right:10px; font-family: GmarketSansMedium;'>&nbsp&nbsp"+ProDto.spcltyRealmDtoList[0].spcltyRealmNm+"&nbsp&nbsp</span>";
+                str += "<span class='badge badge-outline-dark my-1' style='margin-right:10px; font-family: GmarketSansMedium;'>"+ProDto.proflDtoList[0].proProflContactPosblTime+"</span>";
                 str += "<span class='badge badge-outline-dark my-1' id='profl-info' style='margin-right:10px; font-family: 'GmarketSansMedium';'>";
-                if (ProVO.vcityVOList[0].bcityNm == ProVO.vcityVOList[0].brtcNm) {
-                    str += "<span class='brtcNm' style='font-family: GmarketSansMedium;'>" + ProVO.vcityVOList[0].brtcNm + "</span>";
+                if (ProDto.vcityDtoList[0].bcityNm == ProDto.vcityDtoList[0].brtcNm) {
+                    str += "<span class='brtcNm' style='font-family: GmarketSansMedium;'>" + ProDto.vcityDtoList[0].brtcNm + "</span>";
                 } else {
-                    str += "&nbsp;&nbsp;<span class='bcityNm' style='font-family: GmarketSansMedium;'>" + ProVO.vcityVOList[0].bcityNm + "</span>&nbsp;";
-                    str += "<span class='brtcNm' style='font-family: GmarketSansMedium;'>" + ProVO.vcityVOList[0].brtcNm + "</span>&nbsp;&nbsp;";
+                    str += "&nbsp;&nbsp;<span class='bcityNm' style='font-family: GmarketSansMedium;'>" + ProDto.vcityDtoList[0].bcityNm + "</span>&nbsp;";
+                    str += "<span class='brtcNm' style='font-family: GmarketSansMedium;'>" + ProDto.vcityDtoList[0].brtcNm + "</span>&nbsp;&nbsp;";
                 }
                 str += "</span>";
                 str += "</div>";
                 str += "</div>";
                 str += "<div>";
-                str += "<p style='font-family: GmarketSansMedium;'>"+ProVO.proflVOList[0].proProflOnLiIntrcn+"</p>";
+                str += "<p style='font-family: GmarketSansMedium;'>"+ProDto.proflDtoList[0].proProflOnLiIntrcn+"</p>";
                 str += "</div>";
                 str += "</div>";
                 str += "<div style='margin-left: 20px;'>";
-                str += "<img class='proProflPhoto' src='"+ (ProVO.proProflPhoto == null ? '/images/2024/profile.jpg' : ProVO.proProflPhoto) +"' style='width: 100px; height: 100px; border-radius: 20%;'> ";  
+                str += "<img class='proProflPhoto' src='"+ (ProDto.proProflPhoto == null ? '/images/2024/profile.jpg' : ProDto.proProflPhoto) +"' style='width: 100px; height: 100px; border-radius: 20%;'> ";  
                 str += "</div>";
                 str += "</div>";
                 str += "</div>";
@@ -580,10 +580,10 @@ while(sen.hasMoreElements()){
 	
 	
 <!-- 이달의 프로 -->
-<!--monthProList[ProVO(proId=nn34111, 
+<!--monthProList[ProDto(proId=nn34111, 
 	proProflPhoto=/images/2024/03/12/3a4500c7-1342-4dd9-8493-7ea0a356660f_Desert.jpg, spcltyRealmCode=SR2502,  
-	proflVOList=[ProProflVO(proProflOnLiIntrcn=asdfasdf], 
-	userSeVOList=[UsersVO(userNm=ndfn111,)]  -->
+	proflDtoList=[ProProflDto(proProflOnLiIntrcn=asdfasdf], 
+	userSeDtoList=[UsersDto(userNm=ndfn111,)]  -->
 <div>
 <div style="width:700px; height:auto; margin:60px 0 0 340px;">
 <%-- 	<p>${monthProList}</p> --%>
@@ -600,11 +600,11 @@ while(sen.hasMoreElements()){
 						<c:if test="${proDto.proProflPhoto != null}">
 						<img src="${proDto.proProflPhoto}" style="width: 120px; height: 120px; border-radius: 70%; margin:20px 0 ;" alt="profile image">
 						</c:if>
-						<h4 style="font-family: 'GmarketSansMedium';">${proDto.userSeVOList[0].userNm}</h4>
+						<h4 style="font-family: 'GmarketSansMedium';">${proDto.userSeDtoList[0].userNm}</h4>
 						<p style="font-family: 'GmarketSansMedium';" class="text-muted mb-0">${proDto.proId}</p>
 					</div>
 					<p class="mt-2 card-text" style="font-family: 'GmarketSansMedium';">
-					  	${proDto.proflVOList[0].proProflOnLiIntrcn}
+					  	${proDto.proflDtoList[0].proProflOnLiIntrcn}
 					</p>
                   <button class="btn btn-info btn-sm mt-3 mb-4" style="font-family: 'GmarketSansMedium';" onclick="location.href='/proProfl/detail?proId=${proDto.proId}'">프로필 보러가기</button>
                  </c:forEach>
@@ -693,15 +693,15 @@ while(sen.hasMoreElements()){
 </h3>
 	<br />
 		<div class="row portfolio-grid" style="width:60%; height:auto;">
-			<c:forEach var="VO" items="${getRecommendList}">
+			<c:forEach var="Dto" items="${getRecommendList}">
 				<div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
 				  <figure class="effect-text-in" style="background:#f6e28b">
 				
-					<a href="/prostory/getStory?storyNo=${VO.proStoryBbscttNo}">
-				    <img src="images${VO.proStoryBbscttThumbPhoto}" alt="">
+					<a href="/prostory/getStory?storyNo=${Dto.proStoryBbscttNo}">
+				    <img src="images${Dto.proStoryBbscttThumbPhoto}" alt="">
 				    <figcaption>
-				      <h4 class="proStorylTitle" style="font-family: 'GmarketSansMedium';">${VO.proStoryBbscttSj}</h4>
-				      <p style="font-family: 'GmarketSansMedium';">${VO.userNcnm}</p>
+				      <h4 class="proStorylTitle" style="font-family: 'GmarketSansMedium';">${Dto.proStoryBbscttSj}</h4>
+				      <p style="font-family: 'GmarketSansMedium';">${Dto.userNcnm}</p>
 				    </figcaption>
 				    
 				  	</a>
@@ -781,9 +781,9 @@ while(sen.hasMoreElements()){
                   <label for="spcltyB" style="font-family: 'GmarketSansMedium';">대분류</label>
                      <select id="spcltyB" name="spcltyB" class="form-control" style="width:400px; font-family: 'GmarketSansMedium';">
                         <option selected>대분류를 선택해주세요</option>
-                        <c:forEach items="${spcltyBList}" var="spcltyBVO">
-	                        <c:if test="${spcltyBVO.lev eq 1}">
-		                        <option value="${spcltyBVO.spcltyRealmCode}" value2="${spcltyBVO.spcltyRealmNm}">${spcltyBVO.spcltyRealmNm}</option>
+                        <c:forEach items="${spcltyBList}" var="spcltyBDto">
+	                        <c:if test="${spcltyBDto.lev eq 1}">
+		                        <option value="${spcltyBDto.spcltyRealmCode}" value2="${spcltyBDto.spcltyRealmNm}">${spcltyBDto.spcltyRealmNm}</option>
 	                        </c:if>
                         </c:forEach>
                      </select>
@@ -816,18 +816,18 @@ while(sen.hasMoreElements()){
 	const ctx3 = document.querySelector('#myChart3');
 	const ctx4 = document.querySelector('#myChart4');
 	
-	let january = ${dongVO2.january};
-	let february = ${dongVO2.february};
-	let march = ${dongVO2.march};
-	let april = ${dongVO2.april};
-	let may = ${dongVO2.may};
-	let june = ${dongVO2.june};
-	let july = ${dongVO2.july};
-	let august = ${dongVO2.august};
-	let september = ${dongVO2.september};
-	let october = ${dongVO2.october};
-	let november = ${dongVO2.november};
-	let december = ${dongVO2.december};
+	let january = ${dongDto2.january};
+	let february = ${dongDto2.february};
+	let march = ${dongDto2.march};
+	let april = ${dongDto2.april};
+	let may = ${dongDto2.may};
+	let june = ${dongDto2.june};
+	let july = ${dongDto2.july};
+	let august = ${dongDto2.august};
+	let september = ${dongDto2.september};
+	let october = ${dongDto2.october};
+	let november = ${dongDto2.november};
+	let december = ${dongDto2.december};
 	
 	//서비스요청 월별 통계
 	new Chart(ctx3, {
@@ -858,9 +858,9 @@ while(sen.hasMoreElements()){
 	
 	
 
-	let agree = ${dongVO3.agree};
-	let refusal = ${dongVO3.refusal};
-	let total2 = ${dongVO3.total};
+	let agree = ${dongDto3.agree};
+	let refusal = ${dongDto3.refusal};
+	let total2 = ${dongDto3.total};
 	
 	let ptAgree = (agree / total2 * 100).toFixed(2);
 	let ptRefusal = (refusal / total2 * 100).toFixed(2);

@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.pro.proBkmk.mapper.ProBkmkMapper;
-import kr.or.ddit.vo.ProBkmkDto;
+import kr.or.ddit.dto.ProBkmkDto;
 
 
 @Service

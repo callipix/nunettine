@@ -7,7 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import kr.or.ddit.vo.SrvcBtfInqryDto;
+import kr.or.ddit.dto.SrvcBtfInqryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +23,7 @@ import kr.or.ddit.proservice.serviceInquiry.service.SrvcBtfInqryService;
 import kr.or.ddit.proservice.serviceInquiry.dto.V_SrvcBtfInqryDto;
 import kr.or.ddit.util.ArticlePage;
 import kr.or.ddit.util.fileupload.service.FileuploadService;
-import kr.or.ddit.vo.SprviseAtchmnflDto;
+import kr.or.ddit.dto.SprviseAtchmnflDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

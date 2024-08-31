@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import kr.or.ddit.vo.SprviseAtchmnflDto;
+import kr.or.ddit.dto.SprviseAtchmnflDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

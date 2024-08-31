@@ -5,7 +5,7 @@ import java.util.List;
 import kr.or.ddit.chatting.dto.AllChatRoomViewDto;
 import kr.or.ddit.chatting.dto.ChatRelayDto;
 import kr.or.ddit.chatting.dto.ChatRoomDto;
-import kr.or.ddit.vo.UsersDto;
+import kr.or.ddit.dto.UsersDto;
 
 public interface ChatService {
 

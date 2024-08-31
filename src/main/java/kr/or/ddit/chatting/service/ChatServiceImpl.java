@@ -9,7 +9,7 @@ import kr.or.ddit.chatting.mapper.ChatMapper;
 import kr.or.ddit.chatting.dto.AllChatRoomViewDto;
 import kr.or.ddit.chatting.dto.ChatRelayDto;
 import kr.or.ddit.chatting.dto.ChatRoomDto;
-import kr.or.ddit.vo.UsersDto;
+import kr.or.ddit.dto.UsersDto;
 @Service
 @RequiredArgsConstructor
 public class ChatServiceImpl implements ChatService{

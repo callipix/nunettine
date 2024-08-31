@@ -1,8 +1,8 @@
 package kr.or.ddit.manage.service;
 
-import kr.or.ddit.vo.DongChartDto;
-import kr.or.ddit.vo.DongChartDto2;
-import kr.or.ddit.vo.DongChartDto3;
+import kr.or.ddit.dto.DongChartDto;
+import kr.or.ddit.dto.DongChartDto2;
+import kr.or.ddit.dto.DongChartDto3;
 
 public interface ManageService {
 	

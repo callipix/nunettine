@@ -6,9 +6,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import kr.or.ddit.vo.AftusBbscttAnswerDto;
-import kr.or.ddit.vo.AftusBbscttDto;
-import kr.or.ddit.vo.SprviseAtchmnflDto;
+import kr.or.ddit.dto.AftusBbscttAnswerDto;
+import kr.or.ddit.dto.AftusBbscttDto;
+import kr.or.ddit.dto.SprviseAtchmnflDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.board.reviewboard.service.ReviewBoardService;
 import kr.or.ddit.util.ArticlePage3;
-import kr.or.ddit.vo.SrvcRequstDto;
+import kr.or.ddit.dto.SrvcRequstDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

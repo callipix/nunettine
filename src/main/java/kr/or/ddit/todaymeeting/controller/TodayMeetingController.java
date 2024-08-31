@@ -6,8 +6,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import kr.or.ddit.vo.TdmtngDto;
-import kr.or.ddit.vo.TdmtngPrtcpntDto;
+import kr.or.ddit.dto.TdmtngDto;
+import kr.or.ddit.dto.TdmtngPrtcpntDto;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -25,8 +25,8 @@ import kr.or.ddit.chatting.service.MessageService;
 import kr.or.ddit.todaymeeting.VChatRoom;
 import kr.or.ddit.todaymeeting.service.TodayMeetingService;
 import kr.or.ddit.util.ArticlePage3;
-import kr.or.ddit.vo.TdmtngChSpMshgDto;
-import kr.or.ddit.vo.UsersDto;
+import kr.or.ddit.dto.TdmtngChSpMshgDto;
+import kr.or.ddit.dto.UsersDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

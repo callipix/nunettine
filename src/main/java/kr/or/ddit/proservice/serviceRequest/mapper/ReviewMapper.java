@@ -3,8 +3,8 @@ package kr.or.ddit.proservice.serviceRequest.mapper;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.ddit.vo.CommonCdDetailDto;
-import kr.or.ddit.vo.ReviewDto;
+import kr.or.ddit.dto.CommonCdDetailDto;
+import kr.or.ddit.dto.ReviewDto;
 
 public interface ReviewMapper {
 

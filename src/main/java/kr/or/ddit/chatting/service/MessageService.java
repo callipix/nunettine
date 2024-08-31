@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.chatting.dto.MessageDto;
-import kr.or.ddit.vo.TdmtngChSpMshgDto;
+import kr.or.ddit.dto.TdmtngChSpMshgDto;
 
 public interface MessageService {
 

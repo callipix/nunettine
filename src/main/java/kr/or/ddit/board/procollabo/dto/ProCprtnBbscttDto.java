@@ -3,11 +3,11 @@ package kr.or.ddit.board.procollabo.dto;
 import java.util.Date;
 import java.util.List;
 
-import kr.or.ddit.vo.ProDto;
-import kr.or.ddit.vo.SprviseAtchmnflDto;
+import kr.or.ddit.dto.ProDto;
+import kr.or.ddit.dto.SprviseAtchmnflDto;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import kr.or.ddit.vo.ProProflDto;
+import kr.or.ddit.dto.ProProflDto;
 import lombok.Data;
 
 @Data

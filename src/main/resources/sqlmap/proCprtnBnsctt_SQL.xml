@@ -129,7 +129,7 @@
 		<collection property="proProflList" resultMap="proProflMap"></collection>
 	</resultMap>
 	
-	<resultMap type="kr.or.ddit.vo.ProDto" id="proMap">
+	<resultMap type="kr.or.ddit.dto.ProDto" id="proMap">
 		<result property="proId" column="PRO_ID"/>
 		<result property="proMbtlnum" column="PRO_MBTLNUM"/>
 		<result property="sexdstnTy" column="SEXDSTN_TY"/>
@@ -138,7 +138,7 @@
 		<result property="spcltyRealmCode" column="SPCLTY_REALM_CODE"/>
 	</resultMap>
 	
-	<resultMap type="kr.or.ddit.vo.ProProflDto" id="proProflMap">
+	<resultMap type="kr.or.ddit.dto.ProProflDto" id="proProflMap">
 		<result property="proId" column="PRO_ID"/>
 		<result property="proProflOnLiIntrcn" column="PRO_PROFL_ON_LI_INTRCN"/>
 		<result property="proProflContactPosblTime" column="PRO_PROFL_CONTACT_POSBL_TIME"/>

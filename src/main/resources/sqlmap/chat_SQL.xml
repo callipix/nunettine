@@ -63,13 +63,13 @@
 		 WHERE ROOM_NO = #{roomNo}
 	</select>
 	
-	<select id="joinUserInfo" parameterType="String" resultType="kr.or.ddit.vo.UsersDto">
+	<select id="joinUserInfo" parameterType="String" resultType="kr.or.ddit.dto.UsersDto">
 		SELECT USER_ID, USER_NM, USER_PASSWORD, EMPLYR_TY, SECSN_AT, USER_NCNM
 		  FROM  USERS
 		 WHERE USER_ID = #{userId}
 	</select>
 	
-	<select id="userInfo" parameterType="String" resultType="kr.or.ddit.vo.UsersDto">
+	<select id="userInfo" parameterType="String" resultType="kr.or.ddit.dto.UsersDto">
 		SELECT USER_ID, USER_NM, USER_PASSWORD, EMPLYR_TY, SECSN_AT, USER_NCNM
 		  FROM USERS
 		 WHERE USER_ID = #{userId}

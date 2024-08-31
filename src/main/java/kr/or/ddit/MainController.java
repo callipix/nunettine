@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.board.prostory.dto.ProStoryBbscttDto;
-import kr.or.ddit.vo.*;
+import kr.or.ddit.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +18,7 @@ import kr.or.ddit.manage.service.ManageService;
 import kr.or.ddit.onedayclass.service.OnedayClassService;
 import kr.or.ddit.pro.proProfl.service.ProProflService;
 import kr.or.ddit.pro.proSearch.service.SearchProService;
-import kr.or.ddit.vo.BcityDto;
+import kr.or.ddit.dto.BcityDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -35,14 +35,14 @@ public class MainController {
 	@GetMapping("/main")
 	public String main(Model model) throws JsonProcessingException {
 		
-		DongChartDto2 dongVO2 = this.manageService.test2();
-		log.info("dongVO2 : " + dongVO2);
+		DongChartDto2 dongDto2 = this.manageService.test2();
+		log.info("dongDto2 : " + dongDto2);
 		
-		DongChartDto3 dongVO3 = this.manageService.test3();
-		log.info("dongVO3 : " + dongVO3);
+		DongChartDto3 dongDto3 = this.manageService.test3();
+		log.info("dongDto3 : " + dongDto3);
 		
-		model.addAttribute("dongVO2",dongVO2);
-		model.addAttribute("dongVO3",dongVO3);
+		model.addAttribute("dongDto2",dongDto2);
+		model.addAttribute("dongDto3",dongDto3);
 		
 		
 		Map<String,Object> map = new HashMap<String, Object>();
@@ -61,13 +61,13 @@ public class MainController {
 		List<ProStoryBbscttDto> getRecommendList = this.proStoryService.getWeekRecommend();
 		/* 프로이야기 추천수 기준 가져오기 새로 추가*/
 
-		log.info("main->bcityVOList" + bcityDtoList);
+		log.info("main->bcityDtoList" + bcityDtoList);
 		log.info("main->spcltyBList" + spcltyBList);
 		log.info("main->monthProList" + monthProList);
 		log.info("main->getRecommendList" + getRecommendList);
 		
-		model.addAttribute("ondyclVOList", ondyclDtoList);
-		model.addAttribute("bcityVOList", bcityDtoList);
+		model.addAttribute("ondyclDtoList", ondyclDtoList);
+		model.addAttribute("bcityDtoList", bcityDtoList);
 		model.addAttribute("spcltyBList",spcltyBList);
 		model.addAttribute("monthProList",monthProList);
 		model.addAttribute("srvcCount",srvcCount);

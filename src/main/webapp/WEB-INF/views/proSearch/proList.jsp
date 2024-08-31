@@ -236,36 +236,36 @@ function proList(data){
                str += "<h3 style='padding:20px 0 40px 0; color:#c6c9cc; font-family: seolleimcool-SemiBold;'><b>검색 결과가 없어요!</b></h3>";
                str += "</div>";
             }else{
-            $.each(res.content, function(idx, ProVO){
-                console.log("ProVO[" + idx + "] : ", ProVO);
+            $.each(res.content, function(idx, ProDto){
+                console.log("ProDto[" + idx + "] : ", ProDto);
                 console.log("res : " , res.content);
                 str += "<div style='border: 1px solid #CED4DA; border-radius: 20px; width: 800px; margin-left: 280px; padding: 10px 0;'>";
                 str += "<div class='proflClick' style='display: flex; align-items: center; margin-left: 100px;' >";
                 str += "<div style='width: 500px;'>";
                 str += "<div style='display: flex; align-items: center;'>";
                 str += "<div style='width: 200px;'>";
-                str += "<h3 style='font-family: GmarketSansMedium;'>"+ProVO.userSeVOList[0].userNcnm+"</h3>";
-                str += "<p class='proIds' style='font-family: GmarketSansMedium;'>" + ProVO.proId + "</p>"; 
+                str += "<h3 style='font-family: GmarketSansMedium;'>"+ProDto.userSeDtoList[0].userNcnm+"</h3>";
+                str += "<p class='proIds' style='font-family: GmarketSansMedium;'>" + ProDto.proId + "</p>"; 
                 str += "</div>";
                 str += "<div style='width: 300px;'>";
-                str += "<span class='badge badge-outline-dark my-1' id='spcltyRealm' style='margin-right:10px; font-family: GmarketSansMedium;'>&nbsp&nbsp"+ProVO.spcltyRealmVOList[0].spcltyRealmNm+"&nbsp&nbsp</span>";
-                str += "<span class='badge badge-outline-dark my-1' style='margin-right:10px; font-family: GmarketSansMedium;'>"+ProVO.proflVOList[0].proProflContactPosblTime+"</span>";
+                str += "<span class='badge badge-outline-dark my-1' id='spcltyRealm' style='margin-right:10px; font-family: GmarketSansMedium;'>&nbsp&nbsp"+ProDto.spcltyRealmDtoList[0].spcltyRealmNm+"&nbsp&nbsp</span>";
+                str += "<span class='badge badge-outline-dark my-1' style='margin-right:10px; font-family: GmarketSansMedium;'>"+ProDto.proflDtoList[0].proProflContactPosblTime+"</span>";
                 str += "<span class='badge badge-outline-dark my-1' id='profl-info' style='margin-right:10px; font-family: 'GmarketSansMedium';'>";
-                if (ProVO.vcityVOList[0].bcityNm == ProVO.vcityVOList[0].brtcNm) {
-                    str += "<span class='brtcNm' style='font-family: GmarketSansMedium;'>" + ProVO.vcityVOList[0].brtcNm + "</span>";
+                if (ProDto.vcityDtoList[0].bcityNm == ProDto.vcityDtoList[0].brtcNm) {
+                    str += "<span class='brtcNm' style='font-family: GmarketSansMedium;'>" + ProDto.vcityDtoList[0].brtcNm + "</span>";
                 } else {
-                    str += "&nbsp;&nbsp;<span class='bcityNm' style='font-family: GmarketSansMedium;'>" + ProVO.vcityVOList[0].bcityNm + "</span>&nbsp;";
-                    str += "<span class='brtcNm' style='font-family: GmarketSansMedium;'>" + ProVO.vcityVOList[0].brtcNm + "</span>&nbsp;&nbsp;";
+                    str += "&nbsp;&nbsp;<span class='bcityNm' style='font-family: GmarketSansMedium;'>" + ProDto.vcityDtoList[0].bcityNm + "</span>&nbsp;";
+                    str += "<span class='brtcNm' style='font-family: GmarketSansMedium;'>" + ProDto.vcityDtoList[0].brtcNm + "</span>&nbsp;&nbsp;";
                 }
                 str += "</span>";
                 str += "</div>";
                 str += "</div>";
                 str += "<div>";
-                str += "<p style='font-family: GmarketSansMedium;'>"+ProVO.proflVOList[0].proProflOnLiIntrcn+"</p>";
+                str += "<p style='font-family: GmarketSansMedium;'>"+ProDto.proflDtoList[0].proProflOnLiIntrcn+"</p>";
                 str += "</div>";
                 str += "</div>";
                 str += "<div style='margin-left: 20px;'>";
-                str += "<img class='proProflPhoto' src='"+ (ProVO.proProflPhoto == null ? '/images/2024/profile.jpg' : ProVO.proProflPhoto) +"' style='width: 100px; height: 100px; border-radius: 20%;'> ";  
+                str += "<img class='proProflPhoto' src='"+ (ProDto.proProflPhoto == null ? '/images/2024/profile.jpg' : ProDto.proProflPhoto) +"' style='width: 100px; height: 100px; border-radius: 20%;'> ";  
                 str += "</div>";
                 str += "</div>";
                 str += "</div>";
@@ -412,11 +412,11 @@ function proList(data){
          <br><br>
          
            <div id="proListBody">
-         <!--  proSearchList : [ProVO(proId=asdasd, proProflPhoto=/images/2024/03/15/c192873a-de59-47ac-8221-0f46f42412af_Anne-Marie(앤마리)-2002.jpg, spcltyRealmCode=SR2502, 
-         proflVOList=[ProProflVO(proProflOnLiIntrcn=dasfd, proProflContactPosblTime=asdfasd, bcityCode=11, brtcCode=11090)], 
-         userSeVOList=[UsersVO(userNcnm=asdasd)], 
-         vCityVOList=[VCityVO(bcityNm=서울, brtcNm=강북구, ], 
-         spcltyRealmVOList=[SpcltyRealmVO(spcltyRealmNm=태권도)]), -->
+         <!--  proSearchList : [ProDto(proId=asdasd, proProflPhoto=/images/2024/03/15/c192873a-de59-47ac-8221-0f46f42412af_Anne-Marie(앤마리)-2002.jpg, spcltyRealmCode=SR2502, 
+         proflDtoList=[ProProflDto(proProflOnLiIntrcn=dasfd, proProflContactPosblTime=asdfasd, bcityCode=11, brtcCode=11090)], 
+         userSeDtoList=[UsersDto(userNcnm=asdasd)], 
+         vCityDtoList=[VCityDto(bcityNm=서울, brtcNm=강북구, ], 
+         spcltyRealmDtoList=[SpcltyRealmDto(spcltyRealmNm=태권도)]), -->
          <c:if test=""></c:if>
          </div>
        </div>
@@ -445,9 +445,9 @@ function proList(data){
                   <label for="spcltyB" style="font-family: 'GmarketSansMedium';">대분류</label>
                      <select id="spcltyB" name="spcltyB" class="form-control" style="width:400px; font-family: 'GmarketSansMedium';">
                         <option selected>대분류를 선택해주세요</option>
-                        <c:forEach items="${spcltyBList}" var="spcltyBVO">
-	                        <c:if test="${spcltyBVO.lev eq 1}">
-		                        <option value="${spcltyBVO.spcltyRealmCode}" value2="${spcltyBVO.spcltyRealmNm}">${spcltyBVO.spcltyRealmNm}</option>
+                        <c:forEach items="${spcltyBList}" var="spcltyBDto">
+	                        <c:if test="${spcltyBDto.lev eq 1}">
+		                        <option value="${spcltyBDto.spcltyRealmCode}" value2="${spcltyBDto.spcltyRealmNm}">${spcltyBDto.spcltyRealmNm}</option>
 	                        </c:if>
                         </c:forEach>
                      </select>
@@ -493,8 +493,8 @@ function proList(data){
                   <label for="bcityNm" style="font-family: 'GmarketSansMedium';">지역(광역시)</label>
                      <select id="bcityNm" name="spcltyB" class="form-control" style="width:400px; font-family: 'GmarketSansMedium';">
                         <option selected>지역(광역시)를 선택해주세요</option>
-                        <c:forEach items="${bcityDtoList}" var="bcityVO">
-                        <option><c:out value="${bcityVO.bcityNm}"/></option>
+                        <c:forEach items="${bcityDtoList}" var="bcityDto">
+                        <option><c:out value="${bcityDto.bcityNm}"/></option>
                         </c:forEach>
                      </select>
                </div> 

@@ -3,10 +3,10 @@ package kr.or.ddit.pro.proProfl.mapper;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.ddit.vo.*;
+import kr.or.ddit.dto.*;
 import org.apache.ibatis.annotations.Param;
 
-import kr.or.ddit.vo.BcityDto;
+import kr.or.ddit.dto.BcityDto;
 
 
 public interface ProProflMapper {

@@ -3,10 +3,10 @@ package kr.or.ddit.board.reviewboard.mapper;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.ddit.vo.AftusBbscttAnswerDto;
-import kr.or.ddit.vo.AftusBbscttDto;
-import kr.or.ddit.vo.SprviseAtchmnflDto;
-import kr.or.ddit.vo.SrvcRequstDto;
+import kr.or.ddit.dto.AftusBbscttAnswerDto;
+import kr.or.ddit.dto.AftusBbscttDto;
+import kr.or.ddit.dto.SprviseAtchmnflDto;
+import kr.or.ddit.dto.SrvcRequstDto;
 
 public interface ReviewBoardMapper {
 

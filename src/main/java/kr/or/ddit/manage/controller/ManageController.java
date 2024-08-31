@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 import kr.or.ddit.admin.faq.dto.FaqDto;
 import kr.or.ddit.admin.notice.dto.NoticeDto;
 import kr.or.ddit.admin.usersSearch.dto.UsersDto;
-import kr.or.ddit.vo.*;
+import kr.or.ddit.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +30,7 @@ import kr.or.ddit.admin.usersSearch.service.UsersSearchService;
 import kr.or.ddit.manage.service.ManageService;
 import kr.or.ddit.util.ArticlePage;
 import kr.or.ddit.util.fileupload.service.FileuploadService;
-import kr.or.ddit.vo.OneInqryDto;
+import kr.or.ddit.dto.OneInqryDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

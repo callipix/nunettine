@@ -3,12 +3,12 @@ package kr.or.ddit.onedayclass.mapper;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.ddit.vo.*;
-import kr.or.ddit.vo.BcityDto;
+import kr.or.ddit.dto.*;
+import kr.or.ddit.dto.BcityDto;
 
 public interface OnedayClassMapper {
 
-	public List<VOndyclProUsersDto> vOndyclProUsersVOList();
+	public List<VOndyclProUsersDto> vOndyclProUsersDtoList();
 
 	public int countOndycl();
 

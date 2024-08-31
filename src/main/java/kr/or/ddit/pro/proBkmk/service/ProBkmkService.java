@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import kr.or.ddit.vo.ProBkmkDto;
+import kr.or.ddit.dto.ProBkmkDto;
 
 @Service
 public interface ProBkmkService {

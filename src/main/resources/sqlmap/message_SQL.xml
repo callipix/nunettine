@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ddit.chatting.mapper.MessageMapper">
 
-	<insert id="insert" parameterType="kr.or.ddit.vo.TdmtngChSpMshgDto">
+	<insert id="insert" parameterType="kr.or.ddit.dto.TdmtngChSpMshgDto">
 	/** kr.or.ddit.chatting.mapper.MessageMapper INSERT */
 		INSERT INTO TDMTNG_CH_SP_MSG(
 										  TDMTNG_CH_SP_MSG_NO
@@ -46,7 +46,7 @@
 		ORDER BY MSG_SEND_DATE ASC
 	</select>
 	
-	<select id="roomMsgList" parameterType="int" resultType="kr.or.ddit.vo.TdmtngChSpMshgDto">
+	<select id="roomMsgList" parameterType="int" resultType="kr.or.ddit.dto.TdmtngChSpMshgDto">
 	/** kr.or.ddit.chatting.mapper.MessageMapper roomMsgList 채팅방 메세지 리스트 */
 		SELECT
 			     A.TDMTNG_CH_SP_MSG_NO

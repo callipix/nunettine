@@ -3,12 +3,12 @@ package kr.or.ddit.todaymeeting.mapper;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.ddit.vo.TdmtngDto;
-import kr.or.ddit.vo.TdmtngPrtcpntDto;
+import kr.or.ddit.dto.TdmtngDto;
+import kr.or.ddit.dto.TdmtngPrtcpntDto;
 import org.apache.ibatis.annotations.Param;
 
 import kr.or.ddit.todaymeeting.VChatRoom;
-import kr.or.ddit.vo.UsersDto;
+import kr.or.ddit.dto.UsersDto;
 
 public interface TodayMeetingMapper {
 	

@@ -3,7 +3,7 @@ package kr.or.ddit.board.prohunting.service;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.ddit.vo.ProJoBbscttDto;
+import kr.or.ddit.dto.ProJoBbscttDto;
 
 public interface ProHuntingService {
 

@@ -2,7 +2,7 @@ package kr.or.ddit.pro.prtFolio.service;
 
 import org.springframework.stereotype.Service;
 
-import kr.or.ddit.vo.PrtfolioDto;
+import kr.or.ddit.dto.PrtfolioDto;
 
 @Service
 public interface PrtfolioService {

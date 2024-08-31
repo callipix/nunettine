@@ -6,30 +6,30 @@
       <result property="proId" column="PRO_ID"/>
       <result property="proProflPhoto" column="PRO_PROFL_PHOTO"/>
       <result property="spcltyRealmCode" column="SPCLTY_REALM_CODE"/>
-      <collection property="proflVOList" ofType="proDto" resultMap="proflVOMap"></collection>
-      <collection property="userSeVOList" resultMap="userSeVOMap"></collection>
-      <collection property="vCityVOList" resultMap="vCityVOMap"></collection>
-      <collection property="spcltyRealmVOList" resultMap="spcltyRealmVOMap"></collection>
+      <collection property="proflDtoList" ofType="proDto" resultMap="proflDtoMap"></collection>
+      <collection property="userSeDtoList" resultMap="userSeDtoMap"></collection>
+      <collection property="vCityDtoList" resultMap="vCityDtoMap"></collection>
+      <collection property="spcltyRealmDtoList" resultMap="spcltyRealmDtoMap"></collection>
    </resultMap>
    
-   <resultMap type="proProflDto" id="proflVOMap">
+   <resultMap type="proProflDto" id="proflDtoMap">
       <result property="proProflOnLiIntrcn" column="PRO_PROFL_ON_LI_INTRCN"/>
       <result property="proProflContactPosblTime" column="PRO_PROFL_CONTACT_POSBL_TIME"/>
       <result property="bcityCode" column="BCITY_CODE"/>
       <result property="brtcCode" column="BRTC_CODE"/>
    </resultMap>
    
-   <resultMap type="UsersVO" id="userSeVOMap">
+   <resultMap type="UsersDto" id="userSeDtoMap">
       <result property="userId" column="USER_ID"/>
       <result property="userNcnm" column="USER_NCNM"/>
    </resultMap>
    
-   <resultMap type="VCityVO" id="vCityVOMap">
+   <resultMap type="VCityDto" id="vCityDtoMap">
       <result property="bcityNm" column="BCITY_NM"/>
       <result property="brtcNm" column="BRTC_NM"/>
    </resultMap>
    
-   <resultMap type="SpcltyRealmVO" id="spcltyRealmVOMap">
+   <resultMap type="SpcltyRealmDto" id="spcltyRealmDtoMap">
       <result property="spcltyRealmNm" column="SPCLTY_REALM_NM"/>
    </resultMap>
    
@@ -160,7 +160,7 @@
    </select>
    
    
-   <resultMap type="spcltyRealmVO" id="spcltyRealmMap">
+   <resultMap type="spcltyRealmDto" id="spcltyRealmMap">
    	  <result property="lev" column="lev"/>
       <result property="spcltyRealmCode" column="SPCLTY_REALM_CODE"/>
       <result property="spcltyRealmNm" column="SPCLTY_REALM_NM"/>
@@ -184,7 +184,7 @@
    </select>
    
 	<!-- 서비스 하위분류 -->
-	<resultMap type="spcltyRealmVO" id="spcltySecMap">
+	<resultMap type="spcltyRealmDto" id="spcltySecMap">
 		<result property="spcltyRealmCode" column="SPCLTY_REALM_CODE"/>
 		<result property="spcltyRealmNm" column="SPCLTY_REALM_NM"/>
 		<result property="ptprtSpcltyRealmCode" column="PTPRT_SPCLTY_REALM_CODE"/>
@@ -208,7 +208,7 @@
       <result property="proProflPhoto" column="PRO_PROFL_PHOTO"/>
       <result property="spcltyRealmCode" column="SPCLTY_REALM_CODE"/>
       <collection property="adresList" resultMap="AdresMap"></collection>
-      <collection property="userSeVOList" resultMap="UserNmMap"></collection>
+      <collection property="userSeDtoList" resultMap="UserNmMap"></collection>
    </resultMap>
    
    <resultMap type="adresDto" id="AdresMap">
@@ -236,8 +236,8 @@
     <result property="proId" column="PRO_ID"/>
     <result property="proProflPhoto" column="PRO_PROFL_PHOTO"/>
     <result property="spcltyRealmCode" column="SPCLTY_REALM_CODE"/>
-    <collection property="userSeVOList" resultMap="UserNmMap2"></collection>
-    <collection property="proflVOList" resultMap="proflMap"></collection>
+    <collection property="userSeDtoList" resultMap="UserNmMap2"></collection>
+    <collection property="proflDtoList" resultMap="proflMap"></collection>
 </resultMap>
 
 <resultMap type="proProflDto" id="proflMap">

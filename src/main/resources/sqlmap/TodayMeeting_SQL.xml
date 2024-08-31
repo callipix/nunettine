@@ -204,7 +204,7 @@
 		 ORDER BY TDMTNG_NO DESC
 	</select>
 	
-	<select id="getUserInfo" parameterType="String" resultType="kr.or.ddit.vo.UsersDto">
+	<select id="getUserInfo" parameterType="String" resultType="kr.or.ddit.dto.UsersDto">
 		SELECT
 				USER_ID
 			  , USER_NM

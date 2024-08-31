@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.ddit.chatting.mapper.MessageMapper;
 import kr.or.ddit.chatting.dto.MessageDto;
-import kr.or.ddit.vo.TdmtngChSpMshgDto;
+import kr.or.ddit.dto.TdmtngChSpMshgDto;
 @Slf4j
 @Service
 @RequiredArgsConstructor

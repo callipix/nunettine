@@ -25,7 +25,7 @@ import kr.or.ddit.chatting.dto.AllChatRoomViewDto;
 import kr.or.ddit.chatting.dto.ChatRelayDto;
 import kr.or.ddit.chatting.dto.ChatRoomDto;
 import kr.or.ddit.chatting.dto.MessageDto;
-import kr.or.ddit.vo.UsersDto;
+import kr.or.ddit.dto.UsersDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

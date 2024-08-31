@@ -3,12 +3,12 @@ package kr.or.ddit.onedayclass.service;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.ddit.vo.*;
-import kr.or.ddit.vo.BundleOndyclDto;
+import kr.or.ddit.dto.*;
+import kr.or.ddit.dto.BundleOndyclDto;
 
 public interface OnedayClassService {
 
-	public List<VOndyclProUsersDto> vOndyclProUsersVOList();
+	public List<VOndyclProUsersDto> vOndyclProUsersDtoList();
 
 	public int countOndycl();
 

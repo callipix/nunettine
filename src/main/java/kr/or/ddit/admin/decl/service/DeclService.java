@@ -3,8 +3,8 @@ package kr.or.ddit.admin.decl.service;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.ddit.vo.*;
-import kr.or.ddit.vo.SntncDeclDto;
+import kr.or.ddit.dto.*;
+import kr.or.ddit.dto.SntncDeclDto;
 
 
 public interface DeclService {

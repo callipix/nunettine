@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import kr.or.ddit.vo.*;
+import kr.or.ddit.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.onedayclass.service.OnedayClassService;
 import kr.or.ddit.util.ArticlePage;
-import kr.or.ddit.vo.BcityDto;
+import kr.or.ddit.dto.BcityDto;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnailator;
 
@@ -56,18 +56,18 @@ public class OnedayClassController {
 		map.put("mberId",mberId);
 		map.put("currentPage",currentPage);
 //		log.info("장바구니 출력 map " + map);
-		List<BundleOndyclDto> shopngBundleVOList = this.onedayClassService.mberShoppingCart(map);
-		if(shopngBundleVOList != null && !shopngBundleVOList.isEmpty()) {
-			dayCheckBundle(shopngBundleVOList);
-			peopleCheckBundle(shopngBundleVOList);
+		List<BundleOndyclDto> shopngBundleDtoList = this.onedayClassService.mberShoppingCart(map);
+		if(shopngBundleDtoList != null && !shopngBundleDtoList.isEmpty()) {
+			dayCheckBundle(shopngBundleDtoList);
+			peopleCheckBundle(shopngBundleDtoList);
 		}
-		
+
 		int total = this.onedayClassService.countShoppingCart(map);
-//		log.info("첫번째 리스트 "+shopngBundleVOList);
+//		log.info("첫번째 리스트 "+shopngBundleDtoList);
 //		log.info("첫번쨰 total : " + total);
-		model.addAttribute("shopngBundleVOList",shopngBundleVOList);
+		model.addAttribute("shopngBundleDtoList",shopngBundleDtoList);
 		model.addAttribute("cnt",total);
-		
+
 		return "member/shoppingCart";
 	}
 	@ResponseBody
@@ -76,7 +76,7 @@ public class OnedayClassController {
 		String searchKeyword = (String) map.get("searchKeyword");
 		String bfKeyword = map.get("keyword").toString();
 		String keyword = map.get("keyword").toString();
-		
+
 //		log.info("searchKeyword" + searchKeyword);
 //		log.info("bfKeyword" + bfKeyword);
 		if(searchKeyword.trim().equals("date")) {
@@ -88,44 +88,44 @@ public class OnedayClassController {
 		}else {
 			keyword = map.get("keyword").toString();
 		}
-		
+
 //		log.info("두번째 map" + map);
-		List<BundleOndyclDto> shopngBundleVOList = this.onedayClassService.mberShoppingCart(map);
-		if(shopngBundleVOList != null && !shopngBundleVOList.isEmpty()) {
-			dayCheckBundle(shopngBundleVOList);
-			peopleCheckBundle(shopngBundleVOList);
+		List<BundleOndyclDto> shopngBundleDtoList = this.onedayClassService.mberShoppingCart(map);
+		if(shopngBundleDtoList != null && !shopngBundleDtoList.isEmpty()) {
+			dayCheckBundle(shopngBundleDtoList);
+			peopleCheckBundle(shopngBundleDtoList);
 		}
-		
+
 		int total = this.onedayClassService.countShoppingCart(map);
 		int size = 10;
-//		log.info("두번째 리스트 "+shopngBundleVOList);
+//		log.info("두번째 리스트 "+shopngBundleDtoList);
 //		log.info("두번쨰 total : " + total);
 		int currentPage = Integer.parseInt(map.get("currentPage").toString());
-		ArticlePage<BundleOndyclDto> data = new ArticlePage<BundleOndyclDto>(total, currentPage, size, shopngBundleVOList, keyword);
-		
+		ArticlePage<BundleOndyclDto> data = new ArticlePage<BundleOndyclDto>(total, currentPage, size, shopngBundleDtoList, keyword);
+
 		String url  = "/member/shoppingCart";
-		
+
 		data.setUrl(url);
-		
+
 		return data;
 	}
-	
+
 	//원데이클래스 게시판 호출
 	@GetMapping("/main")
 	public String main(Model model) {
-		List<VOndyclProUsersDto> vOndyclProUsersDtoList = this.onedayClassService.vOndyclProUsersVOList();
+		List<VOndyclProUsersDto> vOndyclProUsersDtoList = this.onedayClassService.vOndyclProUsersDtoList();
 		int countOndycl = this.onedayClassService.countOndycl();
 		String codeNm;
 		String codeCd;
-		
+
 		//카테고리 이름
 		for(int i = 0; i< vOndyclProUsersDtoList.size(); i++) {
 			codeCd = vOndyclProUsersDtoList.get(i).getSpcltyRealmCode();
 			codeNm = this.onedayClassService.getCodeNm(codeCd);
-			
+
 			vOndyclProUsersDtoList.get(i).setSpcltyRealmCode(codeNm);
 		}
-		
+
 		List<SpcltyRealmDto> codeList = this.onedayClassService.category();
 		model.addAttribute("codeList", codeList);
 		List<BcityDto> bcityDtoList = this.onedayClassService.getBcity();
@@ -134,15 +134,15 @@ public class OnedayClassController {
 				bcityDtoList.remove(i);
 			}
 		}
-		
+
 		dayCheck(vOndyclProUsersDtoList);
-		
-		model.addAttribute("bcityVOList", bcityDtoList);
-		model.addAttribute("vOndyclProUsersVOList", vOndyclProUsersDtoList);
+
+		model.addAttribute("bcityDtoList", bcityDtoList);
+		model.addAttribute("vOndyclProUsersDtoList", vOndyclProUsersDtoList);
 		model.addAttribute("countOndycl", countOndycl);
 		return "onedayClass/main";
 	}
-		
+
 	//전문분야 검색 실행
 	@ResponseBody
 	@GetMapping("/categorySearch")
@@ -157,13 +157,13 @@ public class OnedayClassController {
 		for(int i = 0; i< vOndyclProUsersDtoList.size(); i++) {
 			codeCd = vOndyclProUsersDtoList.get(i).getSpcltyRealmCode();
 			codeNm = this.onedayClassService.getCodeNm(codeCd);
-			
+
 			vOndyclProUsersDtoList.get(i).setSpcltyRealmCode(codeNm);
 		}
-		
+
 		return vOndyclProUsersDtoList;
 	}
-	
+
 	//원데이클래스 검색
 	@ResponseBody
 	@GetMapping("/searchClass")
@@ -198,15 +198,15 @@ public class OnedayClassController {
 		for(int i = 0; i< vOndyclProUsersDtoList.size(); i++) {
 			codeCd = vOndyclProUsersDtoList.get(i).getSpcltyRealmCode();
 			codeNm = this.onedayClassService.getCodeNm(codeCd);
-			
+
 			vOndyclProUsersDtoList.get(i).setSpcltyRealmCode(codeNm);
 		}
-		
+
 		for(int i = 0; i< vOndyclProUsersDtoList.size(); i++) {
 		}
 		return vOndyclProUsersDtoList;
 	}
-	
+
 	//주소 검색
 	@ResponseBody
 	@GetMapping("/localSearch")
@@ -233,35 +233,35 @@ public class OnedayClassController {
 			searchMap.put("cityName",cityName);
 		}
 		List<VOndyclProUsersDto> vOndyclProUsersDtoList = this.onedayClassService.searchClass(searchMap);
-		
+
 		return vOndyclProUsersDtoList;
 	}
-	
+
 	//클래스 삭제
 	@ResponseBody
 	@GetMapping("/deleteClass")
 	public int deleteClass(String classNo) {
 //		log.info("classNo : " + classNo);
 		int result = this.onedayClassService.deleteClass(classNo);
-		
+
 		return result;
 	}
-	
+
 	//시군구 모달에 출력
 	@ResponseBody
 	@GetMapping("/brtcSelect")
 	public List<BrtcDto> brtcSelect(String bcityCode){
 		List<BrtcDto> brtcDtoList = this.onedayClassService.brtcSelect(bcityCode);
-		
+
 		return brtcDtoList;
 	}
-	
+
 	//원데이클래스 등록화면
 	@GetMapping("/createOndycl")
 	public String createOndycl() {
 		return "onedayClass/createOndycl";
 	}
-	
+
 	//원데이클래스 수정화면으로
 	@PostMapping("/updateClass")
 	public String updateClass(VOndyclSchdulDto vOndyclSchdulDto, Model model) {
@@ -269,25 +269,25 @@ public class OnedayClassController {
 		String ondyclNo = vOndyclSchdulDto.getOndyclNo() + "";
 		List<SprviseAtchmnflDto> sprviseAtchmnflDtoList = this.onedayClassService.fileList(ondyclNo);
 		String classDate = vOndyclSchdulDto.getOndyclSchdulDe();
-		
+
 //		log.info("sprviseAtchmnflVOList"+sprviseAtchmnflVOList);
-		model.addAttribute("vOndyclSchdulVO", vOndyclSchdulDto);
-		model.addAttribute("sprviseAtchmnflVOList", sprviseAtchmnflDtoList);
-		
+		model.addAttribute("vOndyclSchdulDto", vOndyclSchdulDto);
+		model.addAttribute("sprviseAtchmnflDtoList", sprviseAtchmnflDtoList);
+
 		return "onedayClass/updateOndycl";
 	}
-	
+
 	//원데이클래스 업데이트
 	@PostMapping("/updateOndycl")
 	//serviceImpl에서 비즈니스로직 처리
 	public String updateOndycl(VOndyclSchdulDto vOndyclSchdulDto) {
-		log.info("vOndyclSchdulVO" + vOndyclSchdulDto);
+		log.info("vOndyclSchdulDto" + vOndyclSchdulDto);
 		int result = this.onedayClassService.updateOndycl(vOndyclSchdulDto);
-		
+
 		int ondyclNo = vOndyclSchdulDto.getOndyclNo();
 		return "redirect:/onedayClass/onedayClassDetail?ondyclNo=" + ondyclNo;
 	}
-	
+
 	//원데이클래스 등록
 	@PostMapping("/createOndycl")
 	public String createOndycl(VOndyclSchdulDto vOndyclSchdulDto) {
@@ -300,7 +300,7 @@ public class OnedayClassController {
 		String proId = vOndyclSchdulDto.getProId();
 		String ondyclSchdulDe = vOndyclSchdulDto.getOndyclSchdulDe();
 		ondyclSchdulDe = ondyclSchdulDe.replaceAll("-", "");
-		
+
 		map.put("ondyclNo",insertClNum);
 		map.put("ondyclNm", vOndyclSchdulDto.getOndyclNm());
 		map.put("ondyclCn", vOndyclSchdulDto.getOndyclCn());
@@ -314,27 +314,27 @@ public class OnedayClassController {
 		map.put("ondyclAdres", vOndyclSchdulDto.getOndyclAdres());
 		map.put("ondyclDetailAdres", vOndyclSchdulDto.getOndyclDetailAdres());
 		map.put("ondyclZip", vOndyclSchdulDto.getOndyclZip());
-		
+
 		//썸네일 등록
 		if(vOndyclSchdulDto.getUploadProfile() != null && !vOndyclSchdulDto.getUploadProfile().isEmpty()) {
 //			log.info("썸네일 메소드 시작");
 			MultipartFile multipartFile = vOndyclSchdulDto.getUploadProfile();
-			
+
 			File uploadPath = new File(uploadFolder, getFolder());
 			if(!uploadPath.exists()) {
 				uploadPath.mkdirs();
 			}
 			 String uploadFileName = multipartFile.getOriginalFilename();
-			 
+
 			 UUID uuid = UUID.randomUUID();
 			 uploadFileName = uuid.toString() + "_" + uploadFileName;
-			 
+
 			 File saveFile = new File(uploadPath, uploadFileName);
 //			 log.info("프로필사진 이름  : " + saveFile);
-			 
+
 			 try {
 				multipartFile.transferTo(saveFile);
-				
+
 				if(checkImageType(saveFile)) {//이미지라면
 					//설계
 					FileOutputStream thumbnail = new FileOutputStream(
@@ -348,15 +348,15 @@ public class OnedayClassController {
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			}
-			 
+
 			 String url = "/images/" + getFolder().replace("\\", "/") + "/" + uploadFileName;
-			 
+
 //			 log.info("썸네일 url : " + url);
 			 map.put("ondyclThumbPhoto",url);
 		}else {
 			map.put("ondyclThumbPhoto",null);
 		} //썸네일 사진 등록 끝
-		
+
 		//첨부파일(이미지들) 추가
 		if(vOndyclSchdulDto.getUploadFile() != null) {
 //			log.info("첨부파일 메소드 시작");
@@ -365,12 +365,12 @@ public class OnedayClassController {
 			String mimeType = ""; //파일 형식
 			long size = 0; //파일 사이즈
 			int seq = 1;
-			
+
 			for(MultipartFile uploadFiles : vOndyclSchdulDto.getUploadFile()) {
 				originFileName = uploadFiles.getOriginalFilename();
 				size = uploadFiles.getSize();
 				mimeType = uploadFiles.getContentType();
-				
+
 				UUID uuid = UUID.randomUUID();
 				newFileName = uuid.toString() + "_" + originFileName;
 //				log.info("첨부파일 정보 : " + originFileName+"/"+size+"/"+mimeType+"/"+newFileName);
@@ -385,8 +385,8 @@ public class OnedayClassController {
 					sprviseAtchmnflDto.setAtchmnflTy(mimeType);
 					sprviseAtchmnflDto.setAtchmnflNo(seq++);
 					sprviseAtchmnflDto.setUserId(proId);
-//					log.info("sprviseAtchmnflVO : " + sprviseAtchmnflVO);
-					
+//					log.info("sprviseAtchmnflDto : " + sprviseAtchmnflDto);
+
 					result += this.onedayClassService.addSprviseAtchmnfl(sprviseAtchmnflDto);
 					log.info("첨부파일 result " + result);
 				} catch (IllegalStateException | IOException e) {
@@ -395,11 +395,11 @@ public class OnedayClassController {
 			}
 		}//첨부파일추가 끝
 		log.info("sql가기 직전 map : " + map);
-		
+
 		result += this.onedayClassService.createOndycl(map);
-		
+
 		log.info("원데이클래스 result 수 : " + result);
-		
+
 		return "redirect:/onedayClass/onedayClassDetail?ondyclNo="+insertClNum;
 	}
 	public boolean checkImageType(File file) {
@@ -417,19 +417,19 @@ public class OnedayClassController {
 		//이 파일이 이미지가 아닐 경우
 		return false;
 	}
-	
+
 	//원데이클래스 결제
 	@ResponseBody
 	@PostMapping("/buyClass")
 	public int buyClass(@RequestBody Map<String, Object> map) {
 //		log.info("넘어온 맵 : " + map);
-		
+
 		//serviceImpl에서 서비스로직 처리
 		int result = this.onedayClassService.buyClass(map);
 //		log.info("걀제처리 result : " + result);
 		return result;
 	}
-	
+
 	//장바구니 체크 삭제
 	@ResponseBody
 	@PostMapping("/delBundle")
@@ -438,17 +438,17 @@ public class OnedayClassController {
 //		log.info("받은 배열 " + checkList.length);
 		Map<String, Object> map = new HashMap<String, Object>();
 		int result = 0;
-		
+
 		map.put("mberId",mberId);
 		for(int i=0; i<checkList.length; i++) {
 			map.put("ondyclNo",checkList[i]);
-			
+
 			result += this.onedayClassService.delBundle(map);
 		}
-		
+
 		return result;
 	}
-	
+
 	//장바구니 결제
 	@ResponseBody
 	@PostMapping("/buyBundle")
@@ -456,23 +456,23 @@ public class OnedayClassController {
 		//serviceImpl에서 서비스로직 처리
 		int result = this.onedayClassService.buyBundle(map);
 //		log.info("결제처리 result : " + result);
-		
+
 		return result;
 	}
-	
+
 	//원데이클래스 가격확인
 	@ResponseBody
 	@GetMapping("/priceCk")
 	public VOndyclSchdulDto priceCk(int ondyclNo) {
 		VOndyclSchdulDto vOndyclSchdulDto = this.onedayClassService.priceCk(ondyclNo);
-		
+
 		dayCheckSch(vOndyclSchdulDto);
-		
+
 //		log.info("가격확인 vo : " + vOndyclSchdulVO);
-		
+
 		return vOndyclSchdulDto;
 	}
-	
+
 	//원데이클래스 상세페이지
 	@GetMapping("/onedayClassDetail")
 	public String detail(String ondyclNo, @RequestParam(required=false) String startPoint,
@@ -481,7 +481,7 @@ public class OnedayClassController {
 //		log.info("mberId : " + mberId);
 		VOndyclProUsersDto vOndyclProUsersDto = this.onedayClassService.detail(ondyclNo);
 //		log.info("detail->vOndyclProUsersVO : " + vOndyclProUsersVO);
-		
+
 		List<SprviseAtchmnflDto> sprviseAtchmnflDtoList = this.onedayClassService.fileList(ondyclNo);
 		if(mberId != null && !mberId.isEmpty()) {
 			Map<String, Object> mberOndyclMap = new HashMap<String, Object>();
@@ -499,20 +499,20 @@ public class OnedayClassController {
 			dayCheck(vOndyclProUsersDto);
 			peopleCheck(vOndyclProUsersDto);
 		}
-		
+
 		//참가자 목록
 		List<UserNcnmMberPhotoDto> userNcnmMberPhotoDtoList = this.onedayClassService.getBuyer(ondyclNo);
 //		log.info("userNcnmMberPhotoVOList " + userNcnmMberPhotoVOList);
-		model.addAttribute("userNcnmMberPhotoVOList", userNcnmMberPhotoDtoList);
-		
+		model.addAttribute("userNcnmMberPhotoDtoList", userNcnmMberPhotoDtoList);
+
 		String date = vOndyclProUsersDto.getOndyclSchdulDe();
 //		log.info("시작날짜1 : " + date);
 		String reDate = date.substring(0, 4) + "." + date.substring(4, 6) + "." + date.substring(6);
 //		log.info("시작날짜2: " + reDate);
 		vOndyclProUsersDto.setOndyclSchdulDe(reDate);
-		
-		
-		
+
+
+
 		if(startPoint != null && !startPoint.isEmpty()) {
 			if(startPoint.equals("myClass")) {
 				model.addAttribute("mainck", mainck);
@@ -523,41 +523,41 @@ public class OnedayClassController {
 				model.addAttribute("startPoint", startPoint);
 			}
 		}
-				
-		model.addAttribute("sprviseAtchmnflVOList", sprviseAtchmnflDtoList);
-		model.addAttribute("vOndyclProUsersVO", vOndyclProUsersDto);
-//		log.info("vOndyclProUsersVO : "+vOndyclProUsersVO);
-//		log.info("sprviseAtchmnflVOList : "+sprviseAtchmnflVOList);
+
+		model.addAttribute("sprviseAtchmnflDtoList", sprviseAtchmnflDtoList);
+		model.addAttribute("vOndyclProUsersDto", vOndyclProUsersDto);
+//		log.info("vOndyclProUsersDto : "+vOndyclProUsersDto);
+//		log.info("sprviseAtchmnflDtoList : "+sprviseAtchmnflDtoList);
 		return "onedayClass/onedayClassDetail";
 	}
-	
+
 	//멤버 내 원데이클래스 리스트로 이동
 	@GetMapping("/memberOndyclList")
 	public String memberOndyclList(Model model, Map<String,Object>map,
 			@RequestParam(value="currentPage",required=false,defaultValue="1")int currentPage,
 			@RequestParam(value="keyword", required=false, defaultValue="1")String keyword) {
 		map.put("currentPage",currentPage);
-		
+
 		List<VOndyclProUsersDto> vOndyclProUsersDtoList = this.onedayClassService.memberOndyclList(map);
 		int total = this.onedayClassService.countMberMyClass(map);
 		if(vOndyclProUsersDtoList != null && !vOndyclProUsersDtoList.isEmpty()) {
 			dayCheck(vOndyclProUsersDtoList);
 		}
-//		log.info("vOndyclProUsersVOList" + vOndyclProUsersVOList);
-		model.addAttribute("vOndyclProUsersVOList", vOndyclProUsersDtoList);
+//		log.info("vOndyclProUsersDtoList" + vOndyclProUsersDtoList);
+		model.addAttribute("vOndyclProUsersDtoList", vOndyclProUsersDtoList);
 		model.addAttribute("cnt",total);
-		
+
 		return "/onedayClass/memberOndyclList";
 	}
-	
+
 	@ResponseBody
 	@PostMapping("/memberOndyclListAjax")
 	public ArticlePage<VOndyclProUsersDto> memberOndyclListAjax(@RequestBody(required=false) Map<String,Object> map) throws ParseException {
 		String searchKeyword = map.get("searchKeyword").toString();
 		String bfKeyword = map.get("keyword").toString();
 		String keyword = map.get("keyword").toString();
-		
-		
+
+
 		if(searchKeyword.trim().equals("date")) {
 			keyword = bfKeyword.replace("-","");
 			map.put("keyword",keyword);
@@ -569,31 +569,31 @@ public class OnedayClassController {
 		}
 //		log.info("리스트 맵 : " + map);
 		List<VOndyclProUsersDto> vOndyclProUsersDtoList = this.onedayClassService.memberOndyclList(map);
-//		log.info("검색결과" + vOndyclProUsersVOList);
+//		log.info("검색결과" + vOndyclProUsersDtoList);
 		if(vOndyclProUsersDtoList != null && !vOndyclProUsersDtoList.isEmpty()) {
 			dayCheck(vOndyclProUsersDtoList);
 		}else {
 		}
 		int total = this.onedayClassService.countMberMyClass(map);
 		int currentPage = Integer.parseInt(map.get("currentPage").toString());
-		
+
 		int size = 10;
-		
+
 		ArticlePage<VOndyclProUsersDto> data = new ArticlePage<VOndyclProUsersDto>(total, currentPage, size, vOndyclProUsersDtoList, keyword);
-		
+
 		String url  = "/ondayClass/memberOndyclList";
-		
+
 		data.setUrl(url);
-		
+
 		return data;
 	}
-	
+
 	//프로 마이페이지에서 원데이클래스 관리
 	@GetMapping("/proMyClassList")
 	public String proMyClassList(Model model, Map<String,Object>map,
 			@RequestParam(value="currentPage",required=false,defaultValue="1")int currentPage) {
 		map.put("currentPage",currentPage);
-		
+
 		List<VOndyclProUsersDto> vOndyclProUsersDtoList = this.onedayClassService.proMyClassList(map);
 		if(vOndyclProUsersDtoList != null && !vOndyclProUsersDtoList.isEmpty()) {
 			dayCheck(vOndyclProUsersDtoList);
@@ -601,14 +601,14 @@ public class OnedayClassController {
 		int total = this.onedayClassService.countProMyClass(map);
 		int totalPrice = this.onedayClassService.getTotalPrice(map);
 //		log.info("totalPrice" + totalPrice);
-		
-		model.addAttribute("vOndyclProUsersVOList", vOndyclProUsersDtoList);
+
+		model.addAttribute("vOndyclProUsersDtoList", vOndyclProUsersDtoList);
 		model.addAttribute("cnt",total);
 		model.addAttribute("totalPrice",totalPrice);
-		
+
 		return "onedayClass/proMyClassList";
 	}
-	
+
 	@ResponseBody
 	@PostMapping("/proOndyclListAjax")
 	public Map<String, Object> proMyClassListAjax(@RequestBody(required=false) Map<String,Object> map,Model model) {
@@ -621,7 +621,7 @@ public class OnedayClassController {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		Map<String, Object> monthUserMap = new HashMap<String, Object>();
 		Map<String, Object> monthPriceMap = new HashMap<String, Object>();
-		
+
 		int startMonth = 20240001;
 		for(int i=1;i<=4;i++) {
 			startMonth += i*100;
@@ -633,7 +633,7 @@ public class OnedayClassController {
 		}
 		returnMap.put("monthUserMap",monthUserMap);
 		returnMap.put("monthPriceMap",monthPriceMap);
-		
+
 //		log.info("searchKeyword" + searchKeyword);
 //		log.info("bfKeyword" + bfKeyword);
 		if(searchKeyword.trim().equals("date")) {
@@ -645,7 +645,7 @@ public class OnedayClassController {
 		}else {
 			keyword = map.get("keyword").toString();
 		}
-		
+
 //		log.info("map" + map);
 		List<VOndyclProUsersDto> vOndyclProUsersDtoList = this.onedayClassService.proMyClassList(map);
 		if(vOndyclProUsersDtoList != null && !vOndyclProUsersDtoList.isEmpty()) {
@@ -654,27 +654,27 @@ public class OnedayClassController {
 		int total = this.onedayClassService.countProMyClass(map);
 		int size = 10;
 //		int totalPrice = this.onedayClassService.getTotalPrice(map);
-		
+
 		int currentPage = Integer.parseInt(map.get("currentPage").toString());
 		ArticlePage<VOndyclProUsersDto> data = new ArticlePage<VOndyclProUsersDto>(total, currentPage, size, vOndyclProUsersDtoList, keyword);
-		
+
 		String url  = "/onedayClass/proMyClassList";
-		
+
 		data.setUrl(url);
-		
+
 		returnMap.put("data",data);
-		
+
 //		String formatPrice = totalPrice + "";
 		DecimalFormat deF = new DecimalFormat("###,###");
-		
+
 		returnMap.put("totalPrice",deF.format(totalPrice));
 		returnMap.put("totalStar",totalStar);
 		returnMap.put("totalUser",totalUser);
 //		log.info("totalStar"+totalStar);
-		
+
 		return returnMap;
 	}
-	
+
 	//회원 원데이클래스 취소
 	@ResponseBody
 	@PostMapping("/mberClassCancel")
@@ -684,49 +684,49 @@ public class OnedayClassController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("mberId",mberId);
 		map.put("ondyclNo",ondyclNo);
-		
+
 		int result = this.onedayClassService.mberClassCancel(map);
-		
+
 		return result;
 	}
-	
+
 	//리뷰 등록모달에 원데이클래스 제목 전달
 	@ResponseBody
 	@GetMapping(value = "/mberReviewTitle", produces = "text/plain;charset=UTF-8")
 	public String mberReviewTitle(int ondyclNo) {
 		String ondyclNm = this.onedayClassService.mberReviewTitle(ondyclNo);
-		
+
 		return ondyclNm;
 	}
-	
+
 	//원데이클래스 상세페이지 리뷰 리스트 출력
 	@ResponseBody
 	@GetMapping("/reviewList")
 	public List<ReviewMberDto> reviewList(int ondyclNo) {
 		List<ReviewMberDto> reviewMberDtoList = this.onedayClassService.reviewList(ondyclNo);
-		
-		
+
+
 		return reviewMberDtoList;
 	}
-	
+
 	//리뷰 작성
 	@ResponseBody
 	@PostMapping("/createReview")
 	public int createReview(OndyclReviewDto ondyclReviewDto) {
-//		log.info("리뷰작성vo : " + ondyclReviewVO);
+//		log.info("리뷰작성vo : " + ondyclReviewDto);
 		int result = this.onedayClassService.createReview(ondyclReviewDto);
-		
+
 		return result;
 	}
-	
+
 	public String getFolder() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
 		String str = sdf.format(date);
-		
+
 		return str.replace("-", File.separator);
 	}
-	
+
 	//날짜 지났나 확인(지났으면 true 안지났으면 false)
 	public List<VOndyclProUsersDto> dayCheck(List<VOndyclProUsersDto> vOndyclProUsersDtoList) {
 		Date date = new Date();
@@ -737,10 +737,10 @@ public class OnedayClassController {
 		if(vOndyclProUsersDtoList.get(0).getOndyclSchdulDe().length() == 8) {
 			sdf = new SimpleDateFormat("yyyyMMdd");
 		}else if(vOndyclProUsersDtoList.get(0).getOndyclSchdulDe().substring(4, 5) == "-") {
-//			log.info("-형식 " + vOndyclProUsersVOList.get(0).getOndyclSchdulDe().substring(4, 5));
+//			log.info("-형식 " + vOndyclProUsersDtoList.get(0).getOndyclSchdulDe().substring(4, 5));
 			sdf = new SimpleDateFormat("yyyy-MM-dd");
 		}else {
-//			log.info(".형식 " + vOndyclProUsersVOList.get(0).getOndyclSchdulDe().substring(4, 5));
+//			log.info(".형식 " + vOndyclProUsersDtoList.get(0).getOndyclSchdulDe().substring(4, 5));
 			sdf = new SimpleDateFormat("yyyy.MM.dd");
 		}
 		String todayStr = sdf.format(date);
@@ -756,10 +756,10 @@ public class OnedayClassController {
 		} catch (ParseException e) {
 		    e.printStackTrace();
 		}
-		
+
 		return vOndyclProUsersDtoList;
 	}
-	
+
 	//날짜 지났나 확인(지났으면 true 안지났으면 false)
 	public List<BundleOndyclDto> dayCheckBundle(List<BundleOndyclDto> bundleOndyclDtoList) {
 		Date date = new Date();
@@ -767,29 +767,29 @@ public class OnedayClassController {
 		if(bundleOndyclDtoList.get(0).getOndyclSchdulDe().length() == 8) {
 			sdf = new SimpleDateFormat("yyyyMMdd");
 		}else if(bundleOndyclDtoList.get(0).getOndyclSchdulDe().substring(4, 5) == "-") {
-//			log.info("-형식 " + vOndyclProUsersVOList.get(0).getOndyclSchdulDe().substring(4, 5));
+//			log.info("-형식 " + vOndyclProUsersDtoList.get(0).getOndyclSchdulDe().substring(4, 5));
 			sdf = new SimpleDateFormat("yyyy-MM-dd");
 		}else {
-//			log.info(".형식 " + vOndyclProUsersVOList.get(0).getOndyclSchdulDe().substring(4, 5));
+//			log.info(".형식 " + vOndyclProUsersDtoList.get(0).getOndyclSchdulDe().substring(4, 5));
 			sdf = new SimpleDateFormat("yyyy.MM.dd");
 		}
 		String todayStr = sdf.format(date);
 		try {
 			Date today = sdf.parse(todayStr);
-			
+
 			for(int i = 0; i < bundleOndyclDtoList.size(); i++) {
 				Date ondyclSchdulDe = sdf.parse(bundleOndyclDtoList.get(i).getOndyclSchdulDe());
-				
+
 				boolean dayCheck = ondyclSchdulDe.before(today);
 				bundleOndyclDtoList.get(i).setDayCheck(dayCheck);
 			}
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
+
 		return bundleOndyclDtoList;
 	}
-	
+
 	//날짜 지났나 확인(지났으면 true 안지났으면 false)
 	public VOndyclProUsersDto dayCheck(VOndyclProUsersDto vOndyclProUsersDto) {
 		Date date = new Date();
@@ -797,27 +797,27 @@ public class OnedayClassController {
 		if(vOndyclProUsersDto.getOndyclSchdulDe().length() == 8) {
 			sdf = new SimpleDateFormat("yyyyMMdd");
 		}else if(vOndyclProUsersDto.getOndyclSchdulDe().substring(4, 5) == "-") {
-//			log.info("-형식 " + vOndyclProUsersVO.getOndyclSchdulDe().substring(4, 5));
+//			log.info("-형식 " + vOndyclProUsersDto.getOndyclSchdulDe().substring(4, 5));
 			sdf = new SimpleDateFormat("yyyy-MM-dd");
 		}else {
-//			log.info(".형식 " + vOndyclProUsersVO.getOndyclSchdulDe().substring(4, 5));
+//			log.info(".형식 " + vOndyclProUsersDto.getOndyclSchdulDe().substring(4, 5));
 			sdf = new SimpleDateFormat("yyyy.MM.dd");
 		}
 		String todayStr = sdf.format(date);
 		try {
 			Date today = sdf.parse(todayStr);
-			
+
 			Date ondyclSchdulDe = sdf.parse(vOndyclProUsersDto.getOndyclSchdulDe());
-			
+
 			boolean dayCheck = ondyclSchdulDe.before(today);
 			vOndyclProUsersDto.setDayCheck(dayCheck);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
+
 		return vOndyclProUsersDto;
 	}
-	
+
 	//날짜 지났나 확인(지났으면 true 안지났으면 false)
 	public VOndyclSchdulDto dayCheckSch(VOndyclSchdulDto vOndyclSchdulDto) {
 		Date date = new Date();
@@ -825,32 +825,32 @@ public class OnedayClassController {
 		if(vOndyclSchdulDto.getOndyclSchdulDe().length() == 8) {
 			sdf = new SimpleDateFormat("yyyyMMdd");
 		}else if(vOndyclSchdulDto.getOndyclSchdulDe().substring(4, 5) == "-") {
-//			log.info("-형식 " + vOndyclProUsersVO.getOndyclSchdulDe().substring(4, 5));
+//			log.info("-형식 " + vOndyclProUsersDto.getOndyclSchdulDe().substring(4, 5));
 			sdf = new SimpleDateFormat("yyyy-MM-dd");
 		}else {
-//			log.info(".형식 " + vOndyclProUsersVO.getOndyclSchdulDe().substring(4, 5));
+//			log.info(".형식 " + vOndyclProUsersDto.getOndyclSchdulDe().substring(4, 5));
 			sdf = new SimpleDateFormat("yyyy.MM.dd");
 		}
 		String todayStr = sdf.format(date);
 		try {
 			Date today = sdf.parse(todayStr);
-			
+
 			Date ondyclSchdulDe = sdf.parse(vOndyclSchdulDto.getOndyclSchdulDe());
-			
+
 			boolean dayCheck = ondyclSchdulDe.before(today);
 			vOndyclSchdulDto.setDayCheck(dayCheck);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
+
 		return vOndyclSchdulDto;
 	}
-	
+
 	public List<BundleOndyclDto> peopleCheckBundle(List<BundleOndyclDto> bundleOndyclDtoList) {
 		int ondyclNo = 0;
 		String peopleCkString = "";
 		boolean peopleCheck = true;
-		
+
 		for(int i = 0; i < bundleOndyclDtoList.size(); i++) {
 			ondyclNo = bundleOndyclDtoList.get(i).getOndyclNo();
 			peopleCkString = this.onedayClassService.getPeopleCheck(ondyclNo);
@@ -861,10 +861,10 @@ public class OnedayClassController {
 			}
 			bundleOndyclDtoList.get(i).setPeopleCheck(peopleCheck);
 		}
-		
+
 		return bundleOndyclDtoList;
 	}
-	
+
 	public VOndyclProUsersDto peopleCheck(VOndyclProUsersDto vOndyclProUsersDto) {
 		int ondyclNo = vOndyclProUsersDto.getOndyclNo();
 		boolean peopleCheck = true;

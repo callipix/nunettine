@@ -2,10 +2,10 @@ package kr.or.ddit.member.join.mapper;
 
 import java.util.Map;
 
-import kr.or.ddit.vo.AdresDto;
-import kr.or.ddit.vo.UsersDto;
-import kr.or.ddit.vo.VMberUsersDto;
-import kr.or.ddit.vo.VProUsersDto;
+import kr.or.ddit.dto.AdresDto;
+import kr.or.ddit.dto.UsersDto;
+import kr.or.ddit.dto.VMberUsersDto;
+import kr.or.ddit.dto.VProUsersDto;
 
 public interface MemberJoinMapper {
 

@@ -89,7 +89,7 @@
 		<result property="noticeRdcnt" column="NOTICE_RDCNT"/>
 		<result property="sprviseAtchmnflNo" column="SPRVISE_ATCHMNFL_NO"/>
 		<result property="mngrId" column="MNGR_ID"/>
-		<collection property="spAtVOList" resultMap="spAtMap"></collection>
+		<collection property="spAtDtoList" resultMap="spAtMap"></collection>
 	</resultMap>
 	
 	<!-- SPRVISE_ATCHMNFL 여러개의 첨부파일이 있음 -->

@@ -80,7 +80,7 @@
       ) 
       </select>
       
-      <resultMap type="oneInqryDto" id="oneInqryVOMap">
+      <resultMap type="oneInqryDto" id="oneInqryDtoMap">
          <result property="num" column="NUM"/>
       <result property="oneInqryNo" column="ONE_INQRY_NO"/>
       <result property="userId" column="USER_ID"/>
@@ -89,10 +89,10 @@
       <result property="oneInqryWritngDt" column="ONE_INQRY_WRITNG_DT"/>
       <result property="sprviseAtchmnflNo" column="SPRVISE_ATCHMNFL_NO"/>
       <collection property="sprviseAtchmnflDtoList" resultMap="sprviseAtchMap"></collection>
-      <collection property="oneInqryAnswerVOList" resultMap="oneInqryAnswerMap"></collection>
+      <collection property="oneInqryAnswerDtoList" resultMap="oneInqryAnswerMap"></collection>
       </resultMap>
       
-      <resultMap type="oneInqryAnswerVO" id="oneInqryAnswerMap">
+      <resultMap type="oneInqryAnswerDto" id="oneInqryAnswerMap">
          <result property="oneInqryAnswerNo" column="ONE_INQRY_ANSWER_NO"/>
       <result property="oneInqryAnswerCn" column="ONE_INQRY_ANSWER_CN"/>
       <result property="oneInqryAnswerWrDt" column="ONE_INQRY_ANSWER_WR_DT"/>
@@ -113,7 +113,7 @@
       <result property="updtDt" column="UPDT_DT"/>
    </resultMap>
       
-   <select id="searchList" parameterType="map" resultMap="oneInqryVOMap">
+   <select id="searchList" parameterType="map" resultMap="oneInqryDtoMap">
       WITH T AS (
       SELECT ROW_NUMBER() OVER (ORDER BY ONE_INQRY_WRITNG_DT DESC) NUM, B.*
       FROM(
@@ -148,7 +148,7 @@
       </select>
 
       
-      <select id="oneInqryNoAnswerList" parameterType="map" resultMap="oneInqryVOMap">
+      <select id="oneInqryNoAnswerList" parameterType="map" resultMap="oneInqryDtoMap">
          WITH T AS (
       SELECT ROW_NUMBER() OVER (ORDER BY ONE_INQRY_WRITNG_DT DESC) NUM, B.*
       FROM(
@@ -183,7 +183,7 @@
       WHERE T.NUM BETWEEN (#{currentPage}*10) - (10 - 1) AND (#{currentPage}*10)
       </select>
 
-      <select id="oneInqrySuccessList" parameterType="map" resultMap="oneInqryVOMap">
+      <select id="oneInqrySuccessList" parameterType="map" resultMap="oneInqryDtoMap">
          WITH T AS (
       SELECT ROW_NUMBER() OVER (ORDER BY ONE_INQRY_WRITNG_DT DESC) NUM, B.*
       FROM(
@@ -223,7 +223,7 @@
        VALUES(ONE_INQRY_NO_SEQ.NEXTVAL,#{userId}, #{oneInqrySj}, #{oneInqryCn},SYSDATE, SPRVISE_ATCHMNFL_NO_SEQ.NEXTVAL)
    </insert>
    
-   <select id="oneInqryDetail" parameterType="oneInqryDto" resultMap="oneInqryVOMap">
+   <select id="oneInqryDetail" parameterType="oneInqryDto" resultMap="oneInqryDtoMap">
       SELECT *
       FROM ONE_INQRY A
       LEFT JOIN ONE_INQRY_ANSWER B

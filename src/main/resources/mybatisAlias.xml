@@ -11,72 +11,70 @@
 	</settings>
 	<!-- 자주 사용하는 타입의 별칭을 세팅 -->
 	<typeAliases>
-		<typeAlias type="kr.or.ddit.vo.AdresDto" alias="adresDto" />
-		<typeAlias type="kr.or.ddit.vo.AftusBbscttAnswerDto" alias="aftusBbscttAnswerDto" />
-		<typeAlias type="kr.or.ddit.vo.AftusBbscttDto" alias="aftusBbscttDto" />
-		<typeAlias type="kr.or.ddit.vo.AuthorDto" alias="authorVO" />
-		<typeAlias type="kr.or.ddit.vo.BcityDto" alias="bcityVO" />
-		<typeAlias type="kr.or.ddit.vo.BrtcDto" alias="brtcVO" />
-		<typeAlias type="kr.or.ddit.vo.ChttSpceConectrDto" alias="chttSpceConectrVO" />
-		<typeAlias type="kr.or.ddit.vo.CommonCdDetailDto" alias="commonCdDetailVO" />
-		<typeAlias type="kr.or.ddit.vo.CommonCdDto" alias="commonCdVO" />
+		<typeAlias type="kr.or.ddit.dto.AdresDto" alias="adresDto" />
+		<typeAlias type="kr.or.ddit.dto.AftusBbscttAnswerDto" alias="aftusBbscttAnswerDto" />
+		<typeAlias type="kr.or.ddit.dto.AftusBbscttDto" alias="aftusBbscttDto" />
+		<typeAlias type="kr.or.ddit.dto.AuthorDto" alias="authorDto" />
+		<typeAlias type="kr.or.ddit.dto.BcityDto" alias="bcityDto" />
+		<typeAlias type="kr.or.ddit.dto.BrtcDto" alias="brtcDto" />
+		<typeAlias type="kr.or.ddit.dto.ChttSpceConectrDto" alias="chttSpceConectrDto" />
+		<typeAlias type="kr.or.ddit.dto.CommonCdDetailDto" alias="commonCdDetailDto" />
+		<typeAlias type="kr.or.ddit.dto.CommonCdDto" alias="commonCdDto" />
 		<typeAlias type="kr.or.ddit.admin.faq.dto.FaqDto" alias="faqDto" />
-		<typeAlias type="kr.or.ddit.admin.usersSearch.dto.UsersDto" alias="usersVO2" />
-		<typeAlias type="kr.or.ddit.vo.LbrtyBbscttAnswerDto" alias="lbrtyBbscttAnswerDto" />
-		<typeAlias type="kr.or.ddit.vo.LbrtyBbscttAnswerDto2" alias="lbrtyBbscttAnswerVO2" />
-		<typeAlias type="kr.or.ddit.vo.LbrtyBbscttDto" alias="lbrtyBbscttDto" />
-		<typeAlias type="kr.or.ddit.vo.LbrtyBbscttDto2" alias="lbrtyBbscttVO2" />
-		<typeAlias type="kr.or.ddit.vo.MberDto" alias="mberDto" />
-		<typeAlias type="kr.or.ddit.vo.MngrDto" alias="mngrVO" />
-		<typeAlias type="kr.or.ddit.vo.MssageDto" alias="mssageVO" />
+		<typeAlias type="kr.or.ddit.admin.usersSearch.dto.UsersDto" alias="usersDto2" />
+		<typeAlias type="kr.or.ddit.dto.LbrtyBbscttAnswerDto" alias="lbrtyBbscttAnswerDto" />
+		<typeAlias type="kr.or.ddit.dto.LbrtyBbscttAnswerDto2" alias="lbrtyBbscttAnswerDto2" />
+		<typeAlias type="kr.or.ddit.dto.LbrtyBbscttDto" alias="lbrtyBbscttDto" />
+		<typeAlias type="kr.or.ddit.dto.LbrtyBbscttDto2" alias="lbrtyBbscttDto2" />
+		<typeAlias type="kr.or.ddit.dto.MberDto" alias="mberDto" />
+		<typeAlias type="kr.or.ddit.dto.MngrDto" alias="mngrDto" />
+		<typeAlias type="kr.or.ddit.dto.MssageDto" alias="mssageDto" />
 		<typeAlias type="kr.or.ddit.admin.notice.dto.NoticeDto" alias="noticeDto" />
-		<typeAlias type="kr.or.ddit.alarm.vo.NtchDetailVO" alias="ntchDetailVO" />
-		<typeAlias type="kr.or.ddit.alarm.vo.NtchVO" alias="ntchVO" />
-		<typeAlias type="kr.or.ddit.vo.OndyclReviewDto" alias="ondyclReviewDto" />
-		<typeAlias type="kr.or.ddit.vo.OndyclSchdulDto" alias="ondyclSchdulVO" />
-		<typeAlias type="kr.or.ddit.vo.OndyclDto" alias="ondyclVO" />
-		<typeAlias type="kr.or.ddit.vo.OneInqryAnswerDto" alias="oneInqryAnswerVO" />
-		<typeAlias type="kr.or.ddit.vo.OneInqryDto" alias="oneInqryDto" />
-		<typeAlias type="kr.or.ddit.vo.ProBkmkDto" alias="proBkmkDto" />
+		<typeAlias type="kr.or.ddit.dto.OndyclReviewDto" alias="ondyclReviewDto" />
+		<typeAlias type="kr.or.ddit.dto.OndyclSchdulDto" alias="ondyclSchdulDto" />
+		<typeAlias type="kr.or.ddit.dto.OndyclDto" alias="ondyclDto" />
+		<typeAlias type="kr.or.ddit.dto.OneInqryAnswerDto" alias="oneInqryAnswerDto" />
+		<typeAlias type="kr.or.ddit.dto.OneInqryDto" alias="oneInqryDto" />
+		<typeAlias type="kr.or.ddit.dto.ProBkmkDto" alias="proBkmkDto" />
 		<typeAlias type="kr.or.ddit.board.procollabo.dto.ProCprtnAnswerDto" alias="proCprtnAnswerDto" />
 		<typeAlias type="kr.or.ddit.board.procollabo.dto.ProCprtnBbscttDto" alias="proCprtnBbscttDto" />
-		<typeAlias type="kr.or.ddit.vo.ProJoBbscttAnswerDto" alias="proJoBbscttAnswerVO" />
-		<typeAlias type="kr.or.ddit.vo.ProJoBbscttDto" alias="proJoBbscttDto" />
-		<typeAlias type="kr.or.ddit.vo.ProProflDto" alias="proProflDto" />
+		<typeAlias type="kr.or.ddit.dto.ProJoBbscttAnswerDto" alias="proJoBbscttAnswerDto" />
+		<typeAlias type="kr.or.ddit.dto.ProJoBbscttDto" alias="proJoBbscttDto" />
+		<typeAlias type="kr.or.ddit.dto.ProProflDto" alias="proProflDto" />
 		<typeAlias type="kr.or.ddit.board.prostory.dto.ProStoryBbscttDto" alias="proStoryBbscttDto" />
-		<typeAlias type="kr.or.ddit.vo.ProDto" alias="proDto" />
-		<typeAlias type="kr.or.ddit.vo.PrtfolioDto" alias="prtfolioDto" />
-		<typeAlias type="kr.or.ddit.vo.PunshDto" alias="punshVO" />
-		<typeAlias type="kr.or.ddit.vo.ResveDetailDto" alias="resveDetailVO" />
-		<typeAlias type="kr.or.ddit.vo.ResveDto" alias="resveVO" />
-		<typeAlias type="kr.or.ddit.vo.ReviewDto" alias="reviewDto" />
-		<typeAlias type="kr.or.ddit.vo.SetleDto" alias="setleVO" />
-		<typeAlias type="kr.or.ddit.vo.ShopngBundleDto" alias="shopngBundleDto" />
-		<typeAlias type="kr.or.ddit.vo.SntncDeclDto" alias="sntncDeclDto" />
-		<typeAlias type="kr.or.ddit.vo.SpcltyRealmDto" alias="spcltyRealmVO" />
-		<typeAlias type="kr.or.ddit.vo.SprviseAtchmnfl" alias="sprviseAtchmnfl" />
-		<typeAlias type="kr.or.ddit.vo.SprviseAtchmnflDto" alias="sprviseAtchmnflDto" />
-		<typeAlias type="kr.or.ddit.vo.SrvcBtfInqryDto" alias="srvcBtfInqryDto" />
-		<typeAlias type="kr.or.ddit.vo.SrvcRequstDto" alias="srvcRequstDto" />
-		<typeAlias type="kr.or.ddit.vo.TdmtngChSpMshgDto" alias="tdmtngChSpMshgVO" />
-		<typeAlias type="kr.or.ddit.vo.TdmtngPrtcpntDto" alias="tdmtngPrtcpntDto" />
-		<typeAlias type="kr.or.ddit.vo.TdmtngDto" alias="tdmtngDto" />
-		<typeAlias type="kr.or.ddit.vo.UserDeclDto" alias="userDeclDto" />
-		<typeAlias type="kr.or.ddit.vo.UsersDto" alias="usersDto" />
-		<typeAlias type="kr.or.ddit.vo.VMberUsersDto" alias="vMberUsersDto" />
-		<typeAlias type="kr.or.ddit.vo.VProUsersDto" alias="vProUsersDto" />
-		<typeAlias type="kr.or.ddit.vo.VOndyclProUsersDto" alias="vOndyclProUsersDto" />
-		<typeAlias type="kr.or.ddit.vo.VOndyclSchdulDto" alias="vOndyclSchdulDto" />
-		<typeAlias type="kr.or.ddit.vo.ReviewMberDto" alias="reviewMberVO" />
-		<typeAlias type="kr.or.ddit.vo.BundleOndyclDto" alias="bundleOndyclDto" />
-		<typeAlias type="kr.or.ddit.vo.UserNcnmMberPhotoDto" alias="userNcnmMberPhotoVO" />
-		<typeAlias type="kr.or.ddit.proservice.serviceInquiry.dto.V_SrvcBtfInqryDto" alias="vSrvcBtfInqryVO"/>
-		<typeAlias type="kr.or.ddit.proservice.serviceRequest.dto.V_SrvcRequstDto" alias="vSrvcRequstVO"/>
-		<typeAlias type="kr.or.ddit.vo.VCityDto" alias="vCityVO" />
-		<typeAlias type="kr.or.ddit.vo.VPrtfolioDto" alias="vPrtfolioVO" />
-		<typeAlias type="kr.or.ddit.vo.DongChartDto" alias="dongChartVO" />
-		<typeAlias type="kr.or.ddit.vo.DongChartDto2" alias="dongChartVO2" />
-		<typeAlias type="kr.or.ddit.vo.DongChartDto3" alias="dongChartVO3" />
+		<typeAlias type="kr.or.ddit.dto.ProDto" alias="proDto" />
+		<typeAlias type="kr.or.ddit.dto.PrtfolioDto" alias="prtfolioDto" />
+		<typeAlias type="kr.or.ddit.dto.PunshDto" alias="punshDto" />
+		<typeAlias type="kr.or.ddit.dto.ResveDetailDto" alias="resveDetailDto" />
+		<typeAlias type="kr.or.ddit.dto.ResveDto" alias="resveDto" />
+		<typeAlias type="kr.or.ddit.dto.ReviewDto" alias="reviewDto" />
+		<typeAlias type="kr.or.ddit.dto.SetleDto" alias="setleDto" />
+		<typeAlias type="kr.or.ddit.dto.ShopngBundleDto" alias="shopngBundleDto" />
+		<typeAlias type="kr.or.ddit.dto.SntncDeclDto" alias="sntncDeclDto" />
+		<typeAlias type="kr.or.ddit.dto.SpcltyRealmDto" alias="spcltyRealmDto" />
+		<typeAlias type="kr.or.ddit.dto.SprviseAtchmnfl" alias="sprviseAtchmnfl" />
+		<typeAlias type="kr.or.ddit.dto.SprviseAtchmnflDto" alias="sprviseAtchmnflDto" />
+		<typeAlias type="kr.or.ddit.dto.SrvcBtfInqryDto" alias="srvcBtfInqryDto" />
+		<typeAlias type="kr.or.ddit.dto.SrvcRequstDto" alias="srvcRequstDto" />
+		<typeAlias type="kr.or.ddit.dto.TdmtngChSpMshgDto" alias="tdmtngChSpMshgDto" />
+		<typeAlias type="kr.or.ddit.dto.TdmtngPrtcpntDto" alias="tdmtngPrtcpntDto" />
+		<typeAlias type="kr.or.ddit.dto.TdmtngDto" alias="tdmtngDto" />
+		<typeAlias type="kr.or.ddit.dto.UserDeclDto" alias="userDeclDto" />
+		<typeAlias type="kr.or.ddit.dto.UsersDto" alias="usersDto" />
+		<typeAlias type="kr.or.ddit.dto.VMberUsersDto" alias="vMberUsersDto" />
+		<typeAlias type="kr.or.ddit.dto.VProUsersDto" alias="vProUsersDto" />
+		<typeAlias type="kr.or.ddit.dto.VOndyclProUsersDto" alias="vOndyclProUsersDto" />
+		<typeAlias type="kr.or.ddit.dto.VOndyclSchdulDto" alias="vOndyclSchdulDto" />
+		<typeAlias type="kr.or.ddit.dto.ReviewMberDto" alias="reviewMberDto" />
+		<typeAlias type="kr.or.ddit.dto.BundleOndyclDto" alias="bundleOndyclDto" />
+		<typeAlias type="kr.or.ddit.dto.UserNcnmMberPhotoDto" alias="userNcnmMberPhotoDto" />
+		<typeAlias type="kr.or.ddit.proservice.serviceInquiry.dto.V_SrvcBtfInqryDto" alias="vSrvcBtfInqryDto"/>
+		<typeAlias type="kr.or.ddit.proservice.serviceRequest.dto.V_SrvcRequstDto" alias="vSrvcRequstDto"/>
+		<typeAlias type="kr.or.ddit.dto.VCityDto" alias="vCityDto" />
+		<typeAlias type="kr.or.ddit.dto.VPrtfolioDto" alias="vPrtfolioDto" />
+		<typeAlias type="kr.or.ddit.dto.DongChartDto" alias="dongChartDto" />
+		<typeAlias type="kr.or.ddit.dto.DongChartDto2" alias="dongChartDto2" />
+		<typeAlias type="kr.or.ddit.dto.DongChartDto3" alias="dongChartDto3" />
 		
 	</typeAliases>
 </configuration>

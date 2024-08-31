@@ -160,12 +160,12 @@
 		<result property="proJoBbscttRdcnt" column="PRO_JO_BBSCTT_RDCNT"/>
 		<result property="mberId" column="MBER_ID"/>
 		<result property="sprviseAtchmnflNo" column="SPRVISE_ATCHMNFL_NO"/>
-		<collection property="proJoBbscttAnswerVOList" resultMap="proJoBbscttAnswerMap"></collection>
-		<collection property="mberVOList" resultMap="mberMap"></collection>
+		<collection property="proJoBbscttAnswerDtoList" resultMap="proJoBbscttAnswerMap"></collection>
+		<collection property="mberDtoList" resultMap="mberMap"></collection>
 		<collection property="sprviseAtchmnflDtoList" resultMap="sprviseAtchMap"></collection>
 	</resultMap>
 	
-	<resultMap type="proJoBbscttAnswerVO" id="proJoBbscttAnswerMap">
+	<resultMap type="proJoBbscttAnswerDto" id="proJoBbscttAnswerMap">
 		<result property="proJoAnswerNo" column="PRO_JO_ANSWER_NO"/>
 		<result property="proJoBbscttNo" column="PRO_JO_BBSCTT_NO"/>
 		<result property="proJoAnswerCn" column="PRO_JO_ANSWER_CN"/>

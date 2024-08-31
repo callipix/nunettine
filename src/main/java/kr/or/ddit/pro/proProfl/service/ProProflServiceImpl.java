@@ -3,13 +3,13 @@ package kr.or.ddit.pro.proProfl.service;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.ddit.vo.*;
+import kr.or.ddit.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.ddit.pro.proProfl.mapper.ProProflMapper;
-import kr.or.ddit.vo.ProProflDto;
+import kr.or.ddit.dto.ProProflDto;
 
 @Service
 @RequiredArgsConstructor

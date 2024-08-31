@@ -6,8 +6,8 @@ import java.util.Map;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.proservice.serviceRequest.dto.V_SrvcRequstDto;
-import kr.or.ddit.vo.SrvcRequstDto;
-import kr.or.ddit.vo.UsersDto;
+import kr.or.ddit.dto.SrvcRequstDto;
+import kr.or.ddit.dto.UsersDto;
 
 public interface SrvcRequstService {
 

@@ -122,16 +122,16 @@ button{
 // 			$("#reDeTbody").html("");
 // 			$("#reModalHead").html(headStr);
 // 			// console.log("모달쪽 성공",res);
-// 			$.each(res, function (idx, reviewMberVO) {
+// 			$.each(res, function (idx, reviewMberDto) {
 // 				str += `<div class="starRev">`;
 // 				console.log("foreach res",res);
-// 				if(reviewMberVO.mberProflPhoto == null || reviewMberVO.mberProflPhoto == ''){
-// 					str += "<img class='reDeProfile' src='/images/2024/profile.jpg'>"+reviewMberVO.mberNcnm + "<br>";
+// 				if(reviewMberDto.mberProflPhoto == null || reviewMberDto.mberProflPhoto == ''){
+// 					str += "<img class='reDeProfile' src='/images/2024/profile.jpg'>"+reviewMberDto.mberNcnm + "<br>";
 // 				}else{
-// 					str += "<img class='reDeProfile' src='"+reviewMberVO.mberProflPhoto+"'>"+reviewMberVO.mberNcnm + "<br>";
+// 					str += "<img class='reDeProfile' src='"+reviewMberDto.mberProflPhoto+"'>"+reviewMberDto.mberNcnm + "<br>";
 // 				}
-// 				str += starColor(reviewMberVO.ondyclReScore);
-// 				str += "<textarea rows='5' readonly class='form-control' style='margin-top:10px;'>"+reviewMberVO.ondyclReCn+"</textarea>";
+// 				str += starColor(reviewMberDto.ondyclReScore);
+// 				str += "<textarea rows='5' readonly class='form-control' style='margin-top:10px;'>"+reviewMberDto.ondyclReCn+"</textarea>";
 // 			});
 // 			$("#reDeTbody").append(str);
 // 		}
@@ -180,19 +180,19 @@ $(function(){
 					</td>
 				</tr>`;
 				}else{
-					$.each(res, function (idx, reviewMberVO) {
+					$.each(res, function (idx, reviewMberDto) {
 						str += "<tr style=\"cursor: pointer;\">";
 						console.log("res : ", res);
-						str += "<td onclick='reDeFunc("+reviewMberVO.ondyclNo+")'>" + starTitColor(reviewMberVO.ondyclReScore) + "</td>";
-						str += "<td onclick='reDeFunc("+reviewMberVO.ondyclNo+")' style='overflow: hidden; white-space: normal; display : block; text-overflow: ellipsis;'>" + reviewMberVO.ondyclReCn + "</td>";
-						str += "<td onclick='reDeFunc("+reviewMberVO.ondyclNo+")'>";
-						if(reviewMberVO.mberProflPhoto == null || reviewMberVO.mberProflPhoto == ''){
+						str += "<td onclick='reDeFunc("+reviewMberDto.ondyclNo+")'>" + starTitColor(reviewMberDto.ondyclReScore) + "</td>";
+						str += "<td onclick='reDeFunc("+reviewMberDto.ondyclNo+")' style='overflow: hidden; white-space: normal; display : block; text-overflow: ellipsis;'>" + reviewMberDto.ondyclReCn + "</td>";
+						str += "<td onclick='reDeFunc("+reviewMberDto.ondyclNo+")'>";
+						if(reviewMberDto.mberProflPhoto == null || reviewMberDto.mberProflPhoto == ''){
 							str += "<img class='reDeProfile' src='/images/2024/profile.jpg'>";
 						}else{
-							str += "<img class='reDeProfile' src='"+reviewMberVO.mberProflPhoto+"'>";
+							str += "<img class='reDeProfile' src='"+reviewMberDto.mberProflPhoto+"'>";
 						}
-						str += reviewMberVO.mberNcnm + "</td>";
-						str += "<td onclick='reDeFunc("+reviewMberVO.ondyclNo+")'>" + reviewMberVO.ondyclReWrDt + "</td>";
+						str += reviewMberDto.mberNcnm + "</td>";
+						str += "<td onclick='reDeFunc("+reviewMberDto.ondyclNo+")'>" + reviewMberDto.ondyclReWrDt + "</td>";
 						str += "</tr>";
 					});
 				}
@@ -737,14 +737,14 @@ $(document).ready(function(){
 										</div>
 									</c:if>
 									
-									<c:forEach var="userNcnmMberPhotoVO" items="${userNcnmMberPhotoDtoList}" varStatus="stat">
+									<c:forEach var="userNcnmMberPhotoDto" items="${userNcnmMberPhotoDtoList}" varStatus="stat">
 										<div style="margin-bottom:10px;">
 											<c:choose>
-												<c:when test="${not empty userNcnmMberPhotoVO.mberProflPhoto}">
-													<img src="${userNcnmMberPhotoVO.mberProflPhoto}" style='margin-right:10px;'>${userNcnmMberPhotoVO.userNcnm}
+												<c:when test="${not empty userNcnmMberPhotoDto.mberProflPhoto}">
+													<img src="${userNcnmMberPhotoDto.mberProflPhoto}" style='margin-right:10px;'>${userNcnmMberPhotoDto.userNcnm}
 												</c:when>
 												<c:otherwise>
-													<img src="/images/2024/profile.jpg" style='margin-right:10px;'>${userNcnmMberPhotoVO.userNcnm}
+													<img src="/images/2024/profile.jpg" style='margin-right:10px;'>${userNcnmMberPhotoDto.userNcnm}
 												</c:otherwise>
 											</c:choose>
 										</div>

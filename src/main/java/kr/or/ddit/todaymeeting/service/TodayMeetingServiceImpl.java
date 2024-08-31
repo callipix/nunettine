@@ -8,15 +8,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import kr.or.ddit.vo.TdmtngDto;
-import kr.or.ddit.vo.TdmtngPrtcpntDto;
+import kr.or.ddit.dto.TdmtngDto;
+import kr.or.ddit.dto.TdmtngPrtcpntDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.todaymeeting.VChatRoom;
 import kr.or.ddit.todaymeeting.mapper.TodayMeetingMapper;
-import kr.or.ddit.vo.UsersDto;
+import kr.or.ddit.dto.UsersDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

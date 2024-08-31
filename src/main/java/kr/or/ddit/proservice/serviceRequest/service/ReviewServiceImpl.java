@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.ddit.vo.ReviewDto;
+import kr.or.ddit.dto.ReviewDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.proservice.serviceRequest.mapper.ReviewMapper;
-import kr.or.ddit.vo.CommonCdDetailDto;
-import kr.or.ddit.vo.UsersDto;
+import kr.or.ddit.dto.CommonCdDetailDto;
+import kr.or.ddit.dto.UsersDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

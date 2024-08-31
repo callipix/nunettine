@@ -2,7 +2,7 @@ package kr.or.ddit.pro.proBkmk.mapper;
 
 import java.util.List;
 
-import kr.or.ddit.vo.ProBkmkDto;
+import kr.or.ddit.dto.ProBkmkDto;
 import org.apache.ibatis.annotations.Param;
 
 public interface ProBkmkMapper {

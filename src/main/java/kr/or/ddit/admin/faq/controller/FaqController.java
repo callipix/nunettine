@@ -27,6 +27,7 @@ public class FaqController {
 	public String faqList(Model model) {
 		List<FaqDto> faqList = faqService.faqList();
 		model.addAttribute("faqList",faqList);
+		log.info("faqList {} " ,faqList.toString());
 		return "faq/list";
 	}
 	
@@ -53,7 +54,7 @@ public class FaqController {
 	@GetMapping(value="/create", params="register")
 	public String createRegister(FaqDto faqDto) {
 		
-		log.info("createRegister->faqVO:{}" , faqDto);
+		log.info("createRegister->faqDto:{}" , faqDto);
 		
 		return "faq/create";
 	}
@@ -62,7 +63,7 @@ public class FaqController {
 	public String createRegisterPost(FaqDto faqDto) {
 		
 		faqDto.setMngrId("testAdmin");
-		log.info("createRegisterPost->faqVO: {}" , faqDto);
+		log.info("createRegisterPost->faqDto: {}" , faqDto);
 		
 		int result = this.faqService.createRegister(faqDto);
 		log.info("createRegister->result: {}" , result);

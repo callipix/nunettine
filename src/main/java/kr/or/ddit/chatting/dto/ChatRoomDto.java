@@ -2,7 +2,7 @@ package kr.or.ddit.chatting.dto;
 
 import java.util.List;
 
-import kr.or.ddit.vo.UsersDto;
+import kr.or.ddit.dto.UsersDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -5,8 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import kr.or.ddit.vo.AdresDto;
-import kr.or.ddit.vo.ProDto;
+import kr.or.ddit.dto.AdresDto;
+import kr.or.ddit.dto.ProDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.or.ddit.pro.proProfl.service.ProProflService;
 import kr.or.ddit.pro.proSearch.service.SearchProService;
 import kr.or.ddit.util.ArticlePage3;
-import kr.or.ddit.vo.BcityDto;
-import kr.or.ddit.vo.SpcltyRealmDto;
+import kr.or.ddit.dto.BcityDto;
+import kr.or.ddit.dto.SpcltyRealmDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

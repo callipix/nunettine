@@ -3,8 +3,8 @@ package kr.or.ddit.admin.decl.mapper;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.ddit.vo.*;
-import kr.or.ddit.vo.SntncDeclDto;
+import kr.or.ddit.dto.*;
+import kr.or.ddit.dto.SntncDeclDto;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

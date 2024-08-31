@@ -10,7 +10,7 @@
 		</if>
 	</sql>
 	
-	<select id="test" resultType="dongChartVO">
+	<select id="test" resultType="dongChartDto">
 		SELECT  (SELECT COUNT(*) FROM PRO
 	            WHERE spclty_realm_code LIKE 'SR1%') AS pet,
 	        (SELECT COUNT(*) FROM PRO
@@ -29,7 +29,7 @@
 		FROM DUAL
 	</select>
 	
-	<select id="test2" resultType="dongChartVO2">
+	<select id="test2" resultType="dongChartDto2">
 		select (
 			select count(*) from SRVC_REQUST
 			where SRVC_REQUST_WR_DT BETWEEN TO_DATE('2024-01-01', 'YYYY-MM-DD')
@@ -83,7 +83,7 @@
 		from dual
 	</select>
 	
-	<select id="test3" resultType="dongChartVO3">
+	<select id="test3" resultType="dongChartDto3">
 		select
 			(select count(*) from SRVC_REQUST
 			where SRVC_REQUST_PROCESS_AT = 0

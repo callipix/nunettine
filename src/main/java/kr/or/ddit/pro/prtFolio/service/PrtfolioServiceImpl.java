@@ -7,13 +7,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
-import kr.or.ddit.vo.SprviseAtchmnflDto;
+import kr.or.ddit.dto.SprviseAtchmnflDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.pro.prtFolio.mapper.PrtfolioMapper;
-import kr.or.ddit.vo.PrtfolioDto;
+import kr.or.ddit.dto.PrtfolioDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

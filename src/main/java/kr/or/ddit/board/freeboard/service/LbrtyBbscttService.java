@@ -3,8 +3,8 @@ package kr.or.ddit.board.freeboard.service;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.ddit.vo.*;
-import kr.or.ddit.vo.LbrtyBbscttAnswerDto;
+import kr.or.ddit.dto.*;
+import kr.or.ddit.dto.LbrtyBbscttAnswerDto;
 
 public interface LbrtyBbscttService {
 

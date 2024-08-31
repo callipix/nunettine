@@ -23,8 +23,8 @@
 		order by count desc
 	</select>
 
-	<select id="lbrtyBbscttVo" parameterType="sntncDeclDto"
-		resultType="lbrtyBbscttVO2">
+	<select id="lbrtyBbscttDto" parameterType="sntncDeclDto"
+		resultType="lbrtyBbscttDto2">
 		select * from V_${declTarget}
 		where LBRTY_BBSCTT_NO =
 		${declBbscttNo}
@@ -117,7 +117,7 @@
 	</update>
 
 	<select id="declHistoryList" parameterType="string"
-		resultType="punshVO">
+		resultType="punshDto">
 		select PUNSH_NO, PUNSH_END_DE, PUNSH_STR_DE, USER_ID
 		from
 		punsh

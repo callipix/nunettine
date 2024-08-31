@@ -9,7 +9,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
-import kr.or.ddit.vo.AdresDto;
+import kr.or.ddit.dto.AdresDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.member.mypage.service.MemberMypageService;
-import kr.or.ddit.vo.VMberUsersDto;
+import kr.or.ddit.dto.VMberUsersDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller

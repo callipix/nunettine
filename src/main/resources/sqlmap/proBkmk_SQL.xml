@@ -19,11 +19,11 @@
 		<result property="proBkmkNo" column="PRO_BKMK_NO"/>
 		<result property="proId" column="PRO_ID"/>
 		<result property="mberId" column="MBER_ID"/>
-		<collection property="BkmkVOList" ofType="proDto" resultMap="BkmkVOMap"></collection>
-		<collection property="userBkVOList" resultMap="userBkVOMap"></collection>
+		<collection property="BkmkDtoList" ofType="proDto" resultMap="BkmkDtoMap"></collection>
+		<collection property="userBkDtoList" resultMap="userBkDtoMap"></collection>
 	</resultMap>
 	
-	<resultMap type="proDto" id="BkmkVOMap">
+	<resultMap type="proDto" id="BkmkDtoMap">
 		<result property="proMbtlnum" column="PRO_MBTLNUM"/>
 		<result property="sexdstnTy" column="SEXDSTN_TY"/>
 		<result property="email" column="EMAIL"/>
@@ -31,7 +31,7 @@
 		<result property="spcltyRealmCode" column="SPCLTY_REALM_CODE"/>
 	</resultMap>
 	
-	<resultMap type="UsersVO" id="userBkVOMap">
+	<resultMap type="UsersDto" id="userBkDtoMap">
 		<result property="userId" column="USER_ID"/>
 		<result property="userNcnm" column="USER_NCNM"/>
 	</resultMap>

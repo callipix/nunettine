@@ -8,14 +8,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import kr.or.ddit.vo.*;
+import kr.or.ddit.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.board.freeboard.mapper.LbrtyBbscttMapper;
-import kr.or.ddit.vo.LbrtyBbscttDto;
+import kr.or.ddit.dto.LbrtyBbscttDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

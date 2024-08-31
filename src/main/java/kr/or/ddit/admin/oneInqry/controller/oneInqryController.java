@@ -8,8 +8,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import kr.or.ddit.vo.OneInqryDto;
-import kr.or.ddit.vo.SprviseAtchmnflDto;
+import kr.or.ddit.dto.OneInqryDto;
+import kr.or.ddit.dto.SprviseAtchmnflDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,8 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.or.ddit.admin.oneInqry.service.OneInqryService;
 import kr.or.ddit.util.ArticlePage;
 import kr.or.ddit.util.fileupload.service.FileuploadService;
-import kr.or.ddit.vo.OneInqryAnswerDto;
-import kr.or.ddit.vo.UsersDto;
+import kr.or.ddit.dto.OneInqryAnswerDto;
+import kr.or.ddit.dto.UsersDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

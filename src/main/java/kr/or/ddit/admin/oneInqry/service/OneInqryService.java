@@ -3,10 +3,10 @@ package kr.or.ddit.admin.oneInqry.service;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.ddit.vo.OneInqryDto;
+import kr.or.ddit.dto.OneInqryDto;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.or.ddit.vo.UsersDto;
+import kr.or.ddit.dto.UsersDto;
 
 public interface OneInqryService {
 	

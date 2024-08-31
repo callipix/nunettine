@@ -6,7 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import kr.or.ddit.vo.ProJoBbscttDto;
+import kr.or.ddit.dto.ProJoBbscttDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -67,7 +67,7 @@ public class ProHuntingController {
 
 		
 		List<ProJoBbscttDto> proHuntingList  = this.proHuntingService.listAjax(paramMap);
-		log.info("구인 게시판 proHuntingList : " + proHuntingList);
+		log.info("구인 게시판 proHuntingList : {}", proHuntingList);
 		
 		ArticlePage<ProJoBbscttDto> data = new ArticlePage<ProJoBbscttDto>(total, currentPage, size, proHuntingList, keyword);
 		

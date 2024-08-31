@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ddit.pro.proProfl.mapper.ProProflMapper">
 	
-	<select id="list" resultType="bCityVO">
+	<select id="list" resultType="bCityDto">
 		SELECT * FROM BCITY ORDER BY BCITY_CODE
 	</select>
 	
-	<select id="getBrtcList" resultType="vCityVO">
+	<select id="getBrtcList" resultType="vCityDto">
 		SELECT BRTC_NM FROM V_CITY WHERE BCITY_NM = #{bcityNm}
 	</select>
 	
@@ -64,7 +64,7 @@
 		<result property="prtfolioWrDt" column="PRTFOLIO_WR_DT"/>
 		<result property="sprviseAtchmnflNo" column="SPRVISE_ATCHMNFL_NO"/>
 		<result property="proId" column="PRO_ID"/>
-		<collection property="SpAtVOList" resultMap="SpAtMap"></collection>
+		<collection property="SpAtDtoList" resultMap="SpAtMap"></collection>
 	</resultMap>
 	
 	<resultMap type="sprviseAtchmnflDto" id="SpAtMap">
@@ -89,7 +89,7 @@
 		WHERE PRO_ID=#{proId}
 	</select>
 	
-	<select id="portfolioPicture" parameterType="String" resultType="vPrtfolioVO">
+	<select id="portfolioPicture" parameterType="String" resultType="vPrtfolioDto">
 	    SELECT * 
 	    FROM V_PRTFOLIO
 	    WHERE SPRVISE_ATCHMNFL_NO = #{sprviseAtchmnflNo}
@@ -149,39 +149,39 @@
 	</select>
 	
 	
-	<resultMap type="reviewDto" id="reviewVOMap">
+	<resultMap type="reviewDto" id="reviewDtoMap">
 		<result property="reNo" column="RE_NO"/>
 		<result property="reTy" column="RE_TY"/>
 		<result property="reCn" column="RE_CN"/>
 		<result property="reWrDt" column="RE_WR_DT"/>
 		<result property="reScore" column="RE_SCORE"/>
 		<result property="srvcRequstNo" column="SRVC_REQUST_NO"/>
-		<collection property="srvcReVOList" resultMap="srvcReviewVOMap"></collection>
-		<collection property="mberReviewVOList" resultMap="mberReviewVOMap"></collection>
-		<collection property="userReviewVOList" resultMap="userReviewVOMap"></collection>
-		<collection property="comReviewVOList" resultMap="comReviewVOMap"></collection>
+		<collection property="srvcReDtoList" resultMap="srvcReviewDtoMap"></collection>
+		<collection property="mberReviewDtoList" resultMap="mberReviewDtoMap"></collection>
+		<collection property="userReviewDtoList" resultMap="userReviewDtoMap"></collection>
+		<collection property="comReviewDtoList" resultMap="comReviewDtoMap"></collection>
 	</resultMap>
 	
-	<resultMap type="srvcRequstDto" id="srvcReviewVOMap">
+	<resultMap type="srvcRequstDto" id="srvcReviewDtoMap">
 		<result property="mberId" column="MBER_ID"/>
 		<result property="proId" column="PRO_ID"/>
 	</resultMap>
 	
-	<resultMap type="mberDto" id="mberReviewVOMap">
+	<resultMap type="mberDto" id="mberReviewDtoMap">
 		<result property="mberProflPhoto" column="MBER_PROFL_PHOTO"/>
 		<result property="mberId" column="MBER_ID"/>
 	</resultMap>
 	
-	<resultMap type="usersDto" id="userReviewVOMap">
+	<resultMap type="usersDto" id="userReviewDtoMap">
 		<result property="userNcnm" column="USER_NCNM"/>
 	</resultMap>
 	
-	<resultMap type="commonCdDetailVO" id="comReviewVOMap">
+	<resultMap type="commonCdDetailDto" id="comReviewDtoMap">
 		<result property="commonCdDetail" column="COMMON_CD_DETAIL"/>
 		<result property="commonCdDetailNm" column="COMMON_CD_DETAIL_NM"/>
 	</resultMap>
 	
-	<select id="getReview" parameterType="hashMap" resultMap="reviewVOMap">
+	<select id="getReview" parameterType="hashMap" resultMap="reviewDtoMap">
 	WITH T AS (
 	    SELECT A.*,
 	           B.PRO_ID,
@@ -221,7 +221,7 @@
 	
 	
 	<!-- 동균 신고로 인해 추가 -->
-	<select id="declComCdDeSelect" resultType="commonCdDetailVO">
+	<select id="declComCdDeSelect" resultType="commonCdDetailDto">
 		select COMMON_CD_DETAIL, COMMON_CD, COMMON_CD_DETAIL_NM, 
 			COMMON_CD_DETAIL_EXPLAN, COMMON_CD_DETAIL_USE_WH
 		from COMMON_CD_DETAIL

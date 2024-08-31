@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 
-import kr.or.ddit.vo.OneInqryDto;
+import kr.or.ddit.dto.OneInqryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.or.ddit.admin.oneInqry.mapper.OneInqryMapper;
 import kr.or.ddit.proservice.serviceInquiry.mapper.SrvcBtfInqryMapper;
 import kr.or.ddit.util.fileupload.service.FileuploadService;
-import kr.or.ddit.vo.UsersDto;
+import kr.or.ddit.dto.UsersDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

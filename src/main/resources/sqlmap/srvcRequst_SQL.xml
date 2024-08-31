@@ -7,11 +7,11 @@
 		FROM
 		(SELECT * FROM V_SRVC_REQUST
 		<choose>
-			<when test='"ET02".equals(vSrvcRequstVO.emplyrTy)'>
-				WHERE emplyr_ty=#{vSrvcRequstVO.emplyrTy} AND MBER_ID=#{vSrvcRequstVO.userId}
+			<when test='"ET02".equals(vSrvcRequstDto.emplyrTy)'>
+				WHERE emplyr_ty=#{vSrvcRequstDto.emplyrTy} AND MBER_ID=#{vSrvcRequstDto.userId}
 			</when>
-			<when test='"ET01".equals(vSrvcRequstVO.emplyrTy)'>
-				WHERE emplyr_ty=#{vSrvcRequstVO.emplyrTy} AND PRO_ID=#{vSrvcRequstVO.userId}
+			<when test='"ET01".equals(vSrvcRequstDto.emplyrTy)'>
+				WHERE emplyr_ty=#{vSrvcRequstDto.emplyrTy} AND PRO_ID=#{vSrvcRequstDto.userId}
 			</when>
 		</choose>
 		) A
@@ -33,12 +33,12 @@
 		FROM
 		(SELECT * FROM V_SRVC_REQUST
 		<choose>
-			<when test='"ET02".equals(vSrvcRequstVO.emplyrTy)'>
-				WHERE emplyr_ty=#{vSrvcRequstVO.emplyrTy} AND MBER_ID=#{vSrvcRequstVO.userId}
+			<when test='"ET02".equals(vSrvcRequstDto.emplyrTy)'>
+				WHERE emplyr_ty=#{vSrvcRequstDto.emplyrTy} AND MBER_ID=#{vSrvcRequstDto.userId}
 				AND SRVC_REQUST_PROCESS_AT = 0
 			</when>
-			<when test='"ET01".equals(vSrvcRequstVO.emplyrTy)'>
-				WHERE emplyr_ty=#{vSrvcRequstVO.emplyrTy} AND PRO_ID=#{vSrvcRequstVO.userId}
+			<when test='"ET01".equals(vSrvcRequstDto.emplyrTy)'>
+				WHERE emplyr_ty=#{vSrvcRequstDto.emplyrTy} AND PRO_ID=#{vSrvcRequstDto.userId}
 				AND SRVC_REQUST_PROCESS_AT = 0
 			</when>
 		</choose>
@@ -50,12 +50,12 @@
 		FROM
 		(SELECT * FROM V_SRVC_REQUST
 		<choose>
-			<when test='"ET02".equals(vSrvcRequstVO.emplyrTy)'>
-				WHERE emplyr_ty=#{vSrvcRequstVO.emplyrTy} AND MBER_ID=#{vSrvcRequstVO.userId}
+			<when test='"ET02".equals(vSrvcRequstDto.emplyrTy)'>
+				WHERE emplyr_ty=#{vSrvcRequstDto.emplyrTy} AND MBER_ID=#{vSrvcRequstDto.userId}
 				AND SRVC_REQUST_PROCESS_AT = 1
 			</when>
-			<when test='"ET01".equals(vSrvcRequstVO.emplyrTy)'>
-				WHERE emplyr_ty=#{vSrvcRequstVO.emplyrTy} AND PRO_ID=#{vSrvcRequstVO.userId}
+			<when test='"ET01".equals(vSrvcRequstDto.emplyrTy)'>
+				WHERE emplyr_ty=#{vSrvcRequstDto.emplyrTy} AND PRO_ID=#{vSrvcRequstDto.userId}
 				AND SRVC_REQUST_PROCESS_AT = 1
 			</when>
 		</choose>
@@ -67,19 +67,19 @@
 		FROM
 		(SELECT * FROM V_SRVC_REQUST
 		<choose>
-			<when test='"ET02".equals(vSrvcRequstVO.emplyrTy)'>
-				WHERE emplyr_ty=#{vSrvcRequstVO.emplyrTy} AND MBER_ID=#{vSrvcRequstVO.userId}
+			<when test='"ET02".equals(vSrvcRequstDto.emplyrTy)'>
+				WHERE emplyr_ty=#{vSrvcRequstDto.emplyrTy} AND MBER_ID=#{vSrvcRequstDto.userId}
 				AND SRVC_REQUST_PROCESS_AT = 2
 			</when>
-			<when test='"ET01".equals(vSrvcRequstVO.emplyrTy)'>
-				WHERE emplyr_ty=#{vSrvcRequstVO.emplyrTy} AND PRO_ID=#{vSrvcRequstVO.userId}
+			<when test='"ET01".equals(vSrvcRequstDto.emplyrTy)'>
+				WHERE emplyr_ty=#{vSrvcRequstDto.emplyrTy} AND PRO_ID=#{vSrvcRequstDto.userId}
 				AND SRVC_REQUST_PROCESS_AT = 2
 			</when>
 		</choose>
 		) A
    	</select>
 	
-	<select id="srvcRqList" parameterType="map" resultType="vSrvcRequstVO">
+	<select id="srvcRqList" parameterType="map" resultType="vSrvcRequstDto">
 		WITH T AS (
         SELECT ROW_NUMBER() OVER (ORDER BY B.SRVC_REQUST_WR_DT DESC) AS NUM, B.* 
         FROM (
@@ -88,11 +88,11 @@
                LEFT JOIN V_PRO_USERS B
                ON A.PRO_ID = B.PRO_ID
             <choose>
-                <when test='"ET02".equals(vSrvcRequstVO.emplyrTy)'>
-                    WHERE A.emplyr_ty=#{vSrvcRequstVO.emplyrTy} AND A.MBER_ID=#{vSrvcRequstVO.userId}
+                <when test='"ET02".equals(vSrvcRequstDto.emplyrTy)'>
+                    WHERE A.emplyr_ty=#{vSrvcRequstDto.emplyrTy} AND A.MBER_ID=#{vSrvcRequstDto.userId}
                 </when>
-                <when test='"ET01".equals(vSrvcRequstVO.emplyrTy)'>
-                    WHERE A.emplyr_ty=#{vSrvcRequstVO.emplyrTy} AND A.PRO_ID=#{vSrvcRequstVO.userId}
+                <when test='"ET01".equals(vSrvcRequstDto.emplyrTy)'>
+                    WHERE A.emplyr_ty=#{vSrvcRequstDto.emplyrTy} AND A.PRO_ID=#{vSrvcRequstDto.userId}
                 </when>
             </choose>
             <choose>
@@ -113,7 +113,7 @@
 	    WHERE T.NUM BETWEEN (#{currentPage}*#{size}) - (#{size} - 1) AND (#{currentPage}*#{size})
 	</select>
 
-	<select id="srvcRqNoAnswerList" parameterType="map" resultType="vSrvcRequstVO">
+	<select id="srvcRqNoAnswerList" parameterType="map" resultType="vSrvcRequstDto">
 		WITH T AS (
         SELECT ROW_NUMBER() OVER (ORDER BY B.SRVC_REQUST_WR_DT DESC) AS NUM, B.* 
         FROM (
@@ -122,12 +122,12 @@
                LEFT JOIN V_PRO_USERS B
                ON A.PRO_ID = B.PRO_ID
             <choose>
-                <when test='"ET02".equals(vSrvcRequstVO.emplyrTy)'>
-                    WHERE A.emplyr_ty=#{vSrvcRequstVO.emplyrTy} AND A.MBER_ID=#{vSrvcRequstVO.userId}
+                <when test='"ET02".equals(vSrvcRequstDto.emplyrTy)'>
+                    WHERE A.emplyr_ty=#{vSrvcRequstDto.emplyrTy} AND A.MBER_ID=#{vSrvcRequstDto.userId}
                     	AND A.SRVC_REQUST_PROCESS_AT = 0
                 </when>
-                <when test='"ET01".equals(vSrvcRequstVO.emplyrTy)'>
-                    WHERE A.emplyr_ty=#{vSrvcRequstVO.emplyrTy} AND A.PRO_ID=#{vSrvcRequstVO.userId}
+                <when test='"ET01".equals(vSrvcRequstDto.emplyrTy)'>
+                    WHERE A.emplyr_ty=#{vSrvcRequstDto.emplyrTy} AND A.PRO_ID=#{vSrvcRequstDto.userId}
 						AND A.SRVC_REQUST_PROCESS_AT = 0                
                 </when>
             </choose>
@@ -149,7 +149,7 @@
 	    WHERE T.NUM BETWEEN (#{currentPage}*#{size}) - (#{size} - 1) AND (#{currentPage}*#{size})
 	</select>
 	
-	<select id="srvcRqSuccessList" parameterType="map" resultType="vSrvcRequstVO">
+	<select id="srvcRqSuccessList" parameterType="map" resultType="vSrvcRequstDto">
 		WITH T AS (
         SELECT ROW_NUMBER() OVER (ORDER BY B.SRVC_REQUST_WR_DT DESC) AS NUM, B.* 
         FROM (
@@ -158,12 +158,12 @@
                LEFT JOIN V_PRO_USERS B
                ON A.PRO_ID = B.PRO_ID
             <choose>
-                <when test='"ET02".equals(vSrvcRequstVO.emplyrTy)'>
-                    WHERE A.emplyr_ty=#{vSrvcRequstVO.emplyrTy} AND A.MBER_ID=#{vSrvcRequstVO.userId}
+                <when test='"ET02".equals(vSrvcRequstDto.emplyrTy)'>
+                    WHERE A.emplyr_ty=#{vSrvcRequstDto.emplyrTy} AND A.MBER_ID=#{vSrvcRequstDto.userId}
                 	AND A.SRVC_REQUST_PROCESS_AT = 1
                 </when>
-                <when test='"ET01".equals(vSrvcRequstVO.emplyrTy)'>
-                    WHERE A.emplyr_ty=#{vSrvcRequstVO.emplyrTy} AND A.PRO_ID=#{vSrvcRequstVO.userId}
+                <when test='"ET01".equals(vSrvcRequstDto.emplyrTy)'>
+                    WHERE A.emplyr_ty=#{vSrvcRequstDto.emplyrTy} AND A.PRO_ID=#{vSrvcRequstDto.userId}
                 	AND A.SRVC_REQUST_PROCESS_AT = 1
                 </when>
             </choose>
@@ -185,19 +185,19 @@
 	    WHERE T.NUM BETWEEN (#{currentPage}*#{size}) - (#{size} - 1) AND (#{currentPage}*#{size})
 	</select>
 
-	<select id="srvcRqRejectList" parameterType="map" resultType="vSrvcRequstVO">
+	<select id="srvcRqRejectList" parameterType="map" resultType="vSrvcRequstDto">
 		WITH T AS (
         SELECT ROW_NUMBER() OVER (ORDER BY B.SRVC_REQUST_WR_DT DESC) AS NUM, B.* 
         FROM (
             SELECT A.* 
             FROM V_SRVC_REQUST A
             <choose>
-                <when test='"ET02".equals(vSrvcRequstVO.emplyrTy)'>
-                    WHERE A.emplyr_ty=#{vSrvcRequstVO.emplyrTy} AND A.MBER_ID=#{vSrvcRequstVO.userId}
+                <when test='"ET02".equals(vSrvcRequstDto.emplyrTy)'>
+                    WHERE A.emplyr_ty=#{vSrvcRequstDto.emplyrTy} AND A.MBER_ID=#{vSrvcRequstDto.userId}
                 	AND A.SRVC_REQUST_PROCESS_AT = 2
                 </when>
-                <when test='"ET01".equals(vSrvcRequstVO.emplyrTy)'>
-                    WHERE A.emplyr_ty=#{vSrvcRequstVO.emplyrTy} AND A.PRO_ID=#{vSrvcRequstVO.userId}
+                <when test='"ET01".equals(vSrvcRequstDto.emplyrTy)'>
+                    WHERE A.emplyr_ty=#{vSrvcRequstDto.emplyrTy} AND A.PRO_ID=#{vSrvcRequstDto.userId}
                 	AND A.SRVC_REQUST_PROCESS_AT = 2
                 </when>
             </choose>
@@ -219,7 +219,7 @@
     WHERE T.NUM BETWEEN (#{currentPage}*#{size}) - (#{size} - 1) AND (#{currentPage}*#{size})
 	</select>
 	
-	<select id="srvcRqDetail" parameterType="vSrvcRequstVO" resultMap="vSrvcRequstMap">
+	<select id="srvcRqDetail" parameterType="vSrvcRequstDto" resultMap="vSrvcRequstMap">
 		SELECT A.*, B.ATCHMNFL_NO, B.ATCHMNFL_COURS
 		FROM V_SRVC_REQUST A
 		LEFT JOIN SPRVISE_ATCHMNFL B
@@ -227,7 +227,7 @@
 		WHERE A.SRVC_REQUST_NO=#{srvcRequstNo} AND A.USER_ID = #{userId}
 	</select>
 	
-	<resultMap type="vSrvcRequstVO" id="vSrvcRequstMap">
+	<resultMap type="vSrvcRequstDto" id="vSrvcRequstMap">
 		<result property="srvcRequstNo" column="SRVC_REQUST_NO"/>
 		<result property="srvcRequstSj" column="SRVC_REQUST_SJ"/>
 		<result property="srvcRequstCn" column="SRVC_REQUST_CN"/>

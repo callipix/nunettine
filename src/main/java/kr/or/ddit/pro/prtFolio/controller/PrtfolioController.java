@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import kr.or.ddit.vo.PrtfolioDto;
+import kr.or.ddit.dto.PrtfolioDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

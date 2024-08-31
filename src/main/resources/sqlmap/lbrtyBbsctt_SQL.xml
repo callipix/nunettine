@@ -12,7 +12,7 @@
 	</sql>
 	
 	
-	<select id="lbrtyBbscttList" resultType="lbrtyBbscttVO2">
+	<select id="lbrtyBbscttList" resultType="lbrtyBbscttDto2">
 		SELECT LBRTY_BBSCTT_NO, LBRTY_BBSCTT_SJ, USER_ID, USER_NCNM, DEL_TYPE
     	FROM V_LBRTY_BBSCTT
     	WHERE DEL_TYPE = '0'
@@ -95,7 +95,7 @@
 		)
     </insert>
     
-    <select id="lbrtyBbscttAnswerList" parameterType="string" resultType="lbrtyBbscttAnswerVO2">
+    <select id="lbrtyBbscttAnswerList" parameterType="string" resultType="lbrtyBbscttAnswerDto2">
     	select LBRTY_BBSCTT_ANSWER_NO, LBRTY_BBSCTT_NO, LBRTY_BBSCTT_ANSWER_CN, LBRTY_BBSCTT_ANSWER_WR_DT, PT_LBRTY_BBSCTT_ANSWER_NO,
 			PT_LBRTY_BBSCTT_NO, USER_ID, USER_NCNM
 		from V_LBRTY_BBSCTT_ANSWER
@@ -131,7 +131,7 @@
     
     </update>
     
-    <select id="ansAnsList" parameterType="lbrtyBbscttAnswerDto" resultType="lbrtyBbscttAnswerVO2">
+    <select id="ansAnsList" parameterType="lbrtyBbscttAnswerDto" resultType="lbrtyBbscttAnswerDto2">
     	select LBRTY_BBSCTT_ANSWER_NO, LBRTY_BBSCTT_NO, LBRTY_BBSCTT_ANSWER_CN, LBRTY_BBSCTT_ANSWER_WR_DT,
 			PT_LBRTY_BBSCTT_ANSWER_NO, PT_LBRTY_BBSCTT_NO, USER_ID, USER_NCNM 
 		from V_LBRTY_BBSCTT_ANSWER
@@ -220,7 +220,7 @@
 		where SPRVISE_ATCHMNFL_NO = ${sprviseAtchmnflNo}
     </select>
     
-    <select id="lbrtyBbscttListPage" parameterType="hashMap" resultType="lbrtyBbscttVO2">
+    <select id="lbrtyBbscttListPage" parameterType="hashMap" resultType="lbrtyBbscttDto2">
 		WITH T AS(
 		    SELECT ROW_NUMBER() OVER(ORDER BY LBRTY_BBSCTT_WR_DT) RNUM,
 		          LBRTY_BBSCTT_NO, LBRTY_BBSCTT_SJ, LBRTY_BBSCTT_CN, LBRTY_BBSCTT_WR_DT, LBRTY_BBSCTT_RDCNT,
@@ -293,7 +293,7 @@
 		)
 	</insert>
 	
-	<select id="declComCdDeSelect" resultType="commonCdDetailVO">
+	<select id="declComCdDeSelect" resultType="commonCdDetailDto">
 		select COMMON_CD_DETAIL, COMMON_CD, COMMON_CD_DETAIL_NM, 
 			COMMON_CD_DETAIL_EXPLAN, COMMON_CD_DETAIL_USE_WH
 		from COMMON_CD_DETAIL

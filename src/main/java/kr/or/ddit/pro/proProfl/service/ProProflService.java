@@ -3,10 +3,10 @@ package kr.or.ddit.pro.proProfl.service;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.ddit.vo.*;
+import kr.or.ddit.dto.*;
 import org.springframework.stereotype.Service;
 
-import kr.or.ddit.vo.BcityDto;
+import kr.or.ddit.dto.BcityDto;
 
 @Service
 public interface ProProflService {

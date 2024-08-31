@@ -4,13 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.manage.mapper.ManageMapper;
-import kr.or.ddit.vo.DongChartDto;
-import kr.or.ddit.vo.DongChartDto2;
-import kr.or.ddit.vo.DongChartDto3;
+import kr.or.ddit.dto.DongChartDto;
+import kr.or.ddit.dto.DongChartDto2;
+import kr.or.ddit.dto.DongChartDto3;
 
 @Service
 @RequiredArgsConstructor
 public class ManageServiceImpl implements ManageService{
+
 	private final ManageMapper manageMapper;
 	
 	@Override

@@ -7,9 +7,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import kr.or.ddit.vo.MberDto;
-import kr.or.ddit.vo.ProBkmkDto;
-import kr.or.ddit.vo.ProDto;
+import kr.or.ddit.dto.MberDto;
+import kr.or.ddit.dto.ProBkmkDto;
+import kr.or.ddit.dto.ProDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -15,7 +15,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import kr.or.ddit.chatting.service.MessageService;
 import kr.or.ddit.chatting.dto.MessageDto;
-import kr.or.ddit.vo.TdmtngChSpMshgDto;
+import kr.or.ddit.dto.TdmtngChSpMshgDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j

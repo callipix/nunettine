@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.pro.mypage.service.ProMypageService;
-import kr.or.ddit.vo.AdresDto;
-import kr.or.ddit.vo.VProUsersDto;
+import kr.or.ddit.dto.AdresDto;
+import kr.or.ddit.dto.VProUsersDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller

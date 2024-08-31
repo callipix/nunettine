@@ -3,15 +3,15 @@ package kr.or.ddit.member.join.service;
 import java.util.HashMap;
 import java.util.Map;
 
-import kr.or.ddit.vo.VMberUsersDto;
+import kr.or.ddit.dto.VMberUsersDto;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.member.join.mapper.MemberJoinMapper;
-import kr.or.ddit.vo.AdresDto;
-import kr.or.ddit.vo.UsersDto;
-import kr.or.ddit.vo.VProUsersDto;
+import kr.or.ddit.dto.AdresDto;
+import kr.or.ddit.dto.UsersDto;
+import kr.or.ddit.dto.VProUsersDto;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 

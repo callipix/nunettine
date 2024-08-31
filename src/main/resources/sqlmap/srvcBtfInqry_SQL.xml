@@ -13,11 +13,11 @@
 		FROM
 		(SELECT * FROM V_SRVC_BTF_INQRY
 		<choose>
-			<when test='"ET02".equals(vSrvcBtfInqryVO.emplyrTy)'>
-				WHERE emplyr_ty=#{vSrvcBtfInqryVO.emplyrTy} AND MBER_ID=#{vSrvcBtfInqryVO.userId}
+			<when test='"ET02".equals(vSrvcBtfInqryDto.emplyrTy)'>
+				WHERE emplyr_ty=#{vSrvcBtfInqryDto.emplyrTy} AND MBER_ID=#{vSrvcBtfInqryDto.userId}
 			</when>
-			<when test='"ET01".equals(vSrvcBtfInqryVO.emplyrTy)'>
-				WHERE emplyr_ty=#{vSrvcBtfInqryVO.emplyrTy} AND PRO_ID=#{vSrvcBtfInqryVO.userId}
+			<when test='"ET01".equals(vSrvcBtfInqryDto.emplyrTy)'>
+				WHERE emplyr_ty=#{vSrvcBtfInqryDto.emplyrTy} AND PRO_ID=#{vSrvcBtfInqryDto.userId}
 			</when>
 		</choose>
 		) A
@@ -39,12 +39,12 @@
 		FROM
 		(SELECT * FROM V_SRVC_BTF_INQRY
 		<choose>
-			<when test='"ET02".equals(vSrvcBtfInqryVO.emplyrTy)'>
-				WHERE emplyr_ty=#{vSrvcBtfInqryVO.emplyrTy} AND MBER_ID=#{vSrvcBtfInqryVO.userId}
+			<when test='"ET02".equals(vSrvcBtfInqryDto.emplyrTy)'>
+				WHERE emplyr_ty=#{vSrvcBtfInqryDto.emplyrTy} AND MBER_ID=#{vSrvcBtfInqryDto.userId}
 				AND BTF_INQRY_ANSWER_CN IS NULL
 			</when>
-			<when test='"ET01".equals(vSrvcBtfInqryVO.emplyrTy)'>
-				WHERE emplyr_ty=#{vSrvcBtfInqryVO.emplyrTy} AND PRO_ID=#{vSrvcBtfInqryVO.userId}
+			<when test='"ET01".equals(vSrvcBtfInqryDto.emplyrTy)'>
+				WHERE emplyr_ty=#{vSrvcBtfInqryDto.emplyrTy} AND PRO_ID=#{vSrvcBtfInqryDto.userId}
 				AND BTF_INQRY_ANSWER_CN IS NULL
 			</when>
 		</choose>
@@ -67,12 +67,12 @@
 		FROM
 		(SELECT * FROM V_SRVC_BTF_INQRY
 		<choose>
-			<when test='"ET02".equals(vSrvcBtfInqryVO.emplyrTy)'>
-				WHERE emplyr_ty=#{vSrvcBtfInqryVO.emplyrTy} AND MBER_ID=#{vSrvcBtfInqryVO.userId}
+			<when test='"ET02".equals(vSrvcBtfInqryDto.emplyrTy)'>
+				WHERE emplyr_ty=#{vSrvcBtfInqryDto.emplyrTy} AND MBER_ID=#{vSrvcBtfInqryDto.userId}
 				AND BTF_INQRY_ANSWER_CN IS NOT NULL
 			</when>
-			<when test='"ET01".equals(vSrvcBtfInqryVO.emplyrTy)'>
-				WHERE emplyr_ty=#{vSrvcBtfInqryVO.emplyrTy} AND PRO_ID=#{vSrvcBtfInqryVO.userId}
+			<when test='"ET01".equals(vSrvcBtfInqryDto.emplyrTy)'>
+				WHERE emplyr_ty=#{vSrvcBtfInqryDto.emplyrTy} AND PRO_ID=#{vSrvcBtfInqryDto.userId}
 				AND BTF_INQRY_ANSWER_CN IS NOT NULL
 			</when>
 		</choose>
@@ -91,18 +91,18 @@
    	</select>
 	
 	
-	<select id="btfInqryList" parameterType="map" resultType="vSrvcBtfInqryVO">
+	<select id="btfInqryList" parameterType="map" resultType="vSrvcBtfInqryDto">
 		WITH T AS (
 		SELECT ROW_NUMBER() OVER (ORDER BY B.BTF_INQRY_WR_DT DESC) NUM, B.*
 		FROM
 		(SELECT A.* 
 		 FROM V_SRVC_BTF_INQRY A
 		<choose>
-			<when test='"ET02".equals(vSrvcBtfInqryVO.emplyrTy)'>
-				WHERE emplyr_ty=#{vSrvcBtfInqryVO.emplyrTy} AND MBER_ID=#{vSrvcBtfInqryVO.userId}
+			<when test='"ET02".equals(vSrvcBtfInqryDto.emplyrTy)'>
+				WHERE emplyr_ty=#{vSrvcBtfInqryDto.emplyrTy} AND MBER_ID=#{vSrvcBtfInqryDto.userId}
 			</when>
-			<when test='"ET01".equals(vSrvcBtfInqryVO.emplyrTy)'>
-				WHERE emplyr_ty=#{vSrvcBtfInqryVO.emplyrTy} AND PRO_ID=#{vSrvcBtfInqryVO.userId}
+			<when test='"ET01".equals(vSrvcBtfInqryDto.emplyrTy)'>
+				WHERE emplyr_ty=#{vSrvcBtfInqryDto.emplyrTy} AND PRO_ID=#{vSrvcBtfInqryDto.userId}
 			</when>
 		</choose>
 		<choose>
@@ -123,18 +123,18 @@
     	WHERE T.NUM BETWEEN (#{currentPage}*10) - (10 - 1) AND (#{currentPage}*10)
 	</select>
 	
-	<select id="btfInqryNoAnswerList" parameterType="map" resultType="vSrvcBtfInqryVO">
+	<select id="btfInqryNoAnswerList" parameterType="map" resultType="vSrvcBtfInqryDto">
 		WITH T AS (
 		SELECT ROW_NUMBER() OVER (ORDER BY B.BTF_INQRY_WR_DT DESC) NUM, B.*
 		FROM
 		(SELECT A.* 
 		 FROM V_SRVC_BTF_INQRY A
 		<choose>
-			<when test='"ET02".equals(vSrvcBtfInqryVO.emplyrTy)'>
-				WHERE emplyr_ty=#{vSrvcBtfInqryVO.emplyrTy} AND MBER_ID=#{vSrvcBtfInqryVO.userId} AND A.BTF_INQRY_ANSWER_CN IS NULL
+			<when test='"ET02".equals(vSrvcBtfInqryDto.emplyrTy)'>
+				WHERE emplyr_ty=#{vSrvcBtfInqryDto.emplyrTy} AND MBER_ID=#{vSrvcBtfInqryDto.userId} AND A.BTF_INQRY_ANSWER_CN IS NULL
 			</when>
-			<when test='"ET01".equals(vSrvcBtfInqryVO.emplyrTy)'>
-				WHERE emplyr_ty=#{vSrvcBtfInqryVO.emplyrTy} AND PRO_ID=#{vSrvcBtfInqryVO.userId} AND A.BTF_INQRY_ANSWER_CN IS NULL
+			<when test='"ET01".equals(vSrvcBtfInqryDto.emplyrTy)'>
+				WHERE emplyr_ty=#{vSrvcBtfInqryDto.emplyrTy} AND PRO_ID=#{vSrvcBtfInqryDto.userId} AND A.BTF_INQRY_ANSWER_CN IS NULL
 			</when>
 		</choose>
 		<choose>
@@ -155,18 +155,18 @@
     	WHERE T.NUM BETWEEN (#{currentPage}*10) - (10 - 1) AND (#{currentPage}*10)
 	</select>
 	
-	<select id="btfInqrySuccessList" parameterType="map" resultType="vSrvcBtfInqryVO">
+	<select id="btfInqrySuccessList" parameterType="map" resultType="vSrvcBtfInqryDto">
 		WITH T AS (
 		SELECT ROW_NUMBER() OVER (ORDER BY B.BTF_INQRY_WR_DT DESC) NUM, B.*
 		FROM
 		(SELECT A.* 
 		 FROM V_SRVC_BTF_INQRY A
 		<choose>
-			<when test='"ET02".equals(vSrvcBtfInqryVO.emplyrTy)'>
-				WHERE emplyr_ty=#{vSrvcBtfInqryVO.emplyrTy} AND MBER_ID=#{vSrvcBtfInqryVO.userId} AND A.BTF_INQRY_ANSWER_CN IS NOT NULL
+			<when test='"ET02".equals(vSrvcBtfInqryDto.emplyrTy)'>
+				WHERE emplyr_ty=#{vSrvcBtfInqryDto.emplyrTy} AND MBER_ID=#{vSrvcBtfInqryDto.userId} AND A.BTF_INQRY_ANSWER_CN IS NOT NULL
 			</when>
-			<when test='"ET01".equals(vSrvcBtfInqryVO.emplyrTy)'>
-				WHERE emplyr_ty=#{vSrvcBtfInqryVO.emplyrTy} AND PRO_ID=#{vSrvcBtfInqryVO.userId} AND A.BTF_INQRY_ANSWER_CN IS NOT NULL
+			<when test='"ET01".equals(vSrvcBtfInqryDto.emplyrTy)'>
+				WHERE emplyr_ty=#{vSrvcBtfInqryDto.emplyrTy} AND PRO_ID=#{vSrvcBtfInqryDto.userId} AND A.BTF_INQRY_ANSWER_CN IS NOT NULL
 			</when>
 		</choose>
 		<choose>
@@ -187,7 +187,7 @@
     	WHERE T.NUM BETWEEN (#{currentPage}*10) - (10 - 1) AND (#{currentPage}*10)
 	</select>
 	
-	<select id="btfInqryDetail" parameterType="vSrvcBtfInqryVO" resultMap="vSrvcBtfInqryMap">
+	<select id="btfInqryDetail" parameterType="vSrvcBtfInqryDto" resultMap="vSrvcBtfInqryMap">
 		SELECT A.BTF_INQRY_NO, A.BTF_INQRY_SJ, A.BTF_INQRY_CN, A.BTF_INQRY_WR_DT, 
 			   A.BTF_INQRY_ANSWER_CN, A.BTF_INQRY_ANSWER_WR_DT, A.USER_ID, A.USER_NCNM, A.EMPLYR_TY,
 		       A.SPRVISE_ATCHMNFL_NO, B.ATCHMNFL_NO, B.ATCHMNFL_COURS
@@ -197,7 +197,7 @@
 		WHERE A.BTF_INQRY_NO = #{btfInqryNo} AND A.USER_ID=#{userId}
 	</select>
 	
-	<resultMap type="vSrvcBtfInqryVO" id="vSrvcBtfInqryMap">
+	<resultMap type="vSrvcBtfInqryDto" id="vSrvcBtfInqryMap">
 		<result property="btfInqryNo" column="BTF_INQRY_NO"/>
 		<result property="btfInqrySj" column="BTF_INQRY_SJ"/>
 		<result property="btfInqryCn" column="BTF_INQRY_CN"/>

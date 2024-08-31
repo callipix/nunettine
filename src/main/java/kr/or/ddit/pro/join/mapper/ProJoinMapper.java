@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.ddit.vo.*;
-import kr.or.ddit.vo.VMberUsersDto;
+import kr.or.ddit.dto.*;
+import kr.or.ddit.dto.VMberUsersDto;
 
 public interface ProJoinMapper {
 	
