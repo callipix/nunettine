@@ -1,4 +1,0 @@
-package kr.or.ddit.util;
-
-public class ArticlePage<T> {
-}

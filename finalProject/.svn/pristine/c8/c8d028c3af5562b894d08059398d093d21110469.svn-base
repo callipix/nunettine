@@ -1,9 +1,0 @@
-package kr.or.ddit.pro.join.service;
-
-import kr.or.ddit.vo.UsersVO;
-
-public interface ProJoinService {
-
-	public int proLogin(UsersVO usersVO);
-
-}
