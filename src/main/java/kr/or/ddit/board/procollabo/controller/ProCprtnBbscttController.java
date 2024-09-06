@@ -41,20 +41,20 @@ public class ProCprtnBbscttController {
 		
 		if(proSession !=null && proSession instanceof HashMap) {
 			Object userId = ((HashMap<String, Object>)proSession).get("userId");
-			System.out.println("proSession : "+userId);
+			log.info("proSession : {}",userId);
 			
 			return userId != null ? userId.toString() : null;
 		}
 		if(memSession !=null && memSession instanceof HashMap) {
 			Object userId = ((HashMap<String, Object>)memSession).get("userId");
-			System.out.println("memSession : " +userId);
+			log.info("memSession : {}",userId);
 			
 			return userId != null ? userId.toString() : null;
 
 		}
 		if(admSession !=null && admSession instanceof HashMap) {
 			Object userId = ((HashMap<String, Object>)admSession).get("userId");
-			System.out.println("admSession : " +userId);
+			log.info("admSession : {}", userId);
 			
 			return userId != null ? userId.toString() : null;
 

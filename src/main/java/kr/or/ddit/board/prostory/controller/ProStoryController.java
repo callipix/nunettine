@@ -39,22 +39,22 @@ public class ProStoryController {
 
 	private final ProStoryService proStoryService;
 
-	private String userId(HttpServletRequest request) {
 	/* 세션체크 아이디 가져오기 */
-	
+	private String userId(HttpServletRequest request) {
+
 		Object proSession = request.getSession().getAttribute("proSession");
 		Object memSession = request.getSession().getAttribute("memSession");
-		      
+
 		if(proSession !=null && proSession instanceof HashMap) {
 			Object userId = ((HashMap<String, Object>)proSession).get("userId");
-			log.debug("proSession : " + userId);
-		      
+			log.info("proSession : {}", userId);
+
 			return userId != null ? userId.toString() : null;
 		}
 		if(memSession !=null && memSession instanceof HashMap) {
 			Object userId = ((HashMap<String, Object>)memSession).get("userId");
-			log.debug("memSession : " + userId);
-		      
+			log.info("memSession : {}", userId);
+
 			return userId != null ? userId.toString() : null;
 
 		}
@@ -178,8 +178,8 @@ public class ProStoryController {
 
 		String userId = userId(request);
 		
-		System.out.println("체크할 아이디 : " + chkId);
-		System.out.println("내 아이디 : " + userId);
+		log.info("체크할 아이디 : {}", chkId);
+		log.info("내 아이디 : {}", userId);
 		
 		return userId.equals(chkId) ? "true" : "false";
 		

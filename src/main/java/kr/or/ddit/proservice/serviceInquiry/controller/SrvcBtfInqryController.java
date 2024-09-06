@@ -353,7 +353,7 @@ public class SrvcBtfInqryController {
 	public int updateAnswer(@RequestBody Map<String, Object> param) {
 		int res = 0;
 
-		System.out.println("번호 : " + param.get("btfInqryNo"));
+		log.info("번호 : {}", param.get("btfInqryNo"));
 
 		int btfInqryNo = Integer.parseInt(String.valueOf(param.get("btfInqryNo")));
 		String btfInqryAnswerCn = (String) param.get("btfInqryAnswerCn");

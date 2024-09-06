@@ -5,6 +5,7 @@ import java.util.Map;
 
 import kr.or.ddit.dto.VMberUsersDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import kr.or.ddit.dto.UsersDto;
 import kr.or.ddit.dto.VProUsersDto;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MemberJoinServiceImpl implements MemberJoinService {
@@ -51,10 +52,10 @@ public class MemberJoinServiceImpl implements MemberJoinService {
         params.put("app_version", "test app 1.2"); // application name and version
         try {
             JSONObject obj = (JSONObject) coolsms.send(params);
-            System.out.println(obj.toString());
+            log.info(obj.toString());
         } catch (CoolsmsException e) {
-            System.out.println(e.getMessage());
-            System.out.println(e.getCode());
+            log.info(e.getMessage());
+            log.info(String.valueOf(e.getCode()));
         }
 		
 	}

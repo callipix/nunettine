@@ -35,13 +35,10 @@ public class ProStoryServiceImpl implements ProStoryService {
 	public int insert(ProStoryBbscttDto proStoryBbscttDto, MultipartHttpServletRequest multi) {
 
 		int result = 0;
-
 		MultipartFile multipartFile = proStoryBbscttDto.getUploadFile();
-
 		log.info("proStoryBbscttVO : {}", proStoryBbscttDto);
 		// 스프링 파일 객체
 		log.info("MIME 타입   : {}", multipartFile.getContentType());
-
 		// 연월일 폴더 생성 설계 ... \\upload \\ 2024 \\ 01 \\ 30
 		File uploadPath = new File(uploadFolder, getFolder());
 		// 연월일 폴더 생성 실행
@@ -69,7 +66,7 @@ public class ProStoryServiceImpl implements ProStoryService {
 				Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 300, 300);
 				thumbnail.close();
 			};
-			
+
 			proStoryBbscttDto.setProStoryBbscttThumbPhoto("/" + getFolder().replace("\\", "/") + "/" + "s_" + uploadFileName);
 
 			result = this.proStoryMapper.insert(proStoryBbscttDto);
@@ -105,17 +102,17 @@ public class ProStoryServiceImpl implements ProStoryService {
 	@Override
 	@Transactional
 	public List<ProStoryBbscttDto> getPage(Map<String, Object> searchParam) {
-		
+
 		int getTotal = this.proStoryMapper.getTotal();
-		
+
 		log.info("데이터 잘 오나확인  ServiceImpl : {}", searchParam);
-		
+
 		searchParam.put("totalPages", getTotal);
-		
+
 		List<ProStoryBbscttDto> getStory = this.proStoryMapper.getPage(searchParam);
-		
+
 		log.info("최종값??!: {} ", searchParam);
-		
+
 		return getStory;
 	}
 
@@ -125,10 +122,9 @@ public class ProStoryServiceImpl implements ProStoryService {
 	public int updateStory(ProStoryBbscttDto proStoryBbscttDto, MultipartHttpServletRequest multi) {
 
 		int result = 0;
-
 		MultipartFile multipartFile = proStoryBbscttDto.getUploadFile();
 
-		log.info("proStoryBbscttVO : {}", proStoryBbscttDto);
+		log.info("proStoryBbscttVO for updateStory : {}", proStoryBbscttDto);
 		// 스프링 파일 객체
 
 		// 연월일 폴더 생성 설계 ... \\upload \\ 2024 \\ 01 \\ 30
@@ -140,57 +136,42 @@ public class ProStoryServiceImpl implements ProStoryService {
 		if (multipartFile != null && !multipartFile.isEmpty()) {
 			String uploadFileName = multipartFile.getOriginalFilename();
 
-			System.out.println("fileName ::: " + uploadFileName);
+			log.info("fileName ::: {}", uploadFileName);
 			// 파일명 중복 방지 -> 같은 날 같은 이미지 업로드 시 파일명 중복 방지 시작----------------
 			UUID uuid = UUID.randomUUID();
 			uploadFileName = uuid.toString() + "_" + uploadFileName;
-			// 같은 날 같은 이미지 업로드 시 파일 중복 방지 끝----------------
-
-			// 설계 -> , 의 역할 : \\
-			// uploadFolder : ...upload\\2024\\01\\30 + \\ + 개똥이.jpg
-			//		File saveFile = new File(uploadFolder + "\\" + multipartFile.getOriginalFilename());
-			//		↕↕↕↕↕↕↕ 동일
 			File saveFile = new File(uploadPath, uploadFileName);
-			log.info("uploadPath : " + uploadPath);
-			log.info("uploadFileName : " + uploadFileName);
+			log.info("uploadPath for updateStory: {}", uploadPath);
+			log.info("uploadFileName for updateStory : {}", uploadFileName);
 
 			try {
 
 				multipartFile.transferTo(saveFile);
-				// 썸네일 처리 -> 이미지만 가능하기때문에 이미지인지 사전체크
 				if (checkImageType(saveFile)) { // 이미지가 맞다면
-
 					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + uploadFileName));
-					// 썸네일 생성 -> 기존 이미지를 해당 사이즈로 축소시킨다(300 * 300)
 					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 450, 450);
 					thumbnail.close();
 				};
-
-				// getFolder() : 2024\\04\\01(윈도우경로) => 2024/04/01(웹경로)
 				proStoryBbscttDto.setProStoryBbscttThumbPhoto(
 						"/" + getFolder().replace("\\", "/") + "/" + "s_" + uploadFileName);
-				// uuid가 적용된 파일명
 				result = this.proStoryMapper.updateStory(proStoryBbscttDto);
-				log.info("proStoryBbscttVO -> 수정 결과 result : " + result);
+				log.info("proStoryBbscttVO -> 수정 결과 result : {}",result);
 			} catch (IllegalStateException | IOException e) {
 				log.error(e.getMessage());
 			}
 		}
 		return result;
 	}
-
 	@Override
 	@Transactional
 	public int deleteStory(String userId, int storyNo) {
 		return this.proStoryMapper.deleteStory(userId, storyNo);
 	}
-
 	@Override
 	@Transactional
 	public int getStoryCount(int storyNo) {
 		return this.proStoryMapper.getStoryCount(storyNo);
 	}
-
 	@Override
 	@Transactional
 	public ProStoryBbscttDto updateGood(GoodPointDto goodPointDto) {
@@ -209,7 +190,7 @@ public class ProStoryServiceImpl implements ProStoryService {
 			log.info("♡ 추가 실패");
 			return null;
 		}
-		System.out.println("하트 추가 후 해당글 추천수 : " + psbcttVO.getProStoryBbscttRecommend());
+		log.info("하트 추가 후 해당글 추천수 : {}",psbcttVO.getProStoryBbscttRecommend());
 		return psbcttVO;
 	}
 
@@ -225,12 +206,12 @@ public class ProStoryServiceImpl implements ProStoryService {
 
 		int result = this.proStoryMapper.goodRemove(goodPointDto);
 
-		System.out.println("하트삭제 성공 : " + result);
+		log.info("하트삭제 성공 : {}", result);
 
 		if (result > 0) {
 			psbcttVO = this.proStoryMapper.goodCount(psbcttVO);
 		}
-		System.out.println("하트 삭제 후 해당글 추천수 : " + psbcttVO.getProStoryBbscttRecommend());
+		log.info("하트 삭제 후 해당글 추천수 : {}", psbcttVO.getProStoryBbscttRecommend());
 		return psbcttVO;
 	}
 
@@ -240,7 +221,7 @@ public class ProStoryServiceImpl implements ProStoryService {
 		String contentType;
 		try {
 			contentType = Files.probeContentType(file.toPath());
-			log.info("contentType : " + contentType);
+			log.info("contentType : {}", contentType);
 			// image/jpeg는 image로 시작함->true
 			return contentType.startsWith("image");
 		} catch (IOException e) {
@@ -251,13 +232,9 @@ public class ProStoryServiceImpl implements ProStoryService {
 	}
 
 	public String getFolder() {
-
 		String fmtNow = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		
-		log.info("fmtNow ::: " + fmtNow);
-
+		log.info("fmtNow ::: {}", fmtNow);
 		return fmtNow.replace("-", File.separator);
-
 	}
 
 	@Override
@@ -272,16 +249,12 @@ public class ProStoryServiceImpl implements ProStoryService {
 	}
 	@Override
 	public List<ProStoryBbscttDto> getPageTest(Map<String , Object> map){
-		
-		log.info("getPageTest : " + map);
-		
+		log.info("getPageTest : {}", map);
 		return this.proStoryMapper.getPageTest(map);
 	}
 	@Override
 	public List<ProStoryBbscttDto> getWeekRecommend(){
-		
-		return this.proStoryMapper.getWeekRecommend();
-		
-	}
 
+		return this.proStoryMapper.getWeekRecommend();
+	}
 }

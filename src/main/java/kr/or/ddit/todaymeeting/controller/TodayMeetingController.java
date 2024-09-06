@@ -47,13 +47,13 @@ public class TodayMeetingController {
 
 		if(proSession !=null && proSession instanceof HashMap) {
 			Object userId = ((HashMap<String, Object>)proSession).get("userId");
-			System.out.println("proSession : "+userId);
+			log.info("proSession : {}", userId);
 
 			return userId != null ? userId.toString() : null;
 		}
 		if(memSession !=null && memSession instanceof HashMap) {
 			Object userId = ((HashMap<String, Object>)memSession).get("userId");
-			System.out.println("memSession : " +userId);
+			log.info("memSession : {}", userId);
 
 			return userId != null ? userId.toString() : null;
 
@@ -323,7 +323,7 @@ public class TodayMeetingController {
 
 		List<VChatRoom> myList = this.todayMeetingSerive.myList(userId(request));
 
-		System.out.println("내방 리스트 : " + myList);
+		log.info("내방 리스트 : {}", myList);
 
 		return ResponseEntity.ok().body(myList);
 	}
@@ -362,8 +362,8 @@ public class TodayMeetingController {
 		roomInfo.put("msgList", msgList);
 		roomInfo.put("joinRoom", joinRoom);
 
-		System.out.println("해당 방 : " + joinRoom);
-		System.out.println("메세지 리스트: " + msgList);
+		log.info("해당 방 : {}" , joinRoom);
+		log.info("메세지 리스트: {}" , msgList);
 		return roomInfo;
 	}
 

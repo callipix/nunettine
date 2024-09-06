@@ -4,6 +4,7 @@ import kr.or.ddit.board.prostory.service.ProStoryService;
 import kr.or.ddit.board.prostory.dto.ArticlePage5;
 import kr.or.ddit.board.prostory.dto.ProStoryBbscttDto;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
 @ComponentScan(basePackages={"kr.or.ddit.*"})
@@ -43,9 +44,9 @@ public class ProStoryControllerTest {
 
         List<ProStoryBbscttDto> pagingList = this.proStoryService.getPage(searchParam);
         ArticlePage5<ProStoryBbscttDto> data = new ArticlePage5<ProStoryBbscttDto>(total, Integer.parseInt(currentPage), 8 , pagingList, keyword , type);
-        System.out.println("pagingList = " + pagingList);
-        System.out.println();
-        System.out.println("data = " + data);
+        log.info("pagingList = {}", pagingList);
+        log.info("");
+        log.info("data = {}", data);
     }
 
     @Test

@@ -50,20 +50,20 @@ public class ChatController {
 		
 		if(proSession !=null && proSession instanceof HashMap) {
 			Object userId = ((HashMap<String, Object>)proSession).get("userId");
-			System.out.println("proSession : "+ userId);
+			log.info("proSession : {}", userId);
 			
 			return userId != null ? userId.toString() : null;
 		}
 		if(memSession !=null && memSession instanceof HashMap) {
 			Object userId = ((HashMap<String, Object>)memSession).get("userId");
-			System.out.println("memSession : " + userId);
+			log.info("memSession : {}", userId);
 			
 			return userId != null ? userId.toString() : null;
 
 		}
 		if(admSession !=null && admSession instanceof HashMap) {
 			Object userId = ((HashMap<String, Object>)admSession).get("userId");
-			System.out.println("admSession : " + userId);
+			log.info("admSession : {}", userId);
 			
 			return userId != null ? userId.toString() : null;
 
@@ -134,7 +134,7 @@ public class ChatController {
 		    if (userInfo != null) { 					// userInfo가 null이 아닌 경우에만 추가
 		    	myList.getUserVO().addAll(userInfo);	// 가져온 사용자 정보를 myList에 추가
 		    }
-		    System.out.println("myList " + myList);
+		    log.info("myList " + myList);
 		}
 		myList.setUserId(userId(request));
 

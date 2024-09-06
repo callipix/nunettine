@@ -5,6 +5,7 @@ import kr.or.ddit.todaymeeting.VChatRoom;
 import kr.or.ddit.todaymeeting.service.TodayMeetingService;
 import kr.or.ddit.dto.TdmtngChSpMshgDto;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
 @NoArgsConstructor
@@ -56,7 +57,7 @@ public class TodayMeetingControllerTest {
         List<VChatRoom> myList = this.todayMeetingSerive.myList(userId);
 
         for(VChatRoom vChatRoom : myList) {
-            System.out.println(vChatRoom);
+            log.info("vChatRoom {}" , vChatRoom);
         }
     }
 
@@ -73,7 +74,7 @@ public class TodayMeetingControllerTest {
         roomInfo.put("joinRoom", joinRoom);
 
         for(TdmtngChSpMshgDto vo : msgList) {
-            System.out.println(vo);
+            log.info("vo{}", vo.toString());
         }
 
     }

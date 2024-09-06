@@ -50,13 +50,13 @@ public class LbrtyBbscttController {
 	         
 	      if(proSession !=null && proSession instanceof HashMap) {
 	         Object userId = ((HashMap<String, Object>)proSession).get("userId");
-	         System.out.println("proSession : "+userId);
+	         log.info("proSession : {}",userId);
 	            
 	         return userId != null ? userId.toString() : null;
 	      }
 	      if(memSession !=null && memSession instanceof HashMap) {
 	         Object userId = ((HashMap<String, Object>)memSession).get("userId");
-	         System.out.println("memSession : " +userId);
+	         log.info("memSession : {}",userId);
 	            
 	         return userId != null ? userId.toString() : null;
 

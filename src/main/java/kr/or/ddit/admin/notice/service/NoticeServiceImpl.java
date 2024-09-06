@@ -141,7 +141,7 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public List<NoticeDto> list(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		System.out.println("map테스트 : " + map);
+		log.info("map테스트 : {}", map);
 		return this.noticeMapper.list(map);
 	}
 

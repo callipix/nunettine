@@ -93,7 +93,7 @@ public class NoticeController {
 		log.info("createPost->noticeDto: {} ", noticeDto);
 
 		noticeDto.setMngrId("testAdmin");
-		//System.out.println("notico:: " + noticeDto.getMngrId());
+		//log.info("notice :: {}", noticeDto.getMngrId());
 		File uploadPath = new File(uploadFolder,getFolder());
 
 		if(uploadPath.exists()==false) {

@@ -40,7 +40,7 @@ public class ProJoinController {
 	private final String uploadFolder;
 	private final ProJoinService proJoinService;
 	private final JavaMailSenderImpl mailSender;
-	
+
 	@GetMapping("/proLogin")
 	public String proLogin() {
 		return "pro/proLogin";
@@ -48,16 +48,16 @@ public class ProJoinController {
 	//프로 회원가입 화면으로 이동
 	@GetMapping("/proJoin")
 	public String proJoin(Model model) {
-		
+
 		//전문분야 코드 출력
 		List<SpcltyRealmDto> codeList = this.proJoinService.selectCode();
 //		log.info("전문분야 코드 : " + codeList);
 //		log.info("전문분야 코드 : " + codeList.get(0));
 		model.addAttribute("codeList", codeList);
-		
+
 		return "pro/proJoin";
 	}
-	
+
 	//하위 전문분애 출력
 	@ResponseBody
 	@GetMapping("/codeSelect")
@@ -66,48 +66,48 @@ public class ProJoinController {
 //		log.info("codeList : " + codeList);
 		return codeList;
 	}
-	
+
 	//이메일 중복확인
 	@ResponseBody
 	@GetMapping("/emailCk")
 	public int emailCk(String email) {
 		int result = this.proJoinService.emailCk(email);
-		
+
 		return result;
 	}
-	
+
 	//아이디 중복확인
 	@ResponseBody
 	@GetMapping("/idCk")
 	public int idCk(String userId) {
 		int result = this.proJoinService.idCk(userId);
-		
+
 		return result;
 	}
-	
+
 	//닉네임 중복 확인
 	@ResponseBody
 	@GetMapping("/ncnmCk")
 	public int ncnmCk(String userNcnm) {
 		int result = this.proJoinService.ncnmCk(userNcnm);
-		
+
 		return result;
 	}
-	
+
 	//휴대폰 본인인증
 	@ResponseBody
 	@PostMapping("/check/sendSMS")
-    public String sendSMS(String proMbtlnum) {
-        Random rand  = new Random();
-        String numStr = "";
-        for(int i=0; i < 6; i++) {
-            String ran = Integer.toString(rand.nextInt(10));
-            numStr+=ran;
-        }
-        log.info("인증번호 : " + numStr);
-        this.proJoinService.certifiedPhoneNumber(proMbtlnum,numStr);
-        return numStr;
-    }	
+	public String sendSMS(String proMbtlnum) {
+		Random rand  = new Random();
+		String numStr = "";
+		for(int i=0; i < 6; i++) {
+			String ran = Integer.toString(rand.nextInt(10));
+			numStr+=ran;
+		}
+		log.info("인증번호 : {}", numStr);
+		this.proJoinService.certifiedPhoneNumber(proMbtlnum,numStr);
+		return numStr;
+	}
 	//프로 회원가입
 	@PostMapping("/proInsert")
 	public String proInsert(UsersDto usersDto, ProDto proDto, AdresDto adresDto) {
@@ -115,32 +115,24 @@ public class ProJoinController {
 //		log.info("proVO : " + proVO);
 //		log.info("adresVO : " + adresVO);
 		Map<String, Object> map = new HashMap<>();
-		
+
 		//프로필사진 업로드 처리
 		if(proDto.getProProflPhoto() != null && !proDto.getProProflPhoto().isEmpty()) {
 			MultipartFile multipartFile = proDto.getUploadFile();
-//		log.info("multipartFile 처음 : " + multipartFile);
-//			String uploadFolder = "d/team2/upload";
-//			log.info("파일경로 : " + uploadFolder);
-			
+
 			File uploadPath = new File(uploadFolder, getFolder());
 			if(!uploadPath.exists()) {
 				uploadPath.mkdirs();
 			}
 			String uploadFileName = multipartFile.getOriginalFilename();
-//		log.info("uploadFileName 전 : " + uploadFileName);
 			UUID uuid = UUID.randomUUID();
 			uploadFileName = uuid.toString() + "_" + uploadFileName;
-//		log.info("uploadFileName 후 : " + uploadFileName);
 			File saveFile = new File(uploadPath, uploadFileName);
 			try {
 				multipartFile.transferTo(saveFile);
 			} catch (IllegalStateException | IOException e) {
-//				log.info(e.getMessage());
 			}
-//			log.info("saveFile : " + saveFile);
 			String url = "/images/" + getFolder().replace("\\", "/") + "/" + uploadFileName;
-//			log.info("url : " + url);
 			map.put("proProflPhoto", url);
 			map.put("profile", url);
 		}else {
@@ -157,34 +149,29 @@ public class ProJoinController {
 		map.put("adres", adresDto.getAdres());
 		map.put("detailAdres", adresDto.getDetailAdres());
 		map.put("zip", adresDto.getZip());
-		
+
 		int result = this.proJoinService.proInsert(map);
-//		log.info("회원가입 여부 : " + result);
-		
+
 		return "welcome";
 	}
-	
+
 	@GetMapping("/admLogout")
 	public String admLogout(HttpSession session) {
 		session.removeAttribute("admSession");
-//		log.info("로그아웃");
 		return "redirect:/main";
 	}
-	
-	
 	////////////////////////////////////////////////////////////////
 	@SuppressWarnings("unlikely-arg-type")
 	//프로 로그인
 	@ResponseBody
 	@PostMapping("/proLogin")
 	public Map<String, Object> proLogin(String userId, String userPassword, HttpServletRequest request) {
-		
+
 		Map<String, Object> userMap = new HashMap<>();
 		userMap.put("userId", userId);
 		userMap.put("userPassword", userPassword);
-		//로그인 전 map : {userPassword=asdasd, userId=testPro}
-		log.info("로그인 전 map : " + userMap);
-		
+		log.info("로그인 전 map : {}", userMap);
+
 		UsersDto adminVO = this.proJoinService.adminVO(userId);
 		UsersDto usersDto = this.proJoinService.proLogin(userMap);
 		//동균
@@ -196,45 +183,41 @@ public class ProJoinController {
 		adminVO : UsersVO(userId=testAdmin, userNm=테스트관리자, userPassword=asdasd, emplyrTy=ET03
 		, secsnAt=1, userNcnm=테스트관리자, cnt=0)
 		 */
-		log.info("adminVO : " + adminVO);
-		log.info("usersVO : " + usersDto);
+		log.info("adminVO : {}", adminVO);
+		log.info("usersVO : {}", usersDto);
 		//ET03 또는 ET02
-		
+
 		if("ET03".equals(usersDto.getEmplyrTy())) {//관리자
-			
-			log.info("asdp : " + adminVO);
-			
+
+			log.info("asdp : {}", adminVO);
+
 			userMap.put("cnt",1);
 			userMap.put("type","ET03");
 			userMap.put("userNcnm",adminVO.getUserNcnm()); //닉네임
-			
+
 			HttpSession	session = request.getSession();
-			
+
 			if(!userMap.isEmpty()) {
 				session.setAttribute("admSession", adminVO);
 			} else {
 				session.setAttribute("admSession", null);
 			}
-			System.out.println("세션체크 : " + userMap);
+			log.info("세션체크 : {}", userMap);
 			userMap.get("");
-			
-			
+
 			return userMap;
 
 		}else if("ET02".equals(usersDto.getEmplyrTy())){
-//			UsersVO usersVO = this.proJoinService.proLogin(userMap);
-			
 			if(usersDto == null) {
 				return userMap;
 			}
-			
 			//동균 신고 처리 부분 추가
 			//log.info("해당 프로 아이디 : " + userId);
 			Date userEndDt = this.proJoinService.getUserEndDt(userId);
-			log.info("디비로 가져온 userEndDt : " + userEndDt);
-			
+			log.info("디비로 가져온 userEndDt : {}", userEndDt);
+
 			// 현재 날짜와 시간 가져오기
-			
+
 			// 디비로 가져온 제재 종료일이 현재 시간과 같다면
 //				if(userEndDt==now) {
 //			        // Calendar 객체를 사용하여 어제의 날짜를 구하기
@@ -247,26 +230,26 @@ public class ProJoinController {
 //			        
 //					userEndDt = yesterdayDate;
 //				}
-			
+
 			//LocalDate nowDt = userEndDt.toLocalDate();
 			//LocalDate now = LocalDate.now();
-			
+
 			Date now = new Date();
-			log.info("제재 종료일과 비교할 현재일 : " + now);
-			
+			log.info("제재 종료일과 비교할 현재일 : {}", now);
+
 			if(userEndDt.after(now)) {
 				userMap.put("userEndDt", userEndDt);
 				usersDto.setCnt(2);
-				log.info("현재 날짜와 제재 종료일일 다른 경우 로근이 cnt : " + usersDto.getCnt());
+				log.info("현재 날짜와 제재 종료일일 다른 경우 로근이 cnt : {}", usersDto.getCnt());
 				userMap.put("cnt", usersDto.getCnt());
 				return userMap;
 			}
 			//동균 신고 처리 부분 추가 끝
-			
+
 			//		log.info("로그인 usersVO : " + usersVO);
 			VProUsersDto vProUsersDto = this.proJoinService.getProfile(userMap);
-			log.info("로그인 vProUsersVO : " + vProUsersDto);
-			
+			log.info("로그인 vProUsersVO : {}", vProUsersDto);
+
 			try {
 				AdresDto adresDto = this.proJoinService.getAdres(userMap);
 				userMap.put("zip", adresDto.getZip()); //우편번호
@@ -278,105 +261,87 @@ public class ProJoinController {
 				userMap.put("adres","-"); //주소
 				userMap.put("detailAdres","-"); //상세주소
 			}
-			
-			//		log.info("로그인 후 usersVO : " + usersVO);
-			//		log.info("로그인 후 vProUsersVO : " + vProUsersVO);
 			userMap.put("cnt", usersDto.getCnt());
 			userMap.put("type", usersDto.getEmplyrTy()); //유저타입(프로/회원)
 			userMap.put("userNcnm", usersDto.getUserNcnm()); //닉네임
-			
+
 			if(vProUsersDto != null && usersDto.getCnt() == 1) {
 				String profile = vProUsersDto.getProProflPhoto();
-				//			log.info("이미지 : " + profile);
 				if(profile != null) {
 					profile = vProUsersDto.getProProflPhoto();
 				}
-				
 				userMap.put("email", vProUsersDto.getEmail()); //이메일
 				userMap.put("userNm", vProUsersDto.getUserNm()); //이름
 				userMap.put("proMbtlnum", vProUsersDto.getProMbtlnum()); //전화번호
 				userMap.put("sexdstnTy", vProUsersDto.getSexdstnTy()); //성별
 				userMap.put("profile",profile); //프로필사진
 				userMap.put("changePwCk", usersDto.getChangePwCk()); //임시비번여부
-				
+
 				//전문가 코드 나열
 				String spcltyRealmCode = vProUsersDto.getSpcltyRealmCode(); //전문 분야 코드
-				//			log.info("전문가코드 길이 : " + spcltyRealmCode.length());
 				String thirdsrCode = this.proJoinService.proSRCode(spcltyRealmCode); //depth 3단계 이름
 				String secondSRCode = ""; //depth 2단계 이름
 				String firstSRCode = ""; //depth 1단계 이름
 				String spcltyRealmNm = ""; //전문 분야 풀네임
 				if(spcltyRealmCode.length() == 6) { //전문 분야 코드 6자리일때
-					//				log.info("전문가코드 길이 : " + spcltyRealmCode.substring(0,4));
 					secondSRCode = this.proJoinService.proSRCode(spcltyRealmCode.substring(0,4));
 					firstSRCode = this.proJoinService.proSRCode(spcltyRealmCode.substring(0,3));
 					spcltyRealmNm = firstSRCode + " >> " + secondSRCode + " >> " + thirdsrCode;
 				}
-				
 				if(spcltyRealmCode.length() == 4) {
 					firstSRCode = this.proJoinService.proSRCode(spcltyRealmCode.substring(0,3));
 					spcltyRealmNm = firstSRCode + " >> " + thirdsrCode;
 				}
-				
 				userMap.put("firstSRCode",firstSRCode); //depth 1단계 이름
 				userMap.put("secondSRCode",secondSRCode); //depth 2단계 이름
 				userMap.put("thirdsrCode",thirdsrCode); //depth 3단계 이름
 				userMap.put("spcltyRealmNm",spcltyRealmNm); //전문분야 풀네임
 				//			log.info("세션 들어갈 map : "+userMap);
 				HttpSession	session = request.getSession();
-				
+
 				if(!userMap.isEmpty()) {
 					session.setAttribute("proSession", userMap);
 				} else {
 					session.setAttribute("proSession", null);
 				}
-				
 			} else if (vProUsersDto == null && usersDto.getCnt() == 1){
 				userMap.put("cnt",1);
 			} else if (vProUsersDto == null && usersDto.getCnt() == 0) {
 				userMap.put("cnt",0);
 			}
-			System.out.println("세션체크 : " + userMap);
+			log.info("세션체크 for proLogin : {}", userMap);
 			userMap.get("");
-			
+
 		}else {
 			log.info("1" + usersDto.getCnt());
 			if(usersDto.getCnt() == 1) {
-				log.info("2" + usersDto.getCnt());
+				log.info("2{}", usersDto.getCnt());
 				userMap.put("type","ET01");
 			}else {
-				log.info("3" + usersDto.getCnt());
+				log.info("3{}", usersDto.getCnt());
 				userMap.put("cnt",0);
 			}
 		}
-		
+
 		return userMap;
 	}
-	
 	//프로 로그아웃
 	@GetMapping("/proLogout")
 	public String proLogout(HttpSession session) {
 		session.removeAttribute("proSession");
-//		log.info("로그아웃");
 		return "redirect:/main";
 	}
-	
 	public String getFolder() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
 		String str = sdf.format(date);
-//		log.info(str);
 		return str.replace("-", File.separator);
 	}
-	
 	//아이디 찾기
 	@ResponseBody
 	@PostMapping("/idSearch")
 	public UsersDto idSearch(VProUsersDto vProUsersDto) {
-//		log.info("아이디찾기 vo : " + vProUsersVO);
-		
 		UsersDto usersDto = this.proJoinService.idSearch(vProUsersDto);
-//		log.info("userVO : " + usersVO);
 		if(usersDto == null) {
 			VMberUsersDto mberVO = this.proJoinService.idSearch2(vProUsersDto);
 			UsersDto userVO = new UsersDto();
@@ -389,41 +354,31 @@ public class ProJoinController {
 				return userVO;
 			}
 		}
-//		log.info("찾은 아이디 : " + usersVO);
 		return usersDto;
 	}
-	
 	//비밀번호찾기
 	@ResponseBody
 	@PostMapping("/pwSearch")
 	public Map<String, Object> pwSearch(VProUsersDto vProUsersDto) {
-//		log.info("비밀번호찾기 vo : " + vProUsersVO);
 		String userPassword;
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		UsersDto usersDto = this.proJoinService.pwSearch(vProUsersDto);
-//		log.info("userVO : " + usersVO);
 		if(usersDto == null) {
 			String emplyrTy = this.proJoinService.pwSearch2(vProUsersDto);
 			if(emplyrTy==null) {//프로조회
 				map.put("emplyrTy","warn");
-//				log.info("map6 : " + map);
 				return map;
 			}else {
 				map.put("emplyrTy", emplyrTy);
-//				log.info("map5 : " + map);
 				return map;
 			}
 		}else {
 			String emplyrTy = usersDto.getEmplyrTy();
 			map.put("emplyrTy", emplyrTy);
 			userPassword = usersDto.getUserPassword();
-//			log.info("비번2 : " + userPassword);
 		}
 		map.put("proId", vProUsersDto.getProId());
-//		log.info("찾은 비밀번호 : " + usersVO);
-		
-		
+
 		if(userPassword == null || userPassword.isEmpty()) { //검색 결과가 없을때
 			userPassword = null;
 			map.put("userPassword", userPassword);
@@ -445,20 +400,14 @@ public class ProJoinController {
 			String title = "누네띠네 프로님의 임시비밀번호 발송 이메일 입니다."; //이메일 제목
 			String content = "누네띠네를 이용해 주셔서 감사합니다." + "<br><br>" + "변경된 임시비밀번호는 <div style='backgroud-color:yellow;'><b>"
 					+ str + "</b> 입니다.</div><br><br>해당 임시비밀번호로 로그인 후 꼭 비밀번호를 변경해주세요.<br><br>"
-							+ "<a href='localhost/main'>누네띠네로 돌아가기</a>";
+					+ "<a href='localhost/main'>누네띠네로 돌아가기</a>";
 			mailSend(setForm, toMail, title, content); //메일 전송 메소드 호출
-			
 			map.put("imsiPw", str);
 			// 임시비밀번호로 변경
 			int result = this.proJoinService.updatePw(map);
-//			log.info("비번 변경여부 : " + result);
 		}
-		
-//		log.info("Map : " + map);
-
 		return map;
 	}
-	
 	//이메일 전송 메소드
 	public void mailSend(String setForm, String toMail, String title, String content) {
 		//true, 매개값 주면 multipart 형싱의 메세지 전달 가능, 인코딩도 가능
@@ -475,16 +424,4 @@ public class ProJoinController {
 			e.printStackTrace();
 		}
 	}
-	
 }
-
-
-
-
-
-
-
-
-
-
-

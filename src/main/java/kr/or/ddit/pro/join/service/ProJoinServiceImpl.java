@@ -57,8 +57,8 @@ public class ProJoinServiceImpl implements ProJoinService {
             JSONObject obj = coolsms.send(params);
             log.info("obj : {}", obj.toString());
         } catch (CoolsmsException e) {
-            System.out.println(e.getMessage());
-            System.out.println(e.getCode());
+            log.info("{}",e.getMessage());
+            log.info("{}",e.getCode());
         }
 		
 	}
