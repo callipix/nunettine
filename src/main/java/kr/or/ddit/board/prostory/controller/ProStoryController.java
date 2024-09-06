@@ -32,8 +32,8 @@ import kr.or.ddit.board.prostory.dto.GoodPointDto;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
-@RequestMapping("/prostory")
 @RequiredArgsConstructor
+@RequestMapping("/prostory")
 @SuppressWarnings({"unchecked"})
 public class ProStoryController {
 
@@ -48,17 +48,13 @@ public class ProStoryController {
 		if(proSession !=null && proSession instanceof HashMap) {
 			Object userId = ((HashMap<String, Object>)proSession).get("userId");
 			log.info("proSession : {}", userId);
-
 			return userId != null ? userId.toString() : null;
 		}
 		if(memSession !=null && memSession instanceof HashMap) {
 			Object userId = ((HashMap<String, Object>)memSession).get("userId");
 			log.info("memSession : {}", userId);
-
 			return userId != null ? userId.toString() : null;
-
 		}
-
 		return "not";
 	}
 	
@@ -66,9 +62,7 @@ public class ProStoryController {
 	@ResponseBody
 	@GetMapping("/idCheck")
 	private String idCheck(HttpServletRequest request) {
-		
 		return userId(request);
-		
 	}
 	
 	/* 메인페이지(리스트) */
@@ -77,19 +71,15 @@ public class ProStoryController {
 		
 		int total = proStoryService.getTotal();
 		List<ProStoryBbscttDto> list = new LinkedList<ProStoryBbscttDto>();
-	
 		if(this.proStoryService.storyList() == null) { return "prostory/main"; }
-		
 		list = this.proStoryService.storyList();
-		
+
 		// 프로이야기 리스트
 		model.addAttribute("proStoryBbscttVO", list);
 		model.addAttribute("total", total);
 		
-		log.debug("proStoryBbscttVO : {}" , list);
-		
+		log.info("proStoryBbscttVO for list : {}" , list);
 		return "prostory/main";
-		
 	}
 	
 	@ResponseBody
@@ -167,7 +157,7 @@ public class ProStoryController {
 		proStoryBbscttDto.setProId(userId);
 		
 		int result = this.proStoryService.insert(proStoryBbscttDto, multi);
-		log.info("proStoryBbscttVO {}", proStoryBbscttDto.getProStoryBbscttNo());
+		log.info("proStoryBbscttVO {} for insert", proStoryBbscttDto.getProStoryBbscttNo());
 		return result;
 	}
 	
@@ -189,9 +179,6 @@ public class ProStoryController {
 	public String update(@RequestParam("storyNo")int storyNo , Model model) {
 		
 		ProStoryBbscttDto proStoryBbscttDto = this.proStoryService.getStory(storyNo);
-		
-		log.debug("수정페이지 데이터 체크 : {}", proStoryBbscttDto);
-		
 		model.addAttribute("getStory", this.proStoryService.getStory(storyNo));
 		
 		return "prostory/update";
@@ -206,7 +193,7 @@ public class ProStoryController {
 		
 		proStoryBbscttDto.setProId(userId(request));
 		
-		log.debug("proStoryBbscttVO 아이디 세팅 후 {}", proStoryBbscttDto);
+		log.info("proStoryBbscttVO 아이디 세팅 후 {}", proStoryBbscttDto);
 		
 		int result = this.proStoryService.updateStory(proStoryBbscttDto, multi);
 		
@@ -271,8 +258,8 @@ public class ProStoryController {
 				newCookie.setMaxAge(60 * 60 * 24);
 				response.addCookie(newCookie);
 			}
-		log.debug("조회수 : {}" , count);
-		log.debug("프로이야기 데이터 확인 : {}", proStoryBbscttDto);
+		log.info("조회수 : {}" , count);
+		log.info("프로이야기 데이터 확인 : {}", proStoryBbscttDto);
 		
 		model.addAttribute("getStory", proStoryBbscttDto);
 		model.addAttribute("getStoryStr", getStoryStr);
@@ -294,7 +281,7 @@ public class ProStoryController {
 		log.info("체크 데이터 확인 : goodPointVO {} ", goodPointDto);
 		int result = this.proStoryService.getGoodCheck(goodPointDto);
 		
-		log.debug("result Check {}" , result);
+		log.info("result Check {}" , result);
 		return result;
 	}
 	

@@ -1,4 +1,4 @@
-package kr.or.ddit.util.echo;
+package kr.or.ddit.echo;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

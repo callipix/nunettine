@@ -1,4 +1,4 @@
-package kr.or.ddit.util.echo;
+package kr.or.ddit.echo;
 
 import java.util.List;
 
