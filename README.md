@@ -92,6 +92,7 @@
 <img style="width: 100%;" src="https://github.com/user-attachments/assets/60ea5b62-3dc1-4b72-b6cd-0165ff8dfec0">
 <br><br>
 <h2 style="color: #282d33;"> 🔎 프로젝트에서 내가 기여한 부분 </h2>
+<h5>이하 펼쳐보기 부분 전부 플로우차트 및 시퀀스 다이어그램, 클래스 다이어그램으로 수정 예정</h5>
 <h3>1. SMS 인증번호를 통한 가입 인증진행</h3>
   <details>
             <summary>펼쳐보기</summary>
