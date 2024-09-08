@@ -36,10 +36,10 @@ public class MainController {
 	public String main(Model model) throws JsonProcessingException {
 		
 		DongChartDto2 dongDto2 = this.manageService.test2();
-		log.info("dongDto2 : " + dongDto2);
+		log.info("dongDto2 : {}", dongDto2);
 		
 		DongChartDto3 dongDto3 = this.manageService.test3();
-		log.info("dongDto3 : " + dongDto3);
+		log.info("dongDto3 : {}", dongDto3);
 		
 		model.addAttribute("dongDto2",dongDto2);
 		model.addAttribute("dongDto3",dongDto3);

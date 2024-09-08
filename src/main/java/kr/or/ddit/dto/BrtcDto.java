@@ -10,9 +10,9 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class BrtcDto {
-									// 지역(구) 테이블
-	private String brtcCode;		// 지역(구) 코드
-	private String bcityCode;		// 지역(시) 코드
-	private String brtcNm;			// 지역(구) 명
+	// 지역(구) 테이블
+	private String brtcCode;        // 지역(구) 코드
+	private String bcityCode;        // 지역(시) 코드
+	private String brtcNm;            // 지역(구) 명
 
 }

@@ -7,13 +7,13 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 public class BundleOndyclDto {
-	private int shopngBundleNo;	//장바구니번호
-	private String mberId;	//회원아이디
-	private int ondyclSchdulNo;	//일정번호
-	private int ondyclNo;	//원데이클래스 번호
-	private int prdTotqy;	//총 수량
-	private int prdPc;	//가격
-	private String resveTy;	//구매상태 1구매완료/0구매전
+	private int shopngBundleNo;    //장바구니번호
+	private String mberId;    //회원아이디
+	private int ondyclSchdulNo;    //일정번호
+	private int ondyclNo;    //원데이클래스 번호
+	private int prdTotqy;    //총 수량
+	private int prdPc;    //가격
+	private String resveTy;    //구매상태 1구매완료/0구매전
 	private int rnum;
 	private String ondyclSchdulDe; //원데이클래스 일정 날짜("20240303")
 	private String ondyclSchdulBeginTime; //원데이클래스 시작시간("15:00") 
@@ -33,7 +33,7 @@ public class BundleOndyclDto {
 	private String ondyclAdres;
 	private String ondyclDetailAdres;
 	private String ondyclZip;
-	
+
 	private boolean peopleCheck;
 	private boolean dayCheck;
 }
