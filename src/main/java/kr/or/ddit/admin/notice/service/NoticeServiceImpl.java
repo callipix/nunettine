@@ -11,6 +11,7 @@ import java.util.UUID;
 import kr.or.ddit.admin.notice.dto.NoticeDto;
 import kr.or.ddit.dto.SprviseAtchmnflDto;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,97 +22,91 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 public class NoticeServiceImpl implements NoticeService {
-	
+
 	private final String uploadFolder;
 	private final NoticeMapper noticeMapper;
 
 	@Override
 	public List<NoticeDto> getAllNoticeList() {
-		// TODO Auto-generated method stub
 		return this.noticeMapper.getAllNoticeList();
 	}
 
 	@Override
 	public NoticeDto detail(int noticeNo) {
-		// TODO Auto-generated method stub
 		return this.noticeMapper.detail(noticeNo);
 	}
 
 	@Override
 	public int update(NoticeDto noticeDto) {
-		// TODO Auto-generated method stub
 		return this.noticeMapper.update(noticeDto);
 	}
 
 	@Override
 	public int delete(NoticeDto noticeDto) {
-		// TODO Auto-generated method stub
 		return this.noticeMapper.delete(noticeDto);
 	}
 
 	@Override
 	public int createPost(NoticeDto noticeDto) {
-		log.info("noticeVO:"+ noticeDto);
-		
+		log.info("noticeVO : {}", noticeDto);
+
 		int result = this.noticeMapper.createPost(noticeDto);
-		
+
 		//원본파일명
 		String uploadFileName = "";
 		//Mime타입
 		String mime = "";
 		//seq 컬럼 카운터
 		int seq = 1;
-		
+
 		MultipartFile[] uploadFile = noticeDto.getUploadFile();
-		
-		for(MultipartFile multipartFile : uploadFile){
-			log.info("-----------");
-			log.info("원본파일명:"+multipartFile.getOriginalFilename());
-			log.info("MIME타입:"+multipartFile.getContentType());
-			log.info("-----------");
-			
+
+		for (MultipartFile multipartFile : uploadFile) {
+			log.info("-------------------------------------------------------");
+			log.info("원본파일명 : {}", multipartFile.getOriginalFilename());
+			log.info("MIME타입 :{} ", multipartFile.getContentType());
+			log.info("-------------------------------------------------------");
+
 			uploadFileName = multipartFile.getOriginalFilename();
-			mime =multipartFile.getContentType();
-			
-			UUID uuid =UUID.randomUUID();
-			uploadFileName = uuid.toString()+"_"+uploadFileName;
-			
+			mime = multipartFile.getContentType();
+
+			UUID uuid = UUID.randomUUID();
+			uploadFileName = uuid.toString() + "_" + uploadFileName;
+
 			String userId = noticeDto.getMngrId();
 			int sprviseAtchmnflNo = noticeDto.getSprviseAtchmnflNo();
-			log.info("sprviseAtchmnflNo : " + sprviseAtchmnflNo);
+			log.info("sprviseAtchmnflNo : {}", sprviseAtchmnflNo);
 
-			File saveFile = new File(uploadFolder+ "\\" + getFolder(),uploadFileName);
-			
+			File saveFile = new File(uploadFolder + "\\" + getFolder(), uploadFileName);
+
 			try {
 				multipartFile.transferTo(saveFile);
-				
+
 				SprviseAtchmnflDto sprviseAtchmnflDto = new SprviseAtchmnflDto();
 				sprviseAtchmnflDto.setSprviseAtchmnflNo(sprviseAtchmnflNo);
 				sprviseAtchmnflDto.setAtchmnflNo(seq++);
 				sprviseAtchmnflDto.setAtchmnflCours("/images/" + getFolder().replaceAll("\\\\", "/") + "/"
-						+ uploadFileName);
-				
+					+ uploadFileName);
+
 				sprviseAtchmnflDto.setAtchmnflNm(multipartFile.getOriginalFilename());
 				sprviseAtchmnflDto.setStoreAtchmnflNm(uploadFileName);
 				sprviseAtchmnflDto.setAtchmnflTy(mime);
 				sprviseAtchmnflDto.setUserId(userId);
-				
-				log.info("sprviseAtchmnflVO : " + sprviseAtchmnflDto);
+
+				log.info("sprviseAtchmnflVO : {}", sprviseAtchmnflDto);
 
 				result += this.noticeMapper.insertSprvise(sprviseAtchmnflDto);
-				
-			}catch(IllegalStateException | IOException e) {
+
+			} catch (IllegalStateException | IOException e) {
 				log.error(e.getMessage());
 			}
 
-			
 		}
-		
+
 		return result;
-		
-		
+
 	}
-	
+
 	public String getFolder() {
 		//2024-01-30 형식(format) 지정
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -130,33 +125,26 @@ public class NoticeServiceImpl implements NoticeService {
 	 * return contentType.startsWith("image"); } catch (IOException e) {
 	 * e.printStackTrace(); } //이 파일이 이미지가 아닐 경우 return false; }
 	 */
-		
 
 	@Override
 	public int getTotal(Map<String, Object> map) {
-		// TODO Auto-generated method stub
 		return this.noticeMapper.getTotal(map);
 	}
 
 	@Override
 	public List<NoticeDto> list(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		log.info("map테스트 : {}", map);
+		log.info("map 테스트 : {}", map);
 		return this.noticeMapper.list(map);
 	}
 
 	@Override
 	public int increaseViewCount(int noticeNo) {
-		// TODO Auto-generated method stub
 		return this.noticeMapper.increaseViewCount(noticeNo);
 	}
 
 	@Override
 	public NoticeDto sprviseAtchmnflDto(int noticeNo) {
-		// TODO Auto-generated method stub
 		return this.noticeMapper.sprviseAtchmnflDto(noticeNo);
 	}
-	
-	
 
 }

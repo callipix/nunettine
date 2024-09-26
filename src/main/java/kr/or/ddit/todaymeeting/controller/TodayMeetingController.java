@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import kr.or.ddit.dto.TdmtngDto;
 import kr.or.ddit.dto.TdmtngPrtcpntDto;
 import lombok.RequiredArgsConstructor;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.http.ResponseEntity;
@@ -45,13 +46,13 @@ public class TodayMeetingController {
 		Object proSession = request.getSession().getAttribute("proSession");
 		Object memSession = request.getSession().getAttribute("memSession");
 
-		if(proSession !=null && proSession instanceof HashMap) {
+		if (proSession != null && proSession instanceof HashMap) {
 			Object userId = ((HashMap<String, Object>)proSession).get("userId");
 			log.info("proSession : {}", userId);
 
 			return userId != null ? userId.toString() : null;
 		}
-		if(memSession !=null && memSession instanceof HashMap) {
+		if (memSession != null && memSession instanceof HashMap) {
 			Object userId = ((HashMap<String, Object>)memSession).get("userId");
 			log.info("memSession : {}", userId);
 
@@ -86,14 +87,14 @@ public class TodayMeetingController {
 
 	@ResponseBody
 	@PostMapping("/listAjax")
-	public ArticlePage3<TdmtngDto> listAjax(@RequestBody(required=false) Map<String,Object> map) {
+	public ArticlePage3<TdmtngDto> listAjax(@RequestBody(required = false) Map<String, Object> map) {
 
 		log.info("map : " + map);
 
 		int size = 10;
 		int total = this.todayMeetingService.getTotal(map);
 
-		log.info("listAjax->total : {}", total);
+		log.info("listAjax -> total : {}", total);
 
 		map.put("total", total);
 
@@ -101,31 +102,30 @@ public class TodayMeetingController {
 
 		List<TdmtngDto> tdmtngDtoList = this.todayMeetingService.list(map);
 
-		log.info("listAjax->tdmtngVOList : {}", tdmtngDtoList);
+		log.info("listAjax -> tdmtngVOList : {}", tdmtngDtoList);
 
 		String currentPage = map.get("currentPage").toString();
 
 		log.info(currentPage);
 
 		String keyword = map.get("keyword").toString();
-		log.info("listAjax->keyword : {}", keyword);
+		log.info("listAjax -> keyword : {}", keyword);
 
 		String selectColumn = map.get("selectColumn").toString();
-		log.info("listAjax->selectColumn : {}", selectColumn);
+		log.info("listAjax -> selectColumn : {}", selectColumn);
 
 		ArticlePage3<TdmtngDto> data = new ArticlePage3<TdmtngDto>(total,
-				Integer.parseInt(currentPage), size, tdmtngDtoList, keyword, selectColumn);
+			Integer.parseInt(currentPage), size, tdmtngDtoList, keyword, selectColumn);
 
-		log.info("listAjax->data : {}", data);
+		log.info("listAjax -> data : {}", data);
 
 		return data;
 	}
 
-
 	// 내 이벤트 조회
 	@GetMapping("/calendarList")
 	@ResponseBody
-	public List<Map<String, Object>> showAllEventInUpdate(String userId) throws Exception{
+	public List<Map<String, Object>> showAllEventInUpdate(String userId) throws Exception {
 
 		log.info(userId);
 
@@ -137,7 +137,7 @@ public class TodayMeetingController {
 
 		log.info("calList : {}", list);
 
-		for(TdmtngDto tdmtngcal : list) {
+		for (TdmtngDto tdmtngcal : list) {
 			hash.put("id", tdmtngcal.getTdmtngNo());
 			hash.put("title", tdmtngcal.getTdmtngNm());
 			hash.put("start", tdmtngcal.getTdmtngDt());
@@ -151,7 +151,7 @@ public class TodayMeetingController {
 
 	@GetMapping("/detail")
 	public String detail(HttpServletRequest request, int tdmtngNo
-			, Model model) {
+		, Model model) {
 		log.info("detail -> tdmtngNo : {}", tdmtngNo);
 
 		String sessionId = userId(request);
@@ -162,7 +162,7 @@ public class TodayMeetingController {
 
 		int count = this.todayMeetingService.chatMemCount(tdmtngNo);
 
-		log.info("chatMemCount -> count : {}",  count);
+		log.info("chatMemCount -> count : {}", count);
 
 		model.addAttribute("sessionId", sessionId);
 		model.addAttribute("tdmtngVO", tdmtngDto);
@@ -179,27 +179,26 @@ public class TodayMeetingController {
 
 		tdmtngDto.setUserId(userId);
 
-		log.info("create -> tdmtngVO : {}",  tdmtngDto);
+		log.info("create -> tdmtngVO : {}", tdmtngDto);
 
 		int result = this.todayMeetingService.create(tdmtngDto);
 
-		log.info("tdmtngVO -> result : {}",  result);
-		log.info("tdmtngVO -> result : {}",  tdmtngDto.getTdmtngNo());
+		log.info("tdmtngVO -> result : {}", result);
+		log.info("tdmtngVO -> result : {}", tdmtngDto.getTdmtngNo());
 
 		return tdmtngDto.getTdmtngNo();
 	}
 
-
 	@PostMapping("/update")
 	public String update(TdmtngDto tdmtngDto) {
-		log.info("update -> tdmtngVO : {}",  tdmtngDto);
+		log.info("update -> tdmtngVO : {}", tdmtngDto);
 
 		int result = this.todayMeetingService.update(tdmtngDto);
 
-		log.info("tdmtngVO -> result from update : {}",  result);
+		log.info("tdmtngVO -> result from update : {}", result);
 
 		//redirect : 새로운 URL요청
-		return "redirect:/todayMeeting/detail?tdmtngNo="+ tdmtngDto.getTdmtngNo();
+		return "redirect:/todayMeeting/detail?tdmtngNo=" + tdmtngDto.getTdmtngNo();
 	}
 
 	@GetMapping("/delete")
@@ -216,8 +215,7 @@ public class TodayMeetingController {
 	//내 채팅 불러오기
 	@ResponseBody
 	@PostMapping("/selectMyChat")
-	public TdmtngPrtcpntDto selectMyChat (@RequestBody TdmtngPrtcpntDto tdmtngPrtcpntDto) {
-
+	public TdmtngPrtcpntDto selectMyChat(@RequestBody TdmtngPrtcpntDto tdmtngPrtcpntDto) {
 
 		log.info("selectMyChat -> tdmtngPrtcpntVO1 : {}", tdmtngPrtcpntDto);
 
@@ -241,11 +239,11 @@ public class TodayMeetingController {
 		tdmtngPrtcpntDto.setUserId(userId);
 		tdmtngPrtcpntDto.setTdmtngNo(tdmtngNo);
 
-		log.info("joinChat -> tdmtngPrtcpntVO : {}",  tdmtngPrtcpntDto);
+		log.info("joinChat -> tdmtngPrtcpntVO : {}", tdmtngPrtcpntDto);
 
 		int result = this.todayMeetingService.joinChat(tdmtngPrtcpntDto);
 
-		log.info("joinChat -> result : {}",  result);
+		log.info("joinChat -> result : {}", result);
 
 		return result;
 	}
@@ -255,30 +253,30 @@ public class TodayMeetingController {
 	@PostMapping("/chatMemList")
 	public List<TdmtngPrtcpntDto> chatMemList(int tdmtngNo) {
 
-		log.info("chatMemList -> tdmtngNo : {}",  tdmtngNo);
+		log.info("chatMemList -> tdmtngNo : {}", tdmtngNo);
 
 		List<TdmtngPrtcpntDto> chatMemList = this.todayMeetingService.chatMemList(tdmtngNo);
 
-		log.info("chatMemList -> chatMemList : {}",  chatMemList);
+		log.info("chatMemList -> chatMemList : {}", chatMemList);
 
 		return chatMemList;
 	}
 
 	@ResponseBody
 	@PostMapping("/join")
-	public VChatRoom join(@RequestParam("tdmtngNo") int tdmtngNo , HttpServletRequest request , Model model) {
+	public VChatRoom join(@RequestParam("tdmtngNo") int tdmtngNo, HttpServletRequest request, Model model) {
 
-		log.info("detail -> tdmtngNo from join : {}",  tdmtngNo);
+		log.info("detail -> tdmtngNo from join : {}", tdmtngNo);
 
-		VChatRoom joinRoom = this.todayMeetingService.join(tdmtngNo , userId(request));
+		VChatRoom joinRoom = this.todayMeetingService.join(tdmtngNo, userId(request));
 
 		List<TdmtngPrtcpntDto> chatMemList = this.todayMeetingService.chatMemList(tdmtngNo);
 
-		for(TdmtngPrtcpntDto test : chatMemList) {
+		for (TdmtngPrtcpntDto test : chatMemList) {
 
-			if(joinRoom.getUserId().equals(test.getUserId())){
+			if (joinRoom.getUserId().equals(test.getUserId())) {
 
-				if(test.getMberProflPhoto() != null) {
+				if (test.getMberProflPhoto() != null) {
 
 					joinRoom.setProflPhoto(test.getMberProflPhoto());
 
@@ -291,18 +289,18 @@ public class TodayMeetingController {
 
 		}
 
-		for(UsersDto userImg : joinRoom.getUserInfo()) {
+		for (UsersDto userImg : joinRoom.getUserInfo()) {
 
-			for(TdmtngPrtcpntDto bb : chatMemList) {
+			for (TdmtngPrtcpntDto bb : chatMemList) {
 
-				if(userImg.getUserId().equals(bb.getUserId())){
+				if (userImg.getUserId().equals(bb.getUserId())) {
 
-					if(bb.getMberProflPhoto() !=null) {
+					if (bb.getMberProflPhoto() != null) {
 
 						userImg.setProflPhoto(bb.getMberProflPhoto());
 						break;
 					}
-					if(bb.getProProflPhoto() != null) {
+					if (bb.getProProflPhoto() != null) {
 
 						userImg.setProflPhoto(bb.getProProflPhoto());
 						break;
@@ -313,7 +311,7 @@ public class TodayMeetingController {
 		}
 
 		model.addAttribute("joinRoom", joinRoom);
-		log.info("detail After -> joinRoom : {}",  joinRoom);
+		log.info("detail After -> joinRoom : {}", joinRoom);
 		return joinRoom;
 	}
 
@@ -327,31 +325,30 @@ public class TodayMeetingController {
 
 		return ResponseEntity.ok().body(myList);
 	}
+
 	@ResponseBody
 	@PostMapping("/msgList")
-	public Map<String, Object> roomMsg(@RequestParam("tdmtngNo") int tdmtngNo, HttpServletRequest request){
+	public Map<String, Object> roomMsg(@RequestParam("tdmtngNo") int tdmtngNo, HttpServletRequest request) {
 
 		Map<String, Object> roomInfo = new HashMap<>();
 
-		VChatRoom joinRoom = this.todayMeetingService.join(tdmtngNo , userId(request));
+		VChatRoom joinRoom = this.todayMeetingService.join(tdmtngNo, userId(request));
 
 		List<TdmtngChSpMshgDto> msgList = this.messageService.roomMsgList(tdmtngNo);
 
 		List<TdmtngPrtcpntDto> chatMemList = this.todayMeetingService.chatMemList(tdmtngNo);
 
-		for(TdmtngChSpMshgDto aa : msgList) {
+		for (TdmtngChSpMshgDto aa : msgList) {
 
-			for(TdmtngPrtcpntDto bb : chatMemList) {
+			for (TdmtngPrtcpntDto bb : chatMemList) {
 
-				if(aa.getUserId().equals(bb.getUserId())){
+				if (aa.getUserId().equals(bb.getUserId())) {
 
-					if(bb.getMberProflPhoto() !=null)
-					{
+					if (bb.getMberProflPhoto() != null) {
 						aa.setProflPhoto(bb.getMberProflPhoto());
 						break;
 					}
-					if(bb.getProProflPhoto() != null)
-					{
+					if (bb.getProProflPhoto() != null) {
 						aa.setProflPhoto(bb.getProProflPhoto());
 						break;
 					}
@@ -362,8 +359,8 @@ public class TodayMeetingController {
 		roomInfo.put("msgList", msgList);
 		roomInfo.put("joinRoom", joinRoom);
 
-		log.info("해당 방 : {}" , joinRoom);
-		log.info("메세지 리스트: {}" , msgList);
+		log.info("해당 방 : {}", joinRoom);
+		log.info("메세지 리스트: {}", msgList);
 		return roomInfo;
 	}
 

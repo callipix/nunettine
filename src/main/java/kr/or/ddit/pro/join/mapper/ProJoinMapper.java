@@ -8,50 +8,48 @@ import kr.or.ddit.dto.*;
 import kr.or.ddit.dto.VMberUsersDto;
 
 public interface ProJoinMapper {
-	
-	public int emailCk(String email);
 
-	public int idCk(String userId);
+	int emailCk(String email);
 
-	public int ncnmCk(String userNcnm);
+	int idCk(String userId);
 
-	public UsersDto proLogin(Map<String, Object> userMap);
-	
-	public int proInsert(Map<String, Object> map);
+	int ncnmCk(String userNcnm);
 
-	public VProUsersDto getProfile(Map<String, Object> userMap);
+	UsersDto proLogin(Map<String, Object> userMap);
 
-	public UsersDto idSearch(VProUsersDto vProUsersDto);
+	int proInsert(Map<String, Object> map);
 
-	public UsersDto pwSearch(VProUsersDto vProUsersDto);
+	VProUsersDto getProfile(Map<String, Object> userMap);
 
-	public int updatePw(Map<String, Object> map);
+	UsersDto idSearch(VProUsersDto vProUsersDto);
 
-	public VMberUsersDto idSearch2(VProUsersDto vProUsersDto);
+	UsersDto pwSearch(VProUsersDto vProUsersDto);
 
-	public String pwSearch2(VProUsersDto vProUsersDto);
+	int updatePw(Map<String, Object> map);
 
-	public AdresDto getAdres(Map<String, Object> userMap);
+	VMberUsersDto idSearch2(VProUsersDto vProUsersDto);
 
-	public String proSRCode(String spcltyRealmCode);
+	String pwSearch2(VProUsersDto vProUsersDto);
 
-	public List<SpcltyRealmDto> selectCode();
+	AdresDto getAdres(Map<String, Object> userMap);
 
-	public List<SpcltyRealmDto> codeSelect(String code);
+	String proSRCode(String spcltyRealmCode);
 
+	List<SpcltyRealmDto> selectCode();
+
+	List<SpcltyRealmDto> codeSelect(String code);
 
 	//관리자
-	public UsersDto admLogin(Map<String, Object> userMap);
+	UsersDto admLogin(Map<String, Object> userMap);
 
-	public UsersDto adminVO(String userId);
+	UsersDto adminVO(String userId);
 
+	List<VOndyclProUsersDto> proMyClassList(String proId);
 
-	public List<VOndyclProUsersDto> proMyClassList(String proId);
-
-	public int countProMyClass(String proId);
+	int countProMyClass(String proId);
 
 	//동균 추가 시작
-	public Date getUserEndDt(String userId);
+	Date getUserEndDt(String userId);
 	//동균 추가 끝
 
 }

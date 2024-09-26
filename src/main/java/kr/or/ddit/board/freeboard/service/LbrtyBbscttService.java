@@ -8,44 +8,44 @@ import kr.or.ddit.dto.LbrtyBbscttAnswerDto;
 
 public interface LbrtyBbscttService {
 
-	public List<LbrtyBbscttDto2> lbrtyBbscttList();
+	List<LbrtyBbscttDto2> lbrtyBbscttList();
 
-	public LbrtyBbscttDto lbrtyBbscttDetail(int lbrtyBbscttNo);
+	LbrtyBbscttDto lbrtyBbscttDetail(int lbrtyBbscttNo);
 
-	public int lbrtyBbscttDelete(LbrtyBbscttDto lbrtyBbscttDto);
-	
-	public int lbrtyBbscttInsert(LbrtyBbscttDto lbrtyBbscttDto);
+	int lbrtyBbscttDelete(LbrtyBbscttDto lbrtyBbscttDto);
 
-	public List<LbrtyBbscttAnswerDto> lbrtyBbscttAnswerList(String lbrtyBbscttNo);
+	int lbrtyBbscttInsert(LbrtyBbscttDto lbrtyBbscttDto);
 
-	public int lbrtyBbscttAnswerInsert(LbrtyBbscttAnswerDto lbrtyBbscttAnswerDto);
+	List<LbrtyBbscttAnswerDto> lbrtyBbscttAnswerList(String lbrtyBbscttNo);
 
-	public int lbrtyBbscttAnswerDelete(LbrtyBbscttAnswerDto lbrtyBbscttAnswerDto);
+	int lbrtyBbscttAnswerInsert(LbrtyBbscttAnswerDto lbrtyBbscttAnswerDto);
 
-	public int lbrtyBbscttAnswerUpdate(LbrtyBbscttAnswerDto lbrtyBbscttAnswerDto);
+	int lbrtyBbscttAnswerDelete(LbrtyBbscttAnswerDto lbrtyBbscttAnswerDto);
 
-	public int lbrtyBbscttUpdate(LbrtyBbscttDto lbrtyBbscttDto);
+	int lbrtyBbscttAnswerUpdate(LbrtyBbscttAnswerDto lbrtyBbscttAnswerDto);
 
-	public List<LbrtyBbscttAnswerDto2> ansAnsList(LbrtyBbscttAnswerDto lbrtyBbscttAnswerDto);
+	int lbrtyBbscttUpdate(LbrtyBbscttDto lbrtyBbscttDto);
 
-	public int ansAnsInt(LbrtyBbscttAnswerDto lbrtyBbscttAnswerDto);
+	List<LbrtyBbscttAnswerDto2> ansAnsList(LbrtyBbscttAnswerDto lbrtyBbscttAnswerDto);
 
-	public int ansAnsCnt(LbrtyBbscttAnswerDto lbrtyBbscttAnswerDto);
+	int ansAnsInt(LbrtyBbscttAnswerDto lbrtyBbscttAnswerDto);
 
-	public List<SprviseAtchmnfl> sprviseAtchmnflDetail(int sprviseAtchmnflNo);
+	int ansAnsCnt(LbrtyBbscttAnswerDto lbrtyBbscttAnswerDto);
 
-	public int fileDel(SprviseAtchmnfl sprviseAtchmnfl);
+	List<SprviseAtchmnfl> sprviseAtchmnflDetail(int sprviseAtchmnflNo);
 
-	public List<SprviseAtchmnfl> detailfileList(String sprviseAtchmnflNo);
+	int fileDel(SprviseAtchmnfl sprviseAtchmnfl);
 
-	public List<LbrtyBbscttDto2> lbrtyBbscttListPage(Map<String, Object> map);
+	List<SprviseAtchmnfl> detailfileList(String sprviseAtchmnflNo);
 
-	public int getTotal(Map<String, Object> map);
+	List<LbrtyBbscttDto2> lbrtyBbscttListPage(Map<String, Object> map);
 
-	public int declInsert(SntncDeclDto sntncDeclDto);
+	int getTotal(Map<String, Object> map);
 
-	public List<CommonCdDetailDto> declComCdDeSelect();
+	int declInsert(SntncDeclDto sntncDeclDto);
 
-	public int cntUp(int lbrtyBbscttNo);
+	List<CommonCdDetailDto> declComCdDeSelect();
+
+	int cntUp(int lbrtyBbscttNo);
 
 }

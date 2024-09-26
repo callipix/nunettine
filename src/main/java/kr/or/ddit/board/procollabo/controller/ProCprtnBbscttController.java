@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import kr.or.ddit.board.procollabo.dto.ProCprtnAnswerDto;
 import kr.or.ddit.board.procollabo.dto.ProCprtnBbscttDto;
 import lombok.RequiredArgsConstructor;
+
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,106 +30,107 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class ProCprtnBbscttController {
 
-	private final String uploadFolder;
 	private final ProCprtnBbscttService proCprtnBbscttService;
-	
+
 	private String userId(HttpServletRequest request) {
 		//세션값으로 아이디 가져오기
-		
+
 		Object proSession = request.getSession().getAttribute("proSession");
 		Object memSession = request.getSession().getAttribute("memSession");
 		Object admSession = request.getSession().getAttribute("admSession");
-		
-		if(proSession !=null && proSession instanceof HashMap) {
+
+		if (proSession != null && proSession instanceof HashMap) {
 			Object userId = ((HashMap<String, Object>)proSession).get("userId");
-			log.info("proSession : {}",userId);
-			
+			log.info("proSession : {}", userId);
+
 			return userId != null ? userId.toString() : null;
 		}
-		if(memSession !=null && memSession instanceof HashMap) {
+		if (memSession != null && memSession instanceof HashMap) {
 			Object userId = ((HashMap<String, Object>)memSession).get("userId");
-			log.info("memSession : {}",userId);
-			
+			log.info("memSession : {}", userId);
+
 			return userId != null ? userId.toString() : null;
 
 		}
-		if(admSession !=null && admSession instanceof HashMap) {
+		if (admSession != null && admSession instanceof HashMap) {
 			Object userId = ((HashMap<String, Object>)admSession).get("userId");
 			log.info("admSession : {}", userId);
-			
+
 			return userId != null ? userId.toString() : null;
 
 		}
 		return "not";
 
 	}
-	
-	@GetMapping(value="/list")
-	public String list(Model model, Map<String,Object>map,
-			@RequestParam(value="currentPage",required=false,defaultValue="1")int currentPage,
-			@RequestParam(value="keyword", required=false, defaultValue="1")String keyword){
-		
-		if(map!=null) {
+
+	@GetMapping(value = "/list")
+	public String list(Model model, Map<String, Object> map,
+		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
+		@RequestParam(value = "keyword", required = false, defaultValue = "1") String keyword) {
+
+		if (map != null) {
 			keyword = (String)map.get("keyword");
-			
-			if(map.get("currentPage")==null) {
-				map.put("currentPage",currentPage);
+
+			if (map.get("currentPage") == null) {
+				map.put("currentPage", currentPage);
 			}
-		}else {
-			map = new HashMap<String,Object>();
-			map.put("keyword","");
-			map.put("currentPage",1);
+		} else {
+			map = new HashMap<String, Object>();
+			map.put("keyword", "");
+			map.put("currentPage", 1);
 		}
-		
-		map.put("currentPage",currentPage);
-		
-		int total  = this.proCprtnBbscttService.getTotal(map);
-		log.info("list->total:"+total);
+
+		map.put("currentPage", currentPage);
+
+		int total = this.proCprtnBbscttService.getTotal(map);
+		log.info("list -> total : {}", total);
 		int size = 10;
-		
+
 		List<ProCprtnBbscttDto> proCprtnBbscttDtoList = this.proCprtnBbscttService.list(map);
-		log.info("list->proCprtnBbscttVOList:" + proCprtnBbscttDtoList);
-		
+		log.info("list -> proCprtnBbscttVOList from list: {}", proCprtnBbscttDtoList);
+
 		model.addAttribute("data", new ArticlePage<ProCprtnBbscttDto>(total
-				,currentPage, size, proCprtnBbscttDtoList, keyword));
-		
+			, currentPage, size, proCprtnBbscttDtoList, keyword));
+
 		return "/proCprtnBbsctt/list";
-		
+
 	}
 
 	@ResponseBody
-	@PostMapping(value="/listAjax")
-	public ArticlePage<ProCprtnBbscttDto> listAjax(@RequestBody(required=false) Map<String,Object> map) throws ParseException {
-		
-		log.info("listAjax->map : " + map);
-		
+	@PostMapping(value = "/listAjax")
+	public ArticlePage<ProCprtnBbscttDto> listAjax(@RequestBody(required = false) Map<String, Object> map) throws
+		ParseException {
+
+		log.info("listAjax -> map : {}", map);
+
 		String keyword = map.get("keyword").toString();
 		int currentPage = Integer.parseInt(map.get("currentPage").toString());
-		
+
 		int total = this.proCprtnBbscttService.getTotal(map);
-		log.info("listAjax->total:"+total);
-		
+		log.info("listAjax -> total : {}", total);
+
 		int size = 10;
-		
+
 		List<ProCprtnBbscttDto> proCprtnBbscttDtoList = this.proCprtnBbscttService.list(map);
-		log.info("list->proCprtnBbscttVOList:" + proCprtnBbscttDtoList);
-		
-		ArticlePage<ProCprtnBbscttDto> data = new ArticlePage<ProCprtnBbscttDto>(total, currentPage, size, proCprtnBbscttDtoList, keyword);
-		
-		String url  = "/proCprtnBbsctt/list";
-		
+		log.info("list -> proCprtnBbscttVOList : {}", proCprtnBbscttDtoList);
+
+		ArticlePage<ProCprtnBbscttDto> data = new ArticlePage<ProCprtnBbscttDto>(total, currentPage, size,
+			proCprtnBbscttDtoList, keyword);
+
+		String url = "/proCprtnBbsctt/list";
+
 		data.setUrl(url);
-		
+
 		return data;
 	}
-	
+
 	//협업게시판 상세
 	@GetMapping("/detail")
 	public String detail(@RequestParam("proCprtnBbscttNo") int proCprtnBbscttNo, Model model) {
-		log.info("detail->proCprtnBbscttNo:"+proCprtnBbscttNo);
-		
+		log.info("detail -> proCprtnBbscttNo : {}", proCprtnBbscttNo);
+
 		this.proCprtnBbscttService.increaseViewCount(proCprtnBbscttNo);
-		
+
 		//프로 협업 게시판 상세
 		ProCprtnBbscttDto proCprtnBbscttDto = this.proCprtnBbscttService.detail(proCprtnBbscttNo);
 		/*
@@ -136,9 +138,9 @@ public class ProCprtnBbscttController {
 		, proCprtnBbscttWrDt=Thu Mar 21 15:12:35 KST 2024, proCprtnBbscttRdcnt=335
 		, sprviseAtchmnflNo=621, proId=testPro, spAtVOList=null, proList=null, proProflList=null)
 		 */
-		log.info("detail->proCprtnBbscttVO : " + proCprtnBbscttDto);
+		log.info("detail -> proCprtnBbscttVO : {}", proCprtnBbscttDto);
 		model.addAttribute("proCprtnBbscttVO", proCprtnBbscttDto);
-		
+
 		//프로 아이디에 해당되는 다른 상세들
 		ProCprtnBbscttDto proCprtnBbscttDto2 = this.proCprtnBbscttService.detail2(proCprtnBbscttNo);
 		/*
@@ -151,15 +153,15 @@ public class ProCprtnBbscttController {
 		proProflList=[
 			ProProflVO(proId=testPro, proProflOnLiIntrcn=aaa, proProflContactPosblTime=12:00~13:00, proProflReqForm=a, proProflHist=a, bcityCode=24, brtcCode=24010)])
 		 */
-		log.info("detail->proCprtnBbscttVO2 : " + proCprtnBbscttDto2);
+		log.info("detail -> proCprtnBbscttVO2 : {}", proCprtnBbscttDto2);
 		model.addAttribute("proCprtnBbscttVO2", proCprtnBbscttDto2);
-		
+
 		List<ProCprtnAnswerDto> proCprtnAnswerDto = null;
 		proCprtnAnswerDto = this.proCprtnBbscttService.list2(proCprtnBbscttNo);
 		model.addAttribute("proCprtnAnswerVO", proCprtnAnswerDto);
-		log.info("detail->proCprtnAnswerVO : " + proCprtnAnswerDto);
-		
+		log.info("detail -> proCprtnAnswerVO : {}", proCprtnAnswerDto);
+
 		return "proCprtnBbsctt/detail";
 	}
-	
+
 }

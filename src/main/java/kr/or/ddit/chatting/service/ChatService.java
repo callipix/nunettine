@@ -9,30 +9,30 @@ import kr.or.ddit.dto.UsersDto;
 
 public interface ChatService {
 
-	public List<ChatRoomDto> roomList();
+	List<ChatRoomDto> roomList();
 
 	//새로만든
-//	public List<ChatRoomVO> myRoomList(String userId);
+//	List<ChatRoomVO> myRoomList(String userId);
 
-	public List<AllChatRoomViewDto> myRoomList(String userId);
+	List<AllChatRoomViewDto> myRoomList(String userId);
 
-	public AllChatRoomViewDto myRoomListTest(String userId, int roomNo);
+	AllChatRoomViewDto myRoomListTest(String userId, int roomNo);
 	
-	public int joinCheck(ChatRelayDto chatRelayDto);
+	int joinCheck(ChatRelayDto chatRelayDto);
 
-	public int joinRoom(ChatRelayDto chatRelayDto);
+	int joinRoom(ChatRelayDto chatRelayDto);
 
-	public List<ChatRelayDto> myRoomId(int roomNo);
+	List<ChatRelayDto> myRoomId(int roomNo);
 
-	public List<UsersDto> userInfo(String userId);
+	List<UsersDto> userInfo(String userId);
 
-	public UsersDto joinUserInfo(String userId);
+	UsersDto joinUserInfo(String userId);
 
-	public List<AllChatRoomViewDto> roomByRoomNo(int roomNo);
+	List<AllChatRoomViewDto> roomByRoomNo(int roomNo);
 	
-	public AllChatRoomViewDto roomByRoomNo2(int roomNo);
+	AllChatRoomViewDto roomByRoomNo2(int roomNo);
 
-	public int createRoom(ChatRoomDto chatRoomDto);
+	int createRoom(ChatRoomDto chatRoomDto);
 
 
 }

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import kr.or.ddit.dto.ProProflDto;
 import kr.or.ddit.dto.SprviseAtchmnflDto;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,20 +43,19 @@ public class SrvcRequstController {
 
 	public String userIdChk(HttpServletRequest request) {
 		String userId = "";
-		userId = "";
 		HttpSession session = request.getSession();
 
-		if (((HashMap) session.getAttribute("proSession")) != null) {
-			userId = ((HashMap) session.getAttribute("proSession")).get("userId").toString();
-		} else if (((HashMap) session.getAttribute("memSession")) != null) {
-			userId = ((HashMap) session.getAttribute("memSession")).get("userId").toString();
+		if (session.getAttribute("proSession") != null) {
+			userId = ((HashMap)session.getAttribute("proSession")).get("userId").toString();
+		} else if (session.getAttribute("memSession") != null) {
+			userId = ((HashMap)session.getAttribute("memSession")).get("userId").toString();
 		}
 		return userId;
 	}
 
 	@GetMapping("/srvcRqList")
 	public String srvcRqList(Model model, Map<String, Object> map, HttpServletRequest request,
-			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
+		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
 		String userId = "";
 		userId = userIdChk(request);
 		map.put("userId", userId);
@@ -67,14 +67,16 @@ public class SrvcRequstController {
 		List<V_SrvcRequstDto> vSrvcRequstVOList = this.srvcRequstService.srvcRqList(map);
 
 		model.addAttribute("vSrvcRequstVOList", vSrvcRequstVOList);
-		log.info("srvcRqList -> vSrvcRequstVOList : " + vSrvcRequstVOList);
+		log.info("srvcRqList -> vSrvcRequstVOList : {}", vSrvcRequstVOList);
 
 		return "srvcRq/srvcRqList";
-	};
+	}
+
+	;
 
 	@GetMapping("/srvcRqNoAnswerList")
 	public String srvcRqNoAnswerList(Model model, Map<String, Object> map, HttpServletRequest request,
-			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
+		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
 		String userId = "";
 		userId = userIdChk(request);
 
@@ -87,14 +89,16 @@ public class SrvcRequstController {
 		List<V_SrvcRequstDto> vSrvcRequstVOList = this.srvcRequstService.srvcRqNoAnswerList(map);
 
 		model.addAttribute("vSrvcRequstVOList", vSrvcRequstVOList);
-		log.info("srvcRqList -> vSrvcRequstVOList : " + vSrvcRequstVOList);
+		log.info("srvcRqList -> vSrvcRequstVOList from srvcRqNoAnswerList : {}",  vSrvcRequstVOList);
 
 		return "srvcRq/srvcRqNoAnswerList";
-	};
+	}
+
+	;
 
 	@GetMapping("/srvcRqSuccessList")
 	public String srvcRqSuccessList(Model model, Map<String, Object> map, HttpServletRequest request,
-			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
+		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
 		String userId = "";
 		userId = userIdChk(request);
 
@@ -107,14 +111,16 @@ public class SrvcRequstController {
 		List<V_SrvcRequstDto> vSrvcRequstVOList = this.srvcRequstService.srvcRqSuccessList(map);
 
 		model.addAttribute("vSrvcRequstVOList", vSrvcRequstVOList);
-		log.info("srvcRqList -> vSrvcRequstVOList : " + vSrvcRequstVOList);
+		log.info("srvcRqList -> vSrvcRequstVOList from srvcRqSuccessList : {}",  vSrvcRequstVOList);
 
 		return "srvcRq/srvcRqSuccessList";
-	};
+	}
+
+	;
 
 	@GetMapping("/srvcRqRejectList")
 	public String srvcRqRejectList(Model model, Map<String, Object> map, HttpServletRequest request,
-			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
+		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
 		String userId = "";
 		userId = userIdChk(request);
 
@@ -127,14 +133,16 @@ public class SrvcRequstController {
 		List<V_SrvcRequstDto> vSrvcRequstVOList = this.srvcRequstService.srvcRqRejectList(map);
 
 		model.addAttribute("vSrvcRequstVOList", vSrvcRequstVOList);
-		log.info("srvcRqList -> vSrvcRequstVOList : " + vSrvcRequstVOList);
+		log.info("srvcRqList -> vSrvcRequstVOList from srvcRqRejectList : {}",  vSrvcRequstVOList);
 
 		return "srvcRq/srvcRqRejectList";
-	};
+	}
+
+	;
 
 	@GetMapping("/mySrvcRqList")
 	public String mySrvcRqList(Model model, Map<String, Object> map, HttpServletRequest request,
-			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
+		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
 		String userId = "";
 		userId = userIdChk(request);
 		map.put("userId", userId);
@@ -146,14 +154,16 @@ public class SrvcRequstController {
 		List<V_SrvcRequstDto> vSrvcRequstVOList = this.srvcRequstService.srvcRqList(map);
 
 		model.addAttribute("vSrvcRequstVOList", vSrvcRequstVOList);
-		log.info("srvcRqList -> vSrvcRequstVOList : " + vSrvcRequstVOList);
+		log.info("srvcRqList -> vSrvcRequstVOList from mySrvcRqList : {}",  vSrvcRequstVOList);
 
 		return "srvcRq/mySrvcRqList";
-	};
+	}
+
+	;
 
 	@GetMapping("/mySrvcRqNoAnswerList")
 	public String mySrvcRqNoAnswerList(Model model, Map<String, Object> map, HttpServletRequest request,
-			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
+		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
 		String userId = "";
 		userId = userIdChk(request);
 
@@ -166,14 +176,16 @@ public class SrvcRequstController {
 		List<V_SrvcRequstDto> vSrvcRequstVOList = this.srvcRequstService.srvcRqNoAnswerList(map);
 
 		model.addAttribute("vSrvcRequstVOList", vSrvcRequstVOList);
-		log.info("srvcRqList -> vSrvcRequstVOList : " + vSrvcRequstVOList);
+		log.info("srvcRqList -> vSrvcRequstVOList from mySrvcRqNoAnswerList : {}",  vSrvcRequstVOList);
 
 		return "srvcRq/mySrvcRqNoAnswerList";
-	};
+	}
+
+	;
 
 	@GetMapping("/mySrvcRqSuccessList")
 	public String mySrvcRqSuccessList(Model model, Map<String, Object> map, HttpServletRequest request,
-			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
+		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
 		String userId = "";
 		userId = userIdChk(request);
 
@@ -186,14 +198,16 @@ public class SrvcRequstController {
 		List<V_SrvcRequstDto> vSrvcRequstVOList = this.srvcRequstService.srvcRqSuccessList(map);
 
 		model.addAttribute("vSrvcRequstVOList", vSrvcRequstVOList);
-		log.info("srvcRqList -> vSrvcRequstVOList : " + vSrvcRequstVOList);
+		log.info("srvcRqList -> vSrvcRequstVOList from mySrvcRqSuccessList : {}",  vSrvcRequstVOList);
 
 		return "srvcRq/mySrvcRqSuccessList";
-	};
+	}
+
+	;
 
 	@GetMapping("/mySrvcRqRejectList")
 	public String mySrvcRqRejectList(Model model, Map<String, Object> map, HttpServletRequest request,
-			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
+		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
 		String userId = "";
 		userId = userIdChk(request);
 
@@ -206,21 +220,23 @@ public class SrvcRequstController {
 		List<V_SrvcRequstDto> vSrvcRequstVOList = this.srvcRequstService.srvcRqRejectList(map);
 
 		model.addAttribute("vSrvcRequstVOList", vSrvcRequstVOList);
-		log.info("srvcRqList -> vSrvcRequstVOList : " + vSrvcRequstVOList);
+		log.info("srvcRqList -> vSrvcRequstVOList from mySrvcRqRejectList : {}",  vSrvcRequstVOList);
 
 		return "srvcRq/mySrvcRqRejectList";
-	};
+	}
+
+	;
 
 	// 검색 목록 출력
 	@PostMapping("/searchRqList")
 	@ResponseBody
 	public ArticlePage<V_SrvcRequstDto> searchRqList(@RequestBody(required = false) Map<String, Object> map,
-													 HttpServletRequest request) {
+		HttpServletRequest request) {
 		String userId = "";
 		userId = userIdChk(request);
 		map.put("userId", userId);
 
-		log.info("사이즈 map : " + map.toString());
+		log.info("사이즈 map from searchRqList : {}",  map.toString());
 
 		int size = (Integer.parseInt(map.get("size").toString()));
 		map.put("size", size);
@@ -228,25 +244,25 @@ public class SrvcRequstController {
 		List<V_SrvcRequstDto> vSrvcRequstVOList = this.srvcRequstService.srvcRqList(map);
 
 		int total = this.srvcRequstService.getTotal(map);
-		log.info("[srvcRequstController] total : " + total);
+		log.info("[srvcRequstController] total from searchRqList : {}",  total);
 
 		String currentPage = map.get("currentPage").toString();
 		String keyword = map.get("keyword").toString();
 
 		ArticlePage<V_SrvcRequstDto> data = new ArticlePage<V_SrvcRequstDto>(total, Integer.parseInt(currentPage), size,
-				vSrvcRequstVOList, keyword);
+			vSrvcRequstVOList, keyword);
 
 		String url = "/srvcRequst/searchRqList";
 		data.setUrl(url);
 
-		log.info("페이징 처리 : " + data);
+		log.info("페이징 처리 from searchRqList : {}",  data);
 		return data;
 	}
 
 	@PostMapping("/srvcRqNoAnswerList")
 	@ResponseBody
 	public ArticlePage<V_SrvcRequstDto> srvcRqNoAnswerList(@RequestBody(required = false) Map<String, Object> map,
-														   HttpServletRequest request) {
+		HttpServletRequest request) {
 		String userId = "";
 		userId = userIdChk(request);
 		map.put("userId", userId);
@@ -257,25 +273,25 @@ public class SrvcRequstController {
 		List<V_SrvcRequstDto> vSrvcRequstVOList = this.srvcRequstService.srvcRqNoAnswerList(map);
 
 		int total = this.srvcRequstService.getNoAnswerTotal(map);
-		log.info("[srvcRequstController] total : " + total);
+		log.info("[srvcRequstController] from srvcRqNoAnswerList total : {}",  total);
 
 		String currentPage = map.get("currentPage").toString();
 		String keyword = map.get("keyword").toString();
 
 		ArticlePage<V_SrvcRequstDto> data = new ArticlePage<V_SrvcRequstDto>(total, Integer.parseInt(currentPage), size,
-				vSrvcRequstVOList, keyword);
+			vSrvcRequstVOList, keyword);
 
 		String url = "/srvcRequst/srvcRqNoAnswerList";
 		data.setUrl(url);
 
-		log.info("페이징 처리 : " + data);
+		log.info("페이징 처리 from srvcRqNoAnswerList: {}",  data);
 		return data;
 	}
 
 	@PostMapping("/srvcRqSuccessList")
 	@ResponseBody
 	public ArticlePage<V_SrvcRequstDto> srvcRqSuccessList(@RequestBody(required = false) Map<String, Object> map,
-														  HttpServletRequest request) {
+		HttpServletRequest request) {
 		String userId = "";
 		userId = userIdChk(request);
 		map.put("userId", userId);
@@ -286,25 +302,25 @@ public class SrvcRequstController {
 		List<V_SrvcRequstDto> vSrvcRequstVOList = this.srvcRequstService.srvcRqSuccessList(map);
 		int total = this.srvcRequstService.getSuccessTotal(map);
 
-		log.info("[srvcRequstController] total : " + total);
+		log.info("[srvcRequstController] total from srvcRqSuccessList : {}",  total);
 
 		String currentPage = map.get("currentPage").toString();
 		String keyword = map.get("keyword").toString();
 
 		ArticlePage<V_SrvcRequstDto> data = new ArticlePage<V_SrvcRequstDto>(total, Integer.parseInt(currentPage), size,
-				vSrvcRequstVOList, keyword);
+			vSrvcRequstVOList, keyword);
 
 		String url = "/srvcRequst/srvcRqSuccessList";
 		data.setUrl(url);
 
-		log.info("페이징 처리 : " + data);
+		log.info("페이징 처리 : from srvcRqSuccessList {}",  data);
 		return data;
 	}
 
 	@PostMapping("/srvcRqRejectList")
 	@ResponseBody
 	public ArticlePage<V_SrvcRequstDto> srvcRqRejectList(@RequestBody(required = false) Map<String, Object> map,
-														 HttpServletRequest request) {
+		HttpServletRequest request) {
 		String userId = "";
 		userId = userIdChk(request);
 		map.put("userId", userId);
@@ -315,139 +331,139 @@ public class SrvcRequstController {
 		List<V_SrvcRequstDto> vSrvcRequstVOList = this.srvcRequstService.srvcRqRejectList(map);
 
 		int total = this.srvcRequstService.getRejectTotal(map);
-		log.info("[srvcRequstController] total : " + total);
+		log.info("[srvcRequstController] total from srvcRqRejectList : {}",  total);
 
 		String currentPage = map.get("currentPage").toString();
 		String keyword = map.get("keyword").toString();
 
 		ArticlePage<V_SrvcRequstDto> data = new ArticlePage<V_SrvcRequstDto>(total, Integer.parseInt(currentPage), size,
-				vSrvcRequstVOList, keyword);
+			vSrvcRequstVOList, keyword);
 
 		String url = "/srvcRequst/srvcRqRejectList";
 		data.setUrl(url);
 
-		log.info("페이징 처리 : " + data);
+		log.info("페이징 처리 : from srvcRqRejectList {}",  data);
 		return data;
 	}
-	
+
 	// 검색 목록 출력
-		@PostMapping("/mySearchRqList")
-		@ResponseBody
-		public ArticlePage<V_SrvcRequstDto> mySearchRqList(@RequestBody(required = false) Map<String, Object> map,
-														   HttpServletRequest request) {
-			String userId = "";
-			userId = userIdChk(request);
-			map.put("userId", userId);
+	@PostMapping("/mySearchRqList")
+	@ResponseBody
+	public ArticlePage<V_SrvcRequstDto> mySearchRqList(@RequestBody(required = false) Map<String, Object> map,
+		HttpServletRequest request) {
+		String userId = "";
+		userId = userIdChk(request);
+		map.put("userId", userId);
 
-			log.info("사이즈 map : " + map.toString());
+		log.info("사이즈 map : {}",  map.toString());
 
-			int size = (Integer.parseInt(map.get("size").toString()));
-			map.put("size", size);
+		int size = (Integer.parseInt(map.get("size").toString()));
+		map.put("size", size);
 
-			List<V_SrvcRequstDto> vSrvcRequstVOList = this.srvcRequstService.srvcRqList(map);
+		List<V_SrvcRequstDto> vSrvcRequstVOList = this.srvcRequstService.srvcRqList(map);
 
-			int total = this.srvcRequstService.getTotal(map);
-			log.info("[srvcRequstController] total : " + total);
+		int total = this.srvcRequstService.getTotal(map);
+		log.info("[srvcRequstController] total from mySearchRqList : {}",  total);
 
-			String currentPage = map.get("currentPage").toString();
-			String keyword = map.get("keyword").toString();
+		String currentPage = map.get("currentPage").toString();
+		String keyword = map.get("keyword").toString();
 
-			ArticlePage<V_SrvcRequstDto> data = new ArticlePage<V_SrvcRequstDto>(total, Integer.parseInt(currentPage), size,
-					vSrvcRequstVOList, keyword);
+		ArticlePage<V_SrvcRequstDto> data = new ArticlePage<V_SrvcRequstDto>(total, Integer.parseInt(currentPage), size,
+			vSrvcRequstVOList, keyword);
 
-			String url = "/srvcRequst/mySearchRqList";
-			data.setUrl(url);
+		String url = "/srvcRequst/mySearchRqList";
+		data.setUrl(url);
 
-			log.info("페이징 처리 : " + data);
-			return data;
-		}
+		log.info("페이징 처리 from mySearchRqList : {}",  data);
+		return data;
+	}
 
-		@PostMapping("/mySrvcRqNoAnswerList")
-		@ResponseBody
-		public ArticlePage<V_SrvcRequstDto> mySrvcRqNoAnswerList(@RequestBody(required = false) Map<String, Object> map,
-																 HttpServletRequest request) {
-			String userId = "";
-			userId = userIdChk(request);
-			map.put("userId", userId);
+	@PostMapping("/mySrvcRqNoAnswerList")
+	@ResponseBody
+	public ArticlePage<V_SrvcRequstDto> mySrvcRqNoAnswerList(@RequestBody(required = false) Map<String, Object> map,
+		HttpServletRequest request) {
+		String userId = "";
+		userId = userIdChk(request);
+		map.put("userId", userId);
 
-			int size = (Integer.parseInt(map.get("size").toString()));
-			map.put("size", size);
+		int size = (Integer.parseInt(map.get("size").toString()));
+		map.put("size", size);
 
-			List<V_SrvcRequstDto> vSrvcRequstVOList = this.srvcRequstService.srvcRqNoAnswerList(map);
+		List<V_SrvcRequstDto> vSrvcRequstVOList = this.srvcRequstService.srvcRqNoAnswerList(map);
 
-			int total = this.srvcRequstService.getNoAnswerTotal(map);
-			log.info("[srvcRequstController] total : " + total);
+		int total = this.srvcRequstService.getNoAnswerTotal(map);
+		log.info("[srvcRequstController] total from mySrvcRqNoAnswerList : {}",  total);
 
-			String currentPage = map.get("currentPage").toString();
-			String keyword = map.get("keyword").toString();
+		String currentPage = map.get("currentPage").toString();
+		String keyword = map.get("keyword").toString();
 
-			ArticlePage<V_SrvcRequstDto> data = new ArticlePage<V_SrvcRequstDto>(total, Integer.parseInt(currentPage), size,
-					vSrvcRequstVOList, keyword);
+		ArticlePage<V_SrvcRequstDto> data = new ArticlePage<V_SrvcRequstDto>(total, Integer.parseInt(currentPage), size,
+			vSrvcRequstVOList, keyword);
 
-			String url = "/srvcRequst/mySrvcRqNoAnswerList";
-			data.setUrl(url);
+		String url = "/srvcRequst/mySrvcRqNoAnswerList";
+		data.setUrl(url);
 
-			log.info("페이징 처리 : " + data);
-			return data;
-		}
+		log.info("페이징 처리 from mySrvcRqNoAnswerList : {}",  data);
+		return data;
+	}
 
-		@PostMapping("/mySrvcRqSuccessList")
-		@ResponseBody
-		public ArticlePage<V_SrvcRequstDto> mySrvcRqSuccessList(@RequestBody(required = false) Map<String, Object> map,
-																HttpServletRequest request) {
-			String userId = "";
-			userId = userIdChk(request);
-			map.put("userId", userId);
+	@PostMapping("/mySrvcRqSuccessList")
+	@ResponseBody
+	public ArticlePage<V_SrvcRequstDto> mySrvcRqSuccessList(@RequestBody(required = false) Map<String, Object> map,
+		HttpServletRequest request) {
+		String userId = "";
+		userId = userIdChk(request);
+		map.put("userId", userId);
 
-			int size = (Integer.parseInt(map.get("size").toString()));
-			map.put("size", size);
+		int size = (Integer.parseInt(map.get("size").toString()));
+		map.put("size", size);
 
-			List<V_SrvcRequstDto> vSrvcRequstVOList = this.srvcRequstService.srvcRqSuccessList(map);
-			int total = this.srvcRequstService.getSuccessTotal(map);
+		List<V_SrvcRequstDto> vSrvcRequstVOList = this.srvcRequstService.srvcRqSuccessList(map);
+		int total = this.srvcRequstService.getSuccessTotal(map);
 
-			log.info("[srvcRequstController] total : " + total);
+		log.info("[srvcRequstController] total from mySrvcRqSuccessList : {}",  total);
 
-			String currentPage = map.get("currentPage").toString();
-			String keyword = map.get("keyword").toString();
+		String currentPage = map.get("currentPage").toString();
+		String keyword = map.get("keyword").toString();
 
-			ArticlePage<V_SrvcRequstDto> data = new ArticlePage<V_SrvcRequstDto>(total, Integer.parseInt(currentPage), size,
-					vSrvcRequstVOList, keyword);
+		ArticlePage<V_SrvcRequstDto> data = new ArticlePage<V_SrvcRequstDto>(total, Integer.parseInt(currentPage), size,
+			vSrvcRequstVOList, keyword);
 
-			String url = "/srvcRequst/srvcRqSuccessList";
-			data.setUrl(url);
+		String url = "/srvcRequst/srvcRqSuccessList";
+		data.setUrl(url);
 
-			log.info("페이징 처리 : " + data);
-			return data;
-		}
+		log.info("페이징 처리 from mySrvcRqSuccessList : {}",  data);
+		return data;
+	}
 
-		@PostMapping("/mySrvcRqRejectList")
-		@ResponseBody
-		public ArticlePage<V_SrvcRequstDto> mySrvcRqRejectList(@RequestBody(required = false) Map<String, Object> map,
-															   HttpServletRequest request) {
-			String userId = "";
-			userId = userIdChk(request);
-			map.put("userId", userId);
+	@PostMapping("/mySrvcRqRejectList")
+	@ResponseBody
+	public ArticlePage<V_SrvcRequstDto> mySrvcRqRejectList(@RequestBody(required = false) Map<String, Object> map,
+		HttpServletRequest request) {
+		String userId = "";
+		userId = userIdChk(request);
+		map.put("userId", userId);
 
-			int size = (Integer.parseInt(map.get("size").toString()));
-			map.put("size", size);
+		int size = (Integer.parseInt(map.get("size").toString()));
+		map.put("size", size);
 
-			List<V_SrvcRequstDto> vSrvcRequstVOList = this.srvcRequstService.srvcRqRejectList(map);
+		List<V_SrvcRequstDto> vSrvcRequstVOList = this.srvcRequstService.srvcRqRejectList(map);
 
-			int total = this.srvcRequstService.getRejectTotal(map);
-			log.info("[srvcRequstController] total : " + total);
+		int total = this.srvcRequstService.getRejectTotal(map);
+		log.info("[srvcRequstController] from mySrvcRqRejectList total : {}",  total);
 
-			String currentPage = map.get("currentPage").toString();
-			String keyword = map.get("keyword").toString();
+		String currentPage = map.get("currentPage").toString();
+		String keyword = map.get("keyword").toString();
 
-			ArticlePage<V_SrvcRequstDto> data = new ArticlePage<V_SrvcRequstDto>(total, Integer.parseInt(currentPage), size,
-					vSrvcRequstVOList, keyword);
+		ArticlePage<V_SrvcRequstDto> data = new ArticlePage<V_SrvcRequstDto>(total, Integer.parseInt(currentPage), size,
+			vSrvcRequstVOList, keyword);
 
-			String url = "/srvcRequst/mySrvcRqRejectList";
-			data.setUrl(url);
+		String url = "/srvcRequst/mySrvcRqRejectList";
+		data.setUrl(url);
 
-			log.info("페이징 처리 : " + data);
-			return data;
-		}
+		log.info("페이징 처리 from mySrvcRqRejectList : {}",  data);
+		return data;
+	}
 
 	@GetMapping("/srvcRqDetail")
 	public String srvcRqDetail(@RequestParam("srvcRequstNo") int srvcRequstNo, Model model) {
@@ -476,7 +492,7 @@ public class SrvcRequstController {
 		vSrvcRequstVO = this.srvcRequstService.srvcRqDetail(vSrvcRequstVO, userId);
 
 		Map<String, Object> processMap = new HashMap<String, Object>();
-		log.info("[srvcRequstController] processFn -> vSrvcRequstVO " + vSrvcRequstVO);
+		log.info("[srvcRequstController] processFn -> vSrvcRequstVO {}", vSrvcRequstVO);
 
 		processMap.put("res", res);
 		processMap.put("vSrvcRequstVO", vSrvcRequstVO);
@@ -498,13 +514,13 @@ public class SrvcRequstController {
 
 	@PostMapping("/rejectRequst")
 	public String rejectRequst(@RequestParam("srvcRequstItyy") String srvcRequstItyy,
-			@RequestParam("rejectSrvcRequstNo") String srvcRequstNo,
-			@RequestParam("srvcRequstItyyInput") String srvcRequstItyyInput) {
+		@RequestParam("rejectSrvcRequstNo") String srvcRequstNo,
+		@RequestParam("srvcRequstItyyInput") String srvcRequstItyyInput) {
 		int res = 0;
 		String userId = "";
-		log.info("rejectRequst -> srvcRequstItyy : " + srvcRequstItyy);
-		log.info("rejectRequst -> srvcRequstNo : " + srvcRequstNo);
-		log.info("rejectRequst -> srvcRequstItyyInput : " + srvcRequstItyyInput);
+		log.info("rejectRequst -> srvcRequstItyy : {}",  srvcRequstItyy);
+		log.info("rejectRequst -> srvcRequstNo : {}",  srvcRequstNo);
+		log.info("rejectRequst -> srvcRequstItyyInput : {}",  srvcRequstItyyInput);
 
 		Map<String, Object> rejectMap = new HashMap<String, Object>();
 		rejectMap.put("srvcRequstNo", srvcRequstNo);
@@ -514,7 +530,7 @@ public class SrvcRequstController {
 			rejectMap.put("srvcRequstItyy", srvcRequstItyyInput);
 		}
 
-		log.info("거절 내용 : " + rejectMap.get("srvcRequstItyy"));
+		log.info("거절 내용 : {}",  rejectMap.get("srvcRequstItyy"));
 
 		res = this.srvcRequstService.rejectRequst(rejectMap, userId);
 
@@ -533,13 +549,13 @@ public class SrvcRequstController {
 
 	@PostMapping("/srvcRqCreatePost")
 	public String srvcRqCreatePost(@RequestParam("srvcRequstSj") String srvcRequstSj,
-			@RequestParam("srvcRequstCn") String srvcRequstCn, @RequestParam("proId") String proId,
-			@RequestParam("uploadFiles") List<MultipartFile> uploadFiles, HttpServletRequest request) {
+		@RequestParam("srvcRequstCn") String srvcRequstCn, @RequestParam("proId") String proId,
+		@RequestParam("uploadFiles") List<MultipartFile> uploadFiles, HttpServletRequest request) {
 		String userId = "";
 		userId = userIdChk(request);
-		log.info("srvcRqCreatePost -> srvcRequstSj : " + srvcRequstSj);
-		log.info("srvcRqCreatePost -> srvcRequstCn : " + srvcRequstCn);
-		log.info("srvcRqCreatePost -> proId : " + proId);
+		log.info("srvcRqCreatePost -> srvcRequstSj : {}",  srvcRequstSj);
+		log.info("srvcRqCreatePost -> srvcRequstCn : {}",  srvcRequstCn);
+		log.info("srvcRqCreatePost -> proId : {}",  proId);
 
 		SrvcRequstDto srvcRequstDto = new SrvcRequstDto();
 		srvcRequstDto.setSrvcRequstSj(srvcRequstSj);
@@ -547,23 +563,21 @@ public class SrvcRequstController {
 		srvcRequstDto.setProId(proId);
 		srvcRequstDto.setMberId(userId);
 
-		log.info("[srvcRequstController] srvcRqCreatePost -> uploadFiles : " + uploadFiles.toString());
+		log.info("[srvcRequstController] srvcRqCreatePost -> uploadFiles : {}",  uploadFiles.toString());
 
-		int res = 0;
-
-		res = this.srvcRequstService.srvcRqCreatePost(srvcRequstDto, uploadFiles);
+		int res = this.srvcRequstService.srvcRqCreatePost(srvcRequstDto, uploadFiles);
 
 		return "redirect:/srvcRequst/srvcRqList?mberCheck=mber";
 	}
 
 	@PostMapping("/srvcRqUpdatePost")
 	public String srvcRqUpdatePost(@RequestParam Map<String, Object> srvcRqUpdateMap,
-			@RequestParam("uploadFiles") List<MultipartFile> uploadFiles, HttpServletRequest request) {
-		int res = 0;
+		@RequestParam("uploadFiles") List<MultipartFile> uploadFiles, HttpServletRequest request) {
+
 		String userId = "";
 		userId = userIdChk(request);
 
-		res = this.srvcRequstService.srvcRqUpdatePost(srvcRqUpdateMap, uploadFiles, userId);
+		int res = this.srvcRequstService.srvcRqUpdatePost(srvcRqUpdateMap, uploadFiles, userId);
 
 		return "redirect:/srvcRequst/srvcRqDetail?srvcRequstNo=" + srvcRqUpdateMap.get("srvcRequstNo");
 

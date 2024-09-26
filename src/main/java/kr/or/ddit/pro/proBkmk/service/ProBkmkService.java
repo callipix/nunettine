@@ -10,13 +10,12 @@ import kr.or.ddit.dto.ProBkmkDto;
 public interface ProBkmkService {
 	
 	//즐겨찾기
-	public int proBkmkCreate(String proId, String mberId);
+	int proBkmkCreate(String proId, String mberId);
 	//즐겨찾기 확인
-	public String proBkmkCheck(String proId, String mberId);
+	String proBkmkCheck(String proId, String mberId);
 	//즐겨찾기 삭제
-	public int proBkmkDelete(String proId, String mberId);
+	int proBkmkDelete(String proId, String mberId);
 	//즐겨찾기 목록
-	public List<ProBkmkDto> getFavInfo(String memId);
-
+	List<ProBkmkDto> getFavInfo(String memId);
 
 }

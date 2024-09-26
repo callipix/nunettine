@@ -8,84 +8,84 @@ import kr.or.ddit.dto.BundleOndyclDto;
 
 public interface OnedayClassService {
 
-	public List<VOndyclProUsersDto> vOndyclProUsersDtoList();
+	List<VOndyclProUsersDto> vOndyclProUsersDtoList();
 
-	public int countOndycl();
+	int countOndycl();
 
-	public String getCodeNm(String codeCd);
+	String getCodeNm(String codeCd);
 
-	public List<VOndyclProUsersDto> searchClass(Map<String, Object> searchMap);
+	List<VOndyclProUsersDto> searchClass(Map<String, Object> searchMap);
 
-	public List<SpcltyRealmDto> category();
+	List<SpcltyRealmDto> category();
 
-	public List<BcityDto> getBcity();
+	List<BcityDto> getBcity();
 
-	public List<BrtcDto> brtcSelect(String bcityCode);
+	List<BrtcDto> brtcSelect(String bcityCode);
 
-	public VOndyclProUsersDto detail(String ondyclNo);
+	VOndyclProUsersDto detail(String ondyclNo);
 
-	public int getAttachNo();
+	int getAttachNo();
 
-	public int addSprviseAtchmnfl(SprviseAtchmnflDto sprviseAtchmnflDto);
+	int addSprviseAtchmnfl(SprviseAtchmnflDto sprviseAtchmnflDto);
 
-	public int createOndycl(Map<String, Object> map);
+	int createOndycl(Map<String, Object> map);
 
-	public List<SprviseAtchmnflDto> fileList(String ondyclNo);
+	List<SprviseAtchmnflDto> fileList(String ondyclNo);
 
-	public int getInsertClNum();
+	int getInsertClNum();
 
-	public int deleteClass(String classNO);
+	int deleteClass(String classNO);
 
-	public int updateOndycl(VOndyclSchdulDto vOndyclSchdulDto);
+	int updateOndycl(VOndyclSchdulDto vOndyclSchdulDto);
 
-	public int buyClass(Map<String, Object> map);
+	int buyClass(Map<String, Object> map);
 
-	public List<VOndyclProUsersDto> memberOndyclList(Map<String, Object> map);
+	List<VOndyclProUsersDto> memberOndyclList(Map<String, Object> map);
 
-	public int countMberMyClass(Map<String, Object> map);
+	int countMberMyClass(Map<String, Object> map);
 
-	public List<VOndyclProUsersDto> proMyClassList(Map<String, Object> map);
+	List<VOndyclProUsersDto> proMyClassList(Map<String, Object> map);
 
-	public int countProMyClass(Map<String, Object> map);
+	int countProMyClass(Map<String, Object> map);
 
-	public int resveCheck(Map<String, Object> mberOndyclMap);
+	int resveCheck(Map<String, Object> mberOndyclMap);
 
-	public int mberClassCancel(Map<String, Object> map);
+	int mberClassCancel(Map<String, Object> map);
 
-	public String mberReviewTitle(int ondyclNo);
+	String mberReviewTitle(int ondyclNo);
 
-	public int createReview(OndyclReviewDto ondyclReviewDto);
+	int createReview(OndyclReviewDto ondyclReviewDto);
 
-	public List<ReviewMberDto> reviewList(int ondyclNo);
+	List<ReviewMberDto> reviewList(int ondyclNo);
 
-	public List<BundleOndyclDto> mberShoppingCart(Map<String, Object> map);
+	List<BundleOndyclDto> mberShoppingCart(Map<String, Object> map);
 
-	public int countShoppingCart(Map<String, Object> map);
+	int countShoppingCart(Map<String, Object> map);
 
-	public int putShoppingCart(ShopngBundleDto shopngBundleDto);
+	int putShoppingCart(ShopngBundleDto shopngBundleDto);
 
-	public int classBundleCk(Map<String, Object> mberOndyclMap);
+	int classBundleCk(Map<String, Object> mberOndyclMap);
 
-	public VOndyclSchdulDto priceCk(int ondyclNo);
+	VOndyclSchdulDto priceCk(int ondyclNo);
 
-	public int delBundle(Map<String, Object> map);
+	int delBundle(Map<String, Object> map);
 
-	public int buyBundle(Map<String, Object> map);
+	int buyBundle(Map<String, Object> map);
 
-	public int getTotalPrice(Map<String, Object> map);
+	int getTotalPrice(Map<String, Object> map);
 
-	public double getTotalStar(Map<String, Object> map);
+	double getTotalStar(Map<String, Object> map);
 
-	public int getTotalUser(Map<String, Object> map);
+	int getTotalUser(Map<String, Object> map);
 
-	public int getMonthTotalUser(Map<String, Object> map);
+	int getMonthTotalUser(Map<String, Object> map);
 
-	public int getMonthTotalPrice(Map<String, Object> map);
+	int getMonthTotalPrice(Map<String, Object> map);
 
-	public List<UserNcnmMberPhotoDto> getBuyer(String ondyclNo);
+	List<UserNcnmMberPhotoDto> getBuyer(String ondyclNo);
 
-	public List<OndyclDto> getOndyclRank();
+	List<OndyclDto> getOndyclRank();
 
-	public String getPeopleCheck(int ondyclNo);
+	String getPeopleCheck(int ondyclNo);
 
 }

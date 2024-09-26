@@ -7,14 +7,14 @@ import kr.or.ddit.admin.usersSearch.dto.UsersDto;
 
 public interface UsersSearchService {
 
-	public int getTotal(Map<String, Object> map);
+	int getTotal(Map<String, Object> map);
 
-	public List<UsersDto> list(Map<String, Object> map);
+	List<UsersDto> list(Map<String, Object> map);
 
-	public UsersDto detail(String userId);
+	UsersDto detail(String userId);
 
-	public String getUserProfile(String userId);
+	String getUserProfile(String userId);
 
-	public int userDanger(String userId);
+	int userDanger(String userId);
 
 }

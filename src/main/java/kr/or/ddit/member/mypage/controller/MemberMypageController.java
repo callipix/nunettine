@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.ddit.dto.AdresDto;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,103 +28,103 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/member")
 @RequiredArgsConstructor
 public class MemberMypageController {
-	
+
 	private final String uploadFolder;
 	private final MemberMypageService memberMypageService;
-	
+
 	@GetMapping("/memberMypage")
 	public String memberMypage() {
 		return "member/memberMypage";
 	}
-	
+
 	@GetMapping("/memberUpdateCk")
 	public String memberUpdateCk() {
 		return "member/memberUpdateCk";
 	}
-	
+
 	@GetMapping("/memberPostList")
 	public String memberPostList() {
 		return "/member/memberPostList";
 	}
-	
+
 	@GetMapping("/memberOndyclList")
 	public String memberOndyclList() {
 		return "/member/memberOndyclList";
 	}
-	
+
 	//회원 탈퇴
 	@ResponseBody
 	@PostMapping("/memberDelete")
 	public int memberDelete(String userId, HttpSession session) {
-//		log.info("userId : " + userId);
+		//		log.info("userId : " + userId);
 		int result = this.memberMypageService.memberDelete(userId); //MBER 테이블에서 삭제
 		result += this.memberMypageService.memberDelete2(userId); //USERS 테이블에서 삭제
 		result += this.memberMypageService.memberDelete3(userId); //AUTHOR 테이블에서 삭제
 		result += this.memberMypageService.memberDelete4(userId); //ADRES 테이블에서 삭제
-//		log.info("result : " + result);
-		
+		//		log.info("result : " + result);
+
 		session.removeAttribute("memSession");
-		
+
 		return result;
 	}
-	
+
 	//회원 정보수정
 	@PostMapping("/memberMypage")
 	public String updating(VMberUsersDto vMberUsersDto, AdresDto adresDto, HttpSession session) {
 		Map<String, Object> map = (Map<String, Object>)session.getAttribute("memSession");
-//		log.info("업뎃전 map : " + map);
-//		log.info("업뎃전 vMberUsersVO : " + vMberUsersVO);
-		
+		//		log.info("업뎃전 map : " + map);
+		//		log.info("업뎃전 vMberUsersVO : " + vMberUsersVO);
+
 		int result = 0;
-		
+
 		String mberMbtlnum = vMberUsersDto.getMberMbtlnum();
-		if(mberMbtlnum != null && !mberMbtlnum.isEmpty()) {
-			map.put("mberMbtlnum",mberMbtlnum);
+		if (mberMbtlnum != null && !mberMbtlnum.isEmpty()) {
+			map.put("mberMbtlnum", mberMbtlnum);
 			result += this.memberMypageService.updMberMbtlnum(map);
-//			log.info("map1 : " + map);
+			//			log.info("map1 : " + map);
 		}
 		String userPassword = vMberUsersDto.getUserPassword();
-		if(userPassword != null && !userPassword.isEmpty()) {
-			map.put("userPassword",userPassword);
+		if (userPassword != null && !userPassword.isEmpty()) {
+			map.put("userPassword", userPassword);
 			result += this.memberMypageService.updPw(map);
-//			log.info("map2 : " + map);
+			//			log.info("map2 : " + map);
 		}
 		String userNcnm = vMberUsersDto.getUserNcnm();
-		if(userNcnm != null && !userNcnm.isEmpty()) {
-			map.put("userNcnm",userNcnm);
+		if (userNcnm != null && !userNcnm.isEmpty()) {
+			map.put("userNcnm", userNcnm);
 			result += this.memberMypageService.updNcnm(map);
-//			log.info("map3 : " + map);
+			//			log.info("map3 : " + map);
 		}
 		String email = vMberUsersDto.getEmail();
-		if(email != null && !email.isEmpty()) {
-			map.put("email",email);
+		if (email != null && !email.isEmpty()) {
+			map.put("email", email);
 			result += this.memberMypageService.updEmail(map);
-//			log.info("map3 : " + map);
+			//			log.info("map3 : " + map);
 		}
 		String userNm = vMberUsersDto.getUserNm();
-		if(userNm != null && !userNm.isEmpty()) {
-			map.put("userNm",userNm);
+		if (userNm != null && !userNm.isEmpty()) {
+			map.put("userNm", userNm);
 			result += this.memberMypageService.updNm(map);
-//			log.info("map5 : " + map);
+			//			log.info("map5 : " + map);
 		}
 		String zip = adresDto.getZip();
 		String adres = adresDto.getAdres();
 		String detailAdres = adresDto.getDetailAdres();
-		if(detailAdres != null && !detailAdres.isEmpty()) {
-			map.put("zip",zip);
-			map.put("adres",adres);
-			map.put("detailAdres",detailAdres);
+		if (detailAdres != null && !detailAdres.isEmpty()) {
+			map.put("zip", zip);
+			map.put("adres", adres);
+			map.put("detailAdres", detailAdres);
 			result += this.memberMypageService.updAdres(map);
-//			log.info("map6 : " + map);
+			//			log.info("map6 : " + map);
 		}
-		
+
 		MultipartFile multipartFile = vMberUsersDto.getUploadFile();
-		if(vMberUsersDto.getMberProflPhoto() != null && !vMberUsersDto.getMberProflPhoto().isEmpty()) {
-//			String uploadFolder = "d/team2/upload";
-//			log.info("파일경로 : " + uploadFolder);
-			
+		if (vMberUsersDto.getMberProflPhoto() != null && !vMberUsersDto.getMberProflPhoto().isEmpty()) {
+			//			String uploadFolder = "d/team2/upload";
+			//			log.info("파일경로 : " + uploadFolder);
+
 			File uploadPath = new File(uploadFolder, getFolder());
-			if(!uploadPath.exists()) {
+			if (!uploadPath.exists()) {
 				uploadPath.mkdirs();
 			}
 			String uploadFileName = multipartFile.getOriginalFilename();
@@ -136,35 +137,35 @@ public class MemberMypageController {
 				log.info(e.getMessage());
 			}
 			String mberProflPhoto = "/images/" + getFolder().replace("\\", "/") + "/" + uploadFileName;
-//			log.info("저장파일1 : " + saveFile);
-//			log.info("저장파일2 : " + mberProflPhoto);
-			
-			map.put("mberProflPhoto",mberProflPhoto);
-			map.put("profile",mberProflPhoto);
-			
-//			log.info("업뎃 날릴 map : " + map);
+			//			log.info("저장파일1 : " + saveFile);
+			//			log.info("저장파일2 : " + mberProflPhoto);
+
+			map.put("mberProflPhoto", mberProflPhoto);
+			map.put("profile", mberProflPhoto);
+
+			//			log.info("업뎃 날릴 map : " + map);
 			result += this.memberMypageService.updPhoto(map);
-			
-		}else {
-			map.put("mberProflPhoto",null);
-			map.put("profile",null);
+
+		} else {
+			map.put("mberProflPhoto", null);
+			map.put("profile", null);
 		}
-		
-//		log.info("회원정보수정 맵 : " + map);
-//		log.info("결과수 : " + result);
-		
+
+		//		log.info("회원정보수정 맵 : " + map);
+		//		log.info("결과수 : " + result);
+
 		return "member/memberMypage";
 	}
-	
+
 	//프로필 사진 삭제
 	@ResponseBody
 	@PostMapping("/photoDelete")
 	public int photoDelete(String userId) {
 		int result = this.memberMypageService.photoDelete(userId);
-		
+
 		return result;
 	}
-	
+
 	public String getFolder() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();

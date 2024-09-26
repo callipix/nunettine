@@ -3,6 +3,7 @@ package kr.or.ddit.member.mypage.service;
 import java.util.Map;
 
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.member.mypage.mapper.MemberMypageMapper;
@@ -10,14 +11,14 @@ import kr.or.ddit.member.mypage.mapper.MemberMypageMapper;
 @Service
 @RequiredArgsConstructor
 public class MemberMypageServiceImpl implements MemberMypageService {
-	
+
 	private final MemberMypageMapper memberMypageMapper;
 
 	@Override
 	public int updPhoto(Map<String, Object> map) {
 		return this.memberMypageMapper.updPhoto(map);
 	}
-	
+
 	@Override
 	public int memberDelete(String userId) {
 		return this.memberMypageMapper.memberDelete(userId);
@@ -32,7 +33,7 @@ public class MemberMypageServiceImpl implements MemberMypageService {
 	public int memberDelete3(String userId) {
 		return this.memberMypageMapper.memberDelete3(userId);
 	}
-	
+
 	@Override
 	public int memberDelete4(String userId) {
 		return this.memberMypageMapper.memberDelete4(userId);

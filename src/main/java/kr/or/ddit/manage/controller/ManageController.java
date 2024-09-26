@@ -12,6 +12,7 @@ import kr.or.ddit.admin.notice.dto.NoticeDto;
 import kr.or.ddit.admin.usersSearch.dto.UsersDto;
 import kr.or.ddit.dto.*;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,15 +51,15 @@ public class ManageController {
 	public OneInqryDto oneInqryDto = new OneInqryDto();
 
 	public String userIdChk(HttpServletRequest request) {
-		String userId ="";
+		String userId = "";
 		HttpSession session = request.getSession();
 
-		if(((HashMap)session.getAttribute("proSession"))!=null){
+		if (((HashMap)session.getAttribute("proSession")) != null) {
 			userId = ((HashMap)session.getAttribute("proSession")).get("userId").toString();
-		}else if(((HashMap)session.getAttribute("memSession"))!=null){
+		} else if (((HashMap)session.getAttribute("memSession")) != null) {
 			userId = ((HashMap)session.getAttribute("memSession")).get("userId").toString();
-		}else if(session.getAttribute("admSession")!=null){
-			UsersDto usersDto = (UsersDto) session.getAttribute("admSession");
+		} else if (session.getAttribute("admSession") != null) {
+			UsersDto usersDto = (UsersDto)session.getAttribute("admSession");
 			userId = usersDto.getUserId();
 		}
 
@@ -83,23 +84,22 @@ public class ManageController {
 		return "manage/userDetail";
 	}
 
-
 	//공지사항 리스트
 	@GetMapping("/notice")
-	public String noticeList(Model model){
+	public String noticeList(Model model) {
 		List<NoticeDto> list = noticeService.getAllNoticeList();
-		model.addAttribute("noticeList",list);
+		model.addAttribute("noticeList", list);
 
 		DongChartDto dongVO = this.manageService.test();
-		log.info("dongVO : " + dongVO);
+		log.info("dongVO from noticeList : {}" , dongVO);
 
-		model.addAttribute("dongVO",dongVO);
+		model.addAttribute("dongVO", dongVO);
 
 		return "manage/notice";
 	}
 
 	//공지사항 등록
-	@GetMapping(value="/create")
+	@GetMapping(value = "/create")
 	public String create(NoticeDto noticeDto, HttpSession session) {
 		log.info("create->noticeVO:" + noticeDto);
 
@@ -107,9 +107,9 @@ public class ManageController {
 	}
 
 	//공지사항 상세
-	@GetMapping(value="/detail")
-	public String noticeDetail(@RequestParam int noticeNo, Model model){
-		log.info("detail->noticeDetail:"+noticeNo);
+	@GetMapping(value = "/detail")
+	public String noticeDetail(@RequestParam int noticeNo, Model model) {
+		log.info("detail->noticeDetail:" + noticeNo);
 		// 조회수 증가
 		this.noticeService.increaseViewCount(noticeNo);
 		// 공지사항 정보 조회
@@ -126,12 +126,12 @@ public class ManageController {
 	@GetMapping("/faq")
 	public String faqList(Model model) {
 		List<FaqDto> faqList = faqService.faqList();
-		model.addAttribute("faqList",faqList);
+		model.addAttribute("faqList", faqList);
 		return "manage/faq";
 	}
 
 	//FAQ 등록
-	@GetMapping(value="/create", params="register")
+	@GetMapping(value = "/create", params = "register")
 	public String createRegister(FaqDto faqDto) {
 		log.info("createRegister->faqVO:" + faqDto);
 		return "manage/create";
@@ -151,14 +151,14 @@ public class ManageController {
 
 	@PostMapping("/oneInqryNoAnswerList")
 	@ResponseBody
-	public ArticlePage<OneInqryDto> oneInqryNoAnswerList(@RequestBody(required = false) Map<String,Object> map,
-														 HttpServletRequest request){
-		String userId ="";
+	public ArticlePage<OneInqryDto> oneInqryNoAnswerList(@RequestBody(required = false) Map<String, Object> map,
+		HttpServletRequest request) {
+		String userId = "";
 		userId = userIdChk(request);
 		map.put("userId", userId);
 
 		List<OneInqryDto> oneInqryDtoList =
-				this.oneInqryService.oneInqryNoAnswerList(map);
+			this.oneInqryService.oneInqryNoAnswerList(map);
 
 		int total = this.oneInqryService.getNoAnswerTotal(map);
 
@@ -168,7 +168,7 @@ public class ManageController {
 		String keyword = map.get("keyword").toString();
 
 		ArticlePage<OneInqryDto> data
-				= new ArticlePage<OneInqryDto>(total, Integer.parseInt(currentPage), size, oneInqryDtoList,keyword);
+			= new ArticlePage<OneInqryDto>(total, Integer.parseInt(currentPage), size, oneInqryDtoList, keyword);
 
 		String url = "/manage/oneIqnryNoAnswerList";
 		data.setUrl(url);
@@ -176,7 +176,6 @@ public class ManageController {
 		map.put("data", data);
 		return data;
 	}
-
 
 	// 1대1 문의 답변성공
 	@GetMapping("/oneInqrySuccessList")
@@ -187,14 +186,14 @@ public class ManageController {
 	// 답변 완료 목록 출력
 	@PostMapping("/oneInqrySuccessList")
 	@ResponseBody
-	public ArticlePage<OneInqryDto> oneInqrySuccessList(@RequestBody(required = false) Map<String,Object> map,
-														HttpServletRequest request){
-		String userId ="";
+	public ArticlePage<OneInqryDto> oneInqrySuccessList(@RequestBody(required = false) Map<String, Object> map,
+		HttpServletRequest request) {
+		String userId = "";
 		userId = userIdChk(request);
 		map.put("userId", userId);
 
 		List<OneInqryDto> oneInqryDtoList =
-				this.oneInqryService.oneInqrySuccessList(map);
+			this.oneInqryService.oneInqrySuccessList(map);
 
 		int total = this.oneInqryService.getSuccessTotal(map);
 
@@ -204,33 +203,33 @@ public class ManageController {
 		String keyword = map.get("keyword").toString();
 
 		ArticlePage<OneInqryDto> data
-				= new ArticlePage<OneInqryDto>(total, Integer.parseInt(currentPage), size, oneInqryDtoList,keyword);
+			= new ArticlePage<OneInqryDto>(total, Integer.parseInt(currentPage), size, oneInqryDtoList, keyword);
 
 		String url = "/manage/oneIqnrySuccessList";
 		data.setUrl(url);
 
 		return data;
 	}
+
 	@GetMapping("/oneInqryDetail")
-	public String oneInqryDetail(@RequestParam("oneInqryNo") int oneInqryNo,Model model){
-		String userId ="";
+	public String oneInqryDetail(@RequestParam("oneInqryNo") int oneInqryNo, Model model) {
+		String userId = "";
 		oneInqryDto.setOneInqryNo(oneInqryNo);
 		oneInqryDto = this.oneInqryService.oneInqryDetail(oneInqryDto, userId);
 
-		log.info("1:1 detail -> userId  : " + userId);
+		log.info("1:1 detail -> userId  : {}" , userId);
 
 		int sprviseAtchmnflNo = oneInqryDto.getSprviseAtchmnflNo();
 		List<SprviseAtchmnflDto> sprviseAtchmnflDtoList = this.fileuploadService.getsprviseAtchmnfl(sprviseAtchmnflNo);
-		log.info("[oneinqryController] detail -> sprviseAtchmnflVOList : " + sprviseAtchmnflDtoList);
+		log.info("[oneinqryController] detail -> sprviseAtchmnflVOList : {}" , sprviseAtchmnflDtoList);
 
-		log.info("[oneinqryController] detail -> oneInqryVO.getSprviseAtchmnflVOList : " + oneInqryDto.getSprviseAtchmnflDtoList());
-
+		log.info("[oneinqryController] detail -> oneInqryVO.getSprviseAtchmnflVOList : {}", oneInqryDto.getSprviseAtchmnflDtoList());
 
 		oneInqryDto = this.oneInqryService.oneInqryDetail(oneInqryDto, userId);
 		oneInqryDto.setSprviseAtchmnflDtoList(sprviseAtchmnflDtoList);
 
 		model.addAttribute("oneInqryVO", oneInqryDto);
-		if("testAdmin".equals(userId)) {
+		if ("testAdmin".equals(userId)) {
 			model.addAttribute("loginId", "admin");
 		}
 
@@ -240,48 +239,48 @@ public class ManageController {
 
 	@PostMapping("/oneInqryUpdatePost")
 	public String oneInqryUpdatePost(@RequestParam Map<String, Object> oneInqryUpdateMap,
-									 @RequestParam("uploadFiles") List<MultipartFile> uploadFiles,
-									 HttpServletRequest request) {
+		@RequestParam("uploadFiles") List<MultipartFile> uploadFiles,
+		HttpServletRequest request) {
 		// 결과값
 		// 사전문의 업데이트
 		// 사전문의 업데이트 + 기존 사진 삭제
 		// 사전문의 업데이트 + 기존 사진 삭제 + 새로운 사진 업데이트
 		int res = 0;
-		String userId ="";
+		String userId = "";
 		userId = userIdChk(request);
 
 		res = this.oneInqryService.oneInqryUpdatePost(oneInqryUpdateMap, uploadFiles, userId);
 
-		return "redirect:/manage/oneInqryDetail?oneInqryNo="+oneInqryUpdateMap.get("oneInqryNo");
+		return "redirect:/manage/oneInqryDetail?oneInqryNo=" + oneInqryUpdateMap.get("oneInqryNo");
 	}
 
 	@GetMapping("/decl")
-	public String lbrbbs(Model model, Map<String,Object> map, HttpServletRequest request,
-						 @RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage) {
+	public String lbrbbs(Model model, Map<String, Object> map, HttpServletRequest request,
+		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
 
 		map.put("currentPage", currentPage);
 		List<SntncDeclDto> lbrbbsList = this.declService.decllbrSelect(map);
-		log.info("lbrbbs-> lbrbbsList : " + lbrbbsList);
-		model.addAttribute("lbrbbsList",lbrbbsList);
+		log.info("lbrbbs -> lbrbbsList from lbrbbs : {} " , lbrbbsList);
+		model.addAttribute("lbrbbsList", lbrbbsList);
 
 		return "manage/decl";
 	}
 
 	@GetMapping("/userdecl")
-	public String userdecl(Model model, Map<String,Object> map, HttpServletRequest request,
-						   @RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage) {
+	public String userdecl(Model model, Map<String, Object> map, HttpServletRequest request,
+		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
 
 		map.put("currentPage", currentPage);
 		List<SntncDeclDto> lbrbbsList = this.declService.decllbrSelect(map);
-		log.info("lbrbbs-> lbrbbsList : " + lbrbbsList);
-		model.addAttribute("lbrbbsList",lbrbbsList);
+		log.info("lbrbbs -> lbrbbsList : {}" , lbrbbsList);
+		model.addAttribute("lbrbbsList", lbrbbsList);
 
 		return "manage/userdecl";
 	}
 
 	@GetMapping("/resignPro")
 	public String btfInqryList(Model model, HttpServletRequest request, Map<String, Object> map,
-							   @RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
+		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
 
 		map.put("currentPage", currentPage);
 
@@ -296,17 +295,16 @@ public class ManageController {
 	@PostMapping("/userDanger")
 	@ResponseBody
 	public int userDanger(String userId) {
-		log.info("update->result : "+userId);
+		log.info("update -> result : {}" , userId);
 		int result = this.usersSearchService.userDanger(userId);
 		return result;
 	}
-
 
 	// 검색 목록 출력
 	@PostMapping("/resignProList")
 	@ResponseBody
 	public ArticlePage<OneInqryDto> resignProList(@RequestBody(required = false) Map<String, Object> map,
-												  HttpServletRequest request) {
+		HttpServletRequest request) {
 
 		List<OneInqryDto> oneInqryDtoList = this.oneInqryService.resignProList(map);
 
@@ -318,7 +316,7 @@ public class ManageController {
 		String keyword = map.get("keyword").toString();
 
 		ArticlePage<OneInqryDto> data = new ArticlePage<OneInqryDto>(total, Integer.parseInt(currentPage),
-				size, oneInqryDtoList, keyword);
+			size, oneInqryDtoList, keyword);
 
 		String url = "/manage/resignProList";
 		data.setUrl(url);
@@ -338,18 +336,17 @@ public class ManageController {
 	@GetMapping("/main")
 	public String main(Model model) {
 		DongChartDto dongVO = this.manageService.test();
-		log.info("dongVO : " + dongVO);
+		log.info("dongVO : {}" , dongVO);
 
 		DongChartDto2 dongVO2 = this.manageService.test2();
-		log.info("dongVO2 : " + dongVO2);
+		log.info("dongVO2 : {}" , dongVO2);
 
 		DongChartDto3 dongVO3 = this.manageService.test3();
-		log.info("dongVO3 : " + dongVO3);
+		log.info("dongVO3 : {}" , dongVO3);
 
-
-		model.addAttribute("dongVO",dongVO);
-		model.addAttribute("dongVO2",dongVO2);
-		model.addAttribute("dongVO3",dongVO3);
+		model.addAttribute("dongVO", dongVO);
+		model.addAttribute("dongVO2", dongVO2);
+		model.addAttribute("dongVO3", dongVO3);
 
 		return "manage/main";
 	}

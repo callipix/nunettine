@@ -6,6 +6,7 @@ import java.util.Map;
 import kr.or.ddit.board.procollabo.dto.ProCprtnAnswerDto;
 import kr.or.ddit.board.procollabo.dto.ProCprtnBbscttDto;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.board.procollabo.mapper.ProCprtnBbscttMapper;
@@ -42,7 +43,7 @@ public class ProCprtnBbscttServiceImpl implements ProCprtnBbscttService {
 	}
 
 	@Override
-	public List<ProCprtnAnswerDto> list2(int proCprtnBbscttNo){
+	public List<ProCprtnAnswerDto> list2(int proCprtnBbscttNo) {
 		return this.proCprtnBbscttMapper.list2(proCprtnBbscttNo);
 	}
 

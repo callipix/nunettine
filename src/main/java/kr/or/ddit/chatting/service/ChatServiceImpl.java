@@ -3,6 +3,7 @@ package kr.or.ddit.chatting.service;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.chatting.mapper.ChatMapper;
@@ -10,9 +11,10 @@ import kr.or.ddit.chatting.dto.AllChatRoomViewDto;
 import kr.or.ddit.chatting.dto.ChatRelayDto;
 import kr.or.ddit.chatting.dto.ChatRoomDto;
 import kr.or.ddit.dto.UsersDto;
+
 @Service
 @RequiredArgsConstructor
-public class ChatServiceImpl implements ChatService{
+public class ChatServiceImpl implements ChatService {
 
 	private final ChatMapper chatMapper;
 
@@ -65,6 +67,7 @@ public class ChatServiceImpl implements ChatService{
 	public AllChatRoomViewDto myRoomListTest(String userId, int roomNo) {
 		return this.chatMapper.myRoomListTest(userId, roomNo);
 	}
+
 	@Override
 	public int createRoom(ChatRoomDto chatRoomDto) {
 		return this.chatMapper.createRoom(chatRoomDto);

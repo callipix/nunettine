@@ -1,6 +1,7 @@
 package kr.or.ddit.manage.service;
 
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.manage.mapper.ManageMapper;
@@ -10,10 +11,10 @@ import kr.or.ddit.dto.DongChartDto3;
 
 @Service
 @RequiredArgsConstructor
-public class ManageServiceImpl implements ManageService{
+public class ManageServiceImpl implements ManageService {
 
 	private final ManageMapper manageMapper;
-	
+
 	@Override
 	public DongChartDto test() {
 		return this.manageMapper.test();
@@ -29,5 +30,4 @@ public class ManageServiceImpl implements ManageService{
 		return this.manageMapper.test3();
 	}
 
-	
 }

@@ -41,10 +41,10 @@ public class ProBkmkController {
 		    } else {
 		Map<String,Object> map = new HashMap<String, Object>();
 		String memId = ((HashMap)(session.getAttribute("memSession"))).get("userId").toString();
-		log.info("detail->memId : " +memId);
+		log.info("detail -> memId : " +memId);
 		
 		List<ProBkmkDto> proBkmkDtoList = this.proBkmkService.getFavInfo(memId);
-		log.info("detail->proBkmkVO : " + proBkmkDtoList);
+		log.info("detail -> proBkmkVO : {}", proBkmkDtoList);
 		
 		List<String> spcltyRealmCodeList = new ArrayList<>();
 		for (ProBkmkDto proBkmkDto : proBkmkDtoList) {
@@ -55,7 +55,7 @@ public class ProBkmkController {
 		        spcltyRealmCodeList.add(proBun);
 		    }
 		}
-		log.info("detail->spcltyRealmCodeList : " + spcltyRealmCodeList);
+		log.info("detail -> spcltyRealmCodeList : {}", spcltyRealmCodeList);
 		
 		model.addAttribute("proBkmkVO", proBkmkDtoList);
 		model.addAttribute("spcltyCL",  spcltyRealmCodeList);
@@ -66,27 +66,27 @@ public class ProBkmkController {
    @ResponseBody
    @PostMapping("/proBkmkCreate")
    public int proBkmkCreate(@RequestParam("proId") String proId, @RequestParam("mberId") String mberId) {
-	   log.info("proBkmkCreate->proId : " + proId + ",proBkmkCreate->mberId : " + mberId);
+	   log.info("proBkmkCreate -> proId : {}", proId + ",proBkmkCreate -> mberId : {}", mberId);
 	   int result = this.proBkmkService.proBkmkCreate(proId,mberId);
-	   log.info("proBkmkCreate->result : " + result);
+	   log.info("proBkmkCreate -> result : {}", result);
 	   return result;
    }
    
    @ResponseBody
    @GetMapping("/proBkmkCheck")
    public String proBkmkCheck(@RequestParam("proId") String proId, @RequestParam("mberId") String mberId) {
-	   log.info("proBkmkCheck->proId : " + proId + ",proBkmkCheck->mberId : " + mberId);
+	   log.info("proBkmkCheck -> proId : {}", proId + ",proBkmkCheck -> mberId : {}", mberId);
 	   String proBkmkNo = this.proBkmkService.proBkmkCheck(proId,mberId);
-	   log.info("proBkmkCheck->proBkmkNo : " + proBkmkNo);
+	   log.info("proBkmkCheck -> proBkmkNo : {}", proBkmkNo);
 	   return proBkmkNo;
    }
    
    @ResponseBody
    @PostMapping("/proBkmkDelete")
    public int proBkmkDelete(@RequestParam("proId") String proId, @RequestParam("mberId") String mberId) {
-	   log.info("proBkmkDelete->proId : " + proId + ",proBkmkDelete->mberId : " + mberId);
+	   log.info("proBkmkDelete -> proId : {}", proId + ",proBkmkDelete -> mberId : {}", mberId);
 	   int result = this.proBkmkService.proBkmkDelete(proId,mberId);
-	   log.info("proBkmkDelete->result : " + result);
+	   log.info("proBkmkDelete -> result : {}", result);
 	   return result;
    }
 	   

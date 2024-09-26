@@ -7,31 +7,31 @@ import kr.or.ddit.board.procollabo.dto.ProCprtnAnswerDto;
 import kr.or.ddit.board.procollabo.dto.ProCprtnBbscttDto;
 
 
-public interface ProCprtnBbscttService {
+ public interface ProCprtnBbscttService {
 	
 	// 댓글 조회
-	public List<ProCprtnAnswerDto> list2(int proCprtnBbscttNo);
+	 List<ProCprtnAnswerDto> list2(int proCprtnBbscttNo);
 
 	// 댓글 조회
-	public int write(ProCprtnAnswerDto proCprtnAnswerDto);
+	 int write(ProCprtnAnswerDto proCprtnAnswerDto);
 
 	// 댓글 수정
-	public int modify(ProCprtnAnswerDto proCprtnAnswerDto);
+	 int modify(ProCprtnAnswerDto proCprtnAnswerDto);
 
 	// 댓글 삭제
-	public int delete(ProCprtnAnswerDto proCprtnAnswerDto);
+	 int delete(ProCprtnAnswerDto proCprtnAnswerDto);
 	
-//	public List<ProCprtnBbscttVO> proCprtnBbscttList();
+//	 List<ProCprtnBbscttVO> proCprtnBbscttList();
 
-	public int getTotal(Map<String, Object> map);
+	 int getTotal(Map<String, Object> map);
 
-	public List<ProCprtnBbscttDto> list(Map<String, Object> map);
+	 List<ProCprtnBbscttDto> list(Map<String, Object> map);
 
-	public int increaseViewCount(int proCprtnBbscttNo);
+	 int increaseViewCount(int proCprtnBbscttNo);
 
-	public ProCprtnBbscttDto detail(int proCprtnBbscttNo);
+	 ProCprtnBbscttDto detail(int proCprtnBbscttNo);
 
-	public ProCprtnBbscttDto detail2(int proCprtnBbscttNo);
+	 ProCprtnBbscttDto detail2(int proCprtnBbscttNo);
 
 	
 

@@ -12,6 +12,7 @@ import java.util.UUID;
 
 import kr.or.ddit.board.prostory.dto.ProStoryBbscttDto;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import kr.or.ddit.board.prostory.mapper.ProStoryMapper;
 import kr.or.ddit.board.prostory.dto.GoodPointDto;
 import lombok.extern.slf4j.Slf4j;
+
 import net.coobird.thumbnailator.Thumbnailator;
 
 @Slf4j
@@ -56,12 +58,14 @@ public class ProStoryServiceImpl implements ProStoryService {
 
 		try {
 			multipartFile.transferTo(saveFile); // 썸네일 처리 -> 이미지만 가능하기때문에 이미지인지 사전체크
-			if (checkImageType(saveFile)) { 	// 이미지가 맞다면
+			if (checkImageType(saveFile)) {    // 이미지가 맞다면
 				FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + uploadFileName));
 				Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 300, 300);
 				thumbnail.close();
-			};
-			proStoryBbscttDto.setProStoryBbscttThumbPhoto("/" + getFolder().replace("\\", "/") + "/" + "s_" + uploadFileName);
+			}
+			;
+			proStoryBbscttDto.setProStoryBbscttThumbPhoto(
+				"/" + getFolder().replace("\\", "/") + "/" + "s_" + uploadFileName);
 			result = this.proStoryMapper.insert(proStoryBbscttDto);
 			log.info("proStoryBbscttVO -> result : {}", result);
 		} catch (IllegalStateException | IOException e) {
@@ -142,17 +146,19 @@ public class ProStoryServiceImpl implements ProStoryService {
 					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + uploadFileName));
 					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 450, 450);
 					thumbnail.close();
-				};
+				}
+				;
 				proStoryBbscttDto.setProStoryBbscttThumbPhoto(
-						"/" + getFolder().replace("\\", "/") + "/" + "s_" + uploadFileName);
+					"/" + getFolder().replace("\\", "/") + "/" + "s_" + uploadFileName);
 				result = this.proStoryMapper.updateStory(proStoryBbscttDto);
-				log.info("proStoryBbscttVO -> 수정 결과 result : {}",result);
+				log.info("proStoryBbscttVO -> 수정 결과 result : {}", result);
 			} catch (IllegalStateException | IOException e) {
 				log.error(e.getMessage());
 			}
 		}
 		return result;
 	}
+
 	@Override
 	@Transactional
 	public int deleteStory(String userId, int storyNo) {
@@ -183,7 +189,7 @@ public class ProStoryServiceImpl implements ProStoryService {
 			log.info("♡ 추가 실패");
 			return null;
 		}
-		log.info("하트 추가 후 해당글 추천수 : {}",psbcttVO.getProStoryBbscttRecommend());
+		log.info("하트 추가 후 해당글 추천수 : {}", psbcttVO.getProStoryBbscttRecommend());
 		return psbcttVO;
 	}
 
@@ -240,13 +246,15 @@ public class ProStoryServiceImpl implements ProStoryService {
 	public int getGoodCheck(GoodPointDto goodPointDto) {
 		return this.proStoryMapper.getGoodCheck(goodPointDto);
 	}
+
 	@Override
-	public List<ProStoryBbscttDto> getPageTest(Map<String , Object> map){
+	public List<ProStoryBbscttDto> getPageTest(Map<String, Object> map) {
 		log.info("getPageTest : {}", map);
 		return this.proStoryMapper.getPageTest(map);
 	}
+
 	@Override
-	public List<ProStoryBbscttDto> getWeekRecommend(){
+	public List<ProStoryBbscttDto> getWeekRecommend() {
 
 		return this.proStoryMapper.getWeekRecommend();
 	}

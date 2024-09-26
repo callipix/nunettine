@@ -14,7 +14,7 @@ public interface MessageService {
 
 	List<TdmtngChSpMshgDto> roomMsgList(int tdmtngNo);
 	
-	Map<Integer , List<MessageDto> > msgPaging(int roomNo);
+	Map<Integer, List<MessageDto>> msgPaging(int roomNo);
 
 	int getMsgCount(int roomNo);
 }

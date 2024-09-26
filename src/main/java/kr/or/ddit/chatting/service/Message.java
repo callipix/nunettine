@@ -10,11 +10,11 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class Message {
-	
+
 	private int startRowNum;
-	
+
 	private int endRowNum;
-	
+
 	private int rowCount;
 
 }

@@ -1,12 +1,12 @@
 package kr.or.ddit.proservice.serviceRequest.service;
 
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.dto.SrvcRequstDto;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,7 +16,6 @@ import kr.or.ddit.proservice.serviceRequest.dto.V_SrvcRequstDto;
 import kr.or.ddit.util.fileupload.service.FileuploadService;
 import kr.or.ddit.dto.UsersDto;
 import lombok.extern.slf4j.Slf4j;
-
 
 @Slf4j
 @Service
@@ -31,17 +30,17 @@ public class SrvcRequstSeviceImpl implements SrvcRequstService {
 
 	@Override
 	public UsersDto userChk(String userId) {
-		
+
 		UsersDto usersDto = this.srvcBtfInqryMapper.userChk(userId);
-		
-		if(usersDto.getEmplyrTy().equals("ET01")) { // 회원일 경우, 프로 닉네임을 얻기 위함
+
+		if (usersDto.getEmplyrTy().equals("ET01")) { // 회원일 경우, 프로 닉네임을 얻기 위함
 			usersDto.setEmplyrTy("ET02");
-			
-		}else if(usersDto.getEmplyrTy().equals("ET02")) { // 프로일 경우, 회원 닉네임을 얻기 위함
+
+		} else if (usersDto.getEmplyrTy().equals("ET02")) { // 프로일 경우, 회원 닉네임을 얻기 위함
 			usersDto.setEmplyrTy("ET01");
 		}
-		log.info("userChk -> usersVO : " + usersDto.toString());
-		
+		log.info("userChk -> usersVO : {}", usersDto.toString());
+
 		return usersDto;
 	}
 
@@ -50,20 +49,20 @@ public class SrvcRequstSeviceImpl implements SrvcRequstService {
 		UsersDto usersDto = userChk((String)map.get("userId"));
 		vSrvcRequstVO.setUserId(usersDto.getUserId());
 		vSrvcRequstVO.setEmplyrTy(usersDto.getEmplyrTy());
-		
+
 		map.put("vSrvcRequstVO", vSrvcRequstVO);
-		
+
 		return this.srvcRequstMapper.srvcRqList(map);
 	}
-	
+
 	@Override
 	public List<V_SrvcRequstDto> srvcRqNoAnswerList(Map<String, Object> map) {
 		UsersDto usersDto = userChk((String)map.get("userId"));
 		vSrvcRequstVO.setUserId(usersDto.getUserId());
 		vSrvcRequstVO.setEmplyrTy(usersDto.getEmplyrTy());
-		
+
 		map.put("vSrvcRequstVO", vSrvcRequstVO);
-		
+
 		return this.srvcRequstMapper.srvcRqNoAnswerList(map);
 	}
 
@@ -72,64 +71,64 @@ public class SrvcRequstSeviceImpl implements SrvcRequstService {
 		UsersDto usersDto = userChk((String)map.get("userId"));
 		vSrvcRequstVO.setUserId(usersDto.getUserId());
 		vSrvcRequstVO.setEmplyrTy(usersDto.getEmplyrTy());
-		
+
 		map.put("vSrvcRequstVO", vSrvcRequstVO);
-		
+
 		return this.srvcRequstMapper.srvcRqSuccessList(map);
 	}
-	
+
 	@Override
 	public List<V_SrvcRequstDto> srvcRqRejectList(Map<String, Object> map) {
 		UsersDto usersDto = userChk((String)map.get("userId"));
 		vSrvcRequstVO.setUserId(usersDto.getUserId());
 		vSrvcRequstVO.setEmplyrTy(usersDto.getEmplyrTy());
-		
+
 		map.put("vSrvcRequstVO", vSrvcRequstVO);
-		
+
 		return this.srvcRequstMapper.srvcRqRejectList(map);
 	}
-	
+
 	@Override
 	public int getTotal(Map<String, Object> map) {
 		UsersDto usersDto = userChk((String)map.get("userId"));
 		vSrvcRequstVO.setUserId(usersDto.getUserId());
 		vSrvcRequstVO.setEmplyrTy(usersDto.getEmplyrTy());
-		
+
 		map.put("vSrvcRequstVO", vSrvcRequstVO);
-		
+
 		return this.srvcRequstMapper.getTotal(map);
 	}
-	
+
 	@Override
 	public int getNoAnswerTotal(Map<String, Object> map) {
 		UsersDto usersDto = userChk((String)map.get("userId"));
 		vSrvcRequstVO.setUserId(usersDto.getUserId());
 		vSrvcRequstVO.setEmplyrTy(usersDto.getEmplyrTy());
-		
+
 		map.put("vSrvcRequstVO", vSrvcRequstVO);
-		
+
 		return this.srvcRequstMapper.getNoAnswerTotal(map);
 	}
-	
+
 	@Override
 	public int getSuccessTotal(Map<String, Object> map) {
 		UsersDto usersDto = userChk((String)map.get("userId"));
 		vSrvcRequstVO.setUserId(usersDto.getUserId());
 		vSrvcRequstVO.setEmplyrTy(usersDto.getEmplyrTy());
-		
+
 		map.put("vSrvcRequstVO", vSrvcRequstVO);
-		
+
 		return this.srvcRequstMapper.getSuccessTotal(map);
 	}
-	
+
 	@Override
 	public int getRejectTotal(Map<String, Object> map) {
 		UsersDto usersDto = userChk((String)map.get("userId"));
 		vSrvcRequstVO.setUserId(usersDto.getUserId());
 		vSrvcRequstVO.setEmplyrTy(usersDto.getEmplyrTy());
-		
+
 		map.put("vSrvcRequstVO", vSrvcRequstVO);
-		
+
 		return this.srvcRequstMapper.getRejectTotal(map);
 	}
 
@@ -138,7 +137,7 @@ public class SrvcRequstSeviceImpl implements SrvcRequstService {
 		UsersDto usersDto = userChk(userId);
 		vSrvcRequstVO.setUserId(usersDto.getUserId());
 		vSrvcRequstVO.setEmplyrTy(usersDto.getEmplyrTy());
-		
+
 		return this.srvcRequstMapper.srvcRqDetail(vSrvcRequstVO);
 	}
 
@@ -147,20 +146,20 @@ public class SrvcRequstSeviceImpl implements SrvcRequstService {
 		UsersDto usersDto = userChk(userId);
 		vSrvcRequstVO.setUserId(usersDto.getUserId());
 		vSrvcRequstVO.setEmplyrTy(usersDto.getEmplyrTy());
-		
-		Map<String, Object> paramMap = new HashMap<String, Object>(); 
+
+		Map<String, Object> paramMap = new HashMap<String, Object>();
 		String emplyrTy = usersDto.getEmplyrTy();
 		String processUser = "";
-		if("ET01".equals(emplyrTy)) { // 프로
+		if ("ET01".equals(emplyrTy)) { // 프로
 			processUser = "SRVC_REQUST_PROCESS_PRO";
-		}else if("ET02".equals(emplyrTy)) { //회원
+		} else if ("ET02".equals(emplyrTy)) { //회원
 			processUser = "SRVC_REQUST_PROCESS_MBER";
 		}
 		paramMap.put("emplyrTy", emplyrTy);
 		paramMap.put("processUser", processUser);
 		paramMap.put("userId", userId);
 		paramMap.put("srvcRequstNo", srvcRequstNo);
-		
+
 		return this.srvcRequstMapper.processFn(paramMap);
 	}
 
@@ -170,7 +169,7 @@ public class SrvcRequstSeviceImpl implements SrvcRequstService {
 		int res = 0;
 
 		res = this.srvcRequstMapper.acceptRequst(acceptMap);
-		
+
 		return res;
 	}
 
@@ -178,36 +177,36 @@ public class SrvcRequstSeviceImpl implements SrvcRequstService {
 	public int rejectRequst(Map<String, Object> rejectMap, String userId) {
 		rejectMap.put("proId", userId);
 		int res = 0;
-		
+
 		res = this.srvcRequstMapper.rejectRequst(rejectMap);
-		
+
 		return res;
 	}
 
 	@Override
 	public int srvcRqCreatePost(SrvcRequstDto srvcRequstDto, List<MultipartFile> uploadFiles) {
-		
+
 		int res = 0;
-		log.info("srvcRqCreatePost -> srvcRequstVO : " + srvcRequstDto);
-		log.info("srvcRqCreatePost -> 제목 : " + srvcRequstDto.getSrvcRequstSj());
-		log.info("srvcRqCreatePost -> 내용 : " + srvcRequstDto.getSrvcRequstCn());
-		
-		Map<String, Object>srvcRqInfoMap = new HashMap<String, Object>();
-		
+		log.info("srvcRqCreatePost -> srvcRequstVO : {}", srvcRequstDto);
+		log.info("srvcRqCreatePost -> 제목 : {}", srvcRequstDto.getSrvcRequstSj());
+		log.info("srvcRqCreatePost -> 내용 : {}", srvcRequstDto.getSrvcRequstCn());
+
+		Map<String, Object> srvcRqInfoMap = new HashMap<String, Object>();
+
 		srvcRqInfoMap.put("srvcRequstSj", srvcRequstDto.getSrvcRequstSj());
 		srvcRqInfoMap.put("srvcRequstCn", srvcRequstDto.getSrvcRequstCn());
 		srvcRqInfoMap.put("mberId", srvcRequstDto.getMberId());
 		srvcRqInfoMap.put("proId", srvcRequstDto.getProId());
-		
+
 		// 요청서 기본 정보
 		res = this.srvcRequstMapper.srvcRqCreatePost(srvcRqInfoMap);
-		
+
 		String addPath = "pro_service\\srvcRequstImage";
-		log.info("uploadFiles : " + uploadFiles.toString());
-		
-		if(uploadFiles !=null && !uploadFiles.isEmpty()) {
-			res += fileuploadService.fileUpload(uploadFiles, addPath, 
-					srvcRequstDto.getMberId(), res);
+		log.info("uploadFiles : {}", uploadFiles.toString());
+
+		if (uploadFiles != null && !uploadFiles.isEmpty()) {
+			res += fileuploadService.fileUpload(uploadFiles, addPath,
+				srvcRequstDto.getMberId(), res);
 		}
 		return res;
 	}
@@ -223,28 +222,28 @@ public class SrvcRequstSeviceImpl implements SrvcRequstService {
 		String srvcRequstCn = (String)srvcRqUpdateMap.get("newSrvcRequstCn");
 		// 문의 첨부파일 번호
 		String sprviseAtchmnflNo = (String)srvcRqUpdateMap.get("sprviseAtchmnflNo");
-		
+
 		// 사전문의 업데이트
 		SrvcRequstDto srvcRequstDto = new SrvcRequstDto();
-		if(srvcRequstSj != null || srvcRequstCn != null) {
+		if (srvcRequstSj != null || srvcRequstCn != null) {
 			srvcRequstDto.setSrvcRequstNo(Integer.valueOf(srvcRequstNo));
 			srvcRequstDto.setSrvcRequstSj(srvcRequstSj);
 			srvcRequstDto.setSrvcRequstCn(srvcRequstCn);
 
 			res = this.srvcRequstMapper.srvcRqUpdatePost(srvcRequstDto);
 		}
-		
+
 		Map<String, Object> updateFileuploadMap = new HashMap<String, Object>();
-		String atchmnflNoArrayParam = (String) srvcRqUpdateMap.get("atchmnflNo[]");
+		String atchmnflNoArrayParam = (String)srvcRqUpdateMap.get("atchmnflNo[]");
 		String[] atchmnflNoArray = atchmnflNoArrayParam.split(",");
-		
+
 		updateFileuploadMap.put("sprviseAtchmnflNo", sprviseAtchmnflNo);
 		updateFileuploadMap.put("atchmnflNoArray", atchmnflNoArray);
 
 		res += this.fileuploadService.updateFileupload(updateFileuploadMap);
-		
+
 		// 새로운 파일 업로드
-		if(!uploadFiles.isEmpty()) {
+		if (!uploadFiles.isEmpty()) {
 			String addPath = "pro_service\\btfInqryImage";
 			res += fileuploadService.newFileUpload(uploadFiles, addPath, userId, res, sprviseAtchmnflNo);
 		}

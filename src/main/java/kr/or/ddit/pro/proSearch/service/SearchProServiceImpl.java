@@ -6,6 +6,7 @@ import java.util.Map;
 import kr.or.ddit.dto.AdresDto;
 import kr.or.ddit.dto.ProDto;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.pro.proSearch.mapper.SearchProMapper;
@@ -16,7 +17,7 @@ import kr.or.ddit.dto.SpcltyRealmDto;
 public class SearchProServiceImpl implements SearchProService {
 
 	private final SearchProMapper searchProMapper;
-	
+
 	@Override
 	public List<ProDto> proList() {
 		return this.searchProMapper.proList();
@@ -31,12 +32,12 @@ public class SearchProServiceImpl implements SearchProService {
 	public int getTotal(Map<String, Object> map) {
 		return this.searchProMapper.getTotal(map);
 	}
-	
+
 	@Override
 	public List<SpcltyRealmDto> spcltyB() {
 		return this.searchProMapper.spcltyB();
 	}
-	
+
 	@Override
 	public List<AdresDto> aroundPro() {
 		return this.searchProMapper.aroundPro();
@@ -56,8 +57,5 @@ public class SearchProServiceImpl implements SearchProService {
 	public String spcltyNm(String code) {
 		return this.searchProMapper.spcltyNm(code);
 	}
-
-	
-
 
 }

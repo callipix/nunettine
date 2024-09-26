@@ -9,21 +9,20 @@ import kr.or.ddit.dto.SpcltyRealmDto;
 
 public interface SearchProMapper {
 
+	List<ProDto> proList();
 
-	public List<ProDto> proList();
+	List<ProDto> proListPage(Map<String, Object> map);
 
-	public List<ProDto> proListPage(Map<String, Object> map);
+	int getTotal(Map<String, Object> map);
 
-	public int getTotal(Map<String, Object> map);
+	List<SpcltyRealmDto> spcltyB();
 
-	public List<SpcltyRealmDto> spcltyB();
+	List<AdresDto> aroundPro();
 
-	public List<AdresDto> aroundPro();
-	
-	public List<ProDto> getMonthPro(Map<String, Object> map);
+	List<ProDto> getMonthPro(Map<String, Object> map);
 
-	public List<SpcltyRealmDto> spcltySec(String code);
+	List<SpcltyRealmDto> spcltySec(String code);
 
-	public String spcltyNm(String code);
+	String spcltyNm(String code);
 
 }

@@ -10,53 +10,49 @@ import kr.or.ddit.dto.SrvcRequstDto;
 
 public interface ReviewBoardMapper {
 
-	public List<AftusBbscttDto> list(Map<String, Object> map);
+	List<AftusBbscttDto> list(Map<String, Object> map);
 
-	public List<SrvcRequstDto> listModal(String userId);
-	
+	List<SrvcRequstDto> listModal(String userId);
+
 	//로그인한 회원 리뷰 조회
-	public List<AftusBbscttDto> listMyReview(String userId);
-	
-	public int create(AftusBbscttDto aftusBbscttDto);
+	List<AftusBbscttDto> listMyReview(String userId);
 
-	public AftusBbscttDto detail(int aftusBbscttNo);
-	
-	public int insertAtach(SprviseAtchmnflDto sprviseAtchmnflDto);
+	int create(AftusBbscttDto aftusBbscttDto);
 
-	public int delete(int aftusBbscttNo);
+	AftusBbscttDto detail(int aftusBbscttNo);
 
-	public int createAjax(AftusBbscttDto aftusBbscttDto);
+	int insertAtach(SprviseAtchmnflDto sprviseAtchmnflDto);
 
-	public int insertFile(SprviseAtchmnflDto sprviseAtchmnflDto);
-	
-	public int update(AftusBbscttDto aftusBbscttDto);
+	int delete(int aftusBbscttNo);
 
-	public int updateCnt(int aftusBbscttNo);
+	int createAjax(AftusBbscttDto aftusBbscttDto);
 
-	public int updateFile(SprviseAtchmnflDto sprviseAtchmnflDto);
+	int insertFile(SprviseAtchmnflDto sprviseAtchmnflDto);
 
-	public List<SprviseAtchmnflDto> fileList(int sprviseAtchmnflNo);
+	int update(AftusBbscttDto aftusBbscttDto);
 
-	public int fileDel(SprviseAtchmnflDto sprviseAtchmnflDto);
+	int updateCnt(int aftusBbscttNo);
 
-	public int getTotal(Map<String, Object> map);
+	int updateFile(SprviseAtchmnflDto sprviseAtchmnflDto);
 
-	public List<AftusBbscttAnswerDto> aftusBbscttAnswerList(int aftusBbscttNo);
+	List<SprviseAtchmnflDto> fileList(int sprviseAtchmnflNo);
 
-	public int aftusBbscttAnswerInsert(AftusBbscttAnswerDto aftusBbscttAnswerDto);
+	int fileDel(SprviseAtchmnflDto sprviseAtchmnflDto);
 
-	public int aftusBbscttAnswerDelete(int aftusBbscttAnswerNo);
+	int getTotal(Map<String, Object> map);
 
-	public int aftusBbscttAnswerUpdate(AftusBbscttAnswerDto aftusBbscttAnswerDto);
+	List<AftusBbscttAnswerDto> aftusBbscttAnswerList(int aftusBbscttNo);
 
-	public List<AftusBbscttAnswerDto> ansAnsList(int ptAftusBbscttAnswerNo);
+	int aftusBbscttAnswerInsert(AftusBbscttAnswerDto aftusBbscttAnswerDto);
 
-	public int ansAnsInt(AftusBbscttAnswerDto aftusBbscttAnswerDto);
+	int aftusBbscttAnswerDelete(int aftusBbscttAnswerNo);
 
-	public int ansAnsCnt(int ptAftusBbscttAnswerNo);
+	int aftusBbscttAnswerUpdate(AftusBbscttAnswerDto aftusBbscttAnswerDto);
 
-	
+	List<AftusBbscttAnswerDto> ansAnsList(int ptAftusBbscttAnswerNo);
 
-	
+	int ansAnsInt(AftusBbscttAnswerDto aftusBbscttAnswerDto);
+
+	int ansAnsCnt(int ptAftusBbscttAnswerNo);
 
 }

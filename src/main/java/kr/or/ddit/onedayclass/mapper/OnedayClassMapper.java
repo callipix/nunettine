@@ -8,98 +8,97 @@ import kr.or.ddit.dto.BcityDto;
 
 public interface OnedayClassMapper {
 
-	public List<VOndyclProUsersDto> vOndyclProUsersDtoList();
+	List<VOndyclProUsersDto> vOndyclProUsersDtoList();
 
-	public int countOndycl();
+	int countOndycl();
 
-	public String getCodeNm(String codeCd);
+	String getCodeNm(String codeCd);
 
-	public List<VOndyclProUsersDto> searchClass(Map<String, Object> searchMap);
+	List<VOndyclProUsersDto> searchClass(Map<String, Object> searchMap);
 
-	public List<SpcltyRealmDto> category();
+	List<SpcltyRealmDto> category();
 
-	public List<BcityDto> getBcity();
+	List<BcityDto> getBcity();
 
-	public List<BrtcDto> brtcSelect(String bcityCode);
+	List<BrtcDto> brtcSelect(String bcityCode);
 
-	public VOndyclProUsersDto detail(String ondyclNo);
+	VOndyclProUsersDto detail(String ondyclNo);
 
-	public int getAttachNo();
+	int getAttachNo();
 
-	public int addSprviseAtchmnfl(SprviseAtchmnflDto sprviseAtchmnflDto);
+	int addSprviseAtchmnfl(SprviseAtchmnflDto sprviseAtchmnflDto);
 
-	public int createOndycl(Map<String, Object> map);
+	int createOndycl(Map<String, Object> map);
 
-	public List<SprviseAtchmnflDto> fileList(String ondyclNo);
+	List<SprviseAtchmnflDto> fileList(String ondyclNo);
 
-	public int getInsertClNum();
+	int getInsertClNum();
 
-	public int deleteClass(String classNO);
+	int deleteClass(String classNO);
 
-	public int thisAttachNo(int ondyclNo);
+	int thisAttachNo(int ondyclNo);
 
-	public int updateOndycl(Map<String, Object> map);
+	int updateOndycl(Map<String, Object> map);
 
-	public int updateOndyclSchdul(Map<String, Object> map);
+	int updateOndyclSchdul(Map<String, Object> map);
 
-	public int updateSprviseAtchmnfl(SprviseAtchmnflDto sprviseAtchmnflDto);
+	int updateSprviseAtchmnfl(SprviseAtchmnflDto sprviseAtchmnflDto);
 
-	public int buyClass(Map<String, Object> map);
+	int buyClass(Map<String, Object> map);
 
-	public int getResveNo();
+	int getResveNo();
 
-	public int plusndyclResvpa(Map<String, Object> map);
+	int plusndyclResvpa(Map<String, Object> map);
 
-	public List<VOndyclProUsersDto> memberOndyclList(Map<String, Object> map);
+	List<VOndyclProUsersDto> memberOndyclList(Map<String, Object> map);
 
-	public int countMberMyClass(Map<String, Object> map);
-	
-	public List<VOndyclProUsersDto> proMyClassList(Map<String, Object> map);
+	int countMberMyClass(Map<String, Object> map);
 
-	public int countProMyClass(Map<String, Object> map);
+	List<VOndyclProUsersDto> proMyClassList(Map<String, Object> map);
 
-	public int resveCheck(Map<String, Object> mberOndyclMap);
+	int countProMyClass(Map<String, Object> map);
 
-	public int mberClassCancel(Map<String, Object> map);
+	int resveCheck(Map<String, Object> mberOndyclMap);
 
-	public String mberReviewTitle(int ondyclNo);
+	int mberClassCancel(Map<String, Object> map);
 
-	public int createReview(OndyclReviewDto ondyclReviewDto);
+	String mberReviewTitle(int ondyclNo);
 
-	public List<ReviewMberDto> reviewList(int ondyclNo);
+	int createReview(OndyclReviewDto ondyclReviewDto);
 
-	public List<BundleOndyclDto> mberShoppingCart(Map<String, Object> map);
+	List<ReviewMberDto> reviewList(int ondyclNo);
 
-	public int countShoppingCart(Map<String, Object> map);
+	List<BundleOndyclDto> mberShoppingCart(Map<String, Object> map);
 
-	public int putShoppingCart(ShopngBundleDto shopngBundleDto);
+	int countShoppingCart(Map<String, Object> map);
 
-	public String getUserNcnm(String userId);
+	int putShoppingCart(ShopngBundleDto shopngBundleDto);
 
-	public int classBundleCk(Map<String, Object> mberOndyclMap);
+	String getUserNcnm(String userId);
 
-	public VOndyclSchdulDto priceCk(int ondyclNo);
+	int classBundleCk(Map<String, Object> mberOndyclMap);
 
-	public int delBundle(Map<String, Object> map);
+	VOndyclSchdulDto priceCk(int ondyclNo);
 
-	public int getTotalPrice(Map<String, Object> map);
+	int delBundle(Map<String, Object> map);
 
-	public double getTotalStar(Map<String, Object> map);
+	int getTotalPrice(Map<String, Object> map);
 
-	public int getTotalUser(Map<String, Object> map);
+	double getTotalStar(Map<String, Object> map);
 
-	public int getMonthTotalUser(Map<String, Object> map);
+	int getTotalUser(Map<String, Object> map);
 
-	public int getMonthTotalPrice(Map<String, Object> map);
+	int getMonthTotalUser(Map<String, Object> map);
 
-	public List<UserNcnmMberPhotoDto> getBuyer(String ondyclNo);
+	int getMonthTotalPrice(Map<String, Object> map);
 
-	public List<OndyclDto> getOndyclRank();
+	List<UserNcnmMberPhotoDto> getBuyer(String ondyclNo);
+
+	List<OndyclDto> getOndyclRank();
 
 	//원데이클래스 첨부파일 삭제
-	public int deleteSprviseAtchmnfl(int ondyclNo);
+	int deleteSprviseAtchmnfl(int ondyclNo);
 
-	public String getPeopleCheck(int ondyclNo);
-
+	String getPeopleCheck(int ondyclNo);
 
 }

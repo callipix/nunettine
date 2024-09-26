@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.ddit.dto.*;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
@@ -35,114 +36,115 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/member")
 @RequiredArgsConstructor
 public class MemberJoinController {
-	
+
 	private final String uploadFolder;
 	private final MemberJoinService memberJoinService;
 	private final JavaMailSenderImpl mailSender;
-	
+
 	@GetMapping("/memberJoin")
 	public String memberJoin() {
 		return "member/memberJoin";
 	}
-	
+
 	@GetMapping("/test")
 	public String test() {
 		return "member/test";
 	}
+
 	@GetMapping("/memberLogin")
 	public String memberLogin() {
 		return "member/memberLogin";
 	}
-	
+
 	@GetMapping("/joinSelect")
 	public String joinSelect() {
 		return "joinSelect";
 	}
-	
+
 	//이메일 중복확인
 	@ResponseBody
 	@GetMapping("/emailCk")
 	public int emailCk(String email) {
 		int result = this.memberJoinService.emailCk(email);
-		
+
 		return result;
 	}
-	
+
 	//아이디 중복확인
 	@ResponseBody
 	@GetMapping("/idCk")
 	public int idCk(String userId) {
 		int result = this.memberJoinService.idCk(userId);
-		
+
 		return result;
 	}
-	
+
 	//닉네임 중복 확인
 	@ResponseBody
 	@GetMapping("/ncnmCk")
 	public int ncnmCk(String userNcnm) {
 		int result = this.memberJoinService.ncnmCk(userNcnm);
-		
+
 		return result;
 	}
-	
+
 	//휴대폰 본인인증
 	@ResponseBody
-	@PostMapping("/check/sendSMS")	
-    public String sendSMS(String mberMbtlnum) {			 // 1.
-        Random rand  = new Random();
-        StringBuilder numStr = new StringBuilder();
+	@PostMapping("/check/sendSMS")
+	public String sendSMS(String mberMbtlnum) {             // 1.
+		Random rand = new Random();
+		StringBuilder numStr = new StringBuilder();
 
-        numStr.append(rand.ints(6, 0, 10)  	  	  // 2.
-              .mapToObj(Integer::toString)  	  // 3.
-        	  .collect(Collectors.joining()));    // 4.
+		numStr.append(rand.ints(6, 0, 10)          // 2.
+			.mapToObj(Integer::toString)      // 3.
+			.collect(Collectors.joining()));    // 4.
 
-        log.info("인증번호 : {}", numStr);
-        this.memberJoinService.certifiedPhoneNumber(mberMbtlnum,numStr.toString());	// 5. 
-        return numStr.toString();
-    }
-    
-// 1. 클라이언트에서 입력한 수신번호를 매개변수로 해당요청이 실행된다.     
-// 2. 0 이상 10 미만의 임의의 수 생성                    
-// 3. 각 숫자를 문자열로 변환한다                         
-// 4. 각각의 문자열을 연결하여 하나의 문자열로 만든다
-// 5. 인증번호와 수신번호를 매개변수로 certifiedPhoneNumber메소드를 호출한다
-	
+		log.info("인증번호 : {}", numStr);
+		this.memberJoinService.certifiedPhoneNumber(mberMbtlnum, numStr.toString());    // 5.
+		return numStr.toString();
+	}
+
+	// 1. 클라이언트에서 입력한 수신번호를 매개변수로 해당요청이 실행된다.
+	// 2. 0 이상 10 미만의 임의의 수 생성
+	// 3. 각 숫자를 문자열로 변환한다
+	// 4. 각각의 문자열을 연결하여 하나의 문자열로 만든다
+	// 5. 인증번호와 수신번호를 매개변수로 certifiedPhoneNumber메소드를 호출한다
+
 	//회원가입
 	@PostMapping("/memberInsert")
 	public String memberInsert(UsersDto usersDto, MberDto mberDto, AdresDto adresDto) {
-//		log.info("userVO : " + usersVO);
+		//		log.info("userVO : " + usersVO);
 		log.info("mberVO : " + mberDto);
-//		log.info("adresVO : " + adresVO);
+		//		log.info("adresVO : " + adresVO);
 		Map<String, Object> map = new HashMap<>();
-		
+
 		//프로필사진 업로드 처리
-		if(mberDto.getMberProflPhoto() != null && !mberDto.getMberProflPhoto().isEmpty()) {
+		if (mberDto.getMberProflPhoto() != null && !mberDto.getMberProflPhoto().isEmpty()) {
 			MultipartFile multipartFile = mberDto.getUploadFile();
-//			log.info("파일경로 : " + uploadFolder);
-//		log.info("multipartFile 처음 : " + multipartFile);
-//			String uploadFolder = "d/team2/upload";
+			//			log.info("파일경로 : " + uploadFolder);
+			//		log.info("multipartFile 처음 : " + multipartFile);
+			//			String uploadFolder = "d/team2/upload";
 			File uploadPath = new File(uploadFolder, getFolder());
-			if(!uploadPath.exists()) {
+			if (!uploadPath.exists()) {
 				uploadPath.mkdirs();
 			}
 			String uploadFileName = multipartFile.getOriginalFilename();
-//		log.info("uploadFileName 전 : " + uploadFileName);
+			//		log.info("uploadFileName 전 : " + uploadFileName);
 			UUID uuid = UUID.randomUUID();
 			uploadFileName = uuid.toString() + "_" + uploadFileName;
-//		log.info("uploadFileName 후 : " + uploadFileName);
+			//		log.info("uploadFileName 후 : " + uploadFileName);
 			File saveFile = new File(uploadPath, uploadFileName);
 			try {
 				multipartFile.transferTo(saveFile);
 			} catch (IllegalStateException | IOException e) {
-//				log.info(e.getMessage());
+				//				log.info(e.getMessage());
 			}
-//			log.info("saveFile : " + saveFile);
+			//			log.info("saveFile : " + saveFile);
 			String url = "/images/" + getFolder().replace("\\", "/") + "/" + uploadFileName;
-//			log.info("url : " + url);
+			//			log.info("url : " + url);
 			map.put("mberProflPhoto", url);
 			map.put("profile", url);
-		}else {
+		} else {
 			map.put("mberProflPhoto", null);
 		}
 		map.put("userId", usersDto.getUserId());
@@ -155,13 +157,13 @@ public class MemberJoinController {
 		map.put("adres", adresDto.getAdres());
 		map.put("detailAdres", adresDto.getDetailAdres());
 		map.put("zip", adresDto.getZip());
-//		log.info("회원가입 맵 : " + map);
+		//		log.info("회원가입 맵 : " + map);
 		int result = this.memberJoinService.memberInsert(map);
-//		log.info("회원가입 여부 : " + result);
-		
+		//		log.info("회원가입 여부 : " + result);
+
 		return "welcome";
 	}
-	
+
 	//회원 로그인
 	@ResponseBody
 	@PostMapping("/memberLogin")
@@ -169,193 +171,188 @@ public class MemberJoinController {
 		Map<String, Object> userMap = new HashMap<>();
 		userMap.put("userId", userId); //아이디
 		userMap.put("userPassword", userPassword); //비번
-//		log.info("로그인 전 map : " + userMap);
-		
+		//		log.info("로그인 전 map : " + userMap);
+
 		UsersDto usersDto = this.memberJoinService.memberLogin(userMap);
-		if(usersDto == null) {
-//			log.info(" 왜요");
+		if (usersDto == null) {
+			//			log.info(" 왜요");
 			return userMap;
 		}
-		
+
 		VMberUsersDto vMberUsersDto = this.memberJoinService.getProfile(userMap);
-//		log.info("로그인 userId : " + userId);
-		
+		//		log.info("로그인 userId : " + userId);
+
 		try {
 			AdresDto adresDto = this.memberJoinService.getAdres(userMap);
 			userMap.put("zip", adresDto.getZip()); //우편번호
 			userMap.put("adres", adresDto.getAdres()); //주소
 			userMap.put("detailAdres", adresDto.getDetailAdres()); //상세주소
-//			log.info("로그인 후 adresVO : " + adresVO);
+			//			log.info("로그인 후 adresVO : " + adresVO);
 		} catch (NullPointerException e) {
-			userMap.put("zip","-"); //우편번호
-			userMap.put("adres","-"); //주소
-			userMap.put("detailAdres","-"); //상세주소
+			userMap.put("zip", "-"); //우편번호
+			userMap.put("adres", "-"); //주소
+			userMap.put("detailAdres", "-"); //상세주소
 		}
-		
-//		log.info("로그인 후 usersVO : " + usersVO);
-//		log.info("로그인 후 vMberUsersVO : " + vMberUsersVO);
+
+		//		log.info("로그인 후 usersVO : " + usersVO);
+		//		log.info("로그인 후 vMberUsersVO : " + vMberUsersVO);
 		userMap.put("cnt", usersDto.getCnt());
 		userMap.put("type", usersDto.getEmplyrTy()); //유저타입(프로/회원)
-		if(vMberUsersDto != null && usersDto.getCnt() == 1) {
+		if (vMberUsersDto != null && usersDto.getCnt() == 1) {
 			String profile = vMberUsersDto.getMberProflPhoto();
-//			log.info("이미지 : " + profile);
-			if(profile != null) {
+			//			log.info("이미지 : " + profile);
+			if (profile != null) {
 				profile = vMberUsersDto.getMberProflPhoto();
 			}
-			
+
 			userMap.put("userNcnm", usersDto.getUserNcnm()); //닉네임
 			userMap.put("email", vMberUsersDto.getEmail()); //이메일
 			userMap.put("userNm", vMberUsersDto.getUserNm()); //이름
 			userMap.put("mberMbtlnum", vMberUsersDto.getMberMbtlnum()); //전화번호
 			userMap.put("sexdstnTy", vMberUsersDto.getSexdstnTy()); //성별
-			userMap.put("profile",profile); //프로필사진
+			userMap.put("profile", profile); //프로필사진
 			userMap.put("changePwCk", usersDto.getChangePwCk()); //임시비번여부
-			
-//			log.info("session에 들어갈 map : " + userMap);
+
+			//			log.info("session에 들어갈 map : " + userMap);
 			HttpSession session = request.getSession();
-			if(!userMap.isEmpty()) {
+			if (!userMap.isEmpty()) {
 				session.setAttribute("memSession", userMap);
-//				log.info("session Id : " + session + " : " + session.getAttribute("memSession"));
-			}else {
+				//				log.info("session Id : " + session + " : " + session.getAttribute("memSession"));
+			} else {
 				session.setAttribute("memSession", null);
 			}
-		}else if(vMberUsersDto == null && usersDto.getCnt() == 1){
-			userMap.put("cnt",1);
-		}else if(vMberUsersDto == null && usersDto.getCnt() == 0) {
-			userMap.put("cnt",0);
+		} else if (vMberUsersDto == null && usersDto.getCnt() == 1) {
+			userMap.put("cnt", 1);
+		} else if (vMberUsersDto == null && usersDto.getCnt() == 0) {
+			userMap.put("cnt", 0);
 		}
-		
+
 		return userMap;
 	}
-	
+
 	@GetMapping("/memberLogout")
 	public String memberLogout(HttpSession session) {
 		session.removeAttribute("memSession");
-		
+
 		return "redirect:/main";
 	}
-	
+
 	public String getFolder() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
 		String str = sdf.format(date);
-//		log.info(str);
+		//		log.info(str);
 		return str.replace("-", File.separator);
 	}
-	
+
 	//아이디 찾기
 	@ResponseBody
 	@PostMapping("/idSearch")
 	public UsersDto idSearch(VMberUsersDto vMberUsersDto) {
-//		log.info("아이디찾기 vo : " + vMberUsersVO);
-		
+		//		log.info("아이디찾기 vo : " + vMberUsersVO);
+
 		UsersDto usersDto = this.memberJoinService.idSearch(vMberUsersDto);
-//		log.info("usersVO : " + usersVO);
-//		log.info("userVO null : " + usersVO.equals(null));
-		if(usersDto == null) {
+		//		log.info("usersVO : " + usersVO);
+		//		log.info("userVO null : " + usersVO.equals(null));
+		if (usersDto == null) {
 			VProUsersDto proVO = this.memberJoinService.idSearch2(vMberUsersDto);
-//			log.info("proVO : " + proVO);
+			//			log.info("proVO : " + proVO);
 			UsersDto userVO = new UsersDto();
-			if(proVO != null) {
+			if (proVO != null) {
 				userVO.setEmplyrTy(proVO.getEmplyrTy());
 				userVO.setUserId(proVO.getUserId());
 				return userVO;
-			}else {
+			} else {
 				userVO.setEmplyrTy("warn");
 				return userVO;
 			}
 		}
-//		log.info("찾은 아이디 : " + usersVO);
+		//		log.info("찾은 아이디 : " + usersVO);
 		return usersDto;
 	}
-	
+
 	//비밀번호찾기
 	@ResponseBody
 	@PostMapping("/pwSearch")
 	public Map<String, Object> pwSearch(VMberUsersDto vMberUsersDto) {
-//		log.info("비밀번호찾기 vo : " + vMberUsersVO);
+		//		log.info("비밀번호찾기 vo : " + vMberUsersVO);
 		String userPassword;
-		
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		UsersDto usersDto = this.memberJoinService.pwSearch(vMberUsersDto);
-//		log.info("usersVO : " + usersVO);
-		if(usersDto == null) {
+		//		log.info("usersVO : " + usersVO);
+		if (usersDto == null) {
 			String emplyrTy = this.memberJoinService.pwSearch2(vMberUsersDto);
-			if(emplyrTy==null) {//프로조회
-				map.put("emplyrTy","warn");
-//				log.info("map6 : " + map);
+			if (emplyrTy == null) {//프로조회
+				map.put("emplyrTy", "warn");
+				//				log.info("map6 : " + map);
 				return map;
-			}else {
+			} else {
 				map.put("emplyrTy", emplyrTy);
-//				log.info("map5 : " + map);
+				//				log.info("map5 : " + map);
 				return map;
 			}
-		}else {
+		} else {
 			String emplyrTy = usersDto.getEmplyrTy();
 			map.put("emplyrTy", emplyrTy);
 			userPassword = usersDto.getUserPassword();
-//			log.info("비번2 : " + userPassword);
+			//			log.info("비번2 : " + userPassword);
 		}
-		
-		
+
 		map.put("mberId", vMberUsersDto.getMberId());
-//		log.info("찾은 비밀번호 : " + map);
-//		log.info("비번3 : " + userPassword);
-		
-		if(userPassword == null || userPassword.isEmpty()) { //검색 결과가 없을때
-//			log.info("검색결과없음");
+		//		log.info("찾은 비밀번호 : " + map);
+		//		log.info("비번3 : " + userPassword);
+
+		if (userPassword == null || userPassword.isEmpty()) { //검색 결과가 없을때
+			//			log.info("검색결과없음");
 			userPassword = null;
 			map.put("userPassword", userPassword);
-//			log.info("비번4 : " + userPassword);
-		}else { //비밀번호가 조회되면 이메일로 전송
+			//			log.info("비번4 : " + userPassword);
+		} else { //비밀번호가 조회되면 이메일로 전송
 			// 임시 비밀번호를 발급받기 위한 랜덤번호(0~9,A~Z 까지 추가하고 싶은 문자는 아래의 형식처럼 추가가능)
-			char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
-					'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+			char[] charSet = new char[] {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
+				'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
 			// 임시비빌번호가 저장될 변수
 			String str = "";
 			// 문자 배열 길이의 값을 랜덤으로 10개를 뽑아 구문을 작성함
 			int idx = 0;
 			for (int i = 0; i < 10; i++) {
-				idx = (int) (charSet.length * Math.random());
+				idx = (int)(charSet.length * Math.random());
 				str += charSet[idx];
 			}
 			log.info("메일 보낼 임시비번 " + str);
 			String setForm = "ddit230901@gmail.com"; //보낼 이메일 주소
 			String toMail = vMberUsersDto.getEmail(); //받을 이메일 주소
 			String title = "누네띠네 회원님의 임시비밀번호 발송 이메일 입니다."; //이메일 제목
-			String content = "누네띠네를 이용해 주셔서 감사합니다." + "<br><br>" + "변경된 임시비밀번호는 <div style='backgroud-color:yellow;'><b>"
+			String content =
+				"누네띠네를 이용해 주셔서 감사합니다." + "<br><br>" + "변경된 임시비밀번호는 <div style='backgroud-color:yellow;'><b>"
 					+ str + "</b> 입니다.</div><br><br>해당 임시비밀번호로 로그인 후 꼭 비밀번호를 변경해주세요.<br><br>"
-							+ "<a href='localhost/main'>누네띠네로 돌아가기</a>";
+					+ "<a href='localhost/main'>누네띠네로 돌아가기</a>";
 			mailSend(setForm, toMail, title, content); //메일 전송 메소드 호출
-			
+
 			map.put("imsiPw", str);
 			// 임시비밀번호로 변경
 			int result = this.memberJoinService.updatePw(map);
-//			log.info("비번 변경여부 : " + result);
+			//			log.info("비번 변경여부 : " + result);
 		}
 		return map;
 	}
-	
+
 	//이메일 전송 메소드
-		public void mailSend(String setForm, String toMail, String title, String content) {
-			//true, 매개값 주면 multipart 형싱의 메세지 전달 가능, 인코딩도 가능
-			MimeMessage message = mailSender.createMimeMessage();
-			log.info("메일전송 성공");
-			try {
-				MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
-				helper.setFrom(setForm);
-				helper.setTo(toMail);
-				helper.setSubject(title);
-				helper.setText(content, true); //true면 html형식으로 전송, 아니면 text로 그냥 감
-				mailSender.send(message);
-			} catch (MessagingException e) {
-				e.printStackTrace();
-			}
+	public void mailSend(String setForm, String toMail, String title, String content) {
+		//true, 매개값 주면 multipart 형싱의 메세지 전달 가능, 인코딩도 가능
+		MimeMessage message = mailSender.createMimeMessage();
+		log.info("메일전송 성공");
+		try {
+			MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+			helper.setFrom(setForm);
+			helper.setTo(toMail);
+			helper.setSubject(title);
+			helper.setText(content, true); //true면 html형식으로 전송, 아니면 text로 그냥 감
+			mailSender.send(message);
+		} catch (MessagingException e) {
+			e.printStackTrace();
 		}
+	}
 
 }
-
-
-
-
-

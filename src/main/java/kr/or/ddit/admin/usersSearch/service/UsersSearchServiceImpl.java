@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.admin.usersSearch.mapper.UsersSearchMapper;
@@ -14,7 +15,7 @@ import kr.or.ddit.admin.usersSearch.dto.UsersDto;
 public class UsersSearchServiceImpl implements UsersSearchService {
 
 	private final UsersSearchMapper usersSearchMapper;
-	
+
 	@Override
 	public int getTotal(Map<String, Object> map) {
 		return this.usersSearchMapper.getTotal(map);

@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import kr.or.ddit.dto.SprviseAtchmnflDto;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,65 +24,65 @@ public class PrtfolioServiceImpl implements PrtfolioService {
 
 	private final String uploadFolder;
 	private final PrtfolioMapper prtfolioMapper;
-	
+
 	@Override
 	public int createPost(PrtfolioDto prtfolioDto) {
 
 		int result = this.prtfolioMapper.createPost(prtfolioDto);
-		
+
 		//원본파일명
 		String uploadFileName = "";
 		//MIME타입
 		String mime = "";
 		//seq컬럼 카운터
 		int seq = 1;
-		
+
 		MultipartFile[] uploadFile = prtfolioDto.getUploadFile();
-		
-		for(MultipartFile multipartFile : uploadFile) {
-			log.info("-------------------");
-			log.info("원본 파일 명 : " + multipartFile.getOriginalFilename());
-			log.info("MIMME타입 : " + multipartFile.getContentType());
-			log.info("-------------------");
-			
+
+		for (MultipartFile multipartFile : uploadFile) {
+			log.info("---------------------------------------------------------");
+			log.info("원본 파일 명 : {}", multipartFile.getOriginalFilename());
+			log.info("MIMME 타입 : {}", multipartFile.getContentType());
+			log.info("---------------------------------------------------------1");
+
 			uploadFileName = multipartFile.getOriginalFilename();
 			mime = multipartFile.getContentType();
-			
+
 			UUID uuid = UUID.randomUUID();
 			uploadFileName = uuid.toString() + "_" + uploadFileName;
-			
+
 			String userId = prtfolioDto.getProId();
 			int sprviseAtchmnflNo = prtfolioDto.getSprviseAtchmnflNo();
-			log.info("sprviseAtchmnflNo : " + sprviseAtchmnflNo);
-			
-			File saveFile = new File(uploadFolder + "\\" + getFolder(),uploadFileName);
-			
+			log.info("sprviseAtchmnflNo : {}", sprviseAtchmnflNo);
+
+			File saveFile = new File(uploadFolder + "\\" + getFolder(), uploadFileName);
+
 			try {
 				multipartFile.transferTo(saveFile);
-				
+
 				SprviseAtchmnflDto sprviseAtchmnflDto = new SprviseAtchmnflDto();
 				sprviseAtchmnflDto.setSprviseAtchmnflNo(sprviseAtchmnflNo);
 				sprviseAtchmnflDto.setAtchmnflNo(seq++);
 				sprviseAtchmnflDto.setAtchmnflCours("/images/" + getFolder().replaceAll("\\\\", "/") + "/"
-						+ uploadFileName);
+					+ uploadFileName);
 				sprviseAtchmnflDto.setAtchmnflNm(multipartFile.getOriginalFilename());
 				sprviseAtchmnflDto.setStoreAtchmnflNm(uploadFileName);
 				sprviseAtchmnflDto.setAtchmnflTy(mime);
 				sprviseAtchmnflDto.setUserId(userId);
-				
-				log.info("sprviseAtchmnflVO : " + sprviseAtchmnflDto);
-				
+
+				log.info("sprviseAtchmnflVO : {}", sprviseAtchmnflDto);
+
 				result += this.prtfolioMapper.insertSprvise(sprviseAtchmnflDto);
-				
-				log.info("createPost2->prtfolioVO : " + prtfolioDto);
-				log.info("sprviseAtchmnflVO2 : " + sprviseAtchmnflDto);
-			}catch (IllegalStateException | IOException e) {
+
+				log.info("createPost2->prtfolioVO : {}", prtfolioDto);
+				log.info("sprviseAtchmnflVO2 : {}", sprviseAtchmnflDto);
+			} catch (IllegalStateException | IOException e) {
 				log.error(e.getMessage());
 			}
-			
+
 		}
 		return result;
-		
+
 	}
 
 	//연/월/일 폴더 생성
@@ -95,13 +96,13 @@ public class PrtfolioServiceImpl implements PrtfolioService {
 		//2024-01-30 -> 2024\\01\\30
 		return str.replace("-", File.separator);
 	}
-	
+
 	//이미지인지 판단. 
 	public boolean checkImageType(File file) {
 		String contentType;
 		try {
 			contentType = Files.probeContentType(file.toPath());
-			log.info("contentType : " + contentType);
+			log.info("contentType : {}", contentType);
 			//image/jpeg는 image로 시작함->true
 			return contentType.startsWith("image");
 		} catch (IOException e) {
@@ -115,5 +116,5 @@ public class PrtfolioServiceImpl implements PrtfolioService {
 	public int deletePrt(int sprviseAtchmnflNo) {
 		return this.prtfolioMapper.deletePrt(sprviseAtchmnflNo);
 	}
-	
+
 }

@@ -9,27 +9,27 @@ import kr.or.ddit.dto.UsersDto;
 
 public interface ChatMapper {
 
-	public List<ChatRoomDto> roomList();
-	
-//	public List<ChatRoomVO> myRoomList(String userId);
-	
-	public List<AllChatRoomViewDto> myRoomList(String userId);
+	List<ChatRoomDto> roomList();
 
-	public int joinCheck(ChatRelayDto chatRelayDto);
+//	List<ChatRoomVO> myRoomList(String userId);
 
-	public int joinRoom(ChatRelayDto chatRelayDto);
+	List<AllChatRoomViewDto> myRoomList(String userId);
 
-	public List<ChatRelayDto> myRoomId(int roomNo);
+	int joinCheck(ChatRelayDto chatRelayDto);
 
-	public List<UsersDto> userInfo(String userId);
+	int joinRoom(ChatRelayDto chatRelayDto);
 
-	public UsersDto joinUserInfo(String userId);
+	List<ChatRelayDto> myRoomId(int roomNo);
 
-	public List<AllChatRoomViewDto> roomByRoomNo(int roomNo);
+	List<UsersDto> userInfo(String userId);
 
-	public AllChatRoomViewDto roomByRoomNo2(int roomNo);
-	
-	public AllChatRoomViewDto myRoomListTest(String userId, int roomNo);
+	UsersDto joinUserInfo(String userId);
 
-	public int createRoom(ChatRoomDto chatRoomDto);
+	List<AllChatRoomViewDto> roomByRoomNo(int roomNo);
+
+	AllChatRoomViewDto roomByRoomNo2(int roomNo);
+
+	AllChatRoomViewDto myRoomListTest(String userId, int roomNo);
+
+	int createRoom(ChatRoomDto chatRoomDto);
 }

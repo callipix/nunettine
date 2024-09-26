@@ -11,35 +11,34 @@ import kr.or.ddit.dto.UsersDto;
 
 public interface SrvcRequstService {
 
-	public UsersDto userChk(String userId);
+	UsersDto userChk(String userId);
 
-	public List<V_SrvcRequstDto> srvcRqList(Map<String, Object> map);
+	List<V_SrvcRequstDto> srvcRqList(Map<String, Object> map);
 
-	public V_SrvcRequstDto srvcRqDetail(V_SrvcRequstDto vSrvcRequstVO, String userId);
+	V_SrvcRequstDto srvcRqDetail(V_SrvcRequstDto vSrvcRequstVO, String userId);
 
-	public int processFn(int srvcRequstNo, String userId);
+	int processFn(int srvcRequstNo, String userId);
 
-	public int acceptRequst(Map<String, Object> acceptMap, String userId);
+	int acceptRequst(Map<String, Object> acceptMap, String userId);
 
-	public int rejectRequst(Map<String, Object> rejectMap, String userId);
+	int rejectRequst(Map<String, Object> rejectMap, String userId);
 
-	public int srvcRqCreatePost(SrvcRequstDto srvcRequstDto, List<MultipartFile> uploadFiles);
+	int srvcRqCreatePost(SrvcRequstDto srvcRequstDto, List<MultipartFile> uploadFiles);
 
-	public int getTotal(Map<String, Object> map);
+	int getTotal(Map<String, Object> map);
 
-	public List<V_SrvcRequstDto> srvcRqNoAnswerList(Map<String, Object> map);
+	List<V_SrvcRequstDto> srvcRqNoAnswerList(Map<String, Object> map);
 
-	public List<V_SrvcRequstDto> srvcRqSuccessList(Map<String, Object> map);
+	List<V_SrvcRequstDto> srvcRqSuccessList(Map<String, Object> map);
 
-	public List<V_SrvcRequstDto> srvcRqRejectList(Map<String, Object> map);
+	List<V_SrvcRequstDto> srvcRqRejectList(Map<String, Object> map);
 
-	public int getNoAnswerTotal(Map<String, Object> map);
-	
-	public int getSuccessTotal(Map<String, Object> map);
-	
-	public int getRejectTotal(Map<String, Object> map);
+	int getNoAnswerTotal(Map<String, Object> map);
 
-	public int srvcRqUpdatePost(Map<String, Object> srvcRqUpdateMap, List<MultipartFile> uploadFiles, String userId);
+	int getSuccessTotal(Map<String, Object> map);
 
+	int getRejectTotal(Map<String, Object> map);
+
+	int srvcRqUpdatePost(Map<String, Object> srvcRqUpdateMap, List<MultipartFile> uploadFiles, String userId);
 
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import kr.or.ddit.dto.*;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,13 +42,13 @@ public class DeclServiceImpl implements DeclService {
 		// 이곳에서 두가지 실행
 		// 1번 해당 게시글 삭제 여부가 1로 업데이트가 되면서
 		result = this.declMapper.declSet1(lbrtyBbscttNo);
-		log.info("1번째 결과 값 : {}" , result);
+		log.info("1번째 결과 값 : {}", result);
 		// 2번 신고에 대한 처리를 완료로 뜨게 해야된다.(DECL_PROCESS_AT = 1)
 		result += this.declMapper.declSet2(lbrtyBbscttNo);
-		log.info("2번째 결과 값 : {}" ,result);
+		log.info("2번째 결과 값 : {}", result);
 		result += this.declMapper.declSet3(lbrtyBbscttNo);
-		log.info("3번째 결과 값 : {}" , result);
-		 
+		log.info("3번째 결과 값 : {}", result);
+
 		return result;
 	}
 
@@ -72,16 +73,14 @@ public class DeclServiceImpl implements DeclService {
 		int result = 0;
 		result += this.declMapper.userDeclSet(map);
 		result += this.declMapper.declProcessAtSet(map);
-		
+
 		return result;
-		
+
 	}
 
 	@Override
 	public List<PunshDto> declHistoryList(String userId) {
 		return this.declMapper.declHistoryList(userId);
 	}
-
-
 
 }

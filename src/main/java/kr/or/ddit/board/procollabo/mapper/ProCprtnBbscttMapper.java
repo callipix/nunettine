@@ -8,27 +8,24 @@ import kr.or.ddit.board.procollabo.dto.ProCprtnBbscttDto;
 
 public interface ProCprtnBbscttMapper {
 
-//	public List<ProCprtnBbscttVO> proCprtnBbscttList();
+	//	List<ProCprtnBbscttVO> proCprtnBbscttList();
 
-	public int getTotal(Map<String, Object> map);
+	int getTotal(Map<String, Object> map);
 
-	public List<ProCprtnBbscttDto> list(Map<String, Object> map);
+	List<ProCprtnBbscttDto> list(Map<String, Object> map);
 
-	public int increaseViewCount(int proCprtnBbscttNo);
+	int increaseViewCount(int proCprtnBbscttNo);
 
-	public ProCprtnBbscttDto detail(int proCprtnBbscttNo);
+	ProCprtnBbscttDto detail(int proCprtnBbscttNo);
 
-	public ProCprtnBbscttDto detail2(int proCprtnBbscttNo);
+	ProCprtnBbscttDto detail2(int proCprtnBbscttNo);
 
-	public List<ProCprtnAnswerDto> list2(int proCprtnBbscttNo);
+	List<ProCprtnAnswerDto> list2(int proCprtnBbscttNo);
 
-	public int write(ProCprtnAnswerDto proCprtnAnswerDto);
+	int write(ProCprtnAnswerDto proCprtnAnswerDto);
 
-	public int modify(ProCprtnAnswerDto proCprtnAnswerDto);
+	int modify(ProCprtnAnswerDto proCprtnAnswerDto);
 
-	public int delete(ProCprtnAnswerDto proCprtnAnswerDto);
+	int delete(ProCprtnAnswerDto proCprtnAnswerDto);
 
-	
-
-	
 }

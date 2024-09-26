@@ -6,6 +6,7 @@ import java.util.Map;
 import kr.or.ddit.dto.VMberUsersDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +14,10 @@ import kr.or.ddit.member.join.mapper.MemberJoinMapper;
 import kr.or.ddit.dto.AdresDto;
 import kr.or.ddit.dto.UsersDto;
 import kr.or.ddit.dto.VProUsersDto;
+
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -40,24 +43,24 @@ public class MemberJoinServiceImpl implements MemberJoinService {
 	@Override
 	public void certifiedPhoneNumber(String mberMbtlnum, String numStr) {
 		String api_key = "NCSLIUVALN15NV86";
-        String api_secret = "YCBUEUDBEZA5DMIDC6OAFBY08MRGMZZE";
-        Message coolsms = new Message(api_key, api_secret);
+		String api_secret = "YCBUEUDBEZA5DMIDC6OAFBY08MRGMZZE";
+		Message coolsms = new Message(api_key, api_secret);
 
-        // 4 params(to, from, type, text) are mandatory. must be filled
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("to", mberMbtlnum);    // 수신전화번호
-        params.put("from", "01083354487");    // 발신전화번호. 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨
-        params.put("type", "SMS");
-        params.put("text", "문자메세지 테스트 : 인증번호는" + "["+numStr+"]" + "입니다.");
-        params.put("app_version", "test app 1.2"); // application name and version
-        try {
-            JSONObject obj = (JSONObject) coolsms.send(params);
-            log.info(obj.toString());
-        } catch (CoolsmsException e) {
-            log.info(e.getMessage());
-            log.info(String.valueOf(e.getCode()));
-        }
-		
+		// 4 params(to, from, type, text) are mandatory. must be filled
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("to", mberMbtlnum);    // 수신전화번호
+		params.put("from", "01083354487");    // 발신전화번호. 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨
+		params.put("type", "SMS");
+		params.put("text", "문자메세지 테스트 : 인증번호는" + "[" + numStr + "]" + "입니다.");
+		params.put("app_version", "test app 1.2"); // application name and version
+		try {
+			JSONObject obj = coolsms.send(params);
+			log.info(obj.toString());
+		} catch (CoolsmsException e) {
+			log.info(e.getMessage());
+			log.info(String.valueOf(e.getCode()));
+		}
+
 	}
 
 	@Override

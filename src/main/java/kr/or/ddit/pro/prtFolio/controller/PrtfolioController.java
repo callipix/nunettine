@@ -8,6 +8,7 @@ import java.util.Date;
 
 import kr.or.ddit.dto.PrtfolioDto;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,57 +32,57 @@ public class PrtfolioController {
 	public String create() {
 		return "prtFolio/create";
 	}
-	
+
 	@PostMapping("/createPost")
 	public String createPost(PrtfolioDto prtfolioDto) {
-		log.info("createPost->prtfolioVO : " + prtfolioDto);
-		
-		File uploadPath = new File(uploadFolder,getFolder());
-		
+		log.info("createPost->prtfolioVO : {}", prtfolioDto);
+
+		File uploadPath = new File(uploadFolder, getFolder());
+
 		//연월일
-		if(uploadPath.exists()==false) {
+		if (uploadPath.exists() == false) {
 			uploadPath.mkdirs();
 		}
-		
-		int result =this.prtfolioService.createPost(prtfolioDto);
-		log.info("createPost->result : " + result);
-		
-		return "redirect:/proProfl/detail?proId="+ prtfolioDto.getProId();
+
+		int result = this.prtfolioService.createPost(prtfolioDto);
+		log.info("createPost->result : {}", result);
+
+		return "redirect:/proProfl/detail?proId=" + prtfolioDto.getProId();
 	}
-	
+
 	//연/월/일 폴더 생성
-		public String getFolder() {
-			//2024-01-30 형식(format) 지정
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			//날짜 객체 생성(java.util 패키지)
-			Date date = new Date();
-			//2024-01-30
-			String str = sdf.format(date);
-			//2024-01-30 -> 2024\\01\\30
-			return str.replace("-", File.separator);
+	public String getFolder() {
+		//2024-01-30 형식(format) 지정
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		//날짜 객체 생성(java.util 패키지)
+		Date date = new Date();
+		//2024-01-30
+		String str = sdf.format(date);
+		//2024-01-30 -> 2024\\01\\30
+		return str.replace("-", File.separator);
+	}
+
+	//이미지인지 판단.
+	public boolean checkImageType(File file) {
+		String contentType;
+		try {
+			contentType = Files.probeContentType(file.toPath());
+			log.info("contentType : {}", contentType);
+			//image/jpeg는 image로 시작함->true
+			return contentType.startsWith("image");
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		
-		//이미지인지 판단. 
-		public boolean checkImageType(File file) {
-			String contentType;
-			try {
-				contentType = Files.probeContentType(file.toPath());
-				log.info("contentType : " + contentType);
-				//image/jpeg는 image로 시작함->true
-				return contentType.startsWith("image");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			//이 파일이 이미지가 아닐 경우
-			return false;
-		}
-		
-		@ResponseBody
-		@PostMapping("/deletePrt")
-		public int deletePrt(@RequestParam("sprviseAtchmnflNo") int sprviseAtchmnflNo) {
-			int result=this.prtfolioService.deletePrt(sprviseAtchmnflNo);
-			log.info("result : " + result);
-			return result;
-		}
+		//이 파일이 이미지가 아닐 경우
+		return false;
+	}
+
+	@ResponseBody
+	@PostMapping("/deletePrt")
+	public int deletePrt(@RequestParam("sprviseAtchmnflNo") int sprviseAtchmnflNo) {
+		int result = this.prtfolioService.deletePrt(sprviseAtchmnflNo);
+		log.info("result : {}", result);
+		return result;
+	}
 
 }

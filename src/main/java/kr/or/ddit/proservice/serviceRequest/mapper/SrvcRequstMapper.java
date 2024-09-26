@@ -8,34 +8,34 @@ import kr.or.ddit.dto.SrvcRequstDto;
 
 public interface SrvcRequstMapper {
 
-	public List<V_SrvcRequstDto> srvcRqList(Map<String, Object> map);
+	List<V_SrvcRequstDto> srvcRqList(Map<String, Object> map);
 
-	public V_SrvcRequstDto srvcRqDetail(V_SrvcRequstDto vSrvcRequstVO);
+	V_SrvcRequstDto srvcRqDetail(V_SrvcRequstDto vSrvcRequstVO);
 
-	public int processFn(Map<String, Object> paramMap);
+	int processFn(Map<String, Object> paramMap);
 
-	public int acceptRequst(Map<String, Object> acceptMap);
+	int acceptRequst(Map<String, Object> acceptMap);
 
-	public int rejectRequst(Map<String, Object> rejectMap);
+	int rejectRequst(Map<String, Object> rejectMap);
 
-	public int srvcRqCreatePost(Map<String, Object> srvcRqInfoMap);
+	int srvcRqCreatePost(Map<String, Object> srvcRqInfoMap);
 
-	public int insertSprviseAtchmnfl(Map<String, Object> srvcRqInfoMap);
+	int insertSprviseAtchmnfl(Map<String, Object> srvcRqInfoMap);
 
-	public int getTotal(Map<String, Object> map);
+	int getTotal(Map<String, Object> map);
 
-	public List<V_SrvcRequstDto> srvcRqNoAnswerList(Map<String, Object> map);
+	List<V_SrvcRequstDto> srvcRqNoAnswerList(Map<String, Object> map);
 
-	public List<V_SrvcRequstDto> srvcRqSuccessList(Map<String, Object> map);
+	List<V_SrvcRequstDto> srvcRqSuccessList(Map<String, Object> map);
 
-	public List<V_SrvcRequstDto> srvcRqRejectList(Map<String, Object> map);
+	List<V_SrvcRequstDto> srvcRqRejectList(Map<String, Object> map);
 
-	public int getNoAnswerTotal(Map<String, Object> map);
+	int getNoAnswerTotal(Map<String, Object> map);
 
-	public int getSuccessTotal(Map<String, Object> map);
+	int getSuccessTotal(Map<String, Object> map);
 	
-	public int getRejectTotal(Map<String, Object> map);
+	int getRejectTotal(Map<String, Object> map);
 
-	public int srvcRqUpdatePost(SrvcRequstDto srvcRequstDto);
+	int srvcRqUpdatePost(SrvcRequstDto srvcRequstDto);
 
 }

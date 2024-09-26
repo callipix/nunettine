@@ -10,28 +10,28 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface DeclMapper {
 
-	public List<SntncDeclDto> decllbrSelect(Map<String, Object> map);
+	List<SntncDeclDto> decllbrSelect(Map<String, Object> map);
 
-	public LbrtyBbscttDto2 lbrtyBbscttVo(SntncDeclDto sntncDeclDto);
+	LbrtyBbscttDto2 lbrtyBbscttVo(SntncDeclDto sntncDeclDto);
 
-	public List<SntncDeclDto> declResnList(SntncDeclDto sntncDeclDto);
+	List<SntncDeclDto> declResnList(SntncDeclDto sntncDeclDto);
 
-	public int declSet1(int lbrtyBbscttNo);
+	int declSet1(int lbrtyBbscttNo);
 
-	public int declSet2(int lbrtyBbscttNo);
+	int declSet2(int lbrtyBbscttNo);
 
-	public List<UsersDto> userList();
+	List<UsersDto> userList();
 
-	public int getDeclCount(String userId2);
+	int getDeclCount(String userId2);
 
-	public List<UserDeclDto> userDeclList(String userId);
+	List<UserDeclDto> userDeclList(String userId);
 
-	public int userDeclSet(Map<String, Object> map);
+	int userDeclSet(Map<String, Object> map);
 
-	public int declProcessAtSet(Map<String, Object> map);
+	int declProcessAtSet(Map<String, Object> map);
 
-	public List<PunshDto> declHistoryList(String userId);
+	List<PunshDto> declHistoryList(String userId);
 
-	public int declSet3(int lbrtyBbscttNo);
+	int declSet3(int lbrtyBbscttNo);
 
 }

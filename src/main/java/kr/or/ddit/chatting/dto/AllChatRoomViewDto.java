@@ -17,9 +17,9 @@ public class AllChatRoomViewDto {
 	private int roomNo;
 	private String roomName;
 	private String createDate;
-	
+
 	private String userId;
-	
+
 	private List<UsersDto> userVO;
 
 }

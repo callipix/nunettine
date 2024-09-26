@@ -14,6 +14,7 @@ import java.util.UUID;
 
 import kr.or.ddit.dto.*;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.or.ddit.onedayclass.mapper.OnedayClassMapper;
 import kr.or.ddit.dto.BcityDto;
 import lombok.extern.slf4j.Slf4j;
+
 import net.coobird.thumbnailator.Thumbnailator;
 
 @Slf4j
@@ -104,12 +106,12 @@ public class OnedayClassServiceImpl implements OnedayClassService {
 	@Transactional
 	@Override
 	public int updateOndycl(VOndyclSchdulDto vOndyclSchdulDto) {
-//		log.info("업뎃 : " + vOndyclSchdulDto);
+		//		log.info("업뎃 : {}", vOndyclSchdulDto);
 		Map<String, Object> map = new HashMap<String, Object>();
 		int ondyclNo = vOndyclSchdulDto.getOndyclNo();
 		SprviseAtchmnflDto sprviseAtchmnflDto = new SprviseAtchmnflDto();
 		int sprviseAtchmnflNo = this.onedayClassMapper.getAttachNo();
-//		int sprviseAtchmnflNo = this.onedayClassMapper.thisAttachNo(ondyclNo);
+		//		int sprviseAtchmnflNo = this.onedayClassMapper.thisAttachNo(ondyclNo);
 		int result = 0;
 		String proId = vOndyclSchdulDto.getProId();
 		String ondyclSchdulDe = vOndyclSchdulDto.getOndyclSchdulDe();
@@ -131,11 +133,11 @@ public class OnedayClassServiceImpl implements OnedayClassService {
 
 		MultipartFile uploadFile = vOndyclSchdulDto.getUploadProfile();
 
-//		log.info("uploadFile.getOriginalFilename().length() : " + uploadFile.getOriginalFilename().length());
+		//		log.info("uploadFile.getOriginalFilename().length() : {}", uploadFile.getOriginalFilename().length());
 
 		//썸네일 수정
 		if (uploadFile.getOriginalFilename().length() > 0) {
-//			log.info("썸네일 메소드 시작1");
+			//			log.info("썸네일 메소드 시작1");
 			MultipartFile multipartFile = vOndyclSchdulDto.getUploadProfile();
 
 			File uploadPath = new File(uploadFolder, getFolder());
@@ -148,18 +150,18 @@ public class OnedayClassServiceImpl implements OnedayClassService {
 			uploadFileName = uuid.toString() + "_" + uploadFileName;
 
 			File saveFile = new File(uploadPath, uploadFileName);
-//			 log.info("프로필사진 이름  : " + saveFile);
+			//			 log.info("프로필사진 이름  : {}", saveFile);
 			try {
 				multipartFile.transferTo(saveFile);
 
 				if (checkImageType(saveFile)) {//이미지라면
 					//설계
 					FileOutputStream thumbnail = new FileOutputStream(
-							new File(uploadPath, "s_" + uploadFileName)
+						new File(uploadPath, "s_" + uploadFileName)
 					);
 					//썸네일 생성
 					Thumbnailator.createThumbnail(multipartFile.getInputStream(),
-							thumbnail, 50, 50);
+						thumbnail, 50, 50);
 					thumbnail.close();
 				}
 			} catch (IllegalStateException | IOException e) {
@@ -168,18 +170,18 @@ public class OnedayClassServiceImpl implements OnedayClassService {
 
 			String url = "/images/" + getFolder().replace("\\", "/") + "/" + uploadFileName;
 
-//			 log.info("썸네일 url : " + url);
+			//			 log.info("썸네일 url : {}", url);
 			map.put("ondyclThumbPhoto", url);
 		} else {
-//			log.info("썸네일 메소드 시작2");
+			//			log.info("썸네일 메소드 시작2");
 			map.put("ondyclThumbPhoto", null);
 		}//썸네일 사진 등록 끝
 
 		MultipartFile[] multipartFileArr = vOndyclSchdulDto.getUploadFile();
-//		log.info("multipartFileArr : " + multipartFileArr);
+		//		log.info("multipartFileArr : {}", multipartFileArr);
 		//첨부파일(이미지들) 수정
 		if (multipartFileArr[0].getOriginalFilename().length() > 0) {
-//			log.info("첨부파일 메소드 시작");
+			//			log.info("첨부파일 메소드 시작");
 			String originFileName = ""; //원본파일명
 			String newFileName = "";
 			String mimeType = ""; //파일 형식
@@ -188,7 +190,7 @@ public class OnedayClassServiceImpl implements OnedayClassService {
 
 			//기존 이미지 삭제(ondyclNo : 11)
 			int result2 = this.onedayClassMapper.deleteSprviseAtchmnfl(ondyclNo);
-//			log.info("result2 : " + result2);
+			//			log.info("result2 : {}", result2);
 
 			for (MultipartFile uploadFiles : vOndyclSchdulDto.getUploadFile()) {
 				originFileName = uploadFiles.getOriginalFilename();
@@ -197,7 +199,7 @@ public class OnedayClassServiceImpl implements OnedayClassService {
 
 				UUID uuid = UUID.randomUUID();
 				newFileName = uuid.toString() + "_" + originFileName;
-//				log.info("첨부파일 정보 : " + originFileName+"/"+size+"/"+mimeType+"/"+newFileName);
+				//				log.info("첨부파일 정보 : {}", originFileName+"/"+size+"/"+mimeType+"/"+newFileName);
 				File saveFiles = new File(uploadFolder + "\\" + getFolder(), newFileName);
 				String url = "/images/" + getFolder().replace("\\", "/") + "/" + newFileName;
 				try {
@@ -209,7 +211,7 @@ public class OnedayClassServiceImpl implements OnedayClassService {
 					sprviseAtchmnflDto.setAtchmnflTy(mimeType);
 					sprviseAtchmnflDto.setAtchmnflNo(seq++);
 					sprviseAtchmnflDto.setUserId(proId);
-//					log.info("sprviseAtchmnflDto : " + sprviseAtchmnflDto);
+					//					log.info("sprviseAtchmnflDto : {}", sprviseAtchmnflDto);
 
 					result += this.onedayClassMapper.addSprviseAtchmnfl(sprviseAtchmnflDto);
 				} catch (IllegalStateException | IOException e) {
@@ -219,12 +221,12 @@ public class OnedayClassServiceImpl implements OnedayClassService {
 		} else {
 			int result2 = this.onedayClassMapper.deleteSprviseAtchmnfl(ondyclNo);
 		}//첨부파일추가 끝
-//		log.info("sql가기 직전 map : " + map);
+		//		log.info("sql가기 직전 map : {}", map);
 
 		result += this.onedayClassMapper.updateOndycl(map);
 		result += this.onedayClassMapper.updateOndyclSchdul(map);
 
-//		log.info("원데이클래스 result 수 : " + result);
+		//		log.info("원데이클래스 result 수 : {}", result);
 
 		return result;
 	}
@@ -235,7 +237,7 @@ public class OnedayClassServiceImpl implements OnedayClassService {
 		String contentType;
 		try {
 			contentType = Files.probeContentType(file.toPath());
-//			log.info("contentType : " + contentType);
+			//			log.info("contentType : {}", contentType);
 			//image/jpeg는 image로 시작함->true
 			return contentType.startsWith("image");
 		} catch (IOException e) {
@@ -259,13 +261,12 @@ public class OnedayClassServiceImpl implements OnedayClassService {
 		int resveNo = this.onedayClassMapper.getResveNo();
 
 		map.put("resveNo", resveNo);
-//		log.info("결제때 map : " + map);
+		//		log.info("결제때 map : {}", map);
 		int result = this.onedayClassMapper.buyClass(map); //구매 구매상세 결제 추가
 		result += this.onedayClassMapper.plusndyclResvpa(map); //클래스 참여인원 +1
 
 		return result;
 	}
-
 
 	@Override
 	public List<VOndyclProUsersDto> memberOndyclList(Map<String, Object> map) {
@@ -282,7 +283,7 @@ public class OnedayClassServiceImpl implements OnedayClassService {
 
 				boolean dayCheck = ondyclSchdulDe.before(today);
 				vOndyclProUsersDtoList.get(i).setDayCheck(dayCheck);
-//		        log.info("시간 비교 : " + todayStr + "/" + ondyclSchdulDe + " 불린 : " + dayCheck);
+				//		        log.info("시간 비교 : {}", todayStr + "/" + ondyclSchdulDe + " 불린 : {}", dayCheck);
 			}
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -299,7 +300,7 @@ public class OnedayClassServiceImpl implements OnedayClassService {
 	@Override
 	public List<VOndyclProUsersDto> proMyClassList(Map<String, Object> map) {
 
-//		log.info("impl map " + map);
+		//		log.info("impl map " + map);
 		List<VOndyclProUsersDto> vOndyclProUsersDtoList = this.onedayClassMapper.proMyClassList(map);
 
 		Date date = new Date();
@@ -313,7 +314,7 @@ public class OnedayClassServiceImpl implements OnedayClassService {
 
 				boolean dayCheck = ondyclSchdulDe.before(today);
 				vOndyclProUsersDtoList.get(i).setDayCheck(dayCheck);
-//		        log.info("시간 비교 : " + todayStr + "/" + ondyclSchdulDe + " 불린 : " + dayCheck);
+				//		        log.info("시간 비교 : {}", todayStr + "/" + ondyclSchdulDe + " 불린 : {}", dayCheck);
 			}
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -353,15 +354,15 @@ public class OnedayClassServiceImpl implements OnedayClassService {
 	@Override
 	public List<ReviewMberDto> reviewList(int ondyclNo) {
 		List<ReviewMberDto> reviewMberDtoList = this.onedayClassMapper.reviewList(ondyclNo);
-//		log.info("리뷰 리스트 : " + reviewMberDtoList);
+		//		log.info("리뷰 리스트 : {}", reviewMberDtoList);
 
 		for (ReviewMberDto reMbDto : reviewMberDtoList) {
 			String wrDate = reMbDto.getOndyclReWrDt();
 
 			wrDate.replace("-", ".");
-//			wrDate.replaceFirst("0", "2");
+			//			wrDate.replaceFirst("0", "2");
 			wrDate = "2" + wrDate.substring(1);
-//			log.info("날짜 형식 확인 : " + wrDate);
+			//			log.info("날짜 형식 확인 : {}", wrDate);
 
 			reMbDto.setOndyclReWrDt(wrDate);
 		}
@@ -413,12 +414,12 @@ public class OnedayClassServiceImpl implements OnedayClassService {
 
 	@Override
 	public int buyBundle(Map<String, Object> map) {
-		log.info("넘어온 맵 : " + map);
+		log.info("넘어온 맵 : {}", map);
 		int result = 0;
 		VOndyclSchdulDto vOndyclSchdulDto = new VOndyclSchdulDto();
 
-		List<Integer> arrClassNo = (List<Integer>) map.get("checkList");
-		log.info("배열 : " + arrClassNo + " / " + arrClassNo.size());
+		List<Integer> arrClassNo = (List<Integer>)map.get("checkList");
+		log.info("배열 : {}", arrClassNo + " / " + arrClassNo.size());
 
 		Map<String, Object> buyMap = new HashMap<String, Object>();
 		buyMap.put("mberId", map.get("mberId"));
@@ -429,14 +430,14 @@ public class OnedayClassServiceImpl implements OnedayClassService {
 			Object item = arrClassNo.get(i);
 			int ondyclNo;
 			if (item instanceof String) {
-				ondyclNo = Integer.parseInt((String) item);
+				ondyclNo = Integer.parseInt((String)item);
 			} else if (item instanceof Integer) {
-				ondyclNo = (Integer) item;
+				ondyclNo = (Integer)item;
 			} else {
 				// 예외 처리 또는 로그를 남김
 				continue; // 또는 적절한 오류 처리
 			}
-			log.info("각 넘버 : " + arrClassNo.get(i));
+			log.info("각 넘버 : {}", arrClassNo.get(i));
 			vOndyclSchdulDto = this.onedayClassMapper.priceCk(ondyclNo);
 
 			buyMap.put("ondyclNo", ondyclNo);
@@ -444,7 +445,7 @@ public class OnedayClassServiceImpl implements OnedayClassService {
 			buyMap.put("resveTpprice", vOndyclSchdulDto.getOndyclPc());
 			buyMap.put("ondyclSchdulNo", vOndyclSchdulDto.getOndyclSchdulNo());
 
-			log.info("결제처리 buyMap : " + buyMap);
+			log.info("결제처리 buyMap : {}", buyMap);
 			result += this.onedayClassMapper.buyClass(buyMap);
 			result += this.onedayClassMapper.plusndyclResvpa(buyMap);
 

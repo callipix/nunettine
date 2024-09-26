@@ -35,7 +35,7 @@ public class DeclController {
 		
 		map.put("currentPage", currentPage);
 		List<SntncDeclDto> lbrbbsList = this.declService.decllbrSelect(map);
-        log.info("lbrbbs-> lbrbbsList in userdecl : {}", lbrbbsList);
+        log.info("lbrbbs -> lbrbbsList in userdecl : {}", lbrbbsList);
 		model.addAttribute("lbrbbsList",lbrbbsList);
 		
 		return "decl/userdecl";
@@ -47,7 +47,7 @@ public class DeclController {
 		
 		map.put("currentPage", currentPage);
 		List<SntncDeclDto> lbrbbsList = this.declService.decllbrSelect(map);
-		log.info("lbrbbs-> lbrbbsList in lbrbbs : {} ", lbrbbsList);
+		log.info("lbrbbs -> lbrbbsList in lbrbbs : {} ", lbrbbsList);
 		model.addAttribute("lbrbbsList",lbrbbsList);
 		
 		return "decl/lbrbbs";
@@ -58,7 +58,7 @@ public class DeclController {
 	public List<SntncDeclDto> ajaxList(Map<String,Object> map) {
 		
 		List<SntncDeclDto> lbrbbsList = this.declService.decllbrSelect(map);
-		log.info("lbrbbs-> lbrbbsList : {} " , lbrbbsList);
+		log.info("lbrbbs -> lbrbbsList : {} " , lbrbbsList);
 		
 		return lbrbbsList;
 	}
@@ -66,10 +66,10 @@ public class DeclController {
 	@ResponseBody
 	@PostMapping("/selectList")
 	public LbrtyBbscttDto2 selectList(@RequestBody SntncDeclDto sntncDeclDto) {
-		log.info("selectList-> sntncDeclVO : {}" , sntncDeclDto);
+		log.info("selectList -> sntncDeclVO : {}" , sntncDeclDto);
 		
 		LbrtyBbscttDto2 selectVo = this.declService.lbrtyBbscttVo(sntncDeclDto);
-		log.info("selectList-> selectList : {}" , selectVo);
+		log.info("selectList -> selectList : {}" , selectVo);
 		
 		return selectVo;
 	}
@@ -77,10 +77,10 @@ public class DeclController {
 	@ResponseBody
 	@PostMapping("/declResnList")
 	public List<SntncDeclDto> declResnList(@RequestBody SntncDeclDto sntncDeclDto) {
-		log.info("declResnList-> sntncDeclVO : {}" , sntncDeclDto);
+		log.info("declResnList -> sntncDeclVO : {}" , sntncDeclDto);
 		
 		List<SntncDeclDto> declResnList = this.declService.declResnList(sntncDeclDto);
-		log.info("declResnList-> declResnList : {}" , declResnList);
+		log.info("declResnList -> declResnList : {}" , declResnList);
 		
 		return declResnList;
 	}
@@ -88,11 +88,11 @@ public class DeclController {
 	@ResponseBody
 	@GetMapping("/declSet")
 	public int declSet(int lbrtyBbscttNo) {
-		log.info("declSet-> lbrtyBbscttNo : {}" , lbrtyBbscttNo);
+		log.info("declSet -> lbrtyBbscttNo : {}" , lbrtyBbscttNo);
 		
 		int result = 0;
 		result = this.declService.declSet(lbrtyBbscttNo);
-		log.info("declSet-> result : {}" , result);
+		log.info("declSet -> result : {}" , result);
 		
 		return result;
 	}
@@ -102,7 +102,7 @@ public class DeclController {
 	public List<UsersDto> userList() {
 		
 		List<UsersDto> userList = this.declService.userList();
-		log.info("userIist-> userList : {}" , userList);
+		log.info("userIist -> userList : {}" , userList);
 		
 		return userList;
 	}
@@ -116,7 +116,7 @@ public class DeclController {
 		if(count==0) {
 			return 0;
 		}
-		log.info("getDeclCount-> count : {}" , count);
+		log.info("getDeclCount -> count : {}" , count);
 		return count;
 	}
 	
@@ -125,7 +125,7 @@ public class DeclController {
 	public List<UserDeclDto> userDeclList(String userId) {
 		log.info("userId : {}" , userId);
 		List<UserDeclDto> userDeclList = this.declService.userDeclList(userId);
-		log.info("userDeclList-> userDeclList : {}" , userDeclList);
+		log.info("userDeclList -> userDeclList : {}" , userDeclList);
 
 		return userDeclList;
 	}
@@ -136,7 +136,7 @@ public class DeclController {
 		log.info("userDeclSet -> map : {}" , map);
 		int result = 0;
 		result = this.declService.userDeclSet(map);
-		log.info("userDeclSet-> result : {}" , result);
+		log.info("userDeclSet -> result : {}" , result);
 		
 		return result;
 	}
@@ -146,7 +146,7 @@ public class DeclController {
 		log.info("declHistoryList -> userId : {}" , userId);
 		List<PunshDto> hisoryList = null;
 		hisoryList = this.declService.declHistoryList(userId);
-		log.info("declHistoryList-> hisoryList : {}" , hisoryList);
+		log.info("declHistoryList -> hisoryList : {}" , hisoryList);
 		
 		return hisoryList;
 	}

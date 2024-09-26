@@ -6,11 +6,10 @@ import kr.or.ddit.dto.DongChartDto3;
 
 public interface ManageMapper {
 
-	public DongChartDto test();
+	DongChartDto test();
 
-	public DongChartDto2 test2();
+	DongChartDto2 test2();
 
-	public DongChartDto3 test3();
-
+	DongChartDto3 test3();
 
 }

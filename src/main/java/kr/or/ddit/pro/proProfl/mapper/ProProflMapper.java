@@ -4,66 +4,57 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.dto.*;
+
 import org.apache.ibatis.annotations.Param;
 
 import kr.or.ddit.dto.BcityDto;
 
-
 public interface ProProflMapper {
 
-	
-	public List<BcityDto> list(Map<String, Object> map);
-	
-	public List<VCityDto> getBrtcList(String bcityNm);
+	List<BcityDto> list(Map<String, Object> map);
 
-	public int createPost(ProProflDto proProflDto);
+	List<VCityDto> getBrtcList(String bcityNm);
 
-	public String bcCode(String bcityNm);
+	int createPost(ProProflDto proProflDto);
 
-	public String btCode(@Param("bcityNm")String bcityNm,@Param("brtcNm")String brtcNm);
+	String bcCode(String bcityNm);
 
-	public ProProflDto detail(String proId);
+	String btCode(@Param("bcityNm") String bcityNm, @Param("brtcNm") String brtcNm);
 
-	public VProUsersDto getProInfo(String proId);
+	ProProflDto detail(String proId);
 
-	public ProProflDto getProId(String sessionId);
+	VProUsersDto getProInfo(String proId);
 
-	public List<VPrtfolioDto> prtTumb(String proId);
+	ProProflDto getProId(String sessionId);
 
-	public List<SprviseAtchmnflDto> portfolioPicture(String sprviseAtchmnflNo);
+	List<VPrtfolioDto> prtTumb(String proId);
 
-	public int modify(ProProflDto proProflDto);
+	List<SprviseAtchmnflDto> portfolioPicture(String sprviseAtchmnflNo);
 
-	public String getBcityNm(String bcityCode);
+	int modify(ProProflDto proProflDto);
 
-	public String getBrtcNm(String brtcCode);
+	String getBcityNm(String bcityCode);
 
-	public String getBunryu(String spcltyRealmCode);
+	String getBrtcNm(String brtcCode);
 
-	public int getSrvcCount(String proId);
+	String getBunryu(String spcltyRealmCode);
 
-	public int getRevCount(String proId);
-	
-	public int getBkmkCount(String proId);
-	
-	public List<ReviewDto> getReview(Map<String, Object> map);
-	public int getRevCnt2(Map<String, Object> map);
-	
-	
+	int getSrvcCount(String proId);
+
+	int getRevCount(String proId);
+
+	int getBkmkCount(String proId);
+
+	List<ReviewDto> getReview(Map<String, Object> map);
+
+	int getRevCnt2(Map<String, Object> map);
+
 	//동균 신고로 인해 추가
-	public List<CommonCdDetailDto> declComCdDeSelect();
+	List<CommonCdDetailDto> declComCdDeSelect();
 
-	public int declInsert(UserDeclDto userDeclDto);
+	int declInsert(UserDeclDto userDeclDto);
 
-	public int declUpdate(UserDeclDto userDeclDto);
+	int declUpdate(UserDeclDto userDeclDto);
 	////동균 신고로 인해 추가 끝
-
-
-
-
-
-
-
-
 
 }

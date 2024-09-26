@@ -7,12 +7,12 @@ import kr.or.ddit.dto.DongChartDto3;
 public interface ManageService {
 	
 	//전문분야 통계
-	public DongChartDto test();
+	DongChartDto test();
 	
 	//서비스 요청 통계
-	public DongChartDto2 test2();
+	DongChartDto2 test2();
 
 	// 서비스요청 프로 수락 거절 현황
-	public DongChartDto3 test3();
+	DongChartDto3 test3();
 
 }
