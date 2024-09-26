@@ -158,11 +158,13 @@ public class ProStoryServiceImpl implements ProStoryService {
 	public int deleteStory(String userId, int storyNo) {
 		return this.proStoryMapper.deleteStory(userId, storyNo);
 	}
+
 	@Override
 	@Transactional
 	public int getStoryCount(int storyNo) {
 		return this.proStoryMapper.getStoryCount(storyNo);
 	}
+
 	@Override
 	@Transactional
 	public ProStoryBbscttDto updateGood(GoodPointDto goodPointDto) {

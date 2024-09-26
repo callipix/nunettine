@@ -8,40 +8,40 @@ import kr.or.ddit.dto.TdmtngDto;
 import kr.or.ddit.dto.TdmtngPrtcpntDto;
 
 
-public interface TodayMeetingService {
+ public interface TodayMeetingService {
 	
 	//모임 캘린더 조회
-	public List<TdmtngDto> findAll(String userId);
+	 List<TdmtngDto> findAll(String userId);
 	
 	//모임 캘린더 리스트 조회
-	public List<TdmtngDto> list(Map<String, Object> map);
+	 List<TdmtngDto> list(Map<String, Object> map);
 	
 	//모임 상세 조회
-	public TdmtngDto detail(int tdmtngNo);
+	 TdmtngDto detail(int tdmtngNo);
 
 	//모임 생성
-	public int create(TdmtngDto tdmtngDto);
+	 int create(TdmtngDto tdmtngDto);
 	
 	//모임 수정
-	public int update(TdmtngDto tdmtngDto);
+	 int update(TdmtngDto tdmtngDto);
 	
 	//모임 삭제
-	public int delete(int tdmtngNo);
+	 int delete(int tdmtngNo);
 
-	public TdmtngPrtcpntDto selectMyChat(TdmtngPrtcpntDto tdmtngPrtcpntDto);
+	 TdmtngPrtcpntDto selectMyChat(TdmtngPrtcpntDto tdmtngPrtcpntDto);
 	
-	public int getTotal(Map<String,Object> map);
+	 int getTotal(Map<String,Object> map);
 
-	public int joinChat(TdmtngPrtcpntDto tdmtngPrtcpntDto);
+	 int joinChat(TdmtngPrtcpntDto tdmtngPrtcpntDto);
 
-	public int chatMemCount(int tdmtngNo);
+	 int chatMemCount(int tdmtngNo);
 
-	public List<TdmtngPrtcpntDto> chatMemList(int tdmtngNo);
+	 List<TdmtngPrtcpntDto> chatMemList(int tdmtngNo);
 
-	public List<VChatRoom> myList(String userId);
+	 List<VChatRoom> myList(String userId);
 	
-	public VChatRoom join(int tdmtngNo , String userId);
+	 VChatRoom join(int tdmtngNo , String userId);
 
-	public int getTotalMsg(int tdmtngNo);
+	 int getTotalMsg(int tdmtngNo);
 
 }

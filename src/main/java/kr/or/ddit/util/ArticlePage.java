@@ -261,6 +261,4 @@ public class ArticlePage<T> {
 					+ ", startPage=" + startPage + ", endPage=" + endPage + ", keyword=" + keyword + ", url=" + url
 					+ ", content=" + content + ", pagingArea=" + pagingArea + "]";
 		}
-		
-		
 	}

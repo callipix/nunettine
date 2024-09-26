@@ -30,8 +30,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/chat")
 @RequiredArgsConstructor
+@RequestMapping("/chat")
 @SuppressWarnings({ "unchecked" , "unused"})
 public class ChatController {
 
@@ -134,7 +134,7 @@ public class ChatController {
 		    if (userInfo != null) { 					// userInfo가 null이 아닌 경우에만 추가
 		    	myList.getUserVO().addAll(userInfo);	// 가져온 사용자 정보를 myList에 추가
 		    }
-		    log.info("myList " + myList);
+		    log.info("myList {}",  myList);
 		}
 		myList.setUserId(userId(request));
 

@@ -8,11 +8,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface FileuploadService {
 
-	public int fileUpload(List<MultipartFile> uploadFiles, String addPath, String userId, int res);
+	int fileUpload(List<MultipartFile> uploadFiles, String addPath, String userId, int res);
 	
-	public List<SprviseAtchmnflDto> getsprviseAtchmnfl(int sprviseAtchmnflNo);
+	List<SprviseAtchmnflDto> getsprviseAtchmnfl(int sprviseAtchmnflNo);
 
-	public int updateFileupload(Map<String, Object> updateFileuploadMap);
+	int updateFileupload(Map<String, Object> updateFileuploadMap);
 
-	public int newFileUpload(List<MultipartFile> uploadFiles, String addPath, String userId, int res, String sprviseAtchmnflNo);
+	int newFileUpload(List<MultipartFile> uploadFiles, String addPath, String userId, int res, String sprviseAtchmnflNo);
 }

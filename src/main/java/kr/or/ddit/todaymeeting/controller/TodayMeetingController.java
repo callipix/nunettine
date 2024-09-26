@@ -31,12 +31,12 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/todayMeeting")
-@SuppressWarnings("unchecked")
 @RequiredArgsConstructor
+@SuppressWarnings("unchecked")
+@RequestMapping("/todayMeeting")
 public class TodayMeetingController {
 
-	private final TodayMeetingService todayMeetingSerive;
+	private final TodayMeetingService todayMeetingService;
 	private final MessageService messageService;
 
 	//세션값으로 아이디 가져오기
@@ -72,7 +72,7 @@ public class TodayMeetingController {
 
 		String userId = userId(request);
 
-		log.info("main : " + userId);
+		log.info("main : {}", userId);
 
 		model.addAttribute("userId", userId);
 
@@ -91,32 +91,32 @@ public class TodayMeetingController {
 		log.info("map : " + map);
 
 		int size = 10;
-		int total = this.todayMeetingSerive.getTotal(map);
+		int total = this.todayMeetingService.getTotal(map);
 
-		log.info("listAjax->total : " + total);
+		log.info("listAjax->total : {}", total);
 
 		map.put("total", total);
 
-		log.info("map : " + map);
+		log.info("map : {}", map);
 
-		List<TdmtngDto> tdmtngDtoList = this.todayMeetingSerive.list(map);
+		List<TdmtngDto> tdmtngDtoList = this.todayMeetingService.list(map);
 
-		log.info("listAjax->tdmtngVOList : " + tdmtngDtoList);
+		log.info("listAjax->tdmtngVOList : {}", tdmtngDtoList);
 
 		String currentPage = map.get("currentPage").toString();
 
 		log.info(currentPage);
 
 		String keyword = map.get("keyword").toString();
-		log.info("listAjax->keyword : " + keyword);
+		log.info("listAjax->keyword : {}", keyword);
 
 		String selectColumn = map.get("selectColumn").toString();
-		log.info("listAjax->selectColumn : " + selectColumn);
+		log.info("listAjax->selectColumn : {}", selectColumn);
 
 		ArticlePage3<TdmtngDto> data = new ArticlePage3<TdmtngDto>(total,
 				Integer.parseInt(currentPage), size, tdmtngDtoList, keyword, selectColumn);
 
-		log.info("listAjax->data : " + data);
+		log.info("listAjax->data : {}", data);
 
 		return data;
 	}
@@ -133,9 +133,9 @@ public class TodayMeetingController {
 		JSONArray jsonArr = new JSONArray();
 
 		HashMap<String, Object> hash = new HashMap<>();
-		List<TdmtngDto> list = todayMeetingSerive.findAll(userId);
+		List<TdmtngDto> list = todayMeetingService.findAll(userId);
 
-		log.info("calList : " + list);
+		log.info("calList : {}", list);
 
 		for(TdmtngDto tdmtngcal : list) {
 			hash.put("id", tdmtngcal.getTdmtngNo());
@@ -145,24 +145,24 @@ public class TodayMeetingController {
 			jsonObj = new JSONObject(hash);
 			jsonArr.add(jsonObj);
 		}
-		log.info("jsonArrCheck:{}",jsonArr);
+		log.info("jsonArrCheck : {}", jsonArr);
 		return jsonArr;
 	}
 
 	@GetMapping("/detail")
 	public String detail(HttpServletRequest request, int tdmtngNo
 			, Model model) {
-		log.info("detail -> tdmtngNo : " + tdmtngNo);
+		log.info("detail -> tdmtngNo : {}", tdmtngNo);
 
 		String sessionId = userId(request);
 
-		TdmtngDto tdmtngDto = todayMeetingSerive.detail(tdmtngNo);
+		TdmtngDto tdmtngDto = todayMeetingService.detail(tdmtngNo);
 
-		log.info("detail -> tdmtngVO : " + tdmtngDto);
+		log.info("detail -> tdmtngVO : {}", tdmtngDto);
 
-		int count = this.todayMeetingSerive.chatMemCount(tdmtngNo);
+		int count = this.todayMeetingService.chatMemCount(tdmtngNo);
 
-		log.info("chatMemCount -> count : " + count);
+		log.info("chatMemCount -> count : {}",  count);
 
 		model.addAttribute("sessionId", sessionId);
 		model.addAttribute("tdmtngVO", tdmtngDto);
@@ -179,12 +179,12 @@ public class TodayMeetingController {
 
 		tdmtngDto.setUserId(userId);
 
-		log.info("create -> tdmtngVO : " + tdmtngDto);
+		log.info("create -> tdmtngVO : {}",  tdmtngDto);
 
-		int result = this.todayMeetingSerive.create(tdmtngDto);
+		int result = this.todayMeetingService.create(tdmtngDto);
 
-		log.info("tdmtngVO -> result : " + result);
-		log.info("tdmtngVO -> result : " + tdmtngDto.getTdmtngNo());
+		log.info("tdmtngVO -> result : {}",  result);
+		log.info("tdmtngVO -> result : {}",  tdmtngDto.getTdmtngNo());
 
 		return tdmtngDto.getTdmtngNo();
 	}
@@ -192,11 +192,11 @@ public class TodayMeetingController {
 
 	@PostMapping("/update")
 	public String update(TdmtngDto tdmtngDto) {
-		log.info("update -> tdmtngVO : " + tdmtngDto);
+		log.info("update -> tdmtngVO : {}",  tdmtngDto);
 
-		int result = this.todayMeetingSerive.update(tdmtngDto);
+		int result = this.todayMeetingService.update(tdmtngDto);
 
-		log.info("tdmtngVO -> result : " + result);
+		log.info("tdmtngVO -> result from update : {}",  result);
 
 		//redirect : 새로운 URL요청
 		return "redirect:/todayMeeting/detail?tdmtngNo="+ tdmtngDto.getTdmtngNo();
@@ -204,11 +204,11 @@ public class TodayMeetingController {
 
 	@GetMapping("/delete")
 	public String delete(int tdmtngNo) {
-		log.info("delete -> tdmtngno : " + tdmtngNo);
+		log.info("delete -> tdmtngno : {}", tdmtngNo);
 
-		int result = this.todayMeetingSerive.delete(tdmtngNo);
+		int result = this.todayMeetingService.delete(tdmtngNo);
 
-		log.info("delete -> result : " + result);
+		log.info("delete -> result : {}", result);
 
 		return "todayMeeting/index";
 	}
@@ -219,11 +219,11 @@ public class TodayMeetingController {
 	public TdmtngPrtcpntDto selectMyChat (@RequestBody TdmtngPrtcpntDto tdmtngPrtcpntDto) {
 
 
-		log.info("selectMyChat -> tdmtngPrtcpntVO : " + tdmtngPrtcpntDto);
+		log.info("selectMyChat -> tdmtngPrtcpntVO1 : {}", tdmtngPrtcpntDto);
 
-		tdmtngPrtcpntDto = this.todayMeetingSerive.selectMyChat(tdmtngPrtcpntDto);
+		tdmtngPrtcpntDto = this.todayMeetingService.selectMyChat(tdmtngPrtcpntDto);
 
-		log.info("selectMyChat -> tdmtngPrtcpntVO : " + tdmtngPrtcpntDto);
+		log.info("selectMyChat -> tdmtngPrtcpntVO2 : {}", tdmtngPrtcpntDto);
 
 		return tdmtngPrtcpntDto;
 	}
@@ -234,18 +234,18 @@ public class TodayMeetingController {
 	public int joinChat(HttpServletRequest request, int tdmtngNo, TdmtngPrtcpntDto tdmtngPrtcpntDto) {
 		//Unknown return value type: java.lang.Integer 에러 : @ResponseBody를 안 해줘서..
 
-		log.info("joinChat -> tdmtngNo : " + tdmtngNo);
+		log.info("joinChat -> tdmtngNo : {}", tdmtngNo);
 
 		String userId = userId(request);
 
 		tdmtngPrtcpntDto.setUserId(userId);
 		tdmtngPrtcpntDto.setTdmtngNo(tdmtngNo);
 
-		log.info("joinChat -> tdmtngPrtcpntVO : " + tdmtngPrtcpntDto);
+		log.info("joinChat -> tdmtngPrtcpntVO : {}",  tdmtngPrtcpntDto);
 
-		int result = this.todayMeetingSerive.joinChat(tdmtngPrtcpntDto);
+		int result = this.todayMeetingService.joinChat(tdmtngPrtcpntDto);
 
-		log.info("joinChat -> result : " + result);
+		log.info("joinChat -> result : {}",  result);
 
 		return result;
 	}
@@ -255,11 +255,11 @@ public class TodayMeetingController {
 	@PostMapping("/chatMemList")
 	public List<TdmtngPrtcpntDto> chatMemList(int tdmtngNo) {
 
-		log.info("chatMemList -> tdmtngNo : " + tdmtngNo);
+		log.info("chatMemList -> tdmtngNo : {}",  tdmtngNo);
 
-		List<TdmtngPrtcpntDto> chatMemList = this.todayMeetingSerive.chatMemList(tdmtngNo);
+		List<TdmtngPrtcpntDto> chatMemList = this.todayMeetingService.chatMemList(tdmtngNo);
 
-		log.info("chatMemList -> chatMemList : " + chatMemList);
+		log.info("chatMemList -> chatMemList : {}",  chatMemList);
 
 		return chatMemList;
 	}
@@ -268,11 +268,11 @@ public class TodayMeetingController {
 	@PostMapping("/join")
 	public VChatRoom join(@RequestParam("tdmtngNo") int tdmtngNo , HttpServletRequest request , Model model) {
 
-		log.info("detail -> tdmtngNo : " + tdmtngNo);
+		log.info("detail -> tdmtngNo from join : {}",  tdmtngNo);
 
-		VChatRoom joinRoom = this.todayMeetingSerive.join(tdmtngNo , userId(request));
+		VChatRoom joinRoom = this.todayMeetingService.join(tdmtngNo , userId(request));
 
-		List<TdmtngPrtcpntDto> chatMemList = this.todayMeetingSerive.chatMemList(tdmtngNo);
+		List<TdmtngPrtcpntDto> chatMemList = this.todayMeetingService.chatMemList(tdmtngNo);
 
 		for(TdmtngPrtcpntDto test : chatMemList) {
 
@@ -313,7 +313,7 @@ public class TodayMeetingController {
 		}
 
 		model.addAttribute("joinRoom", joinRoom);
-		log.info("detail After -> joinRoom : " + joinRoom);
+		log.info("detail After -> joinRoom : {}",  joinRoom);
 		return joinRoom;
 	}
 
@@ -321,7 +321,7 @@ public class TodayMeetingController {
 	@PostMapping("/myList")
 	public ResponseEntity<List<VChatRoom>> myList(HttpServletRequest request) {
 
-		List<VChatRoom> myList = this.todayMeetingSerive.myList(userId(request));
+		List<VChatRoom> myList = this.todayMeetingService.myList(userId(request));
 
 		log.info("내방 리스트 : {}", myList);
 
@@ -333,11 +333,11 @@ public class TodayMeetingController {
 
 		Map<String, Object> roomInfo = new HashMap<>();
 
-		VChatRoom joinRoom = this.todayMeetingSerive.join(tdmtngNo , userId(request));
+		VChatRoom joinRoom = this.todayMeetingService.join(tdmtngNo , userId(request));
 
 		List<TdmtngChSpMshgDto> msgList = this.messageService.roomMsgList(tdmtngNo);
 
-		List<TdmtngPrtcpntDto> chatMemList = this.todayMeetingSerive.chatMemList(tdmtngNo);
+		List<TdmtngPrtcpntDto> chatMemList = this.todayMeetingService.chatMemList(tdmtngNo);
 
 		for(TdmtngChSpMshgDto aa : msgList) {
 

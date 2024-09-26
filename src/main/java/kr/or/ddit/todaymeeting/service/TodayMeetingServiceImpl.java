@@ -24,8 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class TodayMeetingServiceImpl implements TodayMeetingService {
 
-	private final String uploadFolder;
 	private final TodayMeetingMapper todayMeetingMapper;
+	private final String uploadFolder;
 
 	//모임 캘린더 조회
 	@Override
@@ -85,8 +85,6 @@ public class TodayMeetingServiceImpl implements TodayMeetingService {
 	public int getTotal(Map<String,Object> map) {
 		return this.todayMeetingMapper.getTotal(map);
 	}
-	
-
 
 	@Override
 	public int joinChat(TdmtngPrtcpntDto tdmtngPrtcpntDto) {

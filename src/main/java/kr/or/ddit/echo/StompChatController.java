@@ -34,7 +34,7 @@ public class StompChatController {
 
 	@ResponseBody
 	@PostMapping("/chat/messageList")
-	public ModelMap messageListTest(@RequestParam("roomNo") int roomNo) throws JsonProcessingException {
+	public ModelMap messageListTest(@RequestParam("roomNo") int roomNo) {
 
 		ModelMap modelMap = new ModelMap();
 
