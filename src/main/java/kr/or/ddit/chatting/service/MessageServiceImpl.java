@@ -32,22 +32,12 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public Map<Integer, List<MessageDto>> msgPaging(int roomNo) {
-		return null;
-	}
-
-	@Override
 	public List<TdmtngChSpMshgDto> roomMsgList(int tdmtngNo) {
 
 		List<TdmtngChSpMshgDto> roomMsgList = this.messageMapper.roomMsgList(tdmtngNo);
 		log.info("TdmtngChSpMshgVO 채팅방번호 : {}", tdmtngNo);
 		log.info("TdmtngChSpMshgVO list : {}", roomMsgList);
 		return roomMsgList;
-	}
-
-	@Override
-	public int getMsgCount(int roomNo) {
-		return this.messageMapper.getMsgCount(roomNo);
 	}
 
 }

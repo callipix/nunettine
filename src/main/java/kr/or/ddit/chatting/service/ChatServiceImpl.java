@@ -34,11 +34,6 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public int joinRoom(ChatRelayDto chatRelayDto) {
-		return this.chatMapper.joinRoom(chatRelayDto);
-	}
-
-	@Override
 	public List<ChatRelayDto> myRoomId(int roomNo) {
 		return this.chatMapper.myRoomId(roomNo);
 	}
@@ -54,23 +49,8 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public List<AllChatRoomViewDto> roomByRoomNo(int roomNo) {
-		return this.chatMapper.roomByRoomNo(roomNo);
-	}
-
-	@Override
 	public AllChatRoomViewDto roomByRoomNo2(int roomNo) {
 		return this.chatMapper.roomByRoomNo2(roomNo);
-	}
-
-	@Override
-	public AllChatRoomViewDto myRoomListTest(String userId, int roomNo) {
-		return this.chatMapper.myRoomListTest(userId, roomNo);
-	}
-
-	@Override
-	public int createRoom(ChatRoomDto chatRoomDto) {
-		return this.chatMapper.createRoom(chatRoomDto);
 	}
 
 }

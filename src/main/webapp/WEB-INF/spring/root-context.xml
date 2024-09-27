@@ -98,7 +98,7 @@
 		</property>
 	</bean>
 	
-	<!-- 트랜잭션 관리자의 빈을 정의 -->
+	<!-- 트랜잭션 관리자 빈을 정의 -->
    <bean id="transactionManager" 
       class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
       <property name="dataSource" ref="dataSource"></property>

@@ -28,14 +28,14 @@ public class EditorImgUpload {
 	private final String uploadDirectCk = "C:\\Users\\Home\\Desktop\\ChatTest\\workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp1\\wtpwebapps\\finalProject\\resources\\ckFolder";
 	private final String uploadFolder;
 
-	//ckeditor이미지 업로드 , data전송 -> ResponseBody 어노테이션 추가(객체화)
+	//ckeditor 이미지 업로드 , data 전송 -> ResponseBody 어노테이션 추가(객체화)
 	@ResponseBody
 	@Transactional
 	@PostMapping("/upload/uploadCk")
 	public Map<String, Object> uploads(MultipartHttpServletRequest request) throws IllegalStateException, IOException {
 
-		// request에 이미지 객체가 담져겨 있다. ckeditor 에서 파일을 보낼 때
-		// upload : [파일] 형식으로 해서 넘어오기 때문에 upload라는 키의 밸류를 받아서 uploadFile에 저장함 , 열기 누르는 순간
+		// request에 이미지 객체가 담겨져 있다. ckeditor 에서 파일을 보낼 때
+		// upload : [파일] 형식으로 해서 넘어오기 때문에 upload 라는 키의 밸류를 받아서 uploadFile에 저장함, 열기 누르는 순간
 		MultipartFile uploadFile = request.getFile("upload");
 		log.info("uploads -> uploadFile : {} ", uploadFile);
 
@@ -48,24 +48,24 @@ public class EditorImgUpload {
 
 		String newFileName = UUID.randomUUID() + ext;
 		log.info("newFileName : {}", newFileName);
-		// 이미지를 현재 경로와 연관된 파일에 저장하기 위해 현재 경로를 알아냄
+		// 이미지를 현재 경로와 연관된 파일에 저장 하기 위해 현재 경로를 알아냄
 		// String realPath = request.getServletContext().getRealPath("/");
 
 		String url = request.getRequestURL().toString();
-		log.info("uploads -> url 업로드전 : {} ", url);
+		log.info("uploads -> url 업로드 전 : {} ", url);
 
 		// http://localhost/
 		// http://192.168.93.73/
 
 		url = url.substring(0, url.indexOf("/", 7));
-		log.info("uploads -> url 업로드후: {}", url);
+		log.info("uploads -> url 업로드 후: {}", url);
 
 		// 업로드 폴더에 저장
 		// 물리적 저장 경로.../upload + "\\" + sadlfkjsafd.jpg
 
 		//	    String savePath = this.uploadFolderDirect + "\\" + newFileName; -> 임시 저장 경로
 		String savePath = this.uploadDirectCk + "\\" + newFileName;
-		log.info("uploads -> savePath(임시경로) : {} ", savePath);
+		log.info("uploads -> savePath(임시 경로) : {} ", savePath);
 
 		// 웹 경로
 		//	    String uploadPath = this.uploadFolder +"\\" + getFolder()+"\\" +newFileName;
@@ -96,7 +96,7 @@ public class EditorImgUpload {
 		try {
 			contentType = Files.probeContentType(file.toPath());
 			log.info("contentType : {} ", contentType);
-			//image/jpeg는 image로 시작함->true
+			// image/jpeg는 image로 시작함->true
 			return contentType.startsWith("image");
 		} catch (IOException e) {
 			e.printStackTrace();

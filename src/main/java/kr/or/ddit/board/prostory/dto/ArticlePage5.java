@@ -8,7 +8,7 @@ public class ArticlePage5<T> {
 		private int total;
 		// 현재 페이지 번호
 		private int currentPage;
-		// 전체 페이지수 
+		// 전체 페이지 수
 		private int totalPages;
 		// 블록의 시작 페이지 번호
 		private int startPage;
@@ -19,7 +19,7 @@ public class ArticlePage5<T> {
 		
 		//검색어
 		private String keyword = "";
-		//요청URL
+		//요청 URL
 		private String url = "";
 		//select 결과 데이터
 		private List<T> content;

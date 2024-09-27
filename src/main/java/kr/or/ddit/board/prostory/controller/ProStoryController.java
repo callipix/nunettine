@@ -2,7 +2,6 @@ package kr.or.ddit.board.prostory.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +39,7 @@ public class ProStoryController {
 
 	private final ProStoryService proStoryService;
 
-	/* 세션체크 아이디 가져오기 */
+	/* 세션 체크 아이디 가져오기 */
 	private String userId(HttpServletRequest request) {
 
 		Object proSession = request.getSession().getAttribute("proSession");
@@ -71,7 +70,7 @@ public class ProStoryController {
 	public String list(Model model) {
 
 		int total = proStoryService.getTotal();
-		List<ProStoryBbscttDto> list = new LinkedList<ProStoryBbscttDto>();
+		List<ProStoryBbscttDto> list;
 		if (this.proStoryService.storyList() == null) {
 			return "prostory/main";
 		}
@@ -100,11 +99,11 @@ public class ProStoryController {
 		log.info("데이터 체크 param           :: {}", param);
 		log.info("데이터 체크 type            :: {}", type);
 		log.info("데이터 체크 keyword         :: {}", keyword);
-		if (type == "") {
+		if (type.trim().equals("")) {
 			param.put("type", "제목");
 		}
 
-		if (param != null && type == "") {
+		if (param != null && type.trim().equals("")) {
 
 			log.info("String keyword : {}", keyword);
 			param.put("keyword", keyword);
@@ -143,7 +142,7 @@ public class ProStoryController {
 
 	/* 글쓰기 페이지 이동 */
 	@GetMapping("/write")
-	public String create(ProStoryBbscttDto proStoryBbscttDto) {
+	public String create() {
 
 		return "prostory/write";
 	}
@@ -217,7 +216,7 @@ public class ProStoryController {
 
 	}
 
-	/* 게시글 상세보기 + 조회수 증가 */
+	/* 게시글 상세 보기 + 조회수 증가 */
 	@GetMapping("/getStory")
 	public String getProStory(@RequestParam("storyNo") Integer storyNo
 		, HttpServletRequest request
@@ -265,7 +264,7 @@ public class ProStoryController {
 			response.addCookie(newCookie);
 		}
 		log.info("조회수 : {}", count);
-		log.info("프로이야기 데이터 확인 : {}", proStoryBbscttDto);
+		log.info("프로 이야기 데이터 확인 : {}", proStoryBbscttDto);
 
 		model.addAttribute("getStory", proStoryBbscttDto);
 		model.addAttribute("getStoryStr", getStoryStr);

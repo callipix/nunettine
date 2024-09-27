@@ -14,7 +14,7 @@ public interface ReviewBoardMapper {
 
 	List<SrvcRequstDto> listModal(String userId);
 
-	//로그인한 회원 리뷰 조회
+	//로그인 한 회원 리뷰 조회
 	List<AftusBbscttDto> listMyReview(String userId);
 
 	int create(AftusBbscttDto aftusBbscttDto);

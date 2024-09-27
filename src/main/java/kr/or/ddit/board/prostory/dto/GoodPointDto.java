@@ -7,8 +7,8 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @ToString
+@NoArgsConstructor
 public class GoodPointDto {
 
 	private int goodNo;						// good번호

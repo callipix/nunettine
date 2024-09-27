@@ -12,8 +12,6 @@ public interface MessageMapper {
 	
 	List<MessageDto> messageList(int roomNo);
 
-	List<MessageDto> msgPaging(int roomNo);
-	
 	String firstMsgDate(int msgNo);
 
 	List<TdmtngChSpMshgDto> roomMsgList(int tdmtngNo);

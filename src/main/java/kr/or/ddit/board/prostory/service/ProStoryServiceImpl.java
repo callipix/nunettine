@@ -48,22 +48,21 @@ public class ProStoryServiceImpl implements ProStoryService {
 		}
 
 		String uploadFileName = multipartFile.getOriginalFilename();
-		UUID uuid = UUID.randomUUID();
+		String uuid = UUID.randomUUID().toString();
 
-		uploadFileName = uuid.toString() + "_" + uploadFileName;
+		uploadFileName = uuid + "_" + uploadFileName;
 
 		File saveFile = new File(uploadPath, uploadFileName);
 		log.info("uploadPath : {}", uploadPath);
 		log.info("uploadFileName : {}", uploadFileName);
 
 		try {
-			multipartFile.transferTo(saveFile); // 썸네일 처리 -> 이미지만 가능하기때문에 이미지인지 사전체크
+			multipartFile.transferTo(saveFile); // 썸네일 처리 -> 이미지만 가능하기 때문에 이미지 인지 사전체크
 			if (checkImageType(saveFile)) {    // 이미지가 맞다면
 				FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + uploadFileName));
 				Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 300, 300);
 				thumbnail.close();
 			}
-			;
 			proStoryBbscttDto.setProStoryBbscttThumbPhoto(
 				"/" + getFolder().replace("\\", "/") + "/" + "s_" + uploadFileName);
 			result = this.proStoryMapper.insert(proStoryBbscttDto);
@@ -101,13 +100,13 @@ public class ProStoryServiceImpl implements ProStoryService {
 
 		int getTotal = this.proStoryMapper.getTotal();
 
-		log.info("데이터 잘 오나확인  ServiceImpl : {}", searchParam);
+		log.info("데이터 잘오나 확인  ServiceImpl : {}", searchParam);
 
 		searchParam.put("totalPages", getTotal);
 
 		List<ProStoryBbscttDto> getStory = this.proStoryMapper.getPage(searchParam);
 
-		log.info("최종값??!: {} ", searchParam);
+		log.info("최종값 : {} ", searchParam);
 
 		return getStory;
 	}
@@ -120,7 +119,7 @@ public class ProStoryServiceImpl implements ProStoryService {
 		int result = 0;
 		MultipartFile multipartFile = proStoryBbscttDto.getUploadFile();
 
-		log.info("proStoryBbscttVO for updateStory : {}", proStoryBbscttDto);
+		log.info("proStoryBbscttDto for updateStory : {}", proStoryBbscttDto);
 		// 스프링 파일 객체
 
 		// 연월일 폴더 생성 설계 ... \\upload \\ 2024 \\ 01 \\ 30
@@ -132,10 +131,10 @@ public class ProStoryServiceImpl implements ProStoryService {
 		if (multipartFile != null && !multipartFile.isEmpty()) {
 			String uploadFileName = multipartFile.getOriginalFilename();
 
-			log.info("fileName ::: {}", uploadFileName);
+			log.info("fileName from updateStory {}", uploadFileName);
 			// 파일명 중복 방지 -> 같은 날 같은 이미지 업로드 시 파일명 중복 방지 시작----------------
-			UUID uuid = UUID.randomUUID();
-			uploadFileName = uuid.toString() + "_" + uploadFileName;
+			String uuid = UUID.randomUUID().toString();
+			uploadFileName = uuid + "_" + uploadFileName;
 			File saveFile = new File(uploadPath, uploadFileName);
 			log.info("uploadPath for updateStory: {}", uploadPath);
 			log.info("uploadFileName for updateStory : {}", uploadFileName);
@@ -205,7 +204,7 @@ public class ProStoryServiceImpl implements ProStoryService {
 
 		int result = this.proStoryMapper.goodRemove(goodPointDto);
 
-		log.info("하트삭제 성공 : {}", result);
+		log.info("하트 삭제 성공 : {}", result);
 
 		if (result > 0) {
 			psbcttVO = this.proStoryMapper.goodCount(psbcttVO);
@@ -216,12 +215,12 @@ public class ProStoryServiceImpl implements ProStoryService {
 
 	public boolean checkImageType(File file) {
 		// MIME(Multipurpose Internet Mail Extensions) : 문서, 파일 또는 바이트 집합의 성격과 형식. 표준화
-		// MIME 타입 알아냄. .jpeg / .jpg의 MIME타입 : image/jpeg
+		// MIME 타입 알아냄. .jpeg / .jpg의 MIME 타입 : image/jpeg
 		String contentType;
 		try {
 			contentType = Files.probeContentType(file.toPath());
 			log.info("contentType : {}", contentType);
-			// image/jpeg는 image로 시작함->true
+			// image/jpeg → image로 시작함 → true
 			return contentType.startsWith("image");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -232,7 +231,7 @@ public class ProStoryServiceImpl implements ProStoryService {
 
 	public String getFolder() {
 		String fmtNow = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		log.info("fmtNow ::: {}", fmtNow);
+		log.info("fmtNow : {}", fmtNow);
 		return fmtNow.replace("-", File.separator);
 	}
 

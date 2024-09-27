@@ -16,7 +16,7 @@ public interface ReviewBoardService {
 	//후기 작성 가능한 완료 서비스 조회
 	List<SrvcRequstDto> listModal(String userId);
 
-	//로그인한 회원 리뷰 조회
+	//로그인 한 회원 리뷰 조회
 	List<AftusBbscttDto> listMyReview(String userId);
 
 	//후기 작성

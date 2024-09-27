@@ -38,7 +38,7 @@ public class ReviewBoardServiceImpl implements ReviewBoardService {
 		return this.reviewBoardMapper.listModal(userId);
 	}
 
-	//로그인한 회원 리뷰 조회
+	//로그인 한 회원 리뷰 조회
 	@Override
 	public List<AftusBbscttDto> listMyReview(String userId) {
 		return this.reviewBoardMapper.listMyReview(userId);
@@ -81,11 +81,11 @@ public class ReviewBoardServiceImpl implements ReviewBoardService {
 
 			//원본 파일명
 			String originalFilename = "";
-			//저장될파일명
+			//저장될 파일명
 			String uploadFileName = "";
 			//파일 크기
 			long size = 0;
-			//MIME타입
+			//MIME 타입
 			String mime = "";
 			//sql 성공한 행의 수
 
@@ -96,7 +96,7 @@ public class ReviewBoardServiceImpl implements ReviewBoardService {
 			uploadFile = aftusBbscttDto.getUploadFile();
 
 			SprviseAtchmnflDto sprviseAtchmnflDto = new SprviseAtchmnflDto();
-			log.info("AtchmnflNo : " + sprviseAtchmnflDto.getAtchmnflNo());
+			log.info("AtchmnflNo : {}", sprviseAtchmnflDto.getAtchmnflNo());
 
 			for (MultipartFile multipartFile : uploadFile) {
 				log.info("----------------------------------------------------------------------");
@@ -108,8 +108,8 @@ public class ReviewBoardServiceImpl implements ReviewBoardService {
 				size = multipartFile.getSize();
 				mime = multipartFile.getContentType();
 
-				UUID uuid = UUID.randomUUID();
-				uploadFileName = uuid.toString() + "_" + originalFilename;
+				String uuid = UUID.randomUUID().toString();
+				uploadFileName = uuid + "_" + originalFilename;
 
 				//File 객체 설계 (어디로 복사할 것인지? 경로)
 				//			File saveFile = new File(uploadDirect + "\\" + getFolder(), uploadFileName);
@@ -120,7 +120,7 @@ public class ReviewBoardServiceImpl implements ReviewBoardService {
 
 					multipartFile.transferTo(saveFile);
 
-					//ATTACH테이블에 insert
+					// ATTACH 테이블에 insert
 					//				sprviseAtchmnflVO.setAtchmnflNo(atchmnflNo++);
 
 					sprviseAtchmnflDto.setAtchmnflCours("/images/" + getFolder().replace("\\", "/") + "/"
@@ -132,12 +132,12 @@ public class ReviewBoardServiceImpl implements ReviewBoardService {
 					sprviseAtchmnflDto.setUserId(userId);
 
 					if (aftusBbscttDto.getSprviseAtchmnflNo() == 0) {
-						//기존에 첨부파일이 없다면 insert
-						log.info("인서트?");
+						//기존에 첨부 파일이 없다면 insert
+						log.info("insert?");
 						result += this.reviewBoardMapper.insertFile(sprviseAtchmnflDto);
 					} else {
-						//기존 첨부파일이 있다면 update
-						log.info("업데이트?");
+						//기존 첨부 파일이 있다면 update
+						log.info("update?");
 						result += this.reviewBoardMapper.updateFile(sprviseAtchmnflDto);
 					}
 				} catch (IllegalStateException | IOException e) {

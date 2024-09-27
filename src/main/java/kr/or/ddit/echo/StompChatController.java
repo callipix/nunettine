@@ -50,7 +50,7 @@ public class StompChatController {
 		// 수신 영역
 		message.setMessageType(MessageType.ENTER.toString());
 
-		String str = "<div id='msgArea'>" + message.getUserNcnm() + "님이 접속하였습니다 </div>";
+		String str = "<div id='msgArea'>" + message.getUserNcnm() + "님이 접속 하였습니다 </div>";
 
 		message.setTdmtngChSpMsgCn(str);
 

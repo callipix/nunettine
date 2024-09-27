@@ -11,8 +11,6 @@ public interface ChatMapper {
 
 	List<ChatRoomDto> roomList();
 
-//	List<ChatRoomVO> myRoomList(String userId);
-
 	List<AllChatRoomViewDto> myRoomList(String userId);
 
 	int joinCheck(ChatRelayDto chatRelayDto);
