@@ -4,8 +4,8 @@ import lombok.*;
 
 @Setter
 @Getter
-@AllArgsConstructor
 @ToString
+@AllArgsConstructor
 public class FaqDto {
 	private int rnum;
 	private int faqNo;

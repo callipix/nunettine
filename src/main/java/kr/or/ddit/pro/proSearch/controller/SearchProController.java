@@ -46,7 +46,6 @@ public class SearchProController {
 	@ResponseBody
 	public List<AdresDto> aroundPro2() {
 		List<AdresDto> aroundInfo = this.searchProService.aroundPro();
-		//		log.info("aroundPro -> aroundProList2 : {}", aroundInfo);
 		return aroundInfo;
 	}
 
@@ -54,7 +53,6 @@ public class SearchProController {
 	@ResponseBody
 	public String spcltyCode(@RequestParam("spcltyRealmCode") String spcltyRealmCode) {
 		String proBun = this.proProflService.getBunryu(spcltyRealmCode);
-		//		  log.info("spcltyCode -> proBun : {}", proBun);
 		return proBun;
 	}
 
@@ -102,7 +100,7 @@ public class SearchProController {
 	@GetMapping(value = "/spcltyNm", produces = "text/plain; charset=utf-8")
 	public String spcltyNm(@RequestParam("code") String code, Model model) {
 		String keyword = this.searchProService.spcltyNm(code);
-		log.info("spcltyNm  -> keyword : {}", keyword);
+		log.info("spcltyNm -> keyword : {}", keyword);
 
 		return keyword;
 	}
@@ -110,8 +108,7 @@ public class SearchProController {
 	//검색 목록 페이징
 	@ResponseBody
 	@PostMapping("/searchPage")
-	public ArticlePage3<ProDto> searchPage(Model model, @RequestBody(required = false) Map<String, Object> map,
-		HttpServletRequest request) {
+	public ArticlePage3<ProDto> searchPage(@RequestBody(required = false) Map<String, Object> map) {
 		int size = 5;
 		map.put("size", size);
 

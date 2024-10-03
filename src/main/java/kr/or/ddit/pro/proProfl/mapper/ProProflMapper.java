@@ -5,10 +5,12 @@ import java.util.Map;
 
 import kr.or.ddit.dto.*;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import kr.or.ddit.dto.BcityDto;
 
+@Mapper
 public interface ProProflMapper {
 
 	List<BcityDto> list(Map<String, Object> map);

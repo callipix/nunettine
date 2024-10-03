@@ -76,20 +76,20 @@ public class LbrtyBbscttController {
 		// List<LbrtyBbscttVO2> list = this.lbrtyBbscttService.lbrtyBbscttList();
 		// log.info("list : {}", list);
 		log.info("detail : {}", detail);
-		log.info("detail-> sprviseAtchmnflNo: " + detail.getSprviseAtchmnflNo());
+		log.info("detail -> sprviseAtchmnflNo : {}", detail.getSprviseAtchmnflNo());
 
 		int sprviseAtchmnflNo = detail.getSprviseAtchmnflNo();
-		log.info("detail-> sprviseAtchmnflNo: " + sprviseAtchmnflNo);
+		log.info("detail -> sprviseAtchmnflNo : {}", sprviseAtchmnflNo);
 		List<SprviseAtchmnfl> sprList = this.lbrtyBbscttService.sprviseAtchmnflDetail(sprviseAtchmnflNo);
 
 		List<CommonCdDetailDto> comCdList = this.lbrtyBbscttService.declComCdDeSelect();
-		log.info("detail-> comCdList: " + comCdList);
+		log.info("detail -> comCdList : {}", comCdList);
 		model.addAttribute("comCdList", comCdList);
 
 		log.info("sprList : {}", sprList);
 		model.addAttribute("detail", detail);
 		model.addAttribute("sprList", sprList);
-		log.info("detail->model : {}", model);
+		log.info("detail -> model : {}", model);
 
 		//select 문 두개를 불러올때도 서비스 딴에서 불어와야되나?
 
@@ -133,7 +133,6 @@ public class LbrtyBbscttController {
 	@PostMapping("/create")
 	public String create(LbrtyBbscttDto lbrtyBbscttDto) {
 
-		log.info("넘어 왔네");
 		log.info("create lbrtyBbscttVO : {}", lbrtyBbscttDto);
 
 		File uploadPath = new File(uploadFolder, getFolder());
@@ -287,11 +286,11 @@ public class LbrtyBbscttController {
 	@GetMapping("/pdfView")
 	public void pdfView(HttpServletResponse response,
 		@RequestParam(value = "sprviseAtchmnflNo", required = false) String sprviseAtchmnflNo) throws IOException {
-		log.info("pdfView -> sprviseAtchmnflNo: " + sprviseAtchmnflNo);
+		log.info("pdfView -> sprviseAtchmnflNo : {}", sprviseAtchmnflNo);
 		//	       log.info("pdfView -> atchFileSn: " + atchFileSn);
 
 		List<SprviseAtchmnfl> sprviseAtchmnflList = this.lbrtyBbscttService.detailfileList(sprviseAtchmnflNo);
-		log.info("pdfView -> sprviseAtchmnflList: " + sprviseAtchmnflList);
+		log.info("pdfView -> sprviseAtchmnflList : {}", sprviseAtchmnflList);
 
 		if (sprviseAtchmnflList.isEmpty()) {
 			throw new FileNotFoundException("첨부 파일이 없습니다.");

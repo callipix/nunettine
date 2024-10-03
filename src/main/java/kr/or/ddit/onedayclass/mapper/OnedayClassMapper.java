@@ -3,9 +3,11 @@ package kr.or.ddit.onedayclass.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import kr.or.ddit.dto.*;
 import kr.or.ddit.dto.BcityDto;
-
+@Mapper
 public interface OnedayClassMapper {
 
 	List<VOndyclProUsersDto> vOndyclProUsersDtoList();
@@ -36,13 +38,9 @@ public interface OnedayClassMapper {
 
 	int deleteClass(String classNO);
 
-	int thisAttachNo(int ondyclNo);
-
 	int updateOndycl(Map<String, Object> map);
 
 	int updateOndyclSchdul(Map<String, Object> map);
-
-	int updateSprviseAtchmnfl(SprviseAtchmnflDto sprviseAtchmnflDto);
 
 	int buyClass(Map<String, Object> map);
 

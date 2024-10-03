@@ -2,13 +2,12 @@ package kr.or.ddit.pro.mypage.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
+import kr.or.ddit.util.ImageCheck;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Controller;
@@ -33,8 +32,7 @@ public class ProMypageController {
 	private final ProMypageService proMypageService;
 
 	@GetMapping("/proMypage")
-	public String proMypage(String userId) {
-		//		log.info("아이디 : " + userId);
+	public String proMypage() {
 		return "pro/proMypage";
 	}
 
@@ -56,39 +54,27 @@ public class ProMypageController {
 	//회원정보 수정
 	@PostMapping("/updating")
 	public String updating(VProUsersDto vProUsersDto, AdresDto adresDto, HttpSession session) {
-		//		log.info("업뎃전 vo : " + vProUsersVO);
 		Map<String, Object> map = (Map<String, Object>)session.getAttribute("proSession");
-		int result = 0;
 
 		String proMbtlnum = vProUsersDto.getProMbtlnum();
 		if (proMbtlnum != null && !proMbtlnum.isEmpty()) {
 			map.put("proMbtlnum", proMbtlnum);
-			//			log.info("map1 : " + map);
-			result += this.proMypageService.updProMbtlnum(map);
 		}
 		String userPassword = vProUsersDto.getUserPassword();
 		if (userPassword != null && !userPassword.isEmpty()) {
 			map.put("userPassword", userPassword);
-			//			log.info("map2 : " + map);
-			result += this.proMypageService.updPW(map);
 		}
 		String userNcnm = vProUsersDto.getUserNcnm();
 		if (userNcnm != null && !userNcnm.isEmpty()) {
 			map.put("userNcnm", userNcnm);
-			//			log.info("map3 : " + map);
-			result += this.proMypageService.updNcnm(map);
 		}
 		String email = vProUsersDto.getEmail();
 		if (email != null && !email.isEmpty()) {
 			map.put("email", email);
-			result += this.proMypageService.updEmail(map);
-			//			log.info("map3 : " + map);
 		}
 		String userNm = vProUsersDto.getUserNm();
 		if (userNm != null && !userNm.isEmpty()) {
 			map.put("userNm", userNm);
-			result += this.proMypageService.updNm(map);
-			//			log.info("map5 : " + map);
 		}
 		String zip = adresDto.getZip();
 		String adres = adresDto.getAdres();
@@ -97,43 +83,31 @@ public class ProMypageController {
 			map.put("zip", zip);
 			map.put("adres", adres);
 			map.put("detailAdres", detailAdres);
-			result += this.proMypageService.updAdres(map);
-			//			log.info("map6 : " + map);
 		}
 
 		MultipartFile multipartFile = vProUsersDto.getUploadFile();
 		if (vProUsersDto.getProProflPhoto() != null && !vProUsersDto.getProProflPhoto().isEmpty()) {
-			//			String uploadFolder = "d/team2/upload";
-			//			log.info("파일경로 : " + uploadFolder);
-			File uploadPath = new File(uploadFolder, getFolder());
+			File uploadPath = new File(uploadFolder, ImageCheck.getFolder());
 			if (!uploadPath.exists()) {
 				uploadPath.mkdirs();
 			}
 			String uploadFileName = multipartFile.getOriginalFilename();
-			UUID uuid = UUID.randomUUID();
-			uploadFileName = uuid.toString() + "_" + uploadFileName;
+			String uuid = UUID.randomUUID().toString();
+			uploadFileName = uuid + "_" + uploadFileName;
 			File saveFile = new File(uploadPath, uploadFileName);
 			try {
 				multipartFile.transferTo(saveFile);
 			} catch (IllegalStateException | IOException e) {
 				log.info(e.getMessage());
 			}
-			String proProflPhoto = "/images/" + getFolder().replace("\\", "/") + "/" + uploadFileName;
-			//			log.info("저장파일1 : " + saveFile);
-			//			log.info("저장파일2 : " + proProflPhoto);
+			String proProflPhoto = "/images/" + ImageCheck.getFolder().replace("\\", "/") + "/" + uploadFileName;
 
 			map.put("proProflPhoto", proProflPhoto);
 			map.put("profile", proProflPhoto);
-
-			//			log.info("업뎃 날릴 map : " + map);
-			result += this.proMypageService.updPhoto(map);
 		} else {
 			map.put("proProflPhoto", null);
 			map.put("profile", null);
-			result += this.proMypageService.updPhoto(map);
 		}
-
-		//		log.info("결과수 : " + result);
 
 		return "pro/proMypage";
 	}
@@ -145,12 +119,5 @@ public class ProMypageController {
 		int result = this.proMypageService.photoDelete(userId);
 
 		return result;
-	}
-
-	public String getFolder() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = new Date();
-		String str = sdf.format(date);
-		return str.replace("-", File.separator);
 	}
 }

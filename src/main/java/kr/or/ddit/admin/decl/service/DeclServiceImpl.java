@@ -67,8 +67,8 @@ public class DeclServiceImpl implements DeclService {
 		return this.declMapper.userDeclList(userId);
 	}
 
-	@Transactional
 	@Override
+	@Transactional
 	public int userDeclSet(Map<String, Object> map) {
 		int result = 0;
 		result += this.declMapper.userDeclSet(map);

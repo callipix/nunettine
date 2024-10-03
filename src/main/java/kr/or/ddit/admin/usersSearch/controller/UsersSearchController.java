@@ -44,7 +44,7 @@ public class UsersSearchController {
 				map.put("currentPage", currentPage);
 			}
 		} else {
-			map = new HashMap<String, Object>();
+			map = new HashMap<>();
 			map.put("keyword", "");
 			map.put("searchKey", "");
 			map.put("currentPage", 1);

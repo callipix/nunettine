@@ -6,11 +6,12 @@ import java.util.Map;
 import kr.or.ddit.dto.TdmtngDto;
 import kr.or.ddit.dto.TdmtngPrtcpntDto;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import kr.or.ddit.todaymeeting.VChatRoom;
 import kr.or.ddit.dto.UsersDto;
-
+@Mapper
 public interface TodayMeetingMapper {
 
 	//모임 캘린더 조회
@@ -41,8 +42,6 @@ public interface TodayMeetingMapper {
 
 	List<TdmtngPrtcpntDto> chatMemList(int tdmtngNo);
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 	/**
 	 * 새로 추가
 	 * @param userId
@@ -52,8 +51,6 @@ public interface TodayMeetingMapper {
 
 	VChatRoom join(@Param("tdmtngNo") int tdmtngNo,
 		@Param("userId") String userId);
-
-	int getTotalMsg(int tdmtngNo);
 
 	List<UsersDto> getUserInfo(String userId);
 

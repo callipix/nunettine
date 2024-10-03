@@ -3,9 +3,11 @@ package kr.or.ddit.proservice.serviceRequest.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import kr.or.ddit.proservice.serviceRequest.dto.V_SrvcRequstDto;
 import kr.or.ddit.dto.SrvcRequstDto;
-
+@Mapper
 public interface SrvcRequstMapper {
 
 	List<V_SrvcRequstDto> srvcRqList(Map<String, Object> map);
@@ -19,8 +21,6 @@ public interface SrvcRequstMapper {
 	int rejectRequst(Map<String, Object> rejectMap);
 
 	int srvcRqCreatePost(Map<String, Object> srvcRqInfoMap);
-
-	int insertSprviseAtchmnfl(Map<String, Object> srvcRqInfoMap);
 
 	int getTotal(Map<String, Object> map);
 

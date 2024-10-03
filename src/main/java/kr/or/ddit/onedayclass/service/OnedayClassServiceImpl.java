@@ -1,5 +1,7 @@
 package kr.or.ddit.onedayclass.service;
 
+import static kr.or.ddit.util.ImageCheck.*;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,6 +15,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import kr.or.ddit.dto.*;
+import kr.or.ddit.util.ImageCheck;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -154,7 +157,7 @@ public class OnedayClassServiceImpl implements OnedayClassService {
 			try {
 				multipartFile.transferTo(saveFile);
 
-				if (checkImageType(saveFile)) {//이미지라면
+				if (ImageCheck.checkImageType(saveFile)) {//이미지라면
 					//설계
 					FileOutputStream thumbnail = new FileOutputStream(
 						new File(uploadPath, "s_" + uploadFileName)
@@ -220,40 +223,14 @@ public class OnedayClassServiceImpl implements OnedayClassService {
 			}//end for
 		} else {
 			int result2 = this.onedayClassMapper.deleteSprviseAtchmnfl(ondyclNo);
-		}//첨부파일추가 끝
-		//		log.info("sql가기 직전 map : {}", map);
+		}
 
 		result += this.onedayClassMapper.updateOndycl(map);
 		result += this.onedayClassMapper.updateOndyclSchdul(map);
 
-		//		log.info("원데이클래스 result 수 : {}", result);
-
 		return result;
 	}
 
-	public boolean checkImageType(File file) {
-		//MIME(Multipurpose Internet Mail Extensions) : 문서, 파일 또는 바이트 집합의 성격과 형식. 표준화
-		//MIME 타입 알아냄. .jpeg / .jpg의 MIME(ContentType)타입 : image/jpeg
-		String contentType;
-		try {
-			contentType = Files.probeContentType(file.toPath());
-			//			log.info("contentType : {}", contentType);
-			//image/jpeg는 image로 시작함->true
-			return contentType.startsWith("image");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		//이 파일이 이미지가 아닐 경우
-		return false;
-	}
-
-	public String getFolder() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = new Date();
-		String str = sdf.format(date);
-
-		return str.replace("-", File.separator);
-	}
 
 	@Transactional
 	@Override
@@ -261,7 +238,6 @@ public class OnedayClassServiceImpl implements OnedayClassService {
 		int resveNo = this.onedayClassMapper.getResveNo();
 
 		map.put("resveNo", resveNo);
-		//		log.info("결제때 map : {}", map);
 		int result = this.onedayClassMapper.buyClass(map); //구매 구매상세 결제 추가
 		result += this.onedayClassMapper.plusndyclResvpa(map); //클래스 참여인원 +1
 
@@ -283,7 +259,6 @@ public class OnedayClassServiceImpl implements OnedayClassService {
 
 				boolean dayCheck = ondyclSchdulDe.before(today);
 				vOndyclProUsersDtoList.get(i).setDayCheck(dayCheck);
-				//		        log.info("시간 비교 : {}", todayStr + "/" + ondyclSchdulDe + " 불린 : {}", dayCheck);
 			}
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -314,7 +289,6 @@ public class OnedayClassServiceImpl implements OnedayClassService {
 
 				boolean dayCheck = ondyclSchdulDe.before(today);
 				vOndyclProUsersDtoList.get(i).setDayCheck(dayCheck);
-				//		        log.info("시간 비교 : {}", todayStr + "/" + ondyclSchdulDe + " 불린 : {}", dayCheck);
 			}
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -354,15 +328,12 @@ public class OnedayClassServiceImpl implements OnedayClassService {
 	@Override
 	public List<ReviewMberDto> reviewList(int ondyclNo) {
 		List<ReviewMberDto> reviewMberDtoList = this.onedayClassMapper.reviewList(ondyclNo);
-		//		log.info("리뷰 리스트 : {}", reviewMberDtoList);
 
 		for (ReviewMberDto reMbDto : reviewMberDtoList) {
 			String wrDate = reMbDto.getOndyclReWrDt();
 
 			wrDate.replace("-", ".");
-			//			wrDate.replaceFirst("0", "2");
 			wrDate = "2" + wrDate.substring(1);
-			//			log.info("날짜 형식 확인 : {}", wrDate);
 
 			reMbDto.setOndyclReWrDt(wrDate);
 		}
@@ -416,7 +387,7 @@ public class OnedayClassServiceImpl implements OnedayClassService {
 	public int buyBundle(Map<String, Object> map) {
 		log.info("넘어온 맵 : {}", map);
 		int result = 0;
-		VOndyclSchdulDto vOndyclSchdulDto = new VOndyclSchdulDto();
+		VOndyclSchdulDto vOndyclSchdulDto;
 
 		List<Integer> arrClassNo = (List<Integer>)map.get("checkList");
 		log.info("배열 : {}", arrClassNo + " / " + arrClassNo.size());

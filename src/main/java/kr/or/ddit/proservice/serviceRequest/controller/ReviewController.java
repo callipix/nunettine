@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import kr.or.ddit.dto.ReviewDto;
 import lombok.RequiredArgsConstructor;
@@ -36,14 +37,12 @@ public class ReviewController {
 
 	private final ReviewService reviewService;
 	private final SrvcRequstService srvcRequstService;
-	private final SrvcRequstController srvcRequstController;
 
 	@GetMapping("/reInfo")
 	@ResponseBody
 	List<CommonCdDetailDto> reInfo() {
 		List<CommonCdDetailDto> commonCdDetailDtoList = this.reviewService.reInfo();
 		log.info("[reviewController] 리뷰 공통코드 : {}", commonCdDetailDtoList);
-
 		return commonCdDetailDtoList;
 	}
 
@@ -51,31 +50,23 @@ public class ReviewController {
 	@ResponseBody
 	public int reCreate(@RequestBody ReviewDto reviewDto) {
 		log.info("reviewVO : {}", reviewDto);
-
-		int res = 0;
-		res = this.reviewService.reCreate(reviewDto);
-
-		return res;
+		return this.reviewService.reCreate(reviewDto);
 	}
 
 	@GetMapping("/reDetail")
 	@ResponseBody
 	public List<ReviewDto> reDetail(HttpServletRequest request) {
-		String userId = this.srvcRequstController.userIdChk(request);
+		String userId = userIdChk(request);
 
-		List<ReviewDto> reviewDtoList = this.reviewService.reDetail(userId);
-
-		return reviewDtoList;
-
+		return this.reviewService.reDetail(userId);
 	}
 
 	@GetMapping("/reMgmt")
 	public String reMgmt(Model model, HttpServletRequest request) {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 
 		// 리스트 토탈 구하기
-		// 필요값 : vSrvcRequstVO.userId, vSrvcRequstVO.emplyrTy='ET02'
-		String userId = this.srvcRequstController.userIdChk(request);
+		String userId = userIdChk(request);
 		UsersDto usersDto = this.srvcRequstService.userChk(userId);
 		map.put("userId", userId);
 		map.put("vSrvcRequstVO.emplyrTy", usersDto.getEmplyrTy());
@@ -111,9 +102,9 @@ public class ReviewController {
 
 	@GetMapping("/proReMgmt")
 	public String proReMgmt(Model model, HttpServletRequest request) {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 
-		String userId = this.srvcRequstController.userIdChk(request);
+		String userId = userIdChk(request);
 		UsersDto usersDto = this.srvcRequstService.userChk(userId);
 
 		// 리뷰 건수 토탈 구하기 
@@ -144,7 +135,7 @@ public class ReviewController {
 	@ResponseBody
 	public Map<String, Object> reviewList(@RequestBody(required = false) Map<String, Object> map,
 		HttpServletRequest request) {
-		String userId = this.srvcRequstController.userIdChk(request);
+		String userId = userIdChk(request);
 		map.put("userId", userId);
 
 		int size = (Integer.parseInt(map.get("size").toString()));
@@ -159,20 +150,20 @@ public class ReviewController {
 
 		// 목록 paging처리
 		ArticlePage<ReviewDto> data
-			= new ArticlePage<ReviewDto>(total, Integer.parseInt(currentPage), size, reviewDtoList, keyword);
+			= new ArticlePage<>(total, Integer.parseInt(currentPage), size, reviewDtoList, keyword);
 		String url = "/srvcRqReview/reviewMgmt";
 		data.setUrl(url);
 
 		// 작성 안된 review 수
 		int res = this.reviewService.reviewNoWrCnt(map);
 
-		Map<String, Object> reviewListMap = new HashMap<String, Object>();
+		Map<String, Object> reviewListMap = new HashMap<>();
 		reviewListMap.put("data", data);
 		reviewListMap.put("reviewNoWrCnt", res);
 
-		log.info("reviewList-> userId from reviewList : {}", userId);
-		log.info("reviewList-> reviewVOList : {}", reviewDtoList);
-		log.info("reviewList-> 페이징 처리 : {}", data);
+		log.info("reviewList -> userId from reviewList : {}", userId);
+		log.info("reviewList -> reviewVOList : {}", reviewDtoList);
+		log.info("reviewList -> 페이징 처리 : {}", data);
 		return reviewListMap;
 	}
 
@@ -180,7 +171,7 @@ public class ReviewController {
 	@ResponseBody
 	public Map<String, Object> proReviewList(@RequestBody(required = false) Map<String, Object> map,
 		HttpServletRequest request) {
-		String userId = this.srvcRequstController.userIdChk(request);
+		String userId = userIdChk(request);
 		map.put("userId", userId);
 		log.info("reviewList-> userId : {}", userId);
 
@@ -197,14 +188,14 @@ public class ReviewController {
 
 		// 목록 paging처리
 		ArticlePage<ReviewDto> data
-			= new ArticlePage<ReviewDto>(total, Integer.parseInt(currentPage), size, reviewDtoList, keyword);
+			= new ArticlePage<>(total, Integer.parseInt(currentPage), size, reviewDtoList, keyword);
 		String url = "/srvcRqReview/proReviewMgmt";
 		data.setUrl(url);
 
 		// 작성 안된 review 수
 		int res = this.reviewService.reviewNoWrCnt(map);
 
-		Map<String, Object> reviewListMap = new HashMap<String, Object>();
+		Map<String, Object> reviewListMap = new HashMap<>();
 		reviewListMap.put("data", data);
 		reviewListMap.put("reviewNoWrCnt", res);
 
@@ -225,7 +216,7 @@ public class ReviewController {
 	public Map<String, Object> reTyChrtList(HttpServletRequest request) {
 
 		Map<String, Object> paramMap = new HashMap<String, Object>();
-		String userId = this.srvcRequstController.userIdChk(request);
+		String userId = userIdChk(request);
 		paramMap.put("userId", userId);
 
 		List<ReviewDto> reTyChrtList = new ArrayList<ReviewDto>();
@@ -250,7 +241,7 @@ public class ReviewController {
 	public Map<String, Object> proReTyChrtList(HttpServletRequest request) {
 
 		Map<String, Object> paramMap = new HashMap<String, Object>();
-		String userId = this.srvcRequstController.userIdChk(request);
+		String userId = userIdChk(request);
 		paramMap.put("userId", userId);
 
 		List<ReviewDto> reTyChrtList = new ArrayList<ReviewDto>();
@@ -274,14 +265,23 @@ public class ReviewController {
 	@ResponseBody
 	public List<ReviewDto> reScoreChrtList(HttpServletRequest request) {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
-		String userId = this.srvcRequstController.userIdChk(request);
+		String userId = userIdChk(request);
 		paramMap.put("userId", userId);
 
-		List<ReviewDto> reScoreChrtList = new ArrayList<ReviewDto>();
-		reScoreChrtList = this.reviewService.reScoreChrtList(paramMap);
+		return this.reviewService.reScoreChrtList(paramMap);
 
-		return reScoreChrtList;
+	}
 
+	private String userIdChk(HttpServletRequest request) {
+		String userId = "";
+		HttpSession session = request.getSession();
+
+		if (session.getAttribute("proSession") != null) {
+			userId = ((HashMap)session.getAttribute("proSession")).get("userId").toString();
+		} else if (session.getAttribute("memSession") != null) {
+			userId = ((HashMap)session.getAttribute("memSession")).get("userId").toString();
+		}
+		return userId;
 	}
 
 }

@@ -25,8 +25,6 @@ public class SrvcBtfInqryServiceImpl implements SrvcBtfInqryService {
 	private final SrvcBtfInqryMapper srvcBtfInqryMapper;
 	private final FileuploadService fileuploadService;
 
-	V_SrvcBtfInqryDto vSrvcBtfInqryVO = new V_SrvcBtfInqryDto();
-
 	// 아이디 유형 확인 
 	@Override
 	public UsersDto userChk(String userId) {
@@ -47,10 +45,9 @@ public class SrvcBtfInqryServiceImpl implements SrvcBtfInqryService {
 	@Override
 	public int getTotal(Map<String, Object> map) {
 		UsersDto usersDto = userChk((String)map.get("userId"));
-		vSrvcBtfInqryVO.setUserId(usersDto.getUserId());
-		vSrvcBtfInqryVO.setEmplyrTy(usersDto.getEmplyrTy());
+		V_SrvcBtfInqryDto vSrvcBtfInqryDto = V_SrvcBtfInqryDto.builder().userId(usersDto.getUserId()).emplyrTy(usersDto.getEmplyrTy()).build();
 
-		map.put("vSrvcBtfInqryVO", vSrvcBtfInqryVO);
+		map.put("vSrvcBtfInqryVO", vSrvcBtfInqryDto);
 
 		return this.srvcBtfInqryMapper.getTotal(map);
 	}
@@ -58,10 +55,9 @@ public class SrvcBtfInqryServiceImpl implements SrvcBtfInqryService {
 	@Override
 	public int getNoAnswerTotal(Map<String, Object> map) {
 		UsersDto usersDto = userChk((String)map.get("userId"));
-		vSrvcBtfInqryVO.setUserId(usersDto.getUserId());
-		vSrvcBtfInqryVO.setEmplyrTy(usersDto.getEmplyrTy());
+		V_SrvcBtfInqryDto vSrvcBtfInqryDto = V_SrvcBtfInqryDto.builder().userId(usersDto.getUserId()).emplyrTy(usersDto.getEmplyrTy()).build();
 
-		map.put("vSrvcBtfInqryVO", vSrvcBtfInqryVO);
+		map.put("vSrvcBtfInqryVO", vSrvcBtfInqryDto);
 
 		return this.srvcBtfInqryMapper.getNoAnswerTotal(map);
 	}
@@ -69,10 +65,9 @@ public class SrvcBtfInqryServiceImpl implements SrvcBtfInqryService {
 	@Override
 	public int getSuccessTotal(Map<String, Object> map) {
 		UsersDto usersDto = userChk((String)map.get("userId"));
-		vSrvcBtfInqryVO.setUserId(usersDto.getUserId());
-		vSrvcBtfInqryVO.setEmplyrTy(usersDto.getEmplyrTy());
+		V_SrvcBtfInqryDto vSrvcBtfInqryDto = V_SrvcBtfInqryDto.builder().userId(usersDto.getUserId()).emplyrTy(usersDto.getEmplyrTy()).build();
 
-		map.put("vSrvcBtfInqryVO", vSrvcBtfInqryVO);
+		map.put("vSrvcBtfInqryVO", vSrvcBtfInqryDto);
 
 		return this.srvcBtfInqryMapper.getSuccessTotal(map);
 	}
@@ -83,10 +78,9 @@ public class SrvcBtfInqryServiceImpl implements SrvcBtfInqryService {
 		UsersDto usersDto = userChk((String)map.get("userId"));
 		log.info("(serviceImpl)btfInqryList -> usersVO from btfInqryList : {}",  usersDto);
 
-		vSrvcBtfInqryVO.setUserId(usersDto.getUserId());
-		vSrvcBtfInqryVO.setEmplyrTy(usersDto.getEmplyrTy());
+		V_SrvcBtfInqryDto vSrvcBtfInqryDto = V_SrvcBtfInqryDto.builder().userId(usersDto.getUserId()).emplyrTy(usersDto.getEmplyrTy()).build();
 
-		map.put("vSrvcBtfInqryVO", vSrvcBtfInqryVO);
+		map.put("vSrvcBtfInqryVO", vSrvcBtfInqryDto);
 
 		return this.srvcBtfInqryMapper.btfInqryList(map);
 	}
@@ -96,11 +90,9 @@ public class SrvcBtfInqryServiceImpl implements SrvcBtfInqryService {
 	public List<V_SrvcBtfInqryDto> btfInqryNoAnswerList(Map<String, Object> map) {
 		UsersDto usersDto = userChk((String)map.get("userId"));
 		log.info("(serviceImpl)btfInqryList -> usersVO : {}", usersDto);
+		V_SrvcBtfInqryDto vSrvcBtfInqryDto = V_SrvcBtfInqryDto.builder().userId(usersDto.getUserId()).emplyrTy(usersDto.getEmplyrTy()).build();
 
-		vSrvcBtfInqryVO.setUserId(usersDto.getUserId());
-		vSrvcBtfInqryVO.setEmplyrTy(usersDto.getEmplyrTy());
-
-		map.put("vSrvcBtfInqryVO", vSrvcBtfInqryVO);
+		map.put("vSrvcBtfInqryVO", vSrvcBtfInqryDto);
 
 		return this.srvcBtfInqryMapper.btfInqryNoAnswerList(map);
 	}
@@ -110,11 +102,9 @@ public class SrvcBtfInqryServiceImpl implements SrvcBtfInqryService {
 	public List<V_SrvcBtfInqryDto> btfInqrySuccessList(Map<String, Object> map) {
 		UsersDto usersDto = userChk((String)map.get("userId"));
 		log.info("(serviceImpl)btfInqryList -> usersVO from btfInqrySuccessList : {}",  usersDto);
+		V_SrvcBtfInqryDto vSrvcBtfInqryDto = V_SrvcBtfInqryDto.builder().userId(usersDto.getUserId()).emplyrTy(usersDto.getEmplyrTy()).build();
 
-		vSrvcBtfInqryVO.setUserId(usersDto.getUserId());
-		vSrvcBtfInqryVO.setEmplyrTy(usersDto.getEmplyrTy());
-
-		map.put("vSrvcBtfInqryVO", vSrvcBtfInqryVO);
+		map.put("vSrvcBtfInqryVO", vSrvcBtfInqryDto);
 		return this.srvcBtfInqryMapper.btfInqrySuccessList(map);
 	}
 
@@ -145,7 +135,7 @@ public class SrvcBtfInqryServiceImpl implements SrvcBtfInqryService {
 		log.info("btfInqryCreatePost -> 아이디 : {}",  srvcBtfInqryDto.getMberId());
 		log.info("btfInqryCreatePost -> 프로아이디 : {}",  srvcBtfInqryDto.getProId());
 
-		Map<String, Object> btfInqryInfoMap = new HashMap<String, Object>();
+		Map<String, Object> btfInqryInfoMap = new HashMap<>();
 
 		btfInqryInfoMap.put("btfInqrySj", srvcBtfInqryDto.getBtfInqrySj());
 		btfInqryInfoMap.put("btfInqryCn", srvcBtfInqryDto.getBtfInqryCn());
@@ -174,11 +164,11 @@ public class SrvcBtfInqryServiceImpl implements SrvcBtfInqryService {
 		// 문의 첨부파일 번호
 		String sprviseAtchmnflNo = (String)btfInqryUpdateMap.get("sprviseAtchmnflNo");
 
-		log.info("[btfInqryUpdatePost/serviceimpl]번호 : {}", btfInqryUpdateMap.get("btfInqryNo"));
-		log.info("[btfInqryUpdatePost/serviceimpl]제목 : {}", btfInqryUpdateMap.get("hiddenBtfInqrySj"));
-		log.info("[btfInqryUpdatePost/serviceimpl]내용 : {}", btfInqryUpdateMap.get("newBtfInqryCn"));
-		log.info("[btfInqryUpdatePost/serviceimpl]통합첨부파일 번호 : {}", btfInqryUpdateMap.get("sprviseAtchmnflNo"));
-		log.info("[btfInqryUpdatePost/serviceimpl]기존 사진 배열 : {}", btfInqryUpdateMap.get("atchmnflNo[]"));
+		log.info("[btfInqryUpdatePost/serviceImpl]번호 : {}", btfInqryUpdateMap.get("btfInqryNo"));
+		log.info("[btfInqryUpdatePost/serviceImpl]제목 : {}", btfInqryUpdateMap.get("hiddenBtfInqrySj"));
+		log.info("[btfInqryUpdatePost/serviceImpl]내용 : {}", btfInqryUpdateMap.get("newBtfInqryCn"));
+		log.info("[btfInqryUpdatePost/serviceImpl]통합첨부파일 번호 : {}", btfInqryUpdateMap.get("sprviseAtchmnflNo"));
+		log.info("[btfInqryUpdatePost/serviceImpl]기존 사진 배열 : {}", btfInqryUpdateMap.get("atchmnflNo[]"));
 
 		// 사전문의 업데이트
 		SrvcBtfInqryDto srvcBtfInqryDto = new SrvcBtfInqryDto();
@@ -195,11 +185,11 @@ public class SrvcBtfInqryServiceImpl implements SrvcBtfInqryService {
 
 		String atchmnflNoArrayParam = (String)btfInqryUpdateMap.get("atchmnflNo[]");
 		String[] atchmnflNoArray = atchmnflNoArrayParam.split(",");
-		log.info("[btfInqryUpdatePost/serviceimpl] String[] atchmnflNoArray : {}",  Arrays.toString(atchmnflNoArray));
+		log.info("[btfInqryUpdatePost/serviceImpl] String[] atchmnflNoArray : {}",  Arrays.toString(atchmnflNoArray));
 
 		updateFileuploadMap.put("sprviseAtchmnflNo", sprviseAtchmnflNo);
 		updateFileuploadMap.put("atchmnflNoArray", atchmnflNoArray);
-		log.info("[btfInqryUpdatePost/serviceimpl] 기존 이미지 삭제 map : {}",  updateFileuploadMap);
+		log.info("[btfInqryUpdatePost/serviceImpl] 기존 이미지 삭제 map : {}",  updateFileuploadMap);
 		res += this.fileuploadService.updateFileupload(updateFileuploadMap);
 
 		// 새로운 파일 업로드

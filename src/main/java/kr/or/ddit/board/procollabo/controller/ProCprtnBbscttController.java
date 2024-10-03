@@ -32,37 +32,6 @@ public class ProCprtnBbscttController {
 
 	private final ProCprtnBbscttService proCprtnBbscttService;
 
-	private String userId(HttpServletRequest request) {
-		//세션값으로 아이디 가져오기
-
-		Object proSession = request.getSession().getAttribute("proSession");
-		Object memSession = request.getSession().getAttribute("memSession");
-		Object admSession = request.getSession().getAttribute("admSession");
-
-		if (proSession != null && proSession instanceof HashMap) {
-			Object userId = ((HashMap<String, Object>)proSession).get("userId");
-			log.info("proSession : {}", userId);
-
-			return userId != null ? userId.toString() : null;
-		}
-		if (memSession != null && memSession instanceof HashMap) {
-			Object userId = ((HashMap<String, Object>)memSession).get("userId");
-			log.info("memSession : {}", userId);
-
-			return userId != null ? userId.toString() : null;
-
-		}
-		if (admSession != null && admSession instanceof HashMap) {
-			Object userId = ((HashMap<String, Object>)admSession).get("userId");
-			log.info("admSession : {}", userId);
-
-			return userId != null ? userId.toString() : null;
-
-		}
-		return "not";
-
-	}
-
 	@GetMapping(value = "/list")
 	public String list(Model model, Map<String, Object> map,
 		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,

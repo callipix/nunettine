@@ -7,12 +7,14 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import kr.or.ddit.dto.SprviseAtchmnflDto;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
+@Builder
 @ToString
 public class V_SrvcBtfInqryDto {
 	

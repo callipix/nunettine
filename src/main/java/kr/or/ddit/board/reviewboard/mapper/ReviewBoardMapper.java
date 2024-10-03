@@ -3,11 +3,13 @@ package kr.or.ddit.board.reviewboard.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import kr.or.ddit.dto.AftusBbscttAnswerDto;
 import kr.or.ddit.dto.AftusBbscttDto;
 import kr.or.ddit.dto.SprviseAtchmnflDto;
 import kr.or.ddit.dto.SrvcRequstDto;
-
+@Mapper
 public interface ReviewBoardMapper {
 
 	List<AftusBbscttDto> list(Map<String, Object> map);

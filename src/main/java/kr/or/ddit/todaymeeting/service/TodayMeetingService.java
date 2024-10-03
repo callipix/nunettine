@@ -41,6 +41,4 @@ public interface TodayMeetingService {
 
 	VChatRoom join(int tdmtngNo, String userId);
 
-	int getTotalMsg(int tdmtngNo);
-
 }

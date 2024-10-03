@@ -2,11 +2,13 @@ package kr.or.ddit.member.join.mapper;
 
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import kr.or.ddit.dto.AdresDto;
 import kr.or.ddit.dto.UsersDto;
 import kr.or.ddit.dto.VMberUsersDto;
 import kr.or.ddit.dto.VProUsersDto;
-
+@Mapper
 public interface MemberJoinMapper {
 
 	int emailCk(String email);

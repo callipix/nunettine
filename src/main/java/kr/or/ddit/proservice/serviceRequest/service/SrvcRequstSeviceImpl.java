@@ -39,7 +39,7 @@ public class SrvcRequstSeviceImpl implements SrvcRequstService {
 		} else if (usersDto.getEmplyrTy().equals("ET02")) { // 프로일 경우, 회원 닉네임을 얻기 위함
 			usersDto.setEmplyrTy("ET01");
 		}
-		log.info("userChk -> usersVO : {}", usersDto.toString());
+		log.info("userChk -> usersVO : {}", usersDto);
 
 		return usersDto;
 	}
@@ -147,7 +147,7 @@ public class SrvcRequstSeviceImpl implements SrvcRequstService {
 		vSrvcRequstVO.setUserId(usersDto.getUserId());
 		vSrvcRequstVO.setEmplyrTy(usersDto.getEmplyrTy());
 
-		Map<String, Object> paramMap = new HashMap<String, Object>();
+		Map<String, Object> paramMap = new HashMap<>();
 		String emplyrTy = usersDto.getEmplyrTy();
 		String processUser = "";
 		if ("ET01".equals(emplyrTy)) { // 프로
@@ -191,7 +191,7 @@ public class SrvcRequstSeviceImpl implements SrvcRequstService {
 		log.info("srvcRqCreatePost -> 제목 : {}", srvcRequstDto.getSrvcRequstSj());
 		log.info("srvcRqCreatePost -> 내용 : {}", srvcRequstDto.getSrvcRequstCn());
 
-		Map<String, Object> srvcRqInfoMap = new HashMap<String, Object>();
+		Map<String, Object> srvcRqInfoMap = new HashMap<>();
 
 		srvcRqInfoMap.put("srvcRequstSj", srvcRequstDto.getSrvcRequstSj());
 		srvcRqInfoMap.put("srvcRequstCn", srvcRequstDto.getSrvcRequstCn());

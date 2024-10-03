@@ -25,10 +25,10 @@ import kr.or.ddit.util.ArticlePage5;
 import kr.or.ddit.dto.BcityDto;
 import lombok.extern.slf4j.Slf4j;
 
-@RequestMapping("/proProfl")
 @Slf4j
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/proProfl")
 public class ProProflController {
 
 	private final ProProflService proProflService;
@@ -81,10 +81,6 @@ public class ProProflController {
 		// proProflVO 객체에 bcCode와 brtcCode 값을 설정
 		proProflDto.setBcityCode(bcityCode);
 		proProflDto.setBrtcCode(brtcCode);
-	   /*
-	   ProProflVO(proId=protest100, proProflOnLiIntrcn=안녕하세요~, proProflContactPosblTime=9:00~13:00
-	   , proProflReqForm=메, proProflHist=메, bcityCode=25, brtcCode=25020)
-	    */
 		log.info("createPost -> proProflVO : {}",proProflDto);
 
 		int result = this.proProflService.createPost(proProflDto);
@@ -217,7 +213,7 @@ public class ProProflController {
 
 		log.info("modifyProfl -> proProflVO : {}",proProflDto);
 
-		int result = this.proProflService.modify(proProflDto);
+		this.proProflService.modify(proProflDto);
 		model.addAttribute("proProflVO", proProflDto);
 		log.info("modifyProfl2 -> proProflVO : {}",proProflDto);
 
@@ -236,6 +232,4 @@ public class ProProflController {
 
 		return result;
 	}
-	//동균 신고로 인해 추가 끝
-
 }

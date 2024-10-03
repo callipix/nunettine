@@ -3,8 +3,10 @@ package kr.or.ddit.admin.oneInqry.mapper;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.ddit.dto.OneInqryDto;
+import org.apache.ibatis.annotations.Mapper;
 
+import kr.or.ddit.dto.OneInqryDto;
+@Mapper
 public interface OneInqryMapper {
 
 	List<OneInqryDto> searchList(Map<String, Object> map);
@@ -25,8 +27,6 @@ public interface OneInqryMapper {
 
 	int oneInqryUpdatePost(OneInqryDto oneInqryDto);
 	
-	String userType(String userId);
-
 	int updateAnswer(Map<String, Object> updateParamMap);
 
 	int resignPro(Map<String, Object> map);
@@ -36,6 +36,5 @@ public interface OneInqryMapper {
 	List<OneInqryDto> resignProList(Map<String, Object> map);
 
 	int proSecssion(String proId);
-	
 
 }

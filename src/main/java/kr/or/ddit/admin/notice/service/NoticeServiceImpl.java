@@ -62,7 +62,7 @@ public class NoticeServiceImpl implements NoticeService {
 		MultipartFile[] uploadFile = noticeDto.getUploadFile();
 
 		for (MultipartFile multipartFile : uploadFile) {
-			log.info("-------------------------------------------------------");
+			log.info("-------------------------------------------------------{}");
 			log.info("원본파일명 : {}", multipartFile.getOriginalFilename());
 			log.info("MIME타입 :{} ", multipartFile.getContentType());
 			log.info("-------------------------------------------------------");

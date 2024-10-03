@@ -41,15 +41,10 @@ public interface ProJoinService {
 
 	List<SpcltyRealmDto> codeSelect(String code);
 
-	//관리자
-	UsersDto admLogin(Map<String, Object> userMap);
-
 	//관리자 users 불러오기
 	UsersDto adminVO(String userId);
 
 	List<VOndyclProUsersDto> proMyClassList(String proId);
-
-	int countProMyClass(String proId);
 
 	//동균 신고 처리 추가 부분
 	//프로 제재종료일 불러오기

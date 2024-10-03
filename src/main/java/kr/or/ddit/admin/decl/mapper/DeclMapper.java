@@ -5,6 +5,7 @@ import java.util.Map;
 
 import kr.or.ddit.dto.*;
 import kr.or.ddit.dto.SntncDeclDto;
+
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

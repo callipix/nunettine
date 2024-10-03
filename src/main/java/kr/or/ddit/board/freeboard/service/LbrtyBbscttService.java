@@ -8,8 +8,6 @@ import kr.or.ddit.dto.LbrtyBbscttAnswerDto;
 
 public interface LbrtyBbscttService {
 
-	List<LbrtyBbscttDto2> lbrtyBbscttList();
-
 	LbrtyBbscttDto lbrtyBbscttDetail(int lbrtyBbscttNo);
 
 	int lbrtyBbscttDelete(LbrtyBbscttDto lbrtyBbscttDto);

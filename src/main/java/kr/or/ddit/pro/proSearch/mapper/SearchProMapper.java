@@ -3,10 +3,13 @@ package kr.or.ddit.pro.proSearch.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import kr.or.ddit.dto.AdresDto;
 import kr.or.ddit.dto.ProDto;
 import kr.or.ddit.dto.SpcltyRealmDto;
 
+@Mapper
 public interface SearchProMapper {
 
 	List<ProDto> proList();

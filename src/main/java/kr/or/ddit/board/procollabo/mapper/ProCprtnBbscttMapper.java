@@ -3,12 +3,12 @@ package kr.or.ddit.board.procollabo.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import kr.or.ddit.board.procollabo.dto.ProCprtnAnswerDto;
 import kr.or.ddit.board.procollabo.dto.ProCprtnBbscttDto;
-
+@Mapper
 public interface ProCprtnBbscttMapper {
-
-	//	List<ProCprtnBbscttVO> proCprtnBbscttList();
 
 	int getTotal(Map<String, Object> map);
 

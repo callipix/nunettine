@@ -3,10 +3,12 @@ package kr.or.ddit.proservice.serviceInquiry.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import kr.or.ddit.proservice.serviceInquiry.dto.V_SrvcBtfInqryDto;
 import kr.or.ddit.dto.SrvcBtfInqryDto;
 import kr.or.ddit.dto.UsersDto;
-
+@Mapper
 public interface SrvcBtfInqryMapper {
 
 	// 이용자 유형 확인

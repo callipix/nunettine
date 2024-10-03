@@ -3,9 +3,11 @@ package kr.or.ddit.admin.notice.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import kr.or.ddit.admin.notice.dto.NoticeDto;
 import kr.or.ddit.dto.SprviseAtchmnflDto;
-
+@Mapper
 public interface NoticeMapper {
 
 	List<NoticeDto> getAllNoticeList();

@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import kr.or.ddit.dto.TdmtngDto;
 import kr.or.ddit.dto.TdmtngPrtcpntDto;
+import kr.or.ddit.util.ImageCheck;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -124,7 +125,7 @@ public class TodayMeetingServiceImpl implements TodayMeetingService {
 		log.info("MIME 타입 : {}", multipartFile.getContentType());
 
 		// 저장될 폴더 설정
-		File uploadPath = new File(uploadFolder, getFolder());
+		File uploadPath = new File(uploadFolder, ImageCheck.getFolder());
 
 		if (uploadPath.exists() == false) {// 폴더가 존재하지 않으면
 			uploadPath.mkdirs();
@@ -133,15 +134,15 @@ public class TodayMeetingServiceImpl implements TodayMeetingService {
 		String uploadFileName = multipartFile.getOriginalFilename();
 
 		// java.util.UUID => 랜덤값 생성
-		UUID uuid = UUID.randomUUID();
-		uploadFileName = uuid.toString() + "_" + uploadFileName;
+		String uuid = UUID.randomUUID().toString();
+		uploadFileName = uuid + "_" + uploadFileName;
 
 		File saveFile = new File(uploadPath, uploadFileName);
 		// 파일 복사 실행
 		try {
 			multipartFile.transferTo(saveFile);
 
-			tdmtngDto.setTdmtngThumbPhoto("/images/" + getFolder().replace("\\", "/") + "/" + uploadFileName);
+			tdmtngDto.setTdmtngThumbPhoto("/images/" + ImageCheck.getFolder().replace("\\", "/") + "/" + uploadFileName);
 
 			log.info("create -> tdmtngVO : {}", tdmtngDto);
 
@@ -150,19 +151,6 @@ public class TodayMeetingServiceImpl implements TodayMeetingService {
 		}
 
 		return tdmtngDto;
-	}
-
-	private String getFolder() {
-		// 2024-01-30 형식(format) 지정
-		// 간단한 날짜 형식
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		// 날짜 객체 생성(java.util 패키지)
-		Date date = new Date();
-		// 2024-01-30
-		String str = sdf.format(date);
-
-		return str.replace("-", File.separator);
-
 	}
 
 	@Override
@@ -196,11 +184,6 @@ public class TodayMeetingServiceImpl implements TodayMeetingService {
 		}
 		log.info("방번호로 리스트 체크 : {}", list);
 		return list;
-	}
-
-	@Override
-	public int getTotalMsg(int tdmtngNo) {
-		return this.todayMeetingMapper.getTotalMsg(tdmtngNo);
 	}
 
 }

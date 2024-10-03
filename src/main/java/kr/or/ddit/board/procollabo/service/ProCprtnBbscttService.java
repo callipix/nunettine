@@ -21,8 +21,6 @@ import kr.or.ddit.board.procollabo.dto.ProCprtnBbscttDto;
 	// 댓글 삭제
 	 int delete(ProCprtnAnswerDto proCprtnAnswerDto);
 	
-//	 List<ProCprtnBbscttVO> proCprtnBbscttList();
-
 	 int getTotal(Map<String, Object> map);
 
 	 List<ProCprtnBbscttDto> list(Map<String, Object> map);

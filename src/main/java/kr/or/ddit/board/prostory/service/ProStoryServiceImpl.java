@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import kr.or.ddit.board.prostory.dto.ProStoryBbscttDto;
+import kr.or.ddit.util.ImageCheck;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -58,7 +59,7 @@ public class ProStoryServiceImpl implements ProStoryService {
 
 		try {
 			multipartFile.transferTo(saveFile); // 썸네일 처리 -> 이미지만 가능하기 때문에 이미지 인지 사전체크
-			if (checkImageType(saveFile)) {    // 이미지가 맞다면
+			if (ImageCheck.checkImageType(saveFile)) {    // 이미지가 맞다면
 				FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + uploadFileName));
 				Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 300, 300);
 				thumbnail.close();
@@ -132,7 +133,6 @@ public class ProStoryServiceImpl implements ProStoryService {
 			String uploadFileName = multipartFile.getOriginalFilename();
 
 			log.info("fileName from updateStory {}", uploadFileName);
-			// 파일명 중복 방지 -> 같은 날 같은 이미지 업로드 시 파일명 중복 방지 시작----------------
 			String uuid = UUID.randomUUID().toString();
 			uploadFileName = uuid + "_" + uploadFileName;
 			File saveFile = new File(uploadPath, uploadFileName);
@@ -141,7 +141,7 @@ public class ProStoryServiceImpl implements ProStoryService {
 
 			try {
 				multipartFile.transferTo(saveFile);
-				if (checkImageType(saveFile)) { // 이미지가 맞다면
+				if (ImageCheck.checkImageType(saveFile)) { // 이미지가 맞다면
 					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + uploadFileName));
 					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 450, 450);
 					thumbnail.close();
@@ -211,22 +211,6 @@ public class ProStoryServiceImpl implements ProStoryService {
 		}
 		log.info("하트 삭제 후 해당글 추천수 : {}", psbcttVO.getProStoryBbscttRecommend());
 		return psbcttVO;
-	}
-
-	public boolean checkImageType(File file) {
-		// MIME(Multipurpose Internet Mail Extensions) : 문서, 파일 또는 바이트 집합의 성격과 형식. 표준화
-		// MIME 타입 알아냄. .jpeg / .jpg의 MIME 타입 : image/jpeg
-		String contentType;
-		try {
-			contentType = Files.probeContentType(file.toPath());
-			log.info("contentType : {}", contentType);
-			// image/jpeg → image로 시작함 → true
-			return contentType.startsWith("image");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		// 이 파일이 이미지가 아닐 경우
-		return false;
 	}
 
 	public String getFolder() {

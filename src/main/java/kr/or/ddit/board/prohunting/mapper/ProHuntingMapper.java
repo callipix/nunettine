@@ -3,8 +3,10 @@ package kr.or.ddit.board.prohunting.mapper;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.ddit.dto.ProJoBbscttDto;
+import org.apache.ibatis.annotations.Mapper;
 
+import kr.or.ddit.dto.ProJoBbscttDto;
+@Mapper
 public interface ProHuntingMapper {
 
 	List<ProJoBbscttDto> listAjax(Map<String, Object> paramMap);

@@ -41,7 +41,7 @@ public class SrvcRequstController {
 
 	V_SrvcRequstDto vSrvcRequstVO = new V_SrvcRequstDto();
 
-	public String userIdChk(HttpServletRequest request) {
+	private String userIdChk(HttpServletRequest request) {
 		String userId = "";
 		HttpSession session = request.getSession();
 
@@ -56,8 +56,7 @@ public class SrvcRequstController {
 	@GetMapping("/srvcRqList")
 	public String srvcRqList(Model model, Map<String, Object> map, HttpServletRequest request,
 		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
-		String userId = "";
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 		map.put("userId", userId);
 		map.put("currentPage", currentPage);
 
@@ -77,8 +76,7 @@ public class SrvcRequstController {
 	@GetMapping("/srvcRqNoAnswerList")
 	public String srvcRqNoAnswerList(Model model, Map<String, Object> map, HttpServletRequest request,
 		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
-		String userId = "";
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 
 		map.put("userId", userId);
 		map.put("currentPage", currentPage);
@@ -99,9 +97,8 @@ public class SrvcRequstController {
 	@GetMapping("/srvcRqSuccessList")
 	public String srvcRqSuccessList(Model model, Map<String, Object> map, HttpServletRequest request,
 		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
-		String userId = "";
-		userId = userIdChk(request);
 
+		String userId = userIdChk(request);
 		map.put("userId", userId);
 		map.put("currentPage", currentPage);
 
@@ -109,7 +106,6 @@ public class SrvcRequstController {
 		map.put("size", size);
 
 		List<V_SrvcRequstDto> vSrvcRequstVOList = this.srvcRequstService.srvcRqSuccessList(map);
-
 		model.addAttribute("vSrvcRequstVOList", vSrvcRequstVOList);
 		log.info("srvcRqList -> vSrvcRequstVOList from srvcRqSuccessList : {}",  vSrvcRequstVOList);
 
@@ -121,8 +117,7 @@ public class SrvcRequstController {
 	@GetMapping("/srvcRqRejectList")
 	public String srvcRqRejectList(Model model, Map<String, Object> map, HttpServletRequest request,
 		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
-		String userId = "";
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 
 		map.put("userId", userId);
 		map.put("currentPage", currentPage);
@@ -143,8 +138,8 @@ public class SrvcRequstController {
 	@GetMapping("/mySrvcRqList")
 	public String mySrvcRqList(Model model, Map<String, Object> map, HttpServletRequest request,
 		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
-		String userId = "";
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
+
 		map.put("userId", userId);
 		map.put("currentPage", currentPage);
 
@@ -159,13 +154,10 @@ public class SrvcRequstController {
 		return "srvcRq/mySrvcRqList";
 	}
 
-	;
-
 	@GetMapping("/mySrvcRqNoAnswerList")
 	public String mySrvcRqNoAnswerList(Model model, Map<String, Object> map, HttpServletRequest request,
 		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
-		String userId = "";
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 
 		map.put("userId", userId);
 		map.put("currentPage", currentPage);
@@ -181,13 +173,10 @@ public class SrvcRequstController {
 		return "srvcRq/mySrvcRqNoAnswerList";
 	}
 
-	;
-
 	@GetMapping("/mySrvcRqSuccessList")
 	public String mySrvcRqSuccessList(Model model, Map<String, Object> map, HttpServletRequest request,
 		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
-		String userId = "";
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 
 		map.put("userId", userId);
 		map.put("currentPage", currentPage);
@@ -203,13 +192,10 @@ public class SrvcRequstController {
 		return "srvcRq/mySrvcRqSuccessList";
 	}
 
-	;
-
 	@GetMapping("/mySrvcRqRejectList")
 	public String mySrvcRqRejectList(Model model, Map<String, Object> map, HttpServletRequest request,
 		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
-		String userId = "";
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 
 		map.put("userId", userId);
 		map.put("currentPage", currentPage);
@@ -225,15 +211,12 @@ public class SrvcRequstController {
 		return "srvcRq/mySrvcRqRejectList";
 	}
 
-	;
-
 	// 검색 목록 출력
 	@PostMapping("/searchRqList")
 	@ResponseBody
 	public ArticlePage<V_SrvcRequstDto> searchRqList(@RequestBody(required = false) Map<String, Object> map,
 		HttpServletRequest request) {
-		String userId = "";
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 		map.put("userId", userId);
 
 		log.info("사이즈 map from searchRqList : {}",  map.toString());
@@ -263,8 +246,7 @@ public class SrvcRequstController {
 	@ResponseBody
 	public ArticlePage<V_SrvcRequstDto> srvcRqNoAnswerList(@RequestBody(required = false) Map<String, Object> map,
 		HttpServletRequest request) {
-		String userId = "";
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 		map.put("userId", userId);
 
 		int size = (Integer.parseInt(map.get("size").toString()));
@@ -292,8 +274,7 @@ public class SrvcRequstController {
 	@ResponseBody
 	public ArticlePage<V_SrvcRequstDto> srvcRqSuccessList(@RequestBody(required = false) Map<String, Object> map,
 		HttpServletRequest request) {
-		String userId = "";
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 		map.put("userId", userId);
 
 		int size = (Integer.parseInt(map.get("size").toString()));
@@ -321,8 +302,7 @@ public class SrvcRequstController {
 	@ResponseBody
 	public ArticlePage<V_SrvcRequstDto> srvcRqRejectList(@RequestBody(required = false) Map<String, Object> map,
 		HttpServletRequest request) {
-		String userId = "";
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 		map.put("userId", userId);
 
 		int size = (Integer.parseInt(map.get("size").toString()));
@@ -351,11 +331,10 @@ public class SrvcRequstController {
 	@ResponseBody
 	public ArticlePage<V_SrvcRequstDto> mySearchRqList(@RequestBody(required = false) Map<String, Object> map,
 		HttpServletRequest request) {
-		String userId = "";
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 		map.put("userId", userId);
 
-		log.info("사이즈 map : {}",  map.toString());
+		log.info("사이즈 map : {}",  map);
 
 		int size = (Integer.parseInt(map.get("size").toString()));
 		map.put("size", size);
@@ -382,8 +361,7 @@ public class SrvcRequstController {
 	@ResponseBody
 	public ArticlePage<V_SrvcRequstDto> mySrvcRqNoAnswerList(@RequestBody(required = false) Map<String, Object> map,
 		HttpServletRequest request) {
-		String userId = "";
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 		map.put("userId", userId);
 
 		int size = (Integer.parseInt(map.get("size").toString()));
@@ -440,8 +418,7 @@ public class SrvcRequstController {
 	@ResponseBody
 	public ArticlePage<V_SrvcRequstDto> mySrvcRqRejectList(@RequestBody(required = false) Map<String, Object> map,
 		HttpServletRequest request) {
-		String userId = "";
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 		map.put("userId", userId);
 
 		int size = (Integer.parseInt(map.get("size").toString()));
@@ -466,13 +443,14 @@ public class SrvcRequstController {
 	}
 
 	@GetMapping("/srvcRqDetail")
-	public String srvcRqDetail(@RequestParam("srvcRequstNo") int srvcRequstNo, Model model) {
-		String userId = "";
+	public String srvcRqDetail(@RequestParam("srvcRequstNo") int srvcRequstNo, Model model, HttpServletRequest request) {
+
+		String userId = userIdChk(request);
 		vSrvcRequstVO.setSrvcRequstNo(srvcRequstNo);
 		vSrvcRequstVO = this.srvcRequstService.srvcRqDetail(vSrvcRequstVO, userId);
 
 		int sprviseAtchmnflNo = vSrvcRequstVO.getSprviseAtchmnflNo();
-		List<SprviseAtchmnflDto> sprviseAtchmnflDtoList = this.fileuploadService.getsprviseAtchmnfl(sprviseAtchmnflNo);
+		this.fileuploadService.getsprviseAtchmnfl(sprviseAtchmnflNo);
 
 		model.addAttribute("vSrvcRequstVO", vSrvcRequstVO);
 
@@ -482,11 +460,10 @@ public class SrvcRequstController {
 	// url:"/srvcRequst/processFn?srvcRequstNo="+srvcRequstNo
 	@PostMapping("/processFn")
 	@ResponseBody
-	public Map<String, Object> processFn(@RequestParam int srvcRequstNo) {
+	public Map<String, Object> processFn(@RequestParam int srvcRequstNo, HttpServletRequest request) {
 
-		int res = 0;
-		String userId = "";
-		res = this.srvcRequstService.processFn(srvcRequstNo, userId);
+		String userId = userIdChk(request);
+		int res = this.srvcRequstService.processFn(srvcRequstNo, userId);
 
 		vSrvcRequstVO.setSrvcRequstNo(srvcRequstNo);
 		vSrvcRequstVO = this.srvcRequstService.srvcRqDetail(vSrvcRequstVO, userId);
@@ -501,13 +478,12 @@ public class SrvcRequstController {
 	}
 
 	@PostMapping("/acceptRequst")
-	public String acceptRequst(@RequestParam("srvcRequstNo") int srvcRequstNo) {
-		int res = 0;
-		String userId = "";
+	public String acceptRequst(@RequestParam("srvcRequstNo") int srvcRequstNo,HttpServletRequest request) {
+		String userId = userIdChk(request);
 		Map<String, Object> acceptMap = new HashMap<String, Object>();
 		acceptMap.put("srvcRequstNo", srvcRequstNo);
 
-		res = this.srvcRequstService.acceptRequst(acceptMap, userId);
+		this.srvcRequstService.acceptRequst(acceptMap, userId);
 
 		return "redirect:/srvcRequst/srvcRqDetail?srvcRequstNo=" + srvcRequstNo;
 	}
@@ -515,9 +491,9 @@ public class SrvcRequstController {
 	@PostMapping("/rejectRequst")
 	public String rejectRequst(@RequestParam("srvcRequstItyy") String srvcRequstItyy,
 		@RequestParam("rejectSrvcRequstNo") String srvcRequstNo,
-		@RequestParam("srvcRequstItyyInput") String srvcRequstItyyInput) {
-		int res = 0;
-		String userId = "";
+		@RequestParam("srvcRequstItyyInput") String srvcRequstItyyInput,
+		HttpServletRequest request) {
+		String userId = userIdChk(request);
 		log.info("rejectRequst -> srvcRequstItyy : {}",  srvcRequstItyy);
 		log.info("rejectRequst -> srvcRequstNo : {}",  srvcRequstNo);
 		log.info("rejectRequst -> srvcRequstItyyInput : {}",  srvcRequstItyyInput);
@@ -532,7 +508,7 @@ public class SrvcRequstController {
 
 		log.info("거절 내용 : {}",  rejectMap.get("srvcRequstItyy"));
 
-		res = this.srvcRequstService.rejectRequst(rejectMap, userId);
+		this.srvcRequstService.rejectRequst(rejectMap, userId);
 
 		return "redirect:/srvcRequst/srvcRqDetail?srvcRequstNo=" + srvcRequstNo;
 	}
@@ -551,8 +527,7 @@ public class SrvcRequstController {
 	public String srvcRqCreatePost(@RequestParam("srvcRequstSj") String srvcRequstSj,
 		@RequestParam("srvcRequstCn") String srvcRequstCn, @RequestParam("proId") String proId,
 		@RequestParam("uploadFiles") List<MultipartFile> uploadFiles, HttpServletRequest request) {
-		String userId = "";
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 		log.info("srvcRqCreatePost -> srvcRequstSj : {}",  srvcRequstSj);
 		log.info("srvcRqCreatePost -> srvcRequstCn : {}",  srvcRequstCn);
 		log.info("srvcRqCreatePost -> proId : {}",  proId);
@@ -565,7 +540,7 @@ public class SrvcRequstController {
 
 		log.info("[srvcRequstController] srvcRqCreatePost -> uploadFiles : {}",  uploadFiles.toString());
 
-		int res = this.srvcRequstService.srvcRqCreatePost(srvcRequstDto, uploadFiles);
+		this.srvcRequstService.srvcRqCreatePost(srvcRequstDto, uploadFiles);
 
 		return "redirect:/srvcRequst/srvcRqList?mberCheck=mber";
 	}
@@ -574,10 +549,8 @@ public class SrvcRequstController {
 	public String srvcRqUpdatePost(@RequestParam Map<String, Object> srvcRqUpdateMap,
 		@RequestParam("uploadFiles") List<MultipartFile> uploadFiles, HttpServletRequest request) {
 
-		String userId = "";
-		userId = userIdChk(request);
-
-		int res = this.srvcRequstService.srvcRqUpdatePost(srvcRqUpdateMap, uploadFiles, userId);
+		String userId = userIdChk(request);
+		this.srvcRequstService.srvcRqUpdatePost(srvcRqUpdateMap, uploadFiles, userId);
 
 		return "redirect:/srvcRequst/srvcRqDetail?srvcRequstNo=" + srvcRqUpdateMap.get("srvcRequstNo");
 

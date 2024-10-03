@@ -22,10 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 public class OneInqryServiceImpl implements OneInqryService {
 
 	private final FileuploadService fileuploadService;
-	private final OneInqryMapper oneInqryMapper;
 	private final SrvcBtfInqryMapper srvcBtfInqryMapper;
-
-	OneInqryDto oneInqryDto = new OneInqryDto();
+	private final OneInqryMapper oneInqryMapper;
 
 	// 아이디 유형 확인 
 	@Override
@@ -49,8 +47,7 @@ public class OneInqryServiceImpl implements OneInqryService {
 	public List<OneInqryDto> searchList(Map<String, Object> map) {
 
 		UsersDto usersDto = userChk((String)map.get("userId"));
-
-		oneInqryDto.setUserId(usersDto.getUserId());
+		OneInqryDto oneInqryDto = OneInqryDto.builder().userId(usersDto.getUserId()).build();
 
 		map.put("oneInqryVO", oneInqryDto);
 		map.put("userId", usersDto.getUserId());
@@ -65,7 +62,7 @@ public class OneInqryServiceImpl implements OneInqryService {
 		UsersDto usersDto = userChk((String)map.get("userId"));
 		log.info("(serviceImpl)btfInqryList -> usersVO : {}", usersDto);
 
-		oneInqryDto.setUserId(usersDto.getUserId());
+		OneInqryDto oneInqryDto = OneInqryDto.builder().userId(usersDto.getUserId()).build();
 
 		map.put("oneInqryVO", oneInqryDto);
 		map.put("userId", usersDto.getUserId());
@@ -78,9 +75,9 @@ public class OneInqryServiceImpl implements OneInqryService {
 	@Override
 	public List<OneInqryDto> oneInqrySuccessList(Map<String, Object> map) {
 		UsersDto usersDto = userChk((String)map.get("userId"));
-		log.info("(serviceImpl)btfInqryList -> usersVO : " + usersDto);
+		log.info("(serviceImpl)btfInqryList from oneInqrySuccessList -> usersVO : {}", usersDto);
 
-		oneInqryDto.setUserId(usersDto.getUserId());
+		OneInqryDto oneInqryDto = OneInqryDto.builder().userId(usersDto.getUserId()).build();
 
 		map.put("oneBtfInqryVO", oneInqryDto);
 		map.put("userId", usersDto.getUserId());
@@ -92,7 +89,7 @@ public class OneInqryServiceImpl implements OneInqryService {
 	@Override
 	public int getTotal(Map<String, Object> map) {
 		UsersDto usersDto = userChk((String)map.get("userId"));
-		oneInqryDto.setUserId(usersDto.getUserId());
+		OneInqryDto oneInqryDto = OneInqryDto.builder().userId(usersDto.getUserId()).build();
 
 		map.put("oneInqryVO", oneInqryDto);
 		map.put("userId", usersDto.getUserId());
@@ -104,7 +101,7 @@ public class OneInqryServiceImpl implements OneInqryService {
 	@Override
 	public int getNoAnswerTotal(Map<String, Object> map) {
 		UsersDto usersDto = userChk((String)map.get("userId"));
-		oneInqryDto.setUserId(usersDto.getUserId());
+		OneInqryDto oneInqryDto = OneInqryDto.builder().userId(usersDto.getUserId()).build();
 
 		map.put("oneInqryVO", oneInqryDto);
 		map.put("userId", usersDto.getUserId());
@@ -116,7 +113,7 @@ public class OneInqryServiceImpl implements OneInqryService {
 	@Override
 	public int getSuccessTotal(Map<String, Object> map) {
 		UsersDto usersDto = userChk((String)map.get("userId"));
-		oneInqryDto.setUserId(usersDto.getUserId());
+		OneInqryDto oneInqryDto = OneInqryDto.builder().userId(usersDto.getUserId()).build();
 
 		map.put("oneInqryVO", oneInqryDto);
 		map.put("userId", usersDto.getUserId());
@@ -185,7 +182,7 @@ public class OneInqryServiceImpl implements OneInqryService {
 
 		updateFileuploadMap.put("sprviseAtchmnflNo", sprviseAtchmnflNo);
 		updateFileuploadMap.put("atchmnflNoArray", atchmnflNoArray);
-		log.info("[btfInqryUpdatePost/serviceimpl] 기존 이미지 삭제 map : " + updateFileuploadMap);
+		log.info("[btfInqryUpdatePost/serviceimpl] 기존 이미지 삭제 map : {}", updateFileuploadMap);
 		res += this.fileuploadService.updateFileupload(updateFileuploadMap);
 
 		// 새로운 파일 업로드

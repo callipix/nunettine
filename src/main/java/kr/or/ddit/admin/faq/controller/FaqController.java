@@ -38,7 +38,7 @@ public class FaqController {
 		faqDto.setMngrId("testAdmin");
 		log.info("update 여기 {}", faqDto);
 		int result = this.faqService.faqUpdate(faqDto);
-		log.info("update->result: {}", result);
+		log.info("update  ->  result: {}", result);
 		return result;
 	}
 
@@ -48,14 +48,14 @@ public class FaqController {
 		faqDto.setMngrId("testAdmin");
 		log.info("delete: {}", faqDto);
 		int result = this.faqService.delete(faqDto);
-		log.info("delete->result: {}", result);
+		log.info("delete -> result: {}", result);
 		return result;
 	}
 
 	@GetMapping(value = "/create", params = "register")
 	public String createRegister(FaqDto faqDto) {
 
-		log.info("createRegister->faqDto:{}", faqDto);
+		log.info("createRegister -> faqDto:{}", faqDto);
 
 		return "faq/create";
 	}
@@ -64,10 +64,10 @@ public class FaqController {
 	public String createRegisterPost(FaqDto faqDto) {
 
 		faqDto.setMngrId("testAdmin");
-		log.info("createRegisterPost->faqDto: {}", faqDto);
+		log.info("createRegisterPost -> faqDto: {}", faqDto);
 
 		int result = this.faqService.createRegister(faqDto);
-		log.info("createRegister->result: {}", result);
+		log.info("createRegister -> result: {}", result);
 
 		return "redirect:/faq/list";
 

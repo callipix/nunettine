@@ -3,8 +3,10 @@ package kr.or.ddit.pro.proBkmk.mapper;
 import java.util.List;
 
 import kr.or.ddit.dto.ProBkmkDto;
-import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+@Mapper
 public interface ProBkmkMapper {
 	
 	int proBkmkCreate(@Param("proId") String proId, @Param("mberId") String mberId);

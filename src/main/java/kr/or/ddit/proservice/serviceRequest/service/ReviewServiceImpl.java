@@ -101,23 +101,19 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public List<ReviewDto> reTyChrtList(Map<String, Object> paramMap) {
-		List<String> reTyList = new ArrayList<String>();
-		for (int i = 1; i < 15; i++) {
-			if (i < 10) {
-				reTyList.add("REV0" + i);
-			} else {
-				reTyList.add("REV" + i);
-			}
-		}
-		paramMap.put("reTyList", reTyList);
-
+		retyList(paramMap);
 		return this.reviewMapper.reTyChrtList(paramMap);
 
 	}
 
 	@Override
 	public List<ReviewDto> proReTyChrtList(Map<String, Object> paramMap) {
-		List<String> reTyList = new ArrayList<String>();
+		retyList(paramMap);
+		return this.reviewMapper.proReTyChrtList(paramMap);
+
+	}
+	private void retyList(Map<String, Object> paramMap) {
+		List<String> reTyList = new ArrayList<>();
 		for (int i = 1; i < 15; i++) {
 			if (i < 10) {
 				reTyList.add("REV0" + i);
@@ -126,9 +122,6 @@ public class ReviewServiceImpl implements ReviewService {
 			}
 		}
 		paramMap.put("reTyList", reTyList);
-
-		return this.reviewMapper.proReTyChrtList(paramMap);
-
 	}
 
 	@Override

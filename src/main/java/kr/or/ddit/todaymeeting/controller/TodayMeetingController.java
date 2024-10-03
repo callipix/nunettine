@@ -89,7 +89,7 @@ public class TodayMeetingController {
 	@PostMapping("/listAjax")
 	public ArticlePage3<TdmtngDto> listAjax(@RequestBody(required = false) Map<String, Object> map) {
 
-		log.info("map : " + map);
+		log.info("map : {}", map);
 
 		int size = 10;
 		int total = this.todayMeetingService.getTotal(map);
@@ -114,7 +114,7 @@ public class TodayMeetingController {
 		String selectColumn = map.get("selectColumn").toString();
 		log.info("listAjax -> selectColumn : {}", selectColumn);
 
-		ArticlePage3<TdmtngDto> data = new ArticlePage3<TdmtngDto>(total,
+		ArticlePage3<TdmtngDto> data = new ArticlePage3<>(total,
 			Integer.parseInt(currentPage), size, tdmtngDtoList, keyword, selectColumn);
 
 		log.info("listAjax -> data : {}", data);
@@ -125,11 +125,11 @@ public class TodayMeetingController {
 	// 내 이벤트 조회
 	@GetMapping("/calendarList")
 	@ResponseBody
-	public List<Map<String, Object>> showAllEventInUpdate(String userId) throws Exception {
+	public List<Map<String, Object>> showAllEventInUpdate(String userId) {
 
 		log.info(userId);
 
-		JSONObject jsonObj = new JSONObject();
+		JSONObject jsonObj;
 		JSONArray jsonArr = new JSONArray();
 
 		HashMap<String, Object> hash = new HashMap<>();

@@ -28,12 +28,6 @@ public class LbrtyBbscttServiceImpl implements LbrtyBbscttService {
 	private final LbrtyBbscttMapper lbrtyBbscttMapper;
 
 	@Override
-	public List<LbrtyBbscttDto2> lbrtyBbscttList() {
-		return this.lbrtyBbscttMapper.lbrtyBbscttList();
-
-	}
-
-	@Override
 	public LbrtyBbscttDto lbrtyBbscttDetail(int lbrtyBbscttNo) {
 		return this.lbrtyBbscttMapper.lbrtyBbscttDetail(lbrtyBbscttNo);
 	}
@@ -104,8 +98,8 @@ public class LbrtyBbscttServiceImpl implements LbrtyBbscttService {
 			uploadFileName = uuid.toString() + "_" + uploadFileName;
 
 			File savePath = new File(uploadFolder + "\\" + getFolder());
-			log.info("폴더 getFolder from lbrtyBbscttInsert: {}", getFolder());
-			log.info("폴더 savePath from lbrtyBbscttInsert: {}", savePath);
+			log.info("폴더 getFolder from lbrtyBbscttInsert : {}", getFolder());
+			log.info("폴더 savePath from lbrtyBbscttInsert : {}", savePath);
 			if (!savePath.exists()) {
 				savePath.mkdirs();
 				log.info("해당 폴더가 없어서 생성했어요?");
@@ -136,7 +130,7 @@ public class LbrtyBbscttServiceImpl implements LbrtyBbscttService {
 
 		}
 
-		log.info("after2 result = " + result);
+		log.info("after2 result = {}", result);
 		return result;
 
 	}
@@ -239,14 +233,14 @@ public class LbrtyBbscttServiceImpl implements LbrtyBbscttService {
 		for (MultipartFile multipartFile : uploadFile) {
 
 			log.info("--------------");
-			log.info("원본 파일명 : {}", multipartFile.getOriginalFilename());
-			log.info("파일 크기    : {}", multipartFile.getSize());
-			log.info("MIME타입  : {}", multipartFile.getContentType());
+			log.info("원본 파일명    : {}", multipartFile.getOriginalFilename());
+			log.info("파일 크기      : {}", multipartFile.getSize());
+			log.info("MIME 타입      : {}", multipartFile.getContentType());
 
 			size = multipartFile.getSize();
 			log.info("업데이트 파일 사이즈 : {}", size);
 			if (size == 0) {
-				log.info("before result = " + result);
+				log.info("before result from lbrtyBbscttUpdate = {}", result);
 				return result;
 			}
 

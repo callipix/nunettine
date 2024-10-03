@@ -3,8 +3,6 @@ package kr.or.ddit.admin.decl.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import kr.or.ddit.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -28,10 +26,10 @@ public class DeclController {
 
 	private final DeclService declService;
 	
-	//페이징 처리
+	// 페이징 처리
 	@GetMapping("/userdecl")
-	public String userdecl(Model model, Map<String,Object> map, HttpServletRequest request,
-			@RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage) {
+	public String userdecl(Model model, Map<String,Object> map,
+		@RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage) {
 		
 		map.put("currentPage", currentPage);
 		List<SntncDeclDto> lbrbbsList = this.declService.decllbrSelect(map);
@@ -42,8 +40,8 @@ public class DeclController {
 	}
 	
 	@GetMapping("/lbrbbs")
-	public String lbrbbs(Model model, Map<String,Object> map, HttpServletRequest request,
-			@RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage) {
+	public String lbrbbs(Model model, Map<String,Object> map,
+		@RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage) {
 		
 		map.put("currentPage", currentPage);
 		List<SntncDeclDto> lbrbbsList = this.declService.decllbrSelect(map);
@@ -78,10 +76,9 @@ public class DeclController {
 	@PostMapping("/declResnList")
 	public List<SntncDeclDto> declResnList(@RequestBody SntncDeclDto sntncDeclDto) {
 		log.info("declResnList -> sntncDeclVO : {}" , sntncDeclDto);
-		
 		List<SntncDeclDto> declResnList = this.declService.declResnList(sntncDeclDto);
 		log.info("declResnList -> declResnList : {}" , declResnList);
-		
+
 		return declResnList;
 	}
 	
@@ -90,8 +87,7 @@ public class DeclController {
 	public int declSet(int lbrtyBbscttNo) {
 		log.info("declSet -> lbrtyBbscttNo : {}" , lbrtyBbscttNo);
 		
-		int result = 0;
-		result = this.declService.declSet(lbrtyBbscttNo);
+		int result = this.declService.declSet(lbrtyBbscttNo);
 		log.info("declSet -> result : {}" , result);
 		
 		return result;
@@ -134,8 +130,7 @@ public class DeclController {
 	@PostMapping("/userDeclSet")
 	public int userDeclSet(@RequestBody Map<String, Object> map) {
 		log.info("userDeclSet -> map : {}" , map);
-		int result = 0;
-		result = this.declService.userDeclSet(map);
+		int result = this.declService.userDeclSet(map);
 		log.info("userDeclSet -> result : {}" , result);
 		
 		return result;
@@ -144,8 +139,7 @@ public class DeclController {
 	@PostMapping("/declHistoryList")
 	public List<PunshDto> declHistoryList(String userId) {
 		log.info("declHistoryList -> userId : {}" , userId);
-		List<PunshDto> hisoryList = null;
-		hisoryList = this.declService.declHistoryList(userId);
+		List<PunshDto> hisoryList = this.declService.declHistoryList(userId);
 		log.info("declHistoryList -> hisoryList : {}" , hisoryList);
 		
 		return hisoryList;

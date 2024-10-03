@@ -62,21 +62,6 @@ public class PrtfolioController {
 		return str.replace("-", File.separator);
 	}
 
-	//이미지인지 판단.
-	public boolean checkImageType(File file) {
-		String contentType;
-		try {
-			contentType = Files.probeContentType(file.toPath());
-			log.info("contentType : {}", contentType);
-			//image/jpeg는 image로 시작함->true
-			return contentType.startsWith("image");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		//이 파일이 이미지가 아닐 경우
-		return false;
-	}
-
 	@ResponseBody
 	@PostMapping("/deletePrt")
 	public int deletePrt(@RequestParam("sprviseAtchmnflNo") int sprviseAtchmnflNo) {

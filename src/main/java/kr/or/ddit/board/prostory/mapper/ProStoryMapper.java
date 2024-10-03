@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.board.prostory.dto.ProStoryBbscttDto;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import kr.or.ddit.board.prostory.dto.GoodPointDto;
-
+@Mapper
 public interface ProStoryMapper {
 
     // 게시글 리스트

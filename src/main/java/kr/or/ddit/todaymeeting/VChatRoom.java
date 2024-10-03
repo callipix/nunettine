@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import kr.or.ddit.dto.UsersDto;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,8 +13,10 @@ import lombok.ToString;
 
 @Getter
 @Setter
+@Builder
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class VChatRoom {
 	
 	private int    tdmtngNo;

@@ -3,12 +3,12 @@ package kr.or.ddit.board.freeboard.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import kr.or.ddit.dto.*;
 import kr.or.ddit.dto.LbrtyBbscttAnswerDto;
-
+@Mapper
 public interface LbrtyBbscttMapper {
-
-	List<LbrtyBbscttDto2> lbrtyBbscttList();
 
 	LbrtyBbscttDto lbrtyBbscttDetail(int lbrtyBbscttNo);
 

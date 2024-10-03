@@ -39,7 +39,7 @@ public class ProStoryController {
 
 	private final ProStoryService proStoryService;
 
-	/* 세션 체크 아이디 가져오기 */
+	/** 세션 체크 아이디 가져오기 */
 	private String userId(HttpServletRequest request) {
 
 		Object proSession = request.getSession().getAttribute("proSession");
@@ -58,14 +58,14 @@ public class ProStoryController {
 		return "not";
 	}
 
-	/* 로그인 체크 */
+	/** 로그인 체크 */
 	@ResponseBody
 	@GetMapping("/idCheck")
 	private String idCheck(HttpServletRequest request) {
 		return userId(request);
 	}
 
-	/* 메인페이지(리스트) */
+	/** 메인페이지(리스트) */
 	@GetMapping("/main")
 	public String list(Model model) {
 
@@ -80,7 +80,7 @@ public class ProStoryController {
 		model.addAttribute("proStoryBbscttVO", list);
 		model.addAttribute("total", total);
 
-		log.info("proStoryBbscttVO for list : {}", list);
+		log.info("proStoryBbscttVO from list : {}", list);
 		return "prostory/main";
 	}
 
@@ -91,7 +91,7 @@ public class ProStoryController {
 		@RequestParam(value = "currentPage", required = false, defaultValue = "1") String currentPage,
 		@RequestParam(value = "type", required = false, defaultValue = "") String type,
 		@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) throws IOException {
-		// 전체글 수
+
 		int total = this.proStoryService.getTotal();
 
 		log.info("데이터 체크 currentPage     :: {}", currentPage);
@@ -111,17 +111,15 @@ public class ProStoryController {
 			log.info("Map keyword : {}", param.get("keyword"));
 		}
 
-		Map<String, Object> searchParam = new HashMap<String, Object>();
+		Map<String, Object> searchParam = new HashMap<>();
 
 		searchParam.put("currentPage", currentPage);
 		searchParam.put("type", type);
 		searchParam.put("keyword", keyword);
 
-		log.info("getContent->searchParam : {}", searchParam);
-
+		log.info("getContent -> searchParam : {}", searchParam);
 		List<ProStoryBbscttDto> pagingList = this.proStoryService.getPage(searchParam);
-
-		ArticlePage5<ProStoryBbscttDto> data = new ArticlePage5<ProStoryBbscttDto>(total, Integer.parseInt(currentPage),
+		ArticlePage5<ProStoryBbscttDto> data = new ArticlePage5<>(total, Integer.parseInt(currentPage),
 			8, pagingList, keyword, type);
 		log.info("data : {}", data);
 
@@ -133,62 +131,48 @@ public class ProStoryController {
 	public List<ProStoryBbscttDto> getWeekRecommend(Model model) {
 
 		List<ProStoryBbscttDto> list = this.proStoryService.getWeekRecommend();
-
 		model.addAttribute("list", list);
-
 		return list;
 
 	}
 
-	/* 글쓰기 페이지 이동 */
-	@GetMapping("/write")
-	public String create() {
-
-		return "prostory/write";
-	}
-
-	/* 글 작성 */
+	/** 글 작성 */
 	@ResponseBody
 	@PostMapping("/insert")
 	public int insert(ProStoryBbscttDto proStoryBbscttDto
 		, HttpServletRequest request
-		, MultipartHttpServletRequest multi
-	) {
+		, MultipartHttpServletRequest multipart) {
 
 		String userId = userId(request);
-
 		proStoryBbscttDto.setProId(userId);
 
-		int result = this.proStoryService.insert(proStoryBbscttDto, multi);
-		log.info("proStoryBbscttVO {} for insert", proStoryBbscttDto.getProStoryBbscttNo());
+		int result = this.proStoryService.insert(proStoryBbscttDto, multipart);
+		log.info("proStoryBbscttVO from insert {}", proStoryBbscttDto.getProStoryBbscttNo());
 		return result;
 	}
 
-	/* 아이디 체크 */
+	/** 아이디 체크 */
 	@ResponseBody
 	@GetMapping("/idChk")
 	public String idCheck(@RequestParam("writer") String chkId, HttpServletRequest request) {
 
 		String userId = userId(request);
-
-		log.info("체크할 아이디 : {}", chkId);
-		log.info("내 아이디 : {}", userId);
-
+		log.info("체크할 아이디  : {}", chkId);
+		log.info("내 아이디      : {}", userId);
 		return userId.equals(chkId) ? "true" : "false";
 
 	}
 
-	/* 글 수정 페이지 이동 */
+	/** 글 수정 페이지 이동 */
 	@GetMapping("/update")
 	public String update(@RequestParam("storyNo") int storyNo, Model model) {
 
-		ProStoryBbscttDto proStoryBbscttDto = this.proStoryService.getStory(storyNo);
+		this.proStoryService.getStory(storyNo);
 		model.addAttribute("getStory", this.proStoryService.getStory(storyNo));
-
 		return "prostory/update";
 	}
 
-	/* 글 수정 */
+	/** 글 수정 */
 	@ResponseBody
 	@PostMapping("/update")
 	public int updateStory(ProStoryBbscttDto proStoryBbscttDto
@@ -197,26 +181,22 @@ public class ProStoryController {
 		, MultipartHttpServletRequest multi) {
 
 		proStoryBbscttDto.setProId(userId(request));
-
 		log.info("proStoryBbscttVO 아이디 세팅 후 {}", proStoryBbscttDto);
-
 		int result = this.proStoryService.updateStory(proStoryBbscttDto, multi);
-
 		rttr.addFlashAttribute("result", result);
 		rttr.addFlashAttribute("storyNo", result);
 		return result;
 	}
 
-	/* 글 삭제 */
+	/** 글 삭제 */
 	@ResponseBody
 	@PostMapping("/delete")
 	public int delete(HttpServletRequest request, @RequestParam int storyNo) {
 
 		return this.proStoryService.deleteStory(userId(request), storyNo);
-
 	}
 
-	/* 게시글 상세 보기 + 조회수 증가 */
+	/** 게시글 상세 보기 + 조회수 증가 */
 	@GetMapping("/getStory")
 	public String getProStory(@RequestParam("storyNo") Integer storyNo
 		, HttpServletRequest request
@@ -224,13 +204,9 @@ public class ProStoryController {
 		, Model model) throws JsonProcessingException {
 
 		ProStoryBbscttDto proStoryBbscttDto = this.proStoryService.getStory(storyNo);
-
 		ObjectMapper objp = new ObjectMapper();
-
 		String getStoryStr = objp.writeValueAsString(proStoryBbscttDto);
-
 		int count = 0;
-
 		Cookie orgCookie = null;
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
@@ -278,7 +254,7 @@ public class ProStoryController {
 
 	}
 
-	/* 좋아요 체크 여부*/
+	/** 좋아요 체크 여부*/
 	public int getGoodCheck(String userId, @RequestParam("storyNo") int storyNo) {
 
 		log.info("체크 데이터 확인 : {}", userId, storyNo);
@@ -291,27 +267,23 @@ public class ProStoryController {
 		return result;
 	}
 
-	/* 좋아요 */
+	/** 좋아요 */
 	@ResponseBody
 	@GetMapping("/goodUp")
 	public ProStoryBbscttDto goodUp(@RequestParam("storyNo") int storyNo, HttpServletRequest request) {
 
 		GoodPointDto goodPointDto = new GoodPointDto(storyNo, userId(request));
-
 		ProStoryBbscttDto proStoryBbscttDto = this.proStoryService.updateGood(goodPointDto);
-
 		return proStoryBbscttDto;
 	}
 
-	/* 좋아요 취소 */
+	/** 좋아요 취소 */
 	@ResponseBody
 	@GetMapping("/goodCancle")
 	public ProStoryBbscttDto goodCancle(@RequestParam("storyNo") int storyNo, HttpServletRequest request) {
 
 		GoodPointDto goodPointDto = new GoodPointDto(storyNo, userId(request));
-
 		ProStoryBbscttDto proStoryBbscttDto = this.proStoryService.goodRemove(goodPointDto);
-
 		return proStoryBbscttDto;
 	}
 

@@ -36,12 +36,8 @@ public class SrvcBtfInqryController {
 	private final SrvcBtfInqryService srvcBtfInqryService;
 	private final FileuploadService fileuploadService;
 
-	// 세션에서 가져올 아이디
-	String userId = "";
-	V_SrvcBtfInqryDto vSrvcBtfInqryVO = new V_SrvcBtfInqryDto();
-
 	public String userIdChk(HttpServletRequest request) {
-		userId = "";
+		String userId = "";
 		HttpSession session = request.getSession();
 
 		if (((HashMap)session.getAttribute("proSession")) != null) {
@@ -57,7 +53,7 @@ public class SrvcBtfInqryController {
 	public String btfInqryList(Model model, HttpServletRequest request, Map<String, Object> map,
 		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
 
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 
 		map.put("userId", userId);
 		map.put("currentPage", currentPage);
@@ -76,7 +72,7 @@ public class SrvcBtfInqryController {
 	public String btfInqryNoAnswerList(Model model, HttpServletRequest request, Map<String, Object> map,
 		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
 
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 
 		map.put("userId", userId);
 		map.put("currentPage", currentPage);
@@ -95,7 +91,7 @@ public class SrvcBtfInqryController {
 	public String btfInqrySuccessList(Model model, HttpServletRequest request, Map<String, Object> map,
 		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
 
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 
 		map.put("userId", userId);
 		map.put("currentPage", currentPage);
@@ -114,7 +110,7 @@ public class SrvcBtfInqryController {
 	public String myBtfInqryList(Model model, HttpServletRequest request, Map<String, Object> map,
 		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
 
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 
 		map.put("userId", userId);
 		map.put("currentPage", currentPage);
@@ -133,7 +129,7 @@ public class SrvcBtfInqryController {
 	public String myBtfInqryNoAnswerList(Model model, HttpServletRequest request, Map<String, Object> map,
 		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
 
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 
 		map.put("userId", userId);
 		map.put("currentPage", currentPage);
@@ -152,7 +148,7 @@ public class SrvcBtfInqryController {
 	public String myBtfInqrySuccessList(Model model, HttpServletRequest request, Map<String, Object> map,
 		@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
 
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 
 		map.put("userId", userId);
 		map.put("currentPage", currentPage);
@@ -172,7 +168,7 @@ public class SrvcBtfInqryController {
 	public ArticlePage<V_SrvcBtfInqryDto> searchList(@RequestBody(required = false) Map<String, Object> map,
 		HttpServletRequest request) {
 
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 		map.put("userId", userId);
 
 		List<V_SrvcBtfInqryDto> vSrvcBtfInqryVOList = this.srvcBtfInqryService.btfInqryList(map);
@@ -199,7 +195,7 @@ public class SrvcBtfInqryController {
 	public ArticlePage<V_SrvcBtfInqryDto> btfInqryNoAnswerList(@RequestBody(required = false) Map<String, Object> map,
 		HttpServletRequest request) {
 
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 		map.put("userId", userId);
 
 		List<V_SrvcBtfInqryDto> vSrvcBtfInqryVOList = this.srvcBtfInqryService.btfInqryNoAnswerList(map);
@@ -226,7 +222,7 @@ public class SrvcBtfInqryController {
 	public ArticlePage<V_SrvcBtfInqryDto> btfInqrySuccessList(@RequestBody(required = false) Map<String, Object> map,
 		HttpServletRequest request) {
 
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 		map.put("userId", userId);
 
 		List<V_SrvcBtfInqryDto> vSrvcBtfInqryVOList = this.srvcBtfInqryService.btfInqrySuccessList(map);
@@ -253,7 +249,7 @@ public class SrvcBtfInqryController {
 	public ArticlePage<V_SrvcBtfInqryDto> mySearchList(@RequestBody(required = false) Map<String, Object> map,
 		HttpServletRequest request) {
 
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 		map.put("userId", userId);
 
 		List<V_SrvcBtfInqryDto> vSrvcBtfInqryVOList = this.srvcBtfInqryService.btfInqryList(map);
@@ -280,7 +276,7 @@ public class SrvcBtfInqryController {
 	public ArticlePage<V_SrvcBtfInqryDto> myBtfInqryNoAnswerList(@RequestBody(required = false) Map<String, Object> map,
 		HttpServletRequest request) {
 
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 		map.put("userId", userId);
 
 		List<V_SrvcBtfInqryDto> vSrvcBtfInqryVOList = this.srvcBtfInqryService.btfInqryNoAnswerList(map);
@@ -307,7 +303,7 @@ public class SrvcBtfInqryController {
 	public ArticlePage<V_SrvcBtfInqryDto> myBtfInqrySuccessList(@RequestBody(required = false) Map<String, Object> map,
 		HttpServletRequest request) {
 
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 		map.put("userId", userId);
 
 		List<V_SrvcBtfInqryDto> vSrvcBtfInqryVOList = this.srvcBtfInqryService.btfInqrySuccessList(map);
@@ -329,13 +325,14 @@ public class SrvcBtfInqryController {
 	}
 
 	@GetMapping("/btfInqryDetail")
-	public String btfInqryDetail(@RequestParam("btfInqryNo") int btfInqryNo, Model model) {
+	public String btfInqryDetail(@RequestParam("btfInqryNo") int btfInqryNo, Model model,HttpServletRequest request) {
 
-		vSrvcBtfInqryVO.setBtfInqryNo(btfInqryNo);
+		String userId = userIdChk(request);
+		V_SrvcBtfInqryDto vSrvcBtfInqryVO = V_SrvcBtfInqryDto.builder().btfInqryNo(btfInqryNo).build();
 		vSrvcBtfInqryVO = this.srvcBtfInqryService.btfInqryDetail(vSrvcBtfInqryVO, userId);
 
 		int sprviseAtchmnflNo = vSrvcBtfInqryVO.getSprviseAtchmnflNo();
-		List<SprviseAtchmnflDto> sprviseAtchmnflDtoList = this.fileuploadService.getsprviseAtchmnfl(sprviseAtchmnflNo);
+		this.fileuploadService.getsprviseAtchmnfl(sprviseAtchmnflNo);
 
 		log.info("btfInqryDetail -> vSrvcBtfInqryVO : {}", vSrvcBtfInqryVO);
 
@@ -351,15 +348,16 @@ public class SrvcBtfInqryController {
 
 	@PostMapping("/updateAnswer")
 	@ResponseBody
-	public int updateAnswer(@RequestBody Map<String, Object> param) {
-		int res = 0;
+	public int updateAnswer(@RequestBody Map<String, Object> param,HttpServletRequest request) {
+		int res;
 
+		String userId = userIdChk(request);
 		log.info("번호 : {}", param.get("btfInqryNo"));
 
 		int btfInqryNo = Integer.parseInt(String.valueOf(param.get("btfInqryNo")));
 		String btfInqryAnswerCn = (String)param.get("btfInqryAnswerCn");
 
-		Map<String, Object> updateParamMap = new HashMap<String, Object>();
+		Map<String, Object> updateParamMap = new HashMap<>();
 		updateParamMap.put("btfInqryNo", btfInqryNo);
 		updateParamMap.put("btfInqryAnswerCn", btfInqryAnswerCn);
 
@@ -377,7 +375,7 @@ public class SrvcBtfInqryController {
 	public String btfInqryCreatePost(@RequestParam Map<String, Object> btfInqryInfoMap,
 		@RequestParam("uploadFiles") List<MultipartFile> uploadFiles, HttpServletRequest request) {
 
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 
 		log.info("[btfInqryController] createPost -> proId : {}", btfInqryInfoMap.get("proId"));
 		SrvcBtfInqryDto srvcBtfInqryDto = new SrvcBtfInqryDto();
@@ -387,9 +385,8 @@ public class SrvcBtfInqryController {
 
 		log.info("[btfInqryController] btfInqryCreatePost->userId : {}", userId);
 		srvcBtfInqryDto.setMberId(userId);
-		int res = 0;
 
-		res = this.srvcBtfInqryService.btfInqryCreatePost(srvcBtfInqryDto, uploadFiles);
+		this.srvcBtfInqryService.btfInqryCreatePost(srvcBtfInqryDto, uploadFiles);
 
 		return "redirect:/srvcBtfInqry/btfInqryList?mberCheck=mber";
 	}
@@ -401,13 +398,12 @@ public class SrvcBtfInqryController {
 		// 사전문의 업데이트
 		// 사전문의 업데이트 + 기존 사진 삭제
 		// 사전문의 업데이트 + 기존 사진 삭제 + 새로운 사진 업데이트
-		int res = 0;
 
-		userId = userIdChk(request);
+		String userId = userIdChk(request);
 		log.info("btfInqryUpdatePost -> btfInqryUpdateMap : {}", btfInqryUpdateMap.toString());
 		log.info("btfInqryUpdatePost -> uploadFiles : {}", uploadFiles.toString());
 
-		res = this.srvcBtfInqryService.btfInqryUpdatePost(btfInqryUpdateMap, uploadFiles, userId);
+		this.srvcBtfInqryService.btfInqryUpdatePost(btfInqryUpdateMap, uploadFiles, userId);
 
 		return "redirect:/srvcBtfInqry/btfInqryDetail?btfInqryNo=" + btfInqryUpdateMap.get("btfInqryNo");
 	}

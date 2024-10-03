@@ -47,7 +47,7 @@ public class NoticeController {
 
 	@GetMapping(value = "/detail")
 	public String noticeDetail(@RequestParam int noticeNo, Model model) {
-		log.info("detail  ->  noticeDetail: {} ", noticeNo);
+		log.info("detail  ->  noticeDetail: {}", noticeNo);
 		// 조회수 증가
 		this.noticeService.increaseViewCount(noticeNo);
 		// 공지사항 정보 조회
@@ -68,7 +68,7 @@ public class NoticeController {
 		log.info("update :  {} ", noticeDto);
 		int result = this.noticeService.update(noticeDto);
 		//insert : 1
-		log.info("update -> result :  {} ", result);
+		log.info("update -> result :  {}", result);
 		return result;
 	}
 
@@ -78,13 +78,13 @@ public class NoticeController {
 		log.info("delete: {} ", noticeDto);
 
 		int result = this.noticeService.delete(noticeDto);
-		log.info("delete -> result: {} ", result);
+		log.info("delete -> result: {}", result);
 		return result;
 	}
 
 	@GetMapping(value = "/create")
 	public String create(NoticeDto noticeDto, HttpSession session) {
-		log.info("create -> noticeDto: {} ", noticeDto);
+		log.info("create -> noticeDto: {}", noticeDto);
 
 		return "admin/create";
 	}
@@ -92,7 +92,7 @@ public class NoticeController {
 	@ResponseBody
 	@PostMapping(value = "/createPost")
 	public int createPost(NoticeDto noticeDto) {
-		log.info("createPost -> noticeDto: {} ", noticeDto);
+		log.info("createPost -> noticeDto: {}", noticeDto);
 
 		noticeDto.setMngrId("testAdmin");
 		//log.info("notice :: {}", noticeDto.getMngrId());
@@ -103,7 +103,7 @@ public class NoticeController {
 		}
 		//		NoticeDto noticeDto = new NoticeDto()
 		int result = this.noticeService.createPost(noticeDto);
-		log.info("createPost -> result: {} ", result);
+		log.info("createPost -> result: {}", result);
 		return result;
 		//return "redirect:/admin/notice="+noticeDto.getNoticeNo();
 		//return "redirect:/admin/notice?noticeNo="+noticeDto.getNoticeNo();
@@ -119,21 +119,6 @@ public class NoticeController {
 		String str = sdf.format(date);
 		//2024-01-30  ->  2024\\01\\30
 		return str.replace("-", File.separator);
-	}
-
-	//이미지인지 판단.
-	public boolean checkImageType(File file) {
-		String contentType;
-		try {
-			contentType = Files.probeContentType(file.toPath());
-			log.info("contentType : {} ", contentType);
-			//image/jpeg는 image로 시작함 -> true
-			return contentType.startsWith("image");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		//이 파일이 이미지가 아닐 경우
-		return false;
 	}
 
 	@GetMapping(value = "/list")
@@ -159,11 +144,11 @@ public class NoticeController {
 		map.put("currentPage", currentPage);
 
 		int total = this.noticeService.getTotal(map);
-		log.info("list -> total: {} ", total);
+		log.info("list -> total: {}", total);
 		int size = 10;
 
 		List<NoticeDto> noticeDtoList = this.noticeService.list(map);
-		log.info("list -> noticeDtoList: {} ", noticeDtoList);
+		log.info("list -> noticeDtoList: {}", noticeDtoList);
 
 		model.addAttribute("data", new ArticlePage2<NoticeDto>(total
 			, currentPage, size, noticeDtoList, keyword, "leftList", searchKey));
@@ -179,19 +164,19 @@ public class NoticeController {
 	public ArticlePage2<NoticeDto> listAjax(@RequestBody(required = false) Map<String, Object> map) throws
 		ParseException {
 
-		log.info("listAjax -> ArticlePage2 -> map :  {} ", map);
+		log.info("listAjax -> ArticlePage2 -> map :  {}", map);
 
 		String keyword = map.get("keyword").toString();
 		String searchKey = map.get("searchKey").toString();
 		int currentPage = Integer.parseInt(map.get("currentPage").toString());
 
 		int total = this.noticeService.getTotal(map);
-		log.info("listAjax -> total {} ", total);
+		log.info("listAjax -> total {}", total);
 
 		int size = 10;
 
 		List<NoticeDto> noticeDtoList = this.noticeService.list(map);
-		log.info("list  ->  noticeDtoList : {} ", noticeDtoList);
+		log.info("list  ->  noticeDtoList : {}", noticeDtoList);
 
 		ArticlePage2<NoticeDto> data = new ArticlePage2(total, currentPage, size, noticeDtoList, keyword, "leftList",
 			searchKey);

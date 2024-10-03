@@ -1,5 +1,7 @@
 package kr.or.ddit.pro.join.controller;
 
+import static kr.or.ddit.util.ImageCheck.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import kr.or.ddit.dto.*;
+import kr.or.ddit.util.ImageCheck;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -53,8 +56,6 @@ public class ProJoinController {
 
 		//전문분야 코드 출력
 		List<SpcltyRealmDto> codeList = this.proJoinService.selectCode();
-		//		log.info("전문분야 코드 : " + codeList);
-		//		log.info("전문분야 코드 : " + codeList.get(0));
 		model.addAttribute("codeList", codeList);
 
 		return "pro/proJoin";
@@ -114,9 +115,6 @@ public class ProJoinController {
 	//프로 회원가입
 	@PostMapping("/proInsert")
 	public String proInsert(UsersDto usersDto, ProDto proDto, AdresDto adresDto) {
-		//		log.info("userVO : " + usersVO);
-		//		log.info("proVO : " + proVO);
-		//		log.info("adresVO : " + adresVO);
 		Map<String, Object> map = new HashMap<>();
 
 		//프로필사진 업로드 처리
@@ -128,8 +126,8 @@ public class ProJoinController {
 				uploadPath.mkdirs();
 			}
 			String uploadFileName = multipartFile.getOriginalFilename();
-			UUID uuid = UUID.randomUUID();
-			uploadFileName = uuid.toString() + "_" + uploadFileName;
+			String uuid = UUID.randomUUID().toString();
+			uploadFileName = uuid + "_" + uploadFileName;
 			File saveFile = new File(uploadPath, uploadFileName);
 			try {
 				multipartFile.transferTo(saveFile);
@@ -153,7 +151,7 @@ public class ProJoinController {
 		map.put("detailAdres", adresDto.getDetailAdres());
 		map.put("zip", adresDto.getZip());
 
-		int result = this.proJoinService.proInsert(map);
+		this.proJoinService.proInsert(map);
 
 		return "welcome";
 	}
@@ -187,7 +185,7 @@ public class ProJoinController {
 		}
 		//동균끝
 		
-		/*
+		/**
 		adminVO : UsersVO(userId=testAdmin, userNm=테스트관리자, userPassword=asdasd, emplyrTy=ET03
 		, secsnAt=1, userNcnm=테스트관리자, cnt=0)
 		 */
@@ -263,7 +261,6 @@ public class ProJoinController {
 				userMap.put("zip", adresDto.getZip()); //우편번호
 				userMap.put("adres", adresDto.getAdres()); //주소
 				userMap.put("detailAdres", adresDto.getDetailAdres()); //상세주소
-				//			log.info("로그인 후 adresVO : " + adresVO);
 			} catch (NullPointerException e) {
 				userMap.put("zip", "-"); //우편번호
 				userMap.put("adres", "-"); //주소
@@ -321,12 +318,12 @@ public class ProJoinController {
 			userMap.get("");
 
 		} else {
-			log.info("1" + usersDto.getCnt());
+			log.info(" 1 {}", usersDto.getCnt());
 			if (usersDto.getCnt() == 1) {
-				log.info("2{}", usersDto.getCnt());
+				log.info(" 2 {}", usersDto.getCnt());
 				userMap.put("type", "ET01");
 			} else {
-				log.info("3{}", usersDto.getCnt());
+				log.info(" 3 {} ", usersDto.getCnt());
 				userMap.put("cnt", 0);
 			}
 		}
@@ -340,14 +337,6 @@ public class ProJoinController {
 		session.removeAttribute("proSession");
 		return "redirect:/main";
 	}
-
-	public String getFolder() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = new Date();
-		String str = sdf.format(date);
-		return str.replace("-", File.separator);
-	}
-
 	//아이디 찾기
 	@ResponseBody
 	@PostMapping("/idSearch")
@@ -406,7 +395,7 @@ public class ProJoinController {
 				idx = (int)(charSet.length * Math.random());
 				str += charSet[idx];
 			}
-			log.info("메일 보낼 임시비번 " + str);
+			log.info("메일 보낼 임시비번 {}", str);
 			String setForm = "ddit230901@gmail.com"; //보낼 이메일 주소
 			String toMail = vProUsersDto.getEmail(); //받을 이메일 주소
 			String title = "누네띠네 프로님의 임시비밀번호 발송 이메일 입니다."; //이메일 제목
@@ -417,7 +406,7 @@ public class ProJoinController {
 			mailSend(setForm, toMail, title, content); //메일 전송 메소드 호출
 			map.put("imsiPw", str);
 			// 임시비밀번호로 변경
-			int result = this.proJoinService.updatePw(map);
+			this.proJoinService.updatePw(map);
 		}
 		return map;
 	}
