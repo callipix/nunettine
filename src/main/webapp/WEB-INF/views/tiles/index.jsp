@@ -24,15 +24,13 @@
 <link rel="stylesheet" href="/resources/skydash/css/vertical-layout-light/style.css">
 <!-- endinject -->
 <link rel="shortcut icon" href="/resources/images/누네띠네.png" />
-<!-- <script src="/resources/chat/chat.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="/resources/chat/chat.css">
+<link rel="stylesheet" type="text/css" href="/resources/chat/css/chat.css">
 
 <!--  -->
-<!-- <link rel="stylesheet" href="/resources/chat/chatFFF/bundle.css"> -->
 <link rel="stylesheet" href="/resources/chat/chatFFF/app.css">
 <!--  -->
 </head>

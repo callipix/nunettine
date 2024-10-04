@@ -30,7 +30,7 @@
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 <script src="/resources/chat/chat.js"></script>
-<link rel="stylesheet" type="text/css" href="/resources/chat/chat.css">
+<link rel="stylesheet" type="text/css" href="/resources/chat/css/chat.css">
 
 <
 

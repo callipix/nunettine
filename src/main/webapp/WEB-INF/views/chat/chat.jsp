@@ -4,8 +4,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-<!-- <link rel="stylesheet" href="/resources/chat/chatFFF/bundle.css"> -->
-<!-- <link rel="stylesheet" href="/resources/chat/chatFFF/app.css"> -->
 <style>
 @font-face {
     font-family: 'TTHakgyoansimKossuyeomR';
@@ -96,8 +94,6 @@ font-family: 'GmarketSansMedium';
     transform: translateY(0);
 }
 .tyn-reply-item {
-  display: table-cell;
-  vertical-align: middle;
 }
 .tyn-quick-chat-box {
 
@@ -121,7 +117,7 @@ font-family: 'GmarketSansMedium';
 }
 .bg-light {
     --bs-bg-opacity: 1;
-    background-color: rgb(226 232 240), var(--bs-bg-opacity)) !important;
+    background-color: rgb(226 232 240, var(--bs-bg-opacity)) !important;
 }
 .tyn-quick-chat-form {
 	display: flex;
@@ -203,16 +199,16 @@ font-family: 'GmarketSansMedium';
 }
 </style>
 <script>
+
 $(document).ready(function(){
 
-	var currentScreen = "A";
-
-	var chatList = [];
+	let currentScreen = "A";
+	let chatList = [];
 	loadRoomList();
 
 	let memSession = "${memSession}";
 	let proSession = "${proSession}";
-	var isCHK = false;
+	let isCHK = false;
 
 	console.log("memSession22 : " + memSession);
 	console.log("proSession22 : " + proSession);
@@ -227,14 +223,9 @@ $(document).ready(function(){
 		document.getElementById('check').innerHTML = str;
 		
 	}
-	
 	const list = document.querySelector("#list");
 	const expired = document.querySelector("#expired");
-	const update = document.querySelector("#update");
-	const msgArea3 = document.querySelector("#msgArea3");
 	
-	var urlParams = new URLSearchParams(window.location.search); // URL 매개변수를 가져옵니다.
-	var isListReload = urlParams.has('list_reload'); // 'list_reload' 매개변수가 있는지 확인합니다.
 	// 페이지 로드 시 실행될 코드
 	$("#myList").show(); // 리스트를 보여줍니다.
 	$("#scrolling").hide(); // 스크롤을 숨깁니다.
@@ -247,7 +238,7 @@ $(document).ready(function(){
 		console.log("isCHK ::11 " + isCHK)
 		document.location.reload(true); // 리스트 버튼 클릭시에만 페이지 리로드합니다.
 	});
-	
+
 console.log("currentScreen :: " + currentScreen );
 	/* 모임 마감 임박 정렬 */	
 	expired.addEventListener("click", function() {
@@ -296,7 +287,6 @@ console.log("currentScreen :: " + currentScreen );
 	    applyStylesToNewItems();
 	}
 
-
 	function loadRoomList() {
 		// 내방 목록 출력
 		
@@ -311,8 +301,8 @@ console.log("currentScreen :: " + currentScreen );
 			dataType: "json",
 			success: function (result) {
 				
-				var roomList = result;
-				var str = '';
+				let roomList = result;
+				let str = '';
 				
 				$.each(roomList, function (index, TdmtngVO) {
 					console.log("TdmtngVO :: " + TdmtngVO.tdmtngDt);
@@ -350,7 +340,6 @@ console.log("currentScreen :: " + currentScreen );
 		let minutes    = ('0' + day.getMinutes()).slice(-2);
 		let secounds   = ('0' + day.getSeconds()).slice(-2);
 	
-		let timeTT     = year + "." + month + "." + date;
 		let timeString = year + month + date + hour + minutes + secounds;
 	
 		return timeString.trim();
@@ -362,16 +351,12 @@ console.log("currentScreen :: " + currentScreen );
 		let year     = day.getFullYear();
 		let month    = ('0' + (day.getMonth() + 1)).slice(-2);
 		let date     = ('0' + day.getDate()).slice(-2);
-		
-		let hour     = ('0' + day.getHours()).slice(-2);
-		let minutes  = ('0' + day.getMinutes()).slice(-2);
-		let secounds = ('0' + day.getSeconds()).slice(-2);
-	
+
 		let timeTT   = year + "." + month + "." + date;
 	
 		return timeTT.trim();
 	}
-	var currentScreen;
+	let currentScreen;
 	function myRoom(event, tdmtngNo) {
 		event.preventDefault();
 
@@ -399,7 +384,7 @@ console.log("currentScreen :: " + currentScreen );
 // 				str += "<a>"+ result["userInfo"].mberProflPhoto + "</a>";
 				str += "</div>";
 
-				$("#listTT").append(str);
+				$("#meetingList").append(str);
 				
 				let userNcnm = "";
 				
@@ -413,11 +398,10 @@ console.log("currentScreen :: " + currentScreen );
 		})
 	}
 
-	var currentScreen;
 	function chat(tdmtngNo, userId , userNcnm) {
 		
-		var sockJs = new SockJS("/stomp/chat");
-		var stomp = Stomp.over(sockJs);
+		const sockJs = new SockJS("/stomp/chat");
+		const stomp = Stomp.over(sockJs);
 		$("#expired").hide();
 		messageCheck(tdmtngNo);
 
@@ -432,23 +416,22 @@ console.log("currentScreen :: " + currentScreen );
 			$("#enterMSG").remove();
 
 			<% /* 구독중인 방에서 채팅 확인 (받는영역 , 메세지 표시 영역) */ %>
-			var content = JSON.parse(chat.body);
-			var msgNo = content.tdmtngChSpMsgNo;
-			var roomNo = content.tdmtngNo;
-			var message = content.tdmtngChSpMsgCn;
-			var writer = content.userId;
-			var date = content.tdmtngChSpMsgTrnsmisDt;
-			var isEnterMessage = content.messageType;
-			var proflPhoto = content.proflPhoto;
-			var userNcnm = content.userNcnm;
+			let content = JSON.parse(chat.body);
+			let msgNo = content.tdmtngChSpMsgNo;
+			let roomNo = content.tdmtngNo;
+			let message = content.tdmtngChSpMsgCn;
+			let writer = content.userId;
+			let date = content.tdmtngChSpMsgTrnsmisDt;
+			let isEnterMessage = content.messageType;
+			let proflPhoto = content.proflPhoto;
+			let userNcnm = content.userNcnm;
 
 			let dateStr = date.substring(8,10) + ":" + date.substring(10,12) + ":" + date.substring(12,14);
 			
 			let time;
 			
 			if(dateStr.substring(0,2) >= 12){
-				
-				
+
 				if(dateStr.substring(0,2) == 12){
 
 					time  = "오후 " + 12 + ":" + date.substring(10,12); 
@@ -541,8 +524,8 @@ console.log("currentScreen :: " + currentScreen );
 		            e.preventDefault();
 					e.stopPropagation(); // 이벤트 전파 중지
 	
-					var date = getTime();
-			        var msg = $(this).text().trim();
+					const date = getTime();
+			        const msg = $(this).text().trim();
 			        
 			        stomp.send('/pub/chat/message', {},
 			            JSON.stringify({ tdmtngNo: tdmtngNo, tdmtngChSpMsgCn: msg, tdmtngChSpMsgTrnsmisDt: date, userId: userId , userNcnm : userNcnm })
@@ -584,9 +567,9 @@ console.log("currentScreen :: " + currentScreen );
 	    
 	    // 스크롤 이벤트 핸들러
 		    $('#scrolling').on('scroll', function() {
-		        var scrollingElement = $(this)[0];
-		        var scrollTop = scrollingElement.scrollTop;
-		        lastScrollTop = scrollTop;
+		        let scrollingElement = $(this)[0];
+		        let scrollTop = scrollingElement.scrollTop;
+				let lastScrollTop = scrollTop;
 		    });
 		    
 		    // 스크롤 가장 아래로 이동
@@ -609,7 +592,7 @@ function displayChatMessages(result) {
 	console.log("joinRoom : ", joinRoom);
 	console.log("msgList : ", msgList);
 	
-	var profile;
+	let profile;
 	for (let i = 0; i < msgList.length; i++) {
 		
 			let msgData = {
@@ -633,7 +616,7 @@ function displayChatMessages(result) {
 			
 			let dayWeek = (new Date(currentDate)).getDay();
 	
-			var weekdays = ['일', '월', '화', '수', '목', '금', '토'];
+			const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
 	
 			let dayWeekString = weekdays[dayWeek];
 	
@@ -772,7 +755,7 @@ function displayChatMessages(result) {
 		<br>
     <div>
 
-    <div id="listTT" class="top-0 end-5 position-absolute rounded-pill translate-middle" style="border-color: black;"></div>
+    <div id="meetingList" class="top-0 end-5 position-absolute rounded-pill translate-middle" style="border-color: black;"></div>
     <button id="list" class="btn btn-secondary btn-sm btn-icon top-0 end-1 position-absolute rounded-pill translate-middle" style="right: 40px; border-color: transparent;">
         <img src="/resources/images/리스트.gif" alt="List Icon" style="width: 40px; background-color: #eff6ff; border-radius : 100%;">
     </button>

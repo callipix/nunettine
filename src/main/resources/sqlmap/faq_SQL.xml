@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ddit.admin.faq.mapper.FaqMapper">
 	
-	<select id="faqList" parameterType="faqDto" resultType="faqDto" >
+	<select id="faqList" resultType="faqDto" >
 		select * from faq
 	</select>
 	

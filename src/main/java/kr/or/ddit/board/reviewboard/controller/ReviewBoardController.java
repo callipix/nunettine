@@ -176,7 +176,7 @@ public class ReviewBoardController {
 		log.info("detail -> aftusBbscttVO : {}", aftusBbscttDto);
 
 		model.addAttribute("sessionId", sessionId);
-		model.addAttribute("aftusBbscttVO", aftusBbscttDto);
+		model.addAttribute("aftusBbscttDto", aftusBbscttDto);
 
 		int sprviseAtchmnflNo = aftusBbscttDto.getSprviseAtchmnflNo();
 

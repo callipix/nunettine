@@ -5,6 +5,7 @@ import lombok.*;
 @Setter
 @Getter
 @ToString
+@NoArgsConstructor
 @AllArgsConstructor
 public class FaqDto {
 	private int rnum;

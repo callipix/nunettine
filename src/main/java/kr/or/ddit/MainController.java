@@ -45,7 +45,7 @@ public class MainController {
 		model.addAttribute("dongDto2", dongDto2);
 		model.addAttribute("dongDto3", dongDto3);
 
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 		List<BcityDto> bcityDtoList = this.proProflService.list(map);
 		List<SpcltyRealmDto> spcltyBList = this.searchProService.spcltyB();
 		List<ProDto> monthProList = this.searchProService.getMonthPro(map);
@@ -61,10 +61,10 @@ public class MainController {
 		List<ProStoryBbscttDto> getRecommendList = this.proStoryService.getWeekRecommend();
 		/* 프로이야기 추천수 기준 가져오기 새로 추가*/
 
-		log.info("main->bcityDtoList" + bcityDtoList);
-		log.info("main->spcltyBList" + spcltyBList);
-		log.info("main->monthProList" + monthProList);
-		log.info("main->getRecommendList" + getRecommendList);
+		log.info("main->bcityDtoList {}", bcityDtoList);
+		log.info("main->spcltyBList {}", spcltyBList);
+		log.info("main->monthProList {}", monthProList);
+		log.info("main->getRecommendList {}", getRecommendList);
 
 		model.addAttribute("ondyclDtoList", ondyclDtoList);
 		model.addAttribute("bcityDtoList", bcityDtoList);

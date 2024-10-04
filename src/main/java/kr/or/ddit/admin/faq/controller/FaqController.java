@@ -26,10 +26,13 @@ public class FaqController {
 
 	@GetMapping("/list")
 	public String faqList(Model model) {
-		List<FaqDto> faqList = faqService.faqList();
+		log.info("애초에 여길 안타는데");
+		List<FaqDto> faqList = this.faqService.faqList();
 		model.addAttribute("faqList", faqList);
-		log.info("faqList {} ", faqList.toString());
-		return "faq/list";
+		log.info("faqList {}", faqList.toString());
+		log.info("제대로 오는거 맞나? {}", model.getAttribute("faqList"));
+		log.info("제대로 오는거 맞나? {}", faqList);
+		return "/faq/list";
 	}
 
 	@ResponseBody
